@@ -1,0 +1,13 @@
+﻿<div [hidden]='!popupShow' [id]='tagId' class="autoCompleteDiv" (mouseover)='isFocusedOnItem=true'
+     (mouseleave)='isFocusedOnItem=false'>
+    <div (click)='selectedItem(item)'
+         *ngFor='#item of values;#i=index'
+         [class.autompleteItem]='i+1!=foucusedItem'
+         [class.autompleteItemFocused]='i+1==foucusedItem'>
+        {{item}}
+    </div>
+    <div *ngIf="values.length<1" class="autompleteItem" style="border:none">
+        No Users found
+    </div>
+</div>
+ 
