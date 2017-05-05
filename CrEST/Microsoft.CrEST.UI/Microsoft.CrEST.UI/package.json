@@ -1,5 +1,5 @@
 {
-  "name": "aspnetcoreangularwebpackstarter",
+  "name": "microsoft.crest.ui",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -13,7 +13,7 @@
     "tsc:w": "tsc -w"
   },
   "keywords": [],
-  "author": "Fabian Gosebrink",
+  "author": "",
   "dependencies": {
     "@angular/common": "~4.0.2",
     "@angular/compiler": "~4.0.2",
@@ -33,9 +33,10 @@
     "@angular/platform-server": "~4.0.2",
     "bootstrap": "^3.3.7",
     "ie-shim": "~0.1.0",
-    "jquery": "^3.1.1",
+    "jquery": "3.2.1",
     "angular2-toaster": "^3.0.1",
-    "ng2-slim-loading-bar": "^4.0.0"
+    "ng2-slim-loading-bar": "^4.0.0",
+    "ng2-handsontable": "0.48.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
@@ -73,5 +74,6 @@
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2",
     "mdn-polyfills": "^2.2.0"
-  }, "-vs-binding":{"BeforeBuild":["buildProduction"]}
+  },
+  "-vs-binding": { "BeforeBuild": [ "buildProduction" ] }
 }

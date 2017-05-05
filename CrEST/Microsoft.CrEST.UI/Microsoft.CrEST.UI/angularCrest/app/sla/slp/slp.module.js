@@ -4,12 +4,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { HotTableModule } from 'ng2-handsontable';
 import { SlpComponent } from './slp.component';
+import { SlpService } from '../shared/services/slp.service';
+import { CrestHandsonComponent } from './cresthandson.component';
 var SlpModule = (function () {
     function SlpModule() {
     }
@@ -22,11 +25,19 @@ SlpModule = __decorate([
             FormsModule,
             ReactiveFormsModule,
             RouterModule,
-            HttpModule
+            HttpModule,
+            HotTableModule
         ],
         declarations: [
+            SlpComponent, CrestHandsonComponent
+        ],
+        exports: [
             SlpComponent
-        ]
+        ],
+        providers: [
+            SlpService
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
 ], SlpModule);
 export { SlpModule };

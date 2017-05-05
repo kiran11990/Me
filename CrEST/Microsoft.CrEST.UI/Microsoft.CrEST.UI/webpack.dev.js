@@ -35,22 +35,22 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif|ico|woff|woff2|ttf|svg|eot)$/,
-                loader: 'file-loader?name=assets/[name].[ext]',
+                loader: 'file-loader?name=assets/[name].[ext]'
             },
             //// Load css files which are required in vendor.ts
-            //{
-            //    test: /\.css$/,
-            //    loader: ExtractTextPlugin.extract({
-            //        fallbackLoader: "style-loader",
-            //        loader: "css-loader"
-            //    })
-            //}
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract({
+                    fallbackLoader: "style-loader",
+                    loader: "css-loader"
+                })
+            }
         ]
     },
     plugins: [
         new ExtractTextPlugin('css/[name].bundle.css'),
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['app','polyfills']
+            name: ['app', 'polyfills']
         }),
         new CleanWebpackPlugin(
             [
@@ -58,7 +58,8 @@ module.exports = {
                 './wwwroot/css/',
                 './wwwroot/assets/',
                 './wwwroot/index.html',
-                './wwwroot/vendor/'
+                './wwwroot/vendor/',
+                './wwwroot/configMetadata/'
             ]
         ),
         // inject in index.html
@@ -67,19 +68,19 @@ module.exports = {
             inject: 'body',
             filename: 'index.html'
         }),
+        // webpack.config.js
+        new webpack.ProvidePlugin({
+            "Handsontable": "handsontable/dist/handsontable.full.js",
+        }),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
             $: 'jquery',
             jquery: 'jquery'
         }),
         new CopyWebpackPlugin([
-            { from: 'vendor', to: 'vendor' }
-        ]),
-        new CopyWebpackPlugin([
-            { from: 'styles', to: 'css' }
-        ]),
-        new CopyWebpackPlugin([
-            { from: 'angularCrest/app/configMetadata', to: 'configMetadata' }
+            { from: './angularCrest/vendor', to: 'vendor' },
+            { from: './angularCrest/styles', to: 'css' },
+            { from: './angularCrest/app/configMetadata', to: 'configMetadata' }
         ])
     ],
     devServer: {
