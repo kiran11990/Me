@@ -24,6 +24,13 @@ var SlpComponent = (function () {
         this.GetData();
     };
     //**Actions and Events Start
+    SlpComponent.prototype.Generate = function () {
+    };
+    SlpComponent.prototype.AutoFill = function () {
+    };
+    SlpComponent.prototype.ExportToExcel = function () {
+        this.crestHandsonComponent.ExportToExcel();
+    };
     //**Actions and Events End
     //**HandsonTable functions Start**
     SlpComponent.prototype.afterChange = function (e) {
@@ -188,7 +195,7 @@ var SlpComponent = (function () {
             className: 'htCenter htMiddle',
             colHeaders: this.colHeaders
         };
-        //this.crestHandsonComponent.colHeaders = this.colHeaders;
+        this.crestHandsonComponent.colHeaders = this.colHeaders;
         this.crestHandsonComponent.columns = this.columns;
         this.crestHandsonComponent.colWidths = this.colWidths;
         this.crestHandsonComponent.options = this.options;

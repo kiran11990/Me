@@ -5,15 +5,17 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <div class="form-group row pull-right">
-            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
-                <a class="btn btn-primary" (click)="Generate()">Generate for current period</a>
-            </div>
-            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
-                <a class="btn btn-primary" (click)="AutoFill()">Autofill with previous period</a>
-            </div>
-            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
-                <a class="btn btn-primary" (click)="ExportToExcel()">Export to excel</a>
+        <div class="form-group row">
+            <div class="pull-right">
+                <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                    <a class="btn btn-primary" (click)="Generate()">Generate for current period</a>
+                </div>
+                <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                    <a class="btn btn-primary" (click)="AutoFill()">Autofill with previous period</a>
+                </div>
+                <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                    <a class="btn btn-primary" (click)="ExportToExcel()">Export to excel</a>
+                </div>
             </div>
         </div>
         <div class="row">
