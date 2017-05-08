@@ -12,17 +12,10 @@ export class CrestHandsonComponent {
     @Input() columns: Array<any>;
     @Input() colWidths: Array<number>;
     @Input() options: any;
-    
 
     constructor() {
-        this.options = {
-            stretchH: 'all',
-            columnSorting: true,
-            contextMenu: [
-                'row_above', 'row_below', 'remove_row'
-            ]
-        };
     }
+
     public afterChange(e: any) {
         console.log(e);
     }

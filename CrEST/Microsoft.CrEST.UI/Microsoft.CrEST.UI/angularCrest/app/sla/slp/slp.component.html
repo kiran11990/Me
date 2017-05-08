@@ -5,15 +5,15 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <div class="form-group row">
-            <div class="col-lg-3 col-sm-3 fixed-action-btn">
-                <a class="btn btn-primary" routerLink="#">Generate</a>
+        <div class="form-group row pull-right">
+            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
+                <a class="btn btn-primary" (click)="Generate()">Generate for current period</a>
             </div>
-            <div class="col-lg-3 col-sm-3 fixed-action-btn">
-                <a class="btn btn-primary" routerLink="#">Autofill with previous period</a>
+            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
+                <a class="btn btn-primary" (click)="AutoFill()">Autofill with previous period</a>
             </div>
-            <div class="col-lg-3 col-sm-3 fixed-action-btn">
-                <a class="btn btn-primary" routerLink="#">Export to excel</a>
+            <div class="col-lg-3 col-sm-3 fixed-action-btn pull-right">
+                <a class="btn btn-primary" (click)="ExportToExcel()">Export to excel</a>
             </div>
         </div>
         <div class="row">
@@ -22,9 +22,13 @@
                     Service Level Performance
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <crest-handson></crest-handson>
-                    </div>
+                    <crest-handson [data]="data"
+                                   (after-change)="afterChange($event)"
+                                   [col-headers]="colHeaders"
+                                   [columns]="columns"
+                                   [options]="options"
+                                   [col-widths]="colWidths">
+                    </crest-handson>
                 </div>
             </div>
         </div>

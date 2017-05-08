@@ -8,22 +8,191 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { SlpService } from "../shared/services/slp.service";
 import { CrestHandsonComponent } from "./cresthandson.component";
 var SlpComponent = (function () {
-    function SlpComponent() {
-        this.data = [{ "id": "1" }, { "id": "2" }, { "id": "3" }];
-        this.colHeaders = ['id'];
-        this.columns = [{
-                data: 'id'
-            }];
-        this.colWidths = [null];
-        //@ViewChild(CrestHandsonComponent)
-        this._crestHandsonComponent = new CrestHandsonComponent();
-        this._crestHandsonComponent.data = this.data;
-        this._crestHandsonComponent.colHeaders = this.colHeaders;
-        this._crestHandsonComponent.columns = this.columns;
-        this._crestHandsonComponent.colWidths = this.colWidths;
+    function SlpComponent(slpService) {
+        this.slpService = slpService;
+        this.data = [];
+        this.colHeaders = [];
+        this.columns = [];
+        this.colWidths = [];
+        this.crestHandsonComponent = new CrestHandsonComponent();
     }
+    SlpComponent.prototype.ngOnInit = function () {
+        this.SetHeaders();
+        this.GetData();
+    };
+    //**Actions and Events Start
+    //**Actions and Events End
+    //**HandsonTable functions Start**
+    SlpComponent.prototype.afterChange = function (e) {
+        this.crestHandsonComponent.afterChange(e);
+    };
+    //**HandsonTable functions Ends**
+    SlpComponent.prototype.GetData = function () {
+        var _this = this;
+        this.slpService.getCurrentPeriodSlp()
+            .subscribe(function (data) {
+            _this.data = data;
+            _this.crestHandsonComponent.data = data;
+        });
+    };
+    SlpComponent.prototype.SetHeaders = function () {
+        this.colHeaders.push('supplier');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "supplier",
+            readOnly: true
+        });
+        this.colHeaders.push('scid');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "scid",
+            readOnly: true
+        });
+        this.colHeaders.push('Contract ID');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "contractID",
+            readOnly: true
+        });
+        this.colHeaders.push('Application Group');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "applicationGroup",
+            readOnly: true
+        });
+        this.colHeaders.push('Crest Level 1 Service');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "crestL1Service",
+            readOnly: true
+        });
+        this.colHeaders.push('Crest Level 2 Service');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "crestL2Service",
+            readOnly: true
+        });
+        this.colHeaders.push('SLA ID');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "slaid",
+            readOnly: true
+        });
+        this.colHeaders.push('Service Metric');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "serviceMetric",
+            readOnly: true
+        });
+        this.colHeaders.push('Service Class');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "serviceClass",
+            readOnly: true
+        });
+        this.colHeaders.push('Severity Level');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "severityLevel",
+            readOnly: true
+        });
+        this.colHeaders.push('Priority Level');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "priorityLevel",
+            readOnly: true
+        });
+        this.colHeaders.push('Environment');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "environment",
+            readOnly: true
+        });
+        this.colHeaders.push('Custom');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "custom",
+            readOnly: true
+        });
+        this.colHeaders.push('Minimum Level');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "minimumLevel",
+            readOnly: true
+        });
+        this.colHeaders.push('Target Level');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "targetLevel",
+            readOnly: true
+        });
+        this.colHeaders.push('Weight');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "weight",
+            readOnly: true
+        });
+        this.colHeaders.push('Remarks');
+        this.colWidths.push(100);
+        this.columns.push({
+            data: "remarks",
+            readOnly: true
+        });
+        this.colHeaders.push('Validation Notes');
+        this.colWidths.push(100);
+        this.columns.push({
+            data: "validationNotes",
+            readOnly: true
+        });
+        this.colHeaders.push('Period');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "period",
+            readOnly: true
+        });
+        this.colHeaders.push('Pref');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "pref",
+            readOnly: true
+        });
+        this.colHeaders.push('Type');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "type",
+            readOnly: true
+        });
+        this.colHeaders.push('Value');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "value"
+        });
+        this.colHeaders.push('Value Remarks');
+        this.colWidths.push(100);
+        this.columns.push({
+            data: "valueRemarks"
+        });
+        this.colHeaders.push('CHK');
+        this.colWidths.push(50);
+        this.columns.push({
+            data: "chk",
+            readOnly: true
+        });
+        this.options = {
+            height: 396,
+            stretchH: 'all',
+            columnSorting: true,
+            className: 'htCenter htMiddle',
+            colHeaders: this.colHeaders
+        };
+        //this.crestHandsonComponent.colHeaders = this.colHeaders;
+        this.crestHandsonComponent.columns = this.columns;
+        this.crestHandsonComponent.colWidths = this.colWidths;
+        this.crestHandsonComponent.options = this.options;
+    };
     return SlpComponent;
 }());
 SlpComponent = __decorate([
@@ -31,7 +200,7 @@ SlpComponent = __decorate([
         selector: 'sla-slp',
         templateUrl: './slp.component.html',
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [SlpService])
 ], SlpComponent);
 export { SlpComponent };
 //# sourceMappingURL=slp.component.js.map

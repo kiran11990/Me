@@ -10,13 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input } from '@angular/core';
 var CrestHandsonComponent = (function () {
     function CrestHandsonComponent() {
-        this.options = {
-            stretchH: 'all',
-            columnSorting: true,
-            contextMenu: [
-                'row_above', 'row_below', 'remove_row'
-            ]
-        };
     }
     CrestHandsonComponent.prototype.afterChange = function (e) {
         console.log(e);

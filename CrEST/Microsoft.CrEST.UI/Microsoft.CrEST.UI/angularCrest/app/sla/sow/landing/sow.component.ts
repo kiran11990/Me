@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { SowService } from "../../shared/services/sows.service";
-import { Sow } from "../../shared/models/sow";
-import { genData } from "../../../data";
+import { Sow } from "../../shared/models/sow";  
 import { HotTableModule } from 'ng2-handsontable';
 
 @Component({
