@@ -30,20 +30,24 @@ export class SlpComponent implements OnInit {
 
     //**Actions and Events Start
     Generate() {
-
+        this.slpService.GenerateSLPforCurrentPeriod()
+            .subscribe(result => {
+                this.data.push(result);
+                this.crestHandsonComponent.data.push(result);
+            });
     }
 
     AutoFill() {
 
     }
-
-    ExportToExcel() {
-        this.crestHandsonComponent.ExportToExcel();
-    }
-
+    
     Save()
     {
-        this.data;
+        this.slpService.SaveSLPs(this.data)
+            .subscribe(data => {
+                this.data = data;
+                this.crestHandsonComponent.data = data;
+            });
     }
     //**Actions and Events End
     

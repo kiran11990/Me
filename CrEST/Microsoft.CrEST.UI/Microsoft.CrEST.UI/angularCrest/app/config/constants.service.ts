@@ -20,7 +20,9 @@ export class ConstantService {
 
                 //slp
                 //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
-                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json'
+                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
+                saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
+                generateSLPforCurrentPeriod: this.apiBaseUrl + 'api/slp/generateSLPforCurrentPeriod'
             }
         };
     }

@@ -10,9 +10,14 @@ import { ConstantService } from '../../../config/constants.service'
 export class SlpService {
 
     private getCurrentPeriodSlpByUserAlias: string;
+    private saveSLPs: string;
+    private generateSLPforCurrentPeriod: string;
 
     constructor(private _constantService: ConstantService, private http: Http) {
         this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
+        this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
+        this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
+
     }
 
     getCurrentPeriodSlp() {
@@ -22,6 +27,16 @@ export class SlpService {
         return this.http.get(this.getCurrentPeriodSlpByUserAlias, alias)
             .map(res => res.json());
 
+    }
+
+    SaveSLPs(data: Array<any>) {
+        return this.http.get(this.saveSLPs, data)
+            .map(res => res.json());
+    }
+
+    GenerateSLPforCurrentPeriod() {
+        return this.http.get(this.generateSLPforCurrentPeriod)
+            .map(res => res.json());
     }
 }
 
