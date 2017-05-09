@@ -15,7 +15,7 @@ export class SlpComponent implements OnInit {
     columns: Array<any> = [];
     colWidths: Array<number> = [];
     options: any;
-    
+
     private crestHandsonComponent: any;
 
     constructor(private slpService: SlpService) {
@@ -25,6 +25,7 @@ export class SlpComponent implements OnInit {
     ngOnInit() {
         this.SetHeaders();
         this.GetData();
+        this.ConfigureHandsonTable();
     }
 
     //**Actions and Events Start
@@ -39,14 +40,13 @@ export class SlpComponent implements OnInit {
     ExportToExcel() {
         this.crestHandsonComponent.ExportToExcel();
     }
-    //**Actions and Events End
 
-    //**HandsonTable functions Start**
-    afterChange(e: any) {
-        this.crestHandsonComponent.afterChange(e);
+    Save()
+    {
+        this.data;
     }
-    //**HandsonTable functions Ends**
-
+    //**Actions and Events End
+    
 
     private GetData() {
         this.slpService.getCurrentPeriodSlp()
@@ -186,7 +186,7 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Period');
         this.colWidths.push(50);
         this.columns.push({
-            data: "period",
+            data: "reportingPeriod",
             readOnly: true
         });
 
@@ -223,19 +223,22 @@ export class SlpComponent implements OnInit {
             data: "chk",
             readOnly: true
         });
+    }
+
+    private ConfigureHandsonTable()
+    {
+        this.crestHandsonComponent.colHeaders = this.colHeaders;
+        this.crestHandsonComponent.columns = this.columns;
+        this.crestHandsonComponent.colWidths = this.colWidths;
 
         this.options = {
             height: 396,
             stretchH: 'all',
             columnSorting: true,
             className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders
+            colHeaders: this.colHeaders,
         };
-
-        this.crestHandsonComponent.colHeaders = this.colHeaders;
-        this.crestHandsonComponent.columns = this.columns;
-        this.crestHandsonComponent.colWidths = this.colWidths;
         this.crestHandsonComponent.options = this.options;
-
     }
+
 }

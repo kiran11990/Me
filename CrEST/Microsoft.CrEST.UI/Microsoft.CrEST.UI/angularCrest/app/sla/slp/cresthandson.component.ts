@@ -20,7 +20,8 @@ export class CrestHandsonComponent {
         console.log(e);
     }
 
-    public afterOnCellMouseDown(e: any) {
-        console.log(e);
+    public ExportToExcel()
+    {
+        this.data;
     }
 }

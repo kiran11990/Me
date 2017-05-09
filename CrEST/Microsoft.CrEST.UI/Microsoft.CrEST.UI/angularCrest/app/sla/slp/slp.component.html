@@ -14,7 +14,7 @@
                     <a class="btn btn-primary" (click)="AutoFill()">Autofill with previous period</a>
                 </div>
                 <div class="col-lg-4 col-sm-4 fixed-action-btn">
-                    <a class="btn btn-primary" (click)="ExportToExcel()">Export to excel</a>
+                    <a class="btn btn-primary" (click)="Save()">Save</a>
                 </div>
             </div>
         </div>
@@ -25,7 +25,6 @@
                 </div>
                 <div class="panel-body">
                     <crest-handson [data]="data"
-                                   (after-change)="afterChange($event)"
                                    [col-headers]="colHeaders"
                                    [columns]="columns"
                                    [options]="options"

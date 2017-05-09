@@ -14,8 +14,8 @@ var CrestHandsonComponent = (function () {
     CrestHandsonComponent.prototype.afterChange = function (e) {
         console.log(e);
     };
-    CrestHandsonComponent.prototype.afterOnCellMouseDown = function (e) {
-        console.log(e);
+    CrestHandsonComponent.prototype.ExportToExcel = function () {
+        this.data;
     };
     return CrestHandsonComponent;
 }());

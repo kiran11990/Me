@@ -22,6 +22,7 @@ var SlpComponent = (function () {
     SlpComponent.prototype.ngOnInit = function () {
         this.SetHeaders();
         this.GetData();
+        this.ConfigureHandsonTable();
     };
     //**Actions and Events Start
     SlpComponent.prototype.Generate = function () {
@@ -31,12 +32,10 @@ var SlpComponent = (function () {
     SlpComponent.prototype.ExportToExcel = function () {
         this.crestHandsonComponent.ExportToExcel();
     };
-    //**Actions and Events End
-    //**HandsonTable functions Start**
-    SlpComponent.prototype.afterChange = function (e) {
-        this.crestHandsonComponent.afterChange(e);
+    SlpComponent.prototype.Save = function () {
+        this.data;
     };
-    //**HandsonTable functions Ends**
+    //**Actions and Events End
     SlpComponent.prototype.GetData = function () {
         var _this = this;
         this.slpService.getCurrentPeriodSlp()
@@ -157,7 +156,7 @@ var SlpComponent = (function () {
         this.colHeaders.push('Period');
         this.colWidths.push(50);
         this.columns.push({
-            data: "period",
+            data: "reportingPeriod",
             readOnly: true
         });
         this.colHeaders.push('Pref');
@@ -188,16 +187,18 @@ var SlpComponent = (function () {
             data: "chk",
             readOnly: true
         });
+    };
+    SlpComponent.prototype.ConfigureHandsonTable = function () {
+        this.crestHandsonComponent.colHeaders = this.colHeaders;
+        this.crestHandsonComponent.columns = this.columns;
+        this.crestHandsonComponent.colWidths = this.colWidths;
         this.options = {
             height: 396,
             stretchH: 'all',
             columnSorting: true,
             className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders
+            colHeaders: this.colHeaders,
         };
-        this.crestHandsonComponent.colHeaders = this.colHeaders;
-        this.crestHandsonComponent.columns = this.columns;
-        this.crestHandsonComponent.colWidths = this.colWidths;
         this.crestHandsonComponent.options = this.options;
     };
     return SlpComponent;
