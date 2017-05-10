@@ -20,12 +20,27 @@ var SlpService = (function () {
         this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
+        this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
     }
     SlpService.prototype.getCurrentPeriodSlp = function () {
         //TODO dynamically  get current user alias
         var alias = 'v-sutat';
         return this.http.get(this.getCurrentPeriodSlpByUserAlias, alias)
             .map(function (res) { return res.json(); });
+    };
+    SlpService.prototype.GetReportingPeriods = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get(_this.getSlps)
+                .map(function (res) { return res.json().ReporintPeriods; })
+                .subscribe(function (data) {
+                resolve(data);
+            });
+        });
+    };
+    SlpService.prototype.GetSlpByPeriod = function (fiscalYear) {
+        return this.http.get(this.getSlps)
+            .map(function (res) { return res.json().ServiceLevelPerformance; });
     };
     SlpService.prototype.SaveSLPs = function (data) {
         return this.http.get(this.saveSLPs, data)

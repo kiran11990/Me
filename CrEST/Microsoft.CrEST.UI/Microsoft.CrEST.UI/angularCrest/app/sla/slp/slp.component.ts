@@ -4,6 +4,8 @@ import { HotTableModule } from 'ng2-handsontable';
 
 import { SlpService } from "../shared/services/slp.service";
 import { Slp } from "../shared/models/slp";
+import { ReportingPeriod } from "../shared/models/reportingperiod";
+
 //import { PaginationComponent, FilterEvent } from './pagination.component';
 //import { PaginationSorter } from './PaginationSorter'; 
 /*import { PaginationComponent, FilterEvent } from '../../shared/pagination/pagination.component';
@@ -25,22 +27,46 @@ export class SlpComponent implements OnInit {
     columns: Array<any> = [];
     colWidths: Array<number> = [];
     options: any;
-    percentRegex: any = "^(0|[1-9]\d?)\.\d{4}|100\.0000%$";
+    public selectedPeriod: ReportingPeriod;
+    public periods: Array<ReportingPeriod>;
 
-    //@ViewChild(PaginationComponent)
-    //private pagination: PaginationComponent;
-
-    constructor(private slpService: SlpService) {
+    constructor(private _slpService: SlpService) {
+        this.periods = new Array<ReportingPeriod>();
+        this.periods = new Array<ReportingPeriod>();
     }
 
     ngOnInit() {
+        this.GetReportingPeriods();
         this.SetHeaders();
-        this.GetData();
+    }
+
+    private GetReportingPeriods() {
+        var _this = this;
+        this._slpService.GetReportingPeriods().then((result: Array<ReportingPeriod>) => {
+            _this.periods = result;
+            _this.selectedPeriod = _this.periods[0];
+            _this.GetSLPData(_this.selectedPeriod.fiscalYear)
+        });
     }
 
     //**Actions and Events Start
+    private GetSLPData(fiscalYear: string) {
+        var _this = this;
+        this._slpService.GetSlpByPeriod(fiscalYear).subscribe((result: Array<Slp>) => {
+            //TODO : can we cleanup this?
+            _this.data = result.filter(res => {
+                return res.reportingPeriod == fiscalYear;
+            });
+            //_this.data = result;
+        });
+    }
+
+    onChange(newObj: any) {
+        this.GetSLPData(newObj);
+    }
+
     Generate() {
-        this.slpService.GenerateSLPforCurrentPeriod()
+        this._slpService.GenerateSLPforCurrentPeriod()
             .subscribe(result => {
                 this.data.push(result);
             });
@@ -49,54 +75,44 @@ export class SlpComponent implements OnInit {
     AutoFill() {
 
     }
-    
-    Save()
-    {
-        this.slpService.SaveSLPs(this.data)
+
+    Save() {
+        this._slpService.SaveSLPs(this.data)
             .subscribe(data => {
                 this.data = data;
             });
     }
     //**Actions and Events End
 
-
-    private afterChange(changes: any)
-    {
-        if (changes && changes.length > 0) {
-            debugger;
-            var row = changes[0][0];
+    private getCurrentFiscalP() {
+        var d = new Date();
+        var currentMonth = d.getMonth() + 1;
+        var fiscalMonth = currentMonth + 6;
+        if (fiscalMonth > 12) {
+            fiscalMonth = fiscalMonth - 12;
         }
+        return fiscalMonth;
     }
 
+    private getCurrentFiscalY() {
+        var d = new Date();
+        var fiscalYear;
+        if (d.getMonth() > 8)
+        { fiscalYear = d.getFullYear() + 1; }
+        else {
+            fiscalYear = d.getFullYear();
+        }
+        return fiscalYear;
+    }
 
     private GetData() {
-        this.slpService.getCurrentPeriodSlp()
+        this._slpService.getCurrentPeriodSlp()
             .subscribe(data => {
                 this.data = data;
             });
     }
 
-    private ValueValidator(value: any, callback: any) {
-        //if (!value || 0 === value.length) {
-        //    callback(false);
-        //} else {
-        //    if ("^(0|[1-9]\d?)\.\d{4}|100\.0000$".(value)) {
-        //        callback(true);
-        //    } else {
-        //        callback(false);
-        //    }
-        //}
-
-    }
-
     private SetHeaders() {
-        this.options = {
-            height: 396,
-            stretchH: 'all',
-            columnSorting: true,
-            className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders,
-        };
 
         this.colHeaders.push('supplier');
         this.colWidths.push(50);
@@ -265,5 +281,13 @@ export class SlpComponent implements OnInit {
             data: "chk",
             readOnly: true
         });
+
+        this.options = {
+            height: 396,
+            stretchH: 'all',
+            columnSorting: true,
+            className: 'htCenter htMiddle',
+            colHeaders: this.colHeaders
+        };
     }
 }

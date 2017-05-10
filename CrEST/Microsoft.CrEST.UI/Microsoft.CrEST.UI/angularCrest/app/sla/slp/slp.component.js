@@ -19,24 +19,44 @@ import { PaginationSorter } from '../../shared/pagination/PaginationSorter';
 
 })*/
 var SlpComponent = (function () {
-    //@ViewChild(PaginationComponent)
-    //private pagination: PaginationComponent;
-    function SlpComponent(slpService) {
-        this.slpService = slpService;
+    function SlpComponent(_slpService) {
+        this._slpService = _slpService;
         this.data = [];
         this.colHeaders = [];
         this.columns = [];
         this.colWidths = [];
-        this.percentRegex = "^(0|[1-9]\d?)\.\d{4}|100\.0000%$";
+        this.periods = new Array();
+        this.periods = new Array();
     }
     SlpComponent.prototype.ngOnInit = function () {
+        this.GetReportingPeriods();
         this.SetHeaders();
-        this.GetData();
+    };
+    SlpComponent.prototype.GetReportingPeriods = function () {
+        var _this = this;
+        this._slpService.GetReportingPeriods().then(function (result) {
+            _this.periods = result;
+            _this.selectedPeriod = _this.periods[0];
+            _this.GetSLPData(_this.selectedPeriod.fiscalYear);
+        });
     };
     //**Actions and Events Start
+    SlpComponent.prototype.GetSLPData = function (fiscalYear) {
+        var _this = this;
+        this._slpService.GetSlpByPeriod(fiscalYear).subscribe(function (result) {
+            //TODO : can we cleanup this?
+            _this.data = result.filter(function (res) {
+                return res.reportingPeriod == fiscalYear;
+            });
+            //_this.data = result;
+        });
+    };
+    SlpComponent.prototype.onChange = function (newObj) {
+        this.GetSLPData(newObj);
+    };
     SlpComponent.prototype.Generate = function () {
         var _this = this;
-        this.slpService.GenerateSLPforCurrentPeriod()
+        this._slpService.GenerateSLPforCurrentPeriod()
             .subscribe(function (result) {
             _this.data.push(result);
         });
@@ -45,44 +65,40 @@ var SlpComponent = (function () {
     };
     SlpComponent.prototype.Save = function () {
         var _this = this;
-        this.slpService.SaveSLPs(this.data)
+        this._slpService.SaveSLPs(this.data)
             .subscribe(function (data) {
             _this.data = data;
         });
     };
     //**Actions and Events End
-    SlpComponent.prototype.afterChange = function (changes) {
-        if (changes && changes.length > 0) {
-            debugger;
-            var row = changes[0][0];
+    SlpComponent.prototype.getCurrentFiscalP = function () {
+        var d = new Date();
+        var currentMonth = d.getMonth() + 1;
+        var fiscalMonth = currentMonth + 6;
+        if (fiscalMonth > 12) {
+            fiscalMonth = fiscalMonth - 12;
         }
+        return fiscalMonth;
+    };
+    SlpComponent.prototype.getCurrentFiscalY = function () {
+        var d = new Date();
+        var fiscalYear;
+        if (d.getMonth() > 8) {
+            fiscalYear = d.getFullYear() + 1;
+        }
+        else {
+            fiscalYear = d.getFullYear();
+        }
+        return fiscalYear;
     };
     SlpComponent.prototype.GetData = function () {
         var _this = this;
-        this.slpService.getCurrentPeriodSlp()
+        this._slpService.getCurrentPeriodSlp()
             .subscribe(function (data) {
             _this.data = data;
         });
     };
-    SlpComponent.prototype.ValueValidator = function (value, callback) {
-        //if (!value || 0 === value.length) {
-        //    callback(false);
-        //} else {
-        //    if ("^(0|[1-9]\d?)\.\d{4}|100\.0000$".(value)) {
-        //        callback(true);
-        //    } else {
-        //        callback(false);
-        //    }
-        //}
-    };
     SlpComponent.prototype.SetHeaders = function () {
-        this.options = {
-            height: 396,
-            stretchH: 'all',
-            columnSorting: true,
-            className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders,
-        };
         this.colHeaders.push('supplier');
         this.colWidths.push(50);
         this.columns.push({
@@ -225,6 +241,13 @@ var SlpComponent = (function () {
             data: "chk",
             readOnly: true
         });
+        this.options = {
+            height: 396,
+            stretchH: 'all',
+            columnSorting: true,
+            className: 'htCenter htMiddle',
+            colHeaders: this.colHeaders
+        };
     };
     return SlpComponent;
 }());
