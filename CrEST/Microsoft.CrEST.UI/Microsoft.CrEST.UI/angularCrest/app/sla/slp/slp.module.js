@@ -12,7 +12,6 @@ import { HttpModule } from '@angular/http';
 import { HotTableModule } from 'ng2-handsontable';
 import { SlpComponent } from './slp.component';
 import { SlpService } from '../shared/services/slp.service';
-import { CrestHandsonComponent } from './cresthandson.component';
 var SlpModule = (function () {
     function SlpModule() {
     }
@@ -29,7 +28,7 @@ SlpModule = __decorate([
             HotTableModule
         ],
         declarations: [
-            SlpComponent, CrestHandsonComponent
+            SlpComponent
         ],
         exports: [
             SlpComponent

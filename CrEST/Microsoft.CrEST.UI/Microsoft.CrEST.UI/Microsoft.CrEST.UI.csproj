@@ -5,18 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="angularCrest\app\cresthandson\**" />
     <Compile Remove="wwwroot\configMetadata\**" />
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\js\**" />
     <Compile Remove="wwwroot\vendor\**" />
+    <Content Remove="angularCrest\app\cresthandson\**" />
     <Content Remove="wwwroot\configMetadata\**" />
     <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\js\**" />
     <Content Remove="wwwroot\vendor\**" />
+    <EmbeddedResource Remove="angularCrest\app\cresthandson\**" />
     <EmbeddedResource Remove="wwwroot\configMetadata\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\vendor\**" />
+    <None Remove="angularCrest\app\cresthandson\**" />
     <None Remove="wwwroot\configMetadata\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\js\**" />
@@ -35,9 +39,6 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="angularCrest\app\cresthandson\" />
   </ItemGroup>
 
 </Project>

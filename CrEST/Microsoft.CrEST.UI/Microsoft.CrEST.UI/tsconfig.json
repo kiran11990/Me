@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
@@ -12,5 +13,11 @@
     ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true,
+    "useTranspileModule": true,
+    "doTypeCheck": true,
+    "forkChecker": true
   }
 }

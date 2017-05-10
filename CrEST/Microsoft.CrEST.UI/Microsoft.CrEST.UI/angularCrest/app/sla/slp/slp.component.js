@@ -9,42 +9,80 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { SlpService } from "../shared/services/slp.service";
-import { CrestHandsonComponent } from "./cresthandson.component";
+//import { PaginationComponent, FilterEvent } from './pagination.component';
+//import { PaginationSorter } from './PaginationSorter'; 
+/*import { PaginationComponent, FilterEvent } from '../../shared/pagination/pagination.component';
+import { PaginationSorter } from '../../shared/pagination/PaginationSorter';
+
+@NgModule({
+    declarations: [PaginationComponent, PaginationSorter]
+
+})*/
 var SlpComponent = (function () {
+    //@ViewChild(PaginationComponent)
+    //private pagination: PaginationComponent;
     function SlpComponent(slpService) {
         this.slpService = slpService;
         this.data = [];
         this.colHeaders = [];
         this.columns = [];
         this.colWidths = [];
-        this.crestHandsonComponent = new CrestHandsonComponent();
+        this.percentRegex = "^(0|[1-9]\d?)\.\d{4}|100\.0000%$";
     }
     SlpComponent.prototype.ngOnInit = function () {
         this.SetHeaders();
         this.GetData();
-        this.ConfigureHandsonTable();
     };
     //**Actions and Events Start
     SlpComponent.prototype.Generate = function () {
+        var _this = this;
+        this.slpService.GenerateSLPforCurrentPeriod()
+            .subscribe(function (result) {
+            _this.data.push(result);
+        });
     };
     SlpComponent.prototype.AutoFill = function () {
     };
-    SlpComponent.prototype.ExportToExcel = function () {
-        this.crestHandsonComponent.ExportToExcel();
-    };
     SlpComponent.prototype.Save = function () {
-        this.data;
+        var _this = this;
+        this.slpService.SaveSLPs(this.data)
+            .subscribe(function (data) {
+            _this.data = data;
+        });
     };
     //**Actions and Events End
+    SlpComponent.prototype.afterChange = function (changes) {
+        if (changes && changes.length > 0) {
+            debugger;
+            var row = changes[0][0];
+        }
+    };
     SlpComponent.prototype.GetData = function () {
         var _this = this;
         this.slpService.getCurrentPeriodSlp()
             .subscribe(function (data) {
             _this.data = data;
-            _this.crestHandsonComponent.data = data;
         });
     };
+    SlpComponent.prototype.ValueValidator = function (value, callback) {
+        //if (!value || 0 === value.length) {
+        //    callback(false);
+        //} else {
+        //    if ("^(0|[1-9]\d?)\.\d{4}|100\.0000$".(value)) {
+        //        callback(true);
+        //    } else {
+        //        callback(false);
+        //    }
+        //}
+    };
     SlpComponent.prototype.SetHeaders = function () {
+        this.options = {
+            height: 396,
+            stretchH: 'all',
+            columnSorting: true,
+            className: 'htCenter htMiddle',
+            colHeaders: this.colHeaders,
+        };
         this.colHeaders.push('supplier');
         this.colWidths.push(50);
         this.columns.push({
@@ -174,7 +212,7 @@ var SlpComponent = (function () {
         this.colHeaders.push('Value');
         this.colWidths.push(50);
         this.columns.push({
-            data: "value"
+            data: "value",
         });
         this.colHeaders.push('Value Remarks');
         this.colWidths.push(100);
@@ -187,19 +225,6 @@ var SlpComponent = (function () {
             data: "chk",
             readOnly: true
         });
-    };
-    SlpComponent.prototype.ConfigureHandsonTable = function () {
-        this.crestHandsonComponent.colHeaders = this.colHeaders;
-        this.crestHandsonComponent.columns = this.columns;
-        this.crestHandsonComponent.colWidths = this.colWidths;
-        this.options = {
-            height: 396,
-            stretchH: 'all',
-            columnSorting: true,
-            className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders,
-        };
-        this.crestHandsonComponent.options = this.options;
     };
     return SlpComponent;
 }());

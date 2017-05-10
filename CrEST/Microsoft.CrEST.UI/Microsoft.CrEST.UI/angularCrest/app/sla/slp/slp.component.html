@@ -7,15 +7,13 @@
     <div class="col-lg-12">
         <div class="form-group row">
             <div class="pull-right">
-                <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                <div class="col-lg-5 col-sm-5 fixed-action-btn">
                     <a class="btn btn-primary" (click)="Generate()">Generate for current period</a>
                 </div>
-                <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                <div class="col-lg-5 col-sm-5 fixed-action-btn">
                     <a class="btn btn-primary" (click)="AutoFill()">Autofill with previous period</a>
                 </div>
-                <div class="col-lg-4 col-sm-4 fixed-action-btn">
-                    <a class="btn btn-primary" (click)="Save()">Save</a>
-                </div>
+
             </div>
         </div>
         <div class="row">
@@ -24,12 +22,20 @@
                     Service Level Performance
                 </div>
                 <div class="panel-body">
-                    <crest-handson [data]="data"
-                                   [col-headers]="colHeaders"
-                                   [columns]="columns"
-                                   [options]="options"
-                                   [col-widths]="colWidths">
-                    </crest-handson>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 fixed-action-btn">
+                            <a class="btn btn-primary" (click)="Save()">Save</a>
+                        </div>
+                    </div>
+                    <hot-table id="slptable" [data]="data"
+                               [col-headers]="colHeaders"
+                               [columns]="columns"
+                               [options]="options"
+                               [col-widths]="colWidths"
+                               (notifyChange)='afterChange($event)'>
+                    </hot-table>
+
+                    <!--<pagination id="slaPaging" style="display:block" [(ngModel)]="currentPage" (pageChanged)="currentPageChanged($event)" (pageLimitChanged)='notifyOnLimit($event)'></pagination>-->
                 </div>
             </div>
         </div>
