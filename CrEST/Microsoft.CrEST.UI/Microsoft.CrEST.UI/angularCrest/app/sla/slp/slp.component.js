@@ -64,16 +64,18 @@ var SlpComponent = (function () {
         this.Message = "";
         var _this = this;
         var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
-        var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
+        var previousFP = this.GetPreviousFP();
+        //TODO: wont wrk on year change
+        //var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
         if (currentFP == fiscalYear) {
             this._slpService.GenerateSLPforCurrentPeriod()
                 .subscribe(function (result) {
                 _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == fiscalYear;
+                    return res.reportingPeriod == previousFP;
                 });
                 //TODO : can we cleanup this?
                 for (var i = 0; i < _this.data.length; i++) {
-                    _this.data[i].reportingPeriod = nextFP;
+                    _this.data[i].reportingPeriod = currentFP;
                     _this.data[i].value = "";
                     _this.data[i].valueRemarks = "";
                 }
@@ -87,17 +89,18 @@ var SlpComponent = (function () {
     SlpComponent.prototype.AutoFill = function (fiscalYear) {
         this.Message = "";
         var _this = this;
+        //TODO o focus on previous period not current
         var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
-        var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
+        var previousFP = this.GetPreviousFP();
         if (currentFP == fiscalYear) {
             this._slpService.GenerateSLPforCurrentPeriod()
                 .subscribe(function (result) {
                 _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == fiscalYear;
+                    return res.reportingPeriod == previousFP;
                 });
                 //TODO : can we cleanup this?
                 for (var i = 0; i < _this.data.length; i++) {
-                    _this.data[i].reportingPeriod = nextFP;
+                    _this.data[i].reportingPeriod = currentFP;
                 }
             });
         }
@@ -134,6 +137,12 @@ var SlpComponent = (function () {
             fiscalYear = d.getFullYear();
         }
         return fiscalYear;
+    };
+    SlpComponent.prototype.GetPreviousFP = function () {
+        if (this.getCurrentFiscalP() == 1)
+            return (this.getCurrentFiscalY() - 1) + "-" + (this.getCurrentFiscalP() + 11);
+        else
+            return this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() - 1);
     };
     SlpComponent.prototype.GetData = function () {
         var _this = this;

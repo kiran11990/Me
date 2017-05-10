@@ -48,7 +48,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-10",
+      "reportingPeriod": "2017-09",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -76,7 +76,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-12",
+      "reportingPeriod": "2017-10",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -104,7 +104,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-11",
+      "reportingPeriod": "2017-09",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -132,7 +132,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-11",
+      "reportingPeriod": "2017-09",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -160,7 +160,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-12",
+      "reportingPeriod": "2017-09",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -176,14 +176,22 @@
     },
     {
       "id": 2,
-      "fiscalYear": "2017-11"
+      "fiscalYear": "2017-09"
     },
     {
       "id": 3,
-      "fiscalYear": "2017-12"
+      "fiscalYear": "2017-10"
     },
     {
       "id": 4,
+      "fiscalYear": "2017-11"
+    },
+    {
+      "id": 5,
+      "fiscalYear": "2017-12"
+    },
+    {
+      "id": 6,
       "fiscalYear": "2018-01"
     }
   ]
