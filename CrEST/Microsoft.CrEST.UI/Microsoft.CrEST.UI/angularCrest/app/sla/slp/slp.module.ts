@@ -7,7 +7,6 @@ import { HotTableModule } from 'ng2-handsontable';
 
 import { SlpComponent } from './slp.component';
 import { SlpService } from '../shared/services/slp.service';
-import { CrestHandsonComponent } from './cresthandson.component';
 
 
 @NgModule({
@@ -20,7 +19,7 @@ import { CrestHandsonComponent } from './cresthandson.component';
         HotTableModule
     ],
     declarations: [
-        SlpComponent, CrestHandsonComponent
+        SlpComponent
     ],
     exports: [
         SlpComponent
