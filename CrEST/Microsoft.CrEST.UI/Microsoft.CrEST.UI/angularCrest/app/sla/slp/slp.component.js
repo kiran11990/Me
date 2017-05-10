@@ -45,30 +45,74 @@ var SlpComponent = (function () {
         var _this = this;
         this._slpService.GetSlpByPeriod(fiscalYear).subscribe(function (result) {
             //TODO : can we cleanup this?
-            _this.data = result.filter(function (res) {
-                return res.reportingPeriod == fiscalYear;
-            });
-            //_this.data = result;
+            if (fiscalYear != "All") {
+                _this.data = result.filter(function (res) {
+                    return res.reportingPeriod == fiscalYear;
+                });
+            }
+            else {
+                _this.data = result;
+            }
         });
     };
     SlpComponent.prototype.onChange = function (newObj) {
+        this.Message = "";
+        this.currentSelectedPeriod = newObj;
         this.GetSLPData(newObj);
     };
-    SlpComponent.prototype.Generate = function () {
+    SlpComponent.prototype.Generate = function (fiscalYear) {
+        this.Message = "";
         var _this = this;
-        this._slpService.GenerateSLPforCurrentPeriod()
-            .subscribe(function (result) {
-            _this.data.push(result);
-        });
+        var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
+        var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
+        if (currentFP == fiscalYear) {
+            this._slpService.GenerateSLPforCurrentPeriod()
+                .subscribe(function (result) {
+                _this.data = result.filter(function (res) {
+                    return res.reportingPeriod == fiscalYear;
+                });
+                //TODO : can we cleanup this?
+                for (var i = 0; i < _this.data.length; i++) {
+                    _this.data[i].reportingPeriod = nextFP;
+                    _this.data[i].value = "";
+                    _this.data[i].valueRemarks = "";
+                }
+            });
+        }
+        else {
+            this.Message = "Please select current fiscal period to generate.";
+            this.MessageType = 2; //MessageType 1 : alert success & MessageType 2 is for danger
+        }
     };
-    SlpComponent.prototype.AutoFill = function () {
+    SlpComponent.prototype.AutoFill = function (fiscalYear) {
+        this.Message = "";
+        var _this = this;
+        var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
+        var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
+        if (currentFP == fiscalYear) {
+            this._slpService.GenerateSLPforCurrentPeriod()
+                .subscribe(function (result) {
+                _this.data = result.filter(function (res) {
+                    return res.reportingPeriod == fiscalYear;
+                });
+                //TODO : can we cleanup this?
+                for (var i = 0; i < _this.data.length; i++) {
+                    _this.data[i].reportingPeriod = nextFP;
+                }
+            });
+        }
+        else {
+            this.Message = "Please select current fiscal period to generate.";
+            this.MessageType = 2; //MessageType 1 : alert success & MessageType 2 is for danger
+        }
     };
     SlpComponent.prototype.Save = function () {
-        var _this = this;
-        this._slpService.SaveSLPs(this.data)
-            .subscribe(function (data) {
-            _this.data = data;
-        });
+        this.Message = "Saved Successfully";
+        this.MessageType = 1; //MessageType 1 : alert success & MessageType 2 is for danger
+        //this._slpService.SaveSLPs(this.data)
+        //    .subscribe(data => {
+        //        this.data = data;
+        //    });
     };
     //**Actions and Events End
     SlpComponent.prototype.getCurrentFiscalP = function () {

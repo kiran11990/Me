@@ -20,7 +20,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-01",
+      "reportingPeriod": "2017-10",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -48,7 +48,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-02",
+      "reportingPeriod": "2017-10",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -76,7 +76,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-03",
+      "reportingPeriod": "2017-12",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -104,7 +104,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-03",
+      "reportingPeriod": "2017-11",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -132,7 +132,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-02",
+      "reportingPeriod": "2017-11",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -160,7 +160,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-02",
+      "reportingPeriod": "2017-12",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -176,71 +176,15 @@
     },
     {
       "id": 2,
-      "fiscalYear": "2016-10"
+      "fiscalYear": "2017-11"
     },
     {
       "id": 3,
-      "fiscalYear": "2016-11"
+      "fiscalYear": "2017-12"
     },
     {
       "id": 4,
-      "fiscalYear": "2016-12"
-    },
-    {
-      "id": 5,
-      "fiscalYear": "2017-01"
-    },
-    {
-      "id": 6,
-      "fiscalYear": "2017-02"
-    },
-    {
-      "id": 7,
-      "fiscalYear": "2017-03"
-    }
-  ],
-  "PeriodSlpValues": [
-    {
-      "id": 1,
-      "slpId": 1,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
-    },
-    {
-      "id": 2,
-      "slpId": 2,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
-    },
-    {
-      "id": 3,
-      "slpId": 3,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
-    },
-    {
-      "id": 4,
-      "slpId": 4,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
-    },
-    {
-      "id": 5,
-      "slpId": 5,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
-    },
-    {
-      "id": 6,
-      "slpId": 6,
-      "fiscalYear": "2017-02",
-      "value": 100,
-      "remarks": "Remarks"
+      "fiscalYear": "2018-01"
     }
   ]
 }

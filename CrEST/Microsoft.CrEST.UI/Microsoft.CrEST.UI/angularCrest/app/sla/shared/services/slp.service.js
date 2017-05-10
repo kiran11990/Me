@@ -47,8 +47,8 @@ var SlpService = (function () {
             .map(function (res) { return res.json(); });
     };
     SlpService.prototype.GenerateSLPforCurrentPeriod = function () {
-        return this.http.get(this.generateSLPforCurrentPeriod)
-            .map(function (res) { return res.json(); });
+        return this.http.get(this.getSlps)
+            .map(function (res) { return res.json().ServiceLevelPerformance; });
     };
     return SlpService;
 }());

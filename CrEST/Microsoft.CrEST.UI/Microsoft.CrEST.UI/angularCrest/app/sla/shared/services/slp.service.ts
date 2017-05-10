@@ -52,8 +52,8 @@ export class SlpService {
     }
 
     GenerateSLPforCurrentPeriod() {
-        return this.http.get(this.generateSLPforCurrentPeriod)
-            .map(res => res.json());
+        return this.http.get(this.getSlps)
+            .map(res => res.json().ServiceLevelPerformance as Slp[]);
     }
 }
 
