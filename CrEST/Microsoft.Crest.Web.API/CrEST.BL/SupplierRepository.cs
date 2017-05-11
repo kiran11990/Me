@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using CrEST.Models;
-using CrEST.Data;
+using Microsoft.Crest.Web.API.Models;
+using Microsoft.Crest.Web.API.Data;
+
 using System.Linq;
 
-namespace CrEST.BL
+namespace Microsoft.Crest.Web.API.CrEST.BL
 {
 	public class SupplierRepository : ISupplierRepository
 	{

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using CrEST.Models;
-using CrEST.Data;
+using Microsoft.Crest.Web.API.Models;
+using Microsoft.Crest.Web.API.Data;
 using System.Linq;
 using System;
 
-namespace CrEST.BL
+
+namespace Microsoft.Crest.Web.API.CrEST.BL
 {
 	public class SoWRepository : ISoWRepository
 	{
@@ -36,12 +37,12 @@ namespace CrEST.BL
 			if (existingItem != null)
 			{
 				existingItem.SupplierId = item.SupplierId;
-				existingItem.ServiceLine = item.ServiceLine;
+				existingItem.Itorg = item.Itorg;
 				existingItem.ContractId = item.ContractId;
-				existingItem.EffectiveDate = item.EffectiveDate;
-				existingItem.ExpirationDate = item.ExpirationDate;
+				existingItem.SoweffectiveDate = item.SoweffectiveDate;
+				existingItem.SowexpirationDate = item.SowexpirationDate;
 				existingItem.Msowner = item.Msowner;
-				existingItem.InfyOwner = item.InfyOwner;
+				//existingItem. = item.InfyOwner;
 				existingItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
 				existingItem.PonumYear1 = item.PonumYear1;
 				existingItem.SowamountYear1 = item.SowamountYear1;
@@ -62,10 +63,10 @@ namespace CrEST.BL
 			return item;
 		}
 
-		public IEnumerable<SoW> FindSoW(int contractId, string serviceLine, DateTime expiryDate, string msOwner)
+		public IEnumerable<SoW> FindSoW(int contractId, string ITOrg, DateTime expiryDate, string msOwner)
 		{
-			return _context.SoW.Where(s => s.ContractId == contractId && s.ServiceLine == serviceLine
-								&& s.ExpirationDate == expiryDate && s.Msowner == msOwner).AsEnumerable();		
+			return _context.SoW.Where(s => s.ContractId == contractId && s.Itorg == ITOrg
+								&& s.SowexpirationDate == expiryDate && s.Msowner == msOwner).AsEnumerable();		
 		}
 
 	}

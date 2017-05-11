@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CrEST.Models
+namespace Microsoft.Crest.Web.API.Models
 {
     public partial class SoW
     {
@@ -14,12 +14,11 @@ namespace CrEST.Models
 
         public int SoWid { get; set; }
         public int SupplierId { get; set; }
-        public string ServiceLine { get; set; }
+        public string Itorg { get; set; }
         public int? ContractId { get; set; }
-        public DateTime? EffectiveDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }
+        public DateTime? SoweffectiveDate { get; set; }
+        public DateTime? SowexpirationDate { get; set; }
         public string Msowner { get; set; }
-        public string InfyOwner { get; set; }
         public double? ServiceCatalogVersion { get; set; }
         public int? PonumYear1 { get; set; }
         public decimal? SowamountYear1 { get; set; }
@@ -28,6 +27,8 @@ namespace CrEST.Models
         public decimal? SowamountYear4 { get; set; }
         public bool? IsCrest { get; set; }
         public string Remarks { get; set; }
+        public int? CompanyCode { get; set; }
+        public string Currency { get; set; }
 
         public virtual ICollection<Application> Application { get; set; }
         public virtual ICollection<Service> Service { get; set; }

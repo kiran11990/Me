@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CrEST.Models
+namespace Microsoft.Crest.Web.API.Models
 {
     public partial class Supplier
     {
@@ -14,7 +14,6 @@ namespace CrEST.Models
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public bool? IsCrest { get; set; }
-        public string Supplier1 { get; set; }
 
         public virtual ICollection<Service> Service { get; set; }
         public virtual ICollection<SoW> SoW { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CrEST.Models
+namespace Microsoft.Crest.Web.API.Models
 {
     public partial class ServiceLevelPerformance
     {
