@@ -39,7 +39,7 @@
                        [columns]="columns"
                        [options]="options"
                        [col-widths]="colWidths"
-                       (notifyChange)='afterChange($event)'>
+                       (AfterValidate)="afterValidate($event)">
             </hot-table>
             <!--<pagination id="slaPaging" style="display:block" [(ngModel)]="currentPage" (pageChanged)="currentPageChanged($event)" (pageLimitChanged)='notifyOnLimit($event)'></pagination>-->
         </div>

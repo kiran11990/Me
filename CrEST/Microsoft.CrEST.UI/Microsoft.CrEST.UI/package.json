@@ -74,7 +74,8 @@
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2",
     "mdn-polyfills": "^2.2.0",
-    "resolve-url-loader": "^2.0.2"
+    "resolve-url-loader": "^2.0.2",
+    "mydatepicker":  "2.0.2"
   },
   "-vs-binding": { "BeforeBuild": [ "buildProduction" ] }
 }

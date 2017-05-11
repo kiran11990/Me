@@ -9,15 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { SlpService } from "../shared/services/slp.service";
-//import { PaginationComponent, FilterEvent } from './pagination.component';
-//import { PaginationSorter } from './PaginationSorter'; 
-/*import { PaginationComponent, FilterEvent } from '../../shared/pagination/pagination.component';
-import { PaginationSorter } from '../../shared/pagination/PaginationSorter';
-
-@NgModule({
-    declarations: [PaginationComponent, PaginationSorter]
-
-})*/
 var SlpComponent = (function () {
     function SlpComponent(_slpService) {
         this._slpService = _slpService;
@@ -25,6 +16,8 @@ var SlpComponent = (function () {
         this.colHeaders = [];
         this.columns = [];
         this.colWidths = [];
+        this.percentageRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
+        this.remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
         this.periods = new Array();
         this.periods = new Array();
     }
@@ -32,29 +25,7 @@ var SlpComponent = (function () {
         this.GetReportingPeriods();
         this.SetHeaders();
     };
-    SlpComponent.prototype.GetReportingPeriods = function () {
-        var _this = this;
-        this._slpService.GetReportingPeriods().then(function (result) {
-            _this.periods = result;
-            _this.selectedPeriod = _this.periods[0];
-            _this.GetSLPData(_this.selectedPeriod.fiscalYear);
-        });
-    };
     //**Actions and Events Start
-    SlpComponent.prototype.GetSLPData = function (fiscalYear) {
-        var _this = this;
-        this._slpService.GetSlpByPeriod(fiscalYear).subscribe(function (result) {
-            //TODO : can we cleanup this?
-            if (fiscalYear != "All") {
-                _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == fiscalYear;
-                });
-            }
-            else {
-                _this.data = result;
-            }
-        });
-    };
     SlpComponent.prototype.onChange = function (newObj) {
         this.Message = "";
         this.currentSelectedPeriod = newObj;
@@ -117,7 +88,31 @@ var SlpComponent = (function () {
         //        this.data = data;
         //    });
     };
+    SlpComponent.prototype.afterChange = function () {
+    };
     //**Actions and Events End
+    SlpComponent.prototype.GetReportingPeriods = function () {
+        var _this = this;
+        this._slpService.GetReportingPeriods().then(function (result) {
+            _this.periods = result;
+            _this.selectedPeriod = _this.periods[0];
+            _this.GetSLPData(_this.selectedPeriod.fiscalYear);
+        });
+    };
+    SlpComponent.prototype.GetSLPData = function (fiscalYear) {
+        var _this = this;
+        this._slpService.GetSlpByPeriod(fiscalYear).subscribe(function (result) {
+            //TODO : can we cleanup this?
+            if (fiscalYear != "All") {
+                _this.data = result.filter(function (res) {
+                    return res.reportingPeriod == fiscalYear;
+                });
+            }
+            else {
+                _this.data = result;
+            }
+        });
+    };
     SlpComponent.prototype.getCurrentFiscalP = function () {
         var d = new Date();
         var currentMonth = d.getMonth() + 1;
@@ -143,13 +138,6 @@ var SlpComponent = (function () {
             return (this.getCurrentFiscalY() - 1) + "-" + (this.getCurrentFiscalP() + 11);
         else
             return this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() - 1);
-    };
-    SlpComponent.prototype.GetData = function () {
-        var _this = this;
-        this._slpService.getCurrentPeriodSlp()
-            .subscribe(function (data) {
-            _this.data = data;
-        });
     };
     SlpComponent.prototype.SetHeaders = function () {
         this.colHeaders.push('supplier');
@@ -282,11 +270,13 @@ var SlpComponent = (function () {
         this.colWidths.push(50);
         this.columns.push({
             data: "value",
+            validator: this.percentageRegexValidator
         });
         this.colHeaders.push('Value Remarks');
         this.colWidths.push(100);
         this.columns.push({
-            data: "valueRemarks"
+            data: "valueRemarks",
+            validator: this.remarksRegexValidtor
         });
         this.colHeaders.push('CHK');
         this.colWidths.push(50);

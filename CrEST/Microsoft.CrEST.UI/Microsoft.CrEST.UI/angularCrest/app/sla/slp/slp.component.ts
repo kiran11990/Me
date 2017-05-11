@@ -1,20 +1,11 @@
 ﻿import { NgModule, Component, ViewChild, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router'
+import { Validators } from '@angular/forms'
 import { HotTableModule } from 'ng2-handsontable';
 
 import { SlpService } from "../shared/services/slp.service";
 import { Slp } from "../shared/models/slp";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
-
-//import { PaginationComponent, FilterEvent } from './pagination.component';
-//import { PaginationSorter } from './PaginationSorter'; 
-/*import { PaginationComponent, FilterEvent } from '../../shared/pagination/pagination.component';
-import { PaginationSorter } from '../../shared/pagination/PaginationSorter'; 
-
-@NgModule({
-    declarations: [PaginationComponent, PaginationSorter]
-
-})*/
 
 @Component({
     selector: 'sla-slp',
@@ -32,6 +23,8 @@ export class SlpComponent implements OnInit {
     public selectedPeriod: ReportingPeriod;
     public periods: Array<ReportingPeriod>;
     public currentSelectedPeriod: any
+    percentageRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
+    remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
 
     constructor(private _slpService: SlpService) {
         this.periods = new Array<ReportingPeriod>();
@@ -43,30 +36,7 @@ export class SlpComponent implements OnInit {
         this.SetHeaders();
     }
 
-    private GetReportingPeriods() {
-        var _this = this;
-        this._slpService.GetReportingPeriods().then((result: Array<ReportingPeriod>) => {
-            _this.periods = result;
-            _this.selectedPeriod = _this.periods[0];
-            _this.GetSLPData(_this.selectedPeriod.fiscalYear)
-        });
-    }
-
     //**Actions and Events Start
-    private GetSLPData(fiscalYear: string) {
-        var _this = this;
-        this._slpService.GetSlpByPeriod(fiscalYear).subscribe((result: Array<Slp>) => {
-            //TODO : can we cleanup this?
-            if (fiscalYear != "All") {
-                _this.data = result.filter(res => {
-                    return res.reportingPeriod == fiscalYear;
-                });
-            } else {
-                _this.data = result;
-            }
-        });
-    }
-
     onChange(newObj: any) {
         this.Message = "";
         this.currentSelectedPeriod = newObj;
@@ -135,7 +105,35 @@ export class SlpComponent implements OnInit {
         //        this.data = data;
         //    });
     }
+
+    afterChange()
+    {
+
+    }
     //**Actions and Events End
+
+    private GetReportingPeriods() {
+        var _this = this;
+        this._slpService.GetReportingPeriods().then((result: Array<ReportingPeriod>) => {
+            _this.periods = result;
+            _this.selectedPeriod = _this.periods[0];
+            _this.GetSLPData(_this.selectedPeriod.fiscalYear)
+        });
+    }
+
+    private GetSLPData(fiscalYear: string) {
+        var _this = this;
+        this._slpService.GetSlpByPeriod(fiscalYear).subscribe((result: Array<Slp>) => {
+            //TODO : can we cleanup this?
+            if (fiscalYear != "All") {
+                _this.data = result.filter(res => {
+                    return res.reportingPeriod == fiscalYear;
+                });
+            } else {
+                _this.data = result;
+            }
+        });
+    }
 
     private getCurrentFiscalP() {
         var d = new Date();
@@ -164,14 +162,7 @@ export class SlpComponent implements OnInit {
         else
             return this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() - 1);
     }
-
-    private GetData() {
-        this._slpService.getCurrentPeriodSlp()
-            .subscribe(data => {
-                this.data = data;
-            });
-    }
-
+    
     private SetHeaders() {
 
         this.colHeaders.push('supplier');
@@ -326,13 +317,14 @@ export class SlpComponent implements OnInit {
         this.colWidths.push(50);
         this.columns.push({
             data: "value",
-            //validator: this.ValueValidator()
+            validator: this.percentageRegexValidator
         });
 
         this.colHeaders.push('Value Remarks');
         this.colWidths.push(100);
         this.columns.push({
-            data: "valueRemarks"
+            data: "valueRemarks",
+            validator: this.remarksRegexValidtor
         });
 
         this.colHeaders.push('CHK');
