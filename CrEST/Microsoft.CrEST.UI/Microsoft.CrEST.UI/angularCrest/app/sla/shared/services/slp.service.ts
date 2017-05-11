@@ -32,13 +32,8 @@ export class SlpService {
     }
 
     GetReportingPeriods() {
-        return new Promise((resolve, reject) => {
-            this.http.get(this.getSlps)
-                .map(res => res.json().ReporintPeriods as ReportingPeriod[])
-                .subscribe((data) => {
-                    resolve(data);
-                });
-        });
+        return this.http.get(this.getSlps)
+            .map(res => res.json().ReporintPeriods as ReportingPeriod[]);
     }
 
     GetSlpByPeriod(fiscalYear: string) {

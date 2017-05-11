@@ -11,25 +11,19 @@ import { Injectable } from '@angular/core';
 var SlpBusiness = (function () {
     function SlpBusiness() {
     }
-    SlpBusiness.prototype.GetPrefStatus = function (slps, isPref, isStatus) {
-        var result = new Array();
-        for (var i = 0; i < slps.length; i++) {
-            var slp = slps[i];
-            if (isPref == true) {
-                //IF(target > minimum, "H", IF(minimum > target, "L", IF(target = 1, "H", IF(target = 0, "L", "N"))))
-                slp.pref = (slp.targetLevel > slp.minimumLevel ? "H" :
-                    (slp.minimumLevel > slp.targetLevel ? "L" :
-                        (slp.targetLevel = 1 ? "H" :
-                            (slp.targetLevel = 0 ? "L" : "N"))));
-            }
-            if (isStatus == true) {
-                //TODO Check validate rule!!
-                /*IF(value = "Validate!", "Validate!", IF(value = "NA", "NA",
-                IF(pref = "H", IF(value >= target, 3, IF(value >= minimum, 2, 1)),
-                IF(pref = "L", IF(value <= target, 3, IF(value <= minimum, 2, 1)), ""))))*/
-                if (slp.value = "NA") { }
-            }
-            result.push(slp);
+    SlpBusiness.prototype.GetStatus = function (slpData) {
+        var result = slpData;
+        //TODO Check validate rule!! IF(value = "Validate!", "Validate!"
+        /*IF(value = "Validate!", "Validate!", IF(value = "NA", "NA",
+        IF(pref = "H", IF(value >= target, 3, IF(value >= minimum, 2, 1)),
+        IF(pref = "L", IF(value <= target, 3, IF(value <= minimum, 2, 1)), ""))))*/
+        if (result.value == "NA")
+            result.chk = "NA";
+        else {
+            if (result.pref == "H")
+                result.chk = (result.value >= result.targetLevel ? "3" : (result.value >= result.minimumLevel ? "2" : "1"));
+            else if (result.pref == "L")
+                result.chk = (result.value <= result.targetLevel ? "3" : (result.value <= result.minimumLevel ? "2" : "1"));
         }
         return result;
     };

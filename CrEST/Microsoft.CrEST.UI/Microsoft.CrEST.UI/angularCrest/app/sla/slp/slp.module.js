@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { HotTableModule } from 'ng2-handsontable';
 import { SlpComponent } from './slp.component';
 import { SlpService } from '../shared/services/slp.service';
+import { SlpBusiness } from '../shared/business/slp.business';
 var SlpModule = (function () {
     function SlpModule() {
     }
@@ -34,7 +35,7 @@ SlpModule = __decorate([
             SlpComponent
         ],
         providers: [
-            SlpService
+            SlpService, SlpBusiness
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

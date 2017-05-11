@@ -4,8 +4,9 @@ import { Validators } from '@angular/forms'
 import { HotTableModule } from 'ng2-handsontable';
 
 import { SlpService } from "../shared/services/slp.service";
-import { Slp } from "../shared/models/slp";
+import { SlpBusiness } from "../shared/business/slp.business";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
+import { Slp } from "../shared/models/slp";
 
 @Component({
     selector: 'sla-slp',
@@ -26,7 +27,7 @@ export class SlpComponent implements OnInit {
     percentageRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
     remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
 
-    constructor(private _slpService: SlpService) {
+    constructor(private _slpService: SlpService, private _slpBusiness: SlpBusiness) {
         this.periods = new Array<ReportingPeriod>();
         this.periods = new Array<ReportingPeriod>();
     }
@@ -114,9 +115,10 @@ export class SlpComponent implements OnInit {
 
     private GetReportingPeriods() {
         var _this = this;
-        this._slpService.GetReportingPeriods().then((result: Array<ReportingPeriod>) => {
+        this._slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
             _this.periods = result;
             _this.selectedPeriod = _this.periods[0];
+            _this.selectedPeriod.id = _this.periods[0].id;
             _this.GetSLPData(_this.selectedPeriod.fiscalYear)
         });
     }
@@ -317,21 +319,25 @@ export class SlpComponent implements OnInit {
         this.colWidths.push(50);
         this.columns.push({
             data: "value",
-            validator: this.percentageRegexValidator
+            validator: this.percentageRegexValidator,
+            mainThis: this
         });
 
         this.colHeaders.push('Value Remarks');
         this.colWidths.push(100);
         this.columns.push({
             data: "valueRemarks",
-            validator: this.remarksRegexValidtor
+            validator: this.remarksRegexValidtor,
+            mainThis: this
         });
 
-        this.colHeaders.push('CHK');
+        this.colHeaders.push('Status');
         this.colWidths.push(50);
         this.columns.push({
             data: "chk",
-            readOnly: true
+            readOnly: true,
+            renderer: this.statusRenderer,
+            mainThis: this
         });
 
         this.options = {
@@ -342,4 +348,10 @@ export class SlpComponent implements OnInit {
             colHeaders: this.colHeaders
         };
     }
+
+    statusRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
+        var data = cellProperties.mainThis.data;
+        var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        data[row] = result;
+    };
 }

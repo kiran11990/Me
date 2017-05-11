@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { SlpService } from "../shared/services/slp.service";
+import { SlpBusiness } from "../shared/business/slp.business";
 var SlpComponent = (function () {
-    function SlpComponent(_slpService) {
+    function SlpComponent(_slpService, _slpBusiness) {
         this._slpService = _slpService;
+        this._slpBusiness = _slpBusiness;
         this.data = [];
         this.colHeaders = [];
         this.columns = [];
@@ -93,9 +95,10 @@ var SlpComponent = (function () {
     //**Actions and Events End
     SlpComponent.prototype.GetReportingPeriods = function () {
         var _this = this;
-        this._slpService.GetReportingPeriods().then(function (result) {
+        this._slpService.GetReportingPeriods().subscribe(function (result) {
             _this.periods = result;
             _this.selectedPeriod = _this.periods[0];
+            _this.selectedPeriod.id = _this.periods[0].id;
             _this.GetSLPData(_this.selectedPeriod.fiscalYear);
         });
     };
@@ -270,19 +273,23 @@ var SlpComponent = (function () {
         this.colWidths.push(50);
         this.columns.push({
             data: "value",
-            validator: this.percentageRegexValidator
+            validator: this.percentageRegexValidator,
+            mainThis: this
         });
         this.colHeaders.push('Value Remarks');
         this.colWidths.push(100);
         this.columns.push({
             data: "valueRemarks",
-            validator: this.remarksRegexValidtor
+            validator: this.remarksRegexValidtor,
+            mainThis: this
         });
-        this.colHeaders.push('CHK');
+        this.colHeaders.push('Status');
         this.colWidths.push(50);
         this.columns.push({
             data: "chk",
-            readOnly: true
+            readOnly: true,
+            renderer: this.statusRenderer,
+            mainThis: this
         });
         this.options = {
             height: 396,
@@ -292,6 +299,12 @@ var SlpComponent = (function () {
             colHeaders: this.colHeaders
         };
     };
+    SlpComponent.prototype.statusRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+        var data = cellProperties.mainThis.data;
+        var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        data[row] = result;
+    };
+    ;
     return SlpComponent;
 }());
 SlpComponent = __decorate([
@@ -299,7 +312,7 @@ SlpComponent = __decorate([
         selector: 'sla-slp',
         templateUrl: './slp.component.html',
     }),
-    __metadata("design:paramtypes", [SlpService])
+    __metadata("design:paramtypes", [SlpService, SlpBusiness])
 ], SlpComponent);
 export { SlpComponent };
 //# sourceMappingURL=slp.component.js.map

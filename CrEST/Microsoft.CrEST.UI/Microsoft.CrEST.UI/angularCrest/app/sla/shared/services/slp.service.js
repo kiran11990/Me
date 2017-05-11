@@ -29,14 +29,8 @@ var SlpService = (function () {
             .map(function (res) { return res.json(); });
     };
     SlpService.prototype.GetReportingPeriods = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.http.get(_this.getSlps)
-                .map(function (res) { return res.json().ReporintPeriods; })
-                .subscribe(function (data) {
-                resolve(data);
-            });
-        });
+        return this.http.get(this.getSlps)
+            .map(function (res) { return res.json().ReporintPeriods; });
     };
     SlpService.prototype.GetSlpByPeriod = function (fiscalYear) {
         return this.http.get(this.getSlps)
