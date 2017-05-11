@@ -302,7 +302,7 @@ var SlpComponent = (function () {
     SlpComponent.prototype.statusRenderer = function (instance, td, row, col, prop, value, cellProperties) {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        data[row] = result;
+        cellProperties.mainThis.data[row] = result;
     };
     ;
     return SlpComponent;

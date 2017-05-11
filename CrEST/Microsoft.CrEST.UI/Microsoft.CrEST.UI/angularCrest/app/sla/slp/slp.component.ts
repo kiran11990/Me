@@ -352,6 +352,6 @@ export class SlpComponent implements OnInit {
     statusRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        data[row] = result;
+        cellProperties.mainThis.data[row] = result;
     };
 }
