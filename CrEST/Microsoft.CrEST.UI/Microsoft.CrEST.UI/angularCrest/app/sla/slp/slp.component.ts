@@ -24,11 +24,11 @@ export class SlpComponent implements OnInit {
     public selectedPeriod: ReportingPeriod;
     public periods: Array<ReportingPeriod>;
     public currentSelectedPeriod: any
-    percentageRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
+    valueRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
     remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
+    isValidHandsonData: boolean = true;
 
     constructor(private _slpService: SlpService, private _slpBusiness: SlpBusiness) {
-        this.periods = new Array<ReportingPeriod>();
         this.periods = new Array<ReportingPeriod>();
     }
 
@@ -99,27 +99,24 @@ export class SlpComponent implements OnInit {
     }
 
     Save() {
-        this.Message = "Saved Successfully";
-        this.MessageType = 1;  //MessageType 1 : alert success & MessageType 2 is for danger
-        //this._slpService.SaveSLPs(this.data)
-        //    .subscribe(data => {
-        //        this.data = data;
-        //    });
-    }
-
-    afterChange()
-    {
-
+        if (this.isValidHandsonData) {
+            this.Message = "Saved Successfully";
+            this.MessageType = 1;  //MessageType 1 : alert success & MessageType 2 is for danger
+            //this._slpService.SaveSLPs(this.data)
+            //    .subscribe(data => {
+            //        this.data = data;
+            //    });
+        }
     }
     //**Actions and Events End
 
     private GetReportingPeriods() {
-        var _this = this;
+        var mainThis = this;
         this._slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
-            _this.periods = result;
-            _this.selectedPeriod = _this.periods[0];
-            _this.selectedPeriod.id = _this.periods[0].id;
-            _this.GetSLPData(_this.selectedPeriod.fiscalYear)
+            mainThis.periods = result;
+            mainThis.selectedPeriod = mainThis.periods[0];
+            mainThis.selectedPeriod.id = mainThis.periods[0].id;
+            mainThis.GetSLPData(mainThis.selectedPeriod.fiscalYear)
         });
     }
 
@@ -319,7 +316,8 @@ export class SlpComponent implements OnInit {
         this.colWidths.push(50);
         this.columns.push({
             data: "value",
-            validator: this.percentageRegexValidator,
+            validator: this.valueRegexValidator,
+            renderer: this.ValueRenderer,
             mainThis: this
         });
 
@@ -348,10 +346,73 @@ export class SlpComponent implements OnInit {
             colHeaders: this.colHeaders
         };
     }
+    
 
-    statusRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
+    private ValueRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
+        var previousFP = cellProperties.mainThis.GetPreviousFP();
+        var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
+        if (reportingPeriod != previousFP) 
+            cellProperties.editor = true;
+
+
+       /**********validate whether entered value is valid based on minimumLevel value**********/
+        cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
+
+        /*******Set Value remarks column**********/
+        var data = cellProperties.mainThis.data;
+        var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        if (status == "1" || status == "NA" || !value)
+        {
+            var valueRemarksCell = instance.getCellMeta(row, col + 1);
+            valueRemarksCell.valid = false;
+            cellProperties.mainThis.isValidHandsonData = false;
+        }
+        else
+            cellProperties.mainThis.isValidHandsonData = true;
+
+        /***********Set status column**********/
+        var tdStatus = instance.getCell(row, col + 2, true);
+        cellProperties.mainThis.statusRenderer(instance, tdStatus, row, col + 2, prop, '', cellProperties);
+        
+        td.innerText = value;
+
+        return td;
+    };
+
+    private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any)
+    {
+        var tdMinimumValue = instance.getDataAtCell(row, 14);
+
+        //check for percentage and numbers
+        if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
+            || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
+            var valuesCell = instance.getCellMeta(row, col);
+            valuesCell.valid = false;
+            cellProperties.mainThis.isValidHandsonData = false;
+        }
+        else
+            cellProperties.mainThis.isValidHandsonData = true;
+    }
+
+    private statusRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        cellProperties.mainThis.data[row] = result;
+        td = cellProperties.mainThis.FormatCellValue(result, td);
+
+        return td;
     };
+
+    private FormatCellValue(status: string, td: any)
+    {
+        if (status == "3")
+            td.style.backgroundColor = "#008000"; //green
+        else if (status == "2")
+            td.style.backgroundColor = "#FFFF00"; //yellow
+        else if (status == "1")
+            td.style.backgroundColor = "#FF0000"; //red
+        else if (status == "NA")
+            td.innerText = "NA";
+        return td;
+    }
+    
 }

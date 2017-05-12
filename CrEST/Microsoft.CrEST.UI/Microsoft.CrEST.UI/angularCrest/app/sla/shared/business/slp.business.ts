@@ -20,13 +20,22 @@ export class SlpBusiness {
         if (result.value == "NA")
             result.chk = "NA"
         else {
+            var value = this.FormatValue(result.value);
+            var targetLevel = this.FormatValue(result.targetLevel);
+            var minimumLevel = this.FormatValue(result.minimumLevel);
             if (result.pref == "H")
-                result.chk = (result.value >= result.targetLevel ? "3" : (result.value >= result.minimumLevel ? "2" : "1"));
+                result.chk = (value >= targetLevel ? "3" : (value >= minimumLevel ? "2" : "1"));
             else if (result.pref == "L")
-                result.chk = (result.value <= result.targetLevel ? "3" : (result.value <= result.minimumLevel ? "2" : "1"));
+                result.chk = (value <= targetLevel ? "3" : (value <= minimumLevel ? "2" : "1"));
         }
 
-        return result;
+        return result.chk;
+    }
+
+    private FormatValue(value: string) {
+        if (value.charAt(value.length - 1) == "%")
+            return parseFloat(value.substr(0, value.length - 1)) / 100;
+        return value;
     }
 }
 
