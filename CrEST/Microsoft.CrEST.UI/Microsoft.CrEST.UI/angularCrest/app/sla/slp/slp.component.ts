@@ -351,8 +351,10 @@ export class SlpComponent implements OnInit {
     private ValueRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
         var previousFP = cellProperties.mainThis.GetPreviousFP();
         var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
-        if (reportingPeriod != previousFP) 
-            cellProperties.editor = true;
+        if (reportingPeriod = previousFP) {
+            instance.setCellMeta(row, col, 'readOnly', true);
+            //cellProperties.readOnly = true;
+        }
 
 
        /**********validate whether entered value is valid based on minimumLevel value**********/
@@ -361,7 +363,7 @@ export class SlpComponent implements OnInit {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        if (status == "1" || status == "NA" || !value)
+        if (status == "1" || status == "NA")
         {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
@@ -371,9 +373,11 @@ export class SlpComponent implements OnInit {
             cellProperties.mainThis.isValidHandsonData = true;
 
         /***********Set status column**********/
-        var tdStatus = instance.getCell(row, col + 2, true);
-        cellProperties.mainThis.statusRenderer(instance, tdStatus, row, col + 2, prop, '', cellProperties);
-        
+        if (value != "NA" || value) {
+            var tdStatus = instance.getCell(row, col + 2, true);
+            cellProperties.mainThis.statusRenderer(instance, tdStatus, row, col + 2, prop, '', cellProperties);
+        }
+
         td.innerText = value;
 
         return td;
@@ -388,6 +392,7 @@ export class SlpComponent implements OnInit {
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
             var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
+            //td.style.backgroundColor = ''
             cellProperties.mainThis.isValidHandsonData = false;
         }
         else

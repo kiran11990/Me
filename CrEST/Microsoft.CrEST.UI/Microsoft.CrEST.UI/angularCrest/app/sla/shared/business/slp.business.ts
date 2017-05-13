@@ -19,7 +19,7 @@ export class SlpBusiness {
 
         if (result.value == "NA")
             result.chk = "NA"
-        else {
+        else if (result.value) {
             var value = this.FormatValue(result.value);
             var targetLevel = this.FormatValue(result.targetLevel);
             var minimumLevel = this.FormatValue(result.minimumLevel);
@@ -28,6 +28,7 @@ export class SlpBusiness {
             else if (result.pref == "L")
                 result.chk = (value <= targetLevel ? "3" : (value <= minimumLevel ? "2" : "1"));
         }
+        else return null;
 
         return result.chk;
     }

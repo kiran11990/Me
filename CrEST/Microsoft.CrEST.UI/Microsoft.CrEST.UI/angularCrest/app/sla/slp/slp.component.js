@@ -299,14 +299,15 @@ var SlpComponent = (function () {
     SlpComponent.prototype.ValueRenderer = function (instance, td, row, col, prop, value, cellProperties) {
         var previousFP = cellProperties.mainThis.GetPreviousFP();
         var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
-        if (reportingPeriod != previousFP)
-            cellProperties.editor = true;
+        if (reportingPeriod = previousFP) {
+            instance.setCellMeta(row, col, 'readOnly', true);
+        }
         /**********validate whether entered value is valid based on minimumLevel value**********/
         cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        if (status == "1" || status == "NA" || !value) {
+        if (status == "1" || status == "NA") {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.isValidHandsonData = false;
@@ -314,8 +315,10 @@ var SlpComponent = (function () {
         else
             cellProperties.mainThis.isValidHandsonData = true;
         /***********Set status column**********/
-        var tdStatus = instance.getCell(row, col + 2, true);
-        cellProperties.mainThis.statusRenderer(instance, tdStatus, row, col + 2, prop, '', cellProperties);
+        if (value != "NA" || value) {
+            var tdStatus = instance.getCell(row, col + 2, true);
+            cellProperties.mainThis.statusRenderer(instance, tdStatus, row, col + 2, prop, '', cellProperties);
+        }
         td.innerText = value;
         return td;
     };
@@ -327,6 +330,7 @@ var SlpComponent = (function () {
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
             var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
+            //td.style.backgroundColor = ''
             cellProperties.mainThis.isValidHandsonData = false;
         }
         else
