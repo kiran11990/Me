@@ -36,12 +36,10 @@ var SlpComponent = (function () {
     SlpComponent.prototype.Generate = function (fiscalYear) {
         this.Message = "";
         var _this = this;
-        var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
+        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
         var previousFP = this.GetPreviousFP();
-        //TODO: wont wrk on year change
-        //var nextFP = this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() + 1);
         if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod()
+            this._slpService.GenerateSLPforCurrentPeriod(currentFP)
                 .subscribe(function (result) {
                 _this.data = result.filter(function (res) {
                     return res.reportingPeriod == previousFP;
@@ -63,10 +61,10 @@ var SlpComponent = (function () {
         this.Message = "";
         var _this = this;
         //TODO o focus on previous period not current
-        var currentFP = this.getCurrentFiscalY() + "-" + this.getCurrentFiscalP();
+        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
         var previousFP = this.GetPreviousFP();
         if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod()
+            this._slpService.GenerateSLPforCurrentPeriod(previousFP)
                 .subscribe(function (result) {
                 _this.data = result.filter(function (res) {
                     return res.reportingPeriod == previousFP;
@@ -112,31 +110,21 @@ var SlpComponent = (function () {
             }
         });
     };
-    SlpComponent.prototype.getCurrentFiscalP = function () {
+    SlpComponent.prototype.getCurrentP = function () {
         var d = new Date();
-        var currentMonth = d.getMonth() + 1;
-        var fiscalMonth = currentMonth + 6;
-        if (fiscalMonth > 12) {
-            fiscalMonth = fiscalMonth - 12;
-        }
-        return fiscalMonth;
+        var currentMonth = d.getMonth();
+        return currentMonth;
     };
-    SlpComponent.prototype.getCurrentFiscalY = function () {
+    SlpComponent.prototype.getCurrentY = function () {
         var d = new Date();
-        var fiscalYear;
-        if (d.getMonth() > 8) {
-            fiscalYear = d.getFullYear() + 1;
-        }
-        else {
-            fiscalYear = d.getFullYear();
-        }
+        var fiscalYear = d.getFullYear();
         return fiscalYear;
     };
     SlpComponent.prototype.GetPreviousFP = function () {
-        if (this.getCurrentFiscalP() == 1)
-            return (this.getCurrentFiscalY() - 1) + "-" + (this.getCurrentFiscalP() + 11);
+        if (this.getCurrentP() == 1)
+            return (this.getCurrentY() - 1) + "-" + (this.getCurrentP() + 11);
         else
-            return this.getCurrentFiscalY() + "-" + (this.getCurrentFiscalP() - 1);
+            return this.getCurrentY() + "-" + (this.getCurrentP() - 1);
     };
     SlpComponent.prototype.SetHeaders = function () {
         this.colHeaders.push('supplier');

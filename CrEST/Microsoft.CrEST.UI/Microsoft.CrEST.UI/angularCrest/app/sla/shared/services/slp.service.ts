@@ -23,14 +23,6 @@ export class SlpService {
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
     }
 
-    getCurrentPeriodSlp() {
-        //TODO dynamically  get current user alias
-        var alias = 'v-sutat';
-
-        return this.http.get(this.getCurrentPeriodSlpByUserAlias, alias)
-            .map(res => res.json());
-    }
-
     GetReportingPeriods() {
         return this.http.get(this.getSlps)
             .map(res => res.json().ReporintPeriods as ReportingPeriod[]);
@@ -42,12 +34,12 @@ export class SlpService {
     }
 
     SaveSLPs(data: Array<any>) {
-        return this.http.get(this.saveSLPs, data)
+        return this.http.post(this.saveSLPs, data)
             .map(res => res.json());
     }
 
-    GenerateSLPforCurrentPeriod() {
-        return this.http.get(this.getSlps)
+    GenerateSLPforCurrentPeriod(previousFP: string) {
+        return this.http.get(this.getSlps + '/' + previousFP)
             .map(res => res.json().ServiceLevelPerformance as Slp[]);
     }
 }

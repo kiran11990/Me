@@ -22,12 +22,6 @@ var SlpService = (function () {
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
     }
-    SlpService.prototype.getCurrentPeriodSlp = function () {
-        //TODO dynamically  get current user alias
-        var alias = 'v-sutat';
-        return this.http.get(this.getCurrentPeriodSlpByUserAlias, alias)
-            .map(function (res) { return res.json(); });
-    };
     SlpService.prototype.GetReportingPeriods = function () {
         return this.http.get(this.getSlps)
             .map(function (res) { return res.json().ReporintPeriods; });
@@ -37,11 +31,11 @@ var SlpService = (function () {
             .map(function (res) { return res.json().ServiceLevelPerformance; });
     };
     SlpService.prototype.SaveSLPs = function (data) {
-        return this.http.get(this.saveSLPs, data)
+        return this.http.post(this.saveSLPs, data)
             .map(function (res) { return res.json(); });
     };
-    SlpService.prototype.GenerateSLPforCurrentPeriod = function () {
-        return this.http.get(this.getSlps)
+    SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
+        return this.http.get(this.getSlps + '/' + previousFP)
             .map(function (res) { return res.json().ServiceLevelPerformance; });
     };
     return SlpService;
