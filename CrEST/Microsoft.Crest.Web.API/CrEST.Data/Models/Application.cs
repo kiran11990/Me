@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Crest.Web.API.Models
+namespace CrEST.Data.Models
 {
     public partial class Application
     {
@@ -23,8 +23,10 @@ namespace Microsoft.Crest.Web.API.Models
         public string Remarks { get; set; }
         public int? SupplierId { get; set; }
         public string OwnerAlias { get; set; }
-        public string Itorg { get; set; }
+        public int? Itorg { get; set; }
 
+        public virtual Itorg ItorgNavigation { get; set; }
+        public virtual ServiceClass ServiceClassNavigation { get; set; }
         public virtual SoW SoW { get; set; }
     }
 }

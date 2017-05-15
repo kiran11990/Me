@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Crest.Web.API.Models;
 
-namespace Microsoft.Crest.Web.API.Data
+namespace CrEST.Data.Models
 {
     public partial class CrESTContext : DbContext
     {
@@ -11,8 +10,10 @@ namespace Microsoft.Crest.Web.API.Data
         public virtual DbSet<CrestLevel1> CrestLevel1 { get; set; }
         public virtual DbSet<CrestLevel2> CrestLevel2 { get; set; }
         public virtual DbSet<CrestLevel3> CrestLevel3 { get; set; }
+        public virtual DbSet<Itorg> Itorg { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServiceCatalog> ServiceCatalog { get; set; }
+        public virtual DbSet<ServiceClass> ServiceClass { get; set; }
         public virtual DbSet<ServiceLevelPerformance> ServiceLevelPerformance { get; set; }
         public virtual DbSet<Slabase> Slabase { get; set; }
         public virtual DbSet<SoW> SoW { get; set; }
@@ -34,9 +35,7 @@ namespace Microsoft.Crest.Web.API.Data
 
                 entity.Property(e => e.Epm).HasColumnName("EPM");
 
-                entity.Property(e => e.Itorg)
-                    .HasColumnName("ITOrg")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Itorg).HasColumnName("ITOrg");
 
                 entity.Property(e => e.ManagedCapacity).HasMaxLength(50);
 
@@ -55,6 +54,16 @@ namespace Microsoft.Crest.Web.API.Data
                 entity.Property(e => e.TM)
                     .HasColumnName("T&M")
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.ItorgNavigation)
+                    .WithMany(p => p.Application)
+                    .HasForeignKey(d => d.Itorg)
+                    .HasConstraintName("FK_Application_ITOrg");
+
+                entity.HasOne(d => d.ServiceClassNavigation)
+                    .WithMany(p => p.Application)
+                    .HasForeignKey(d => d.ServiceClass)
+                    .HasConstraintName("FK_Application_ServiceClass");
 
                 entity.HasOne(d => d.SoW)
                     .WithMany(p => p.Application)
@@ -99,6 +108,18 @@ namespace Microsoft.Crest.Web.API.Data
                     .HasConstraintName("FK_CrestLevel3_CrestLevel2");
             });
 
+            modelBuilder.Entity<Itorg>(entity =>
+            {
+                entity.ToTable("ITOrg");
+
+                entity.Property(e => e.ItorgId).HasColumnName("ITOrgId");
+
+                entity.Property(e => e.ItorgName)
+                    .IsRequired()
+                    .HasColumnName("ITOrgName")
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<Service>(entity =>
             {
                 entity.Property(e => e.AppGroupServiceFeeY1).HasColumnType("money");
@@ -109,11 +130,11 @@ namespace Microsoft.Crest.Web.API.Data
 
                 entity.Property(e => e.AppGroupServiceFeeY4).HasColumnType("money");
 
+                entity.Property(e => e.CrestLevel2).HasMaxLength(20);
+
                 entity.Property(e => e.Currency).HasMaxLength(20);
 
-                entity.Property(e => e.Itorg)
-                    .HasColumnName("ITOrg")
-                    .HasMaxLength(20);
+                entity.Property(e => e.Itorg).HasColumnName("ITOrg");
 
                 entity.Property(e => e.Scid)
                     .HasColumnName("SCID")
@@ -126,15 +147,15 @@ namespace Microsoft.Crest.Web.API.Data
                     .HasForeignKey(d => d.CrestLevel1)
                     .HasConstraintName("FK_Services_CrestLevel1");
 
-                entity.HasOne(d => d.CrestLevel2Navigation)
-                    .WithMany(p => p.ServiceNavigation)
-                    .HasForeignKey(d => d.CrestLevel2)
-                    .HasConstraintName("FK_Service_CrestLevel2");
-
                 entity.HasOne(d => d.CrestLevel3Navigation)
                     .WithMany(p => p.ServiceNavigation)
                     .HasForeignKey(d => d.CrestLevel3)
                     .HasConstraintName("FK_Service_CrestLevel3");
+
+                entity.HasOne(d => d.ItorgNavigation)
+                    .WithMany(p => p.Service)
+                    .HasForeignKey(d => d.Itorg)
+                    .HasConstraintName("FK_Service_ITOrg");
 
                 entity.HasOne(d => d.SoW)
                     .WithMany(p => p.Service)
@@ -190,9 +211,16 @@ namespace Microsoft.Crest.Web.API.Data
                     .HasConstraintName("FK_SLA_CrestLevel2");
             });
 
+            modelBuilder.Entity<ServiceClass>(entity =>
+            {
+                entity.Property(e => e.ServiceClassName)
+                    .IsRequired()
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<ServiceLevelPerformance>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).HasDefaultValueSql("newid()");
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(50);
 
@@ -201,6 +229,8 @@ namespace Microsoft.Crest.Web.API.Data
                 entity.Property(e => e.LastModifiedBy).HasMaxLength(50);
 
                 entity.Property(e => e.LastModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pref).HasMaxLength(5);
 
                 entity.Property(e => e.ReportingPeriod).HasMaxLength(50);
 
@@ -222,12 +252,7 @@ namespace Microsoft.Crest.Web.API.Data
 
                 entity.Property(e => e.Environment).HasMaxLength(50);
 
-                entity.Property(e => e.Itorg)
-                    .IsRequired()
-                    .HasColumnName("ITOrg")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Pref).HasMaxLength(5);
+                entity.Property(e => e.Itorg).HasColumnName("ITOrg");
 
                 entity.Property(e => e.PriorityLevel).HasMaxLength(50);
 
@@ -247,12 +272,22 @@ namespace Microsoft.Crest.Web.API.Data
                 entity.HasOne(d => d.CrestLevel2)
                     .WithMany(p => p.Slabase)
                     .HasForeignKey(d => d.CrestLevel2Id)
-                    .HasConstraintName("FK_SLP_CrestLevel2");
+                    .HasConstraintName("FK_SLABase_CrestLevel2");
+
+                entity.HasOne(d => d.ItorgNavigation)
+                    .WithMany(p => p.Slabase)
+                    .HasForeignKey(d => d.Itorg)
+                    .HasConstraintName("FK_SLABase_ITOrg");
 
                 entity.HasOne(d => d.ServiceCatalog)
                     .WithMany(p => p.Slabase)
                     .HasForeignKey(d => d.ServiceCatalogId)
                     .HasConstraintName("FK_SLAServiceCatalog");
+
+                entity.HasOne(d => d.ServiceClassNavigation)
+                    .WithMany(p => p.Slabase)
+                    .HasForeignKey(d => d.ServiceClass)
+                    .HasConstraintName("FK_SLABase_ServiceClass");
 
                 entity.HasOne(d => d.SoW)
                     .WithMany(p => p.Slabase)
@@ -266,9 +301,9 @@ namespace Microsoft.Crest.Web.API.Data
 
                 entity.Property(e => e.Currency).HasMaxLength(20);
 
-                entity.Property(e => e.Itorg)
-                    .HasColumnName("ITOrg")
-                    .HasMaxLength(50);
+                entity.Property(e => e.InfyOwner).HasMaxLength(150);
+
+                entity.Property(e => e.Itorg).HasColumnName("ITOrg");
 
                 entity.Property(e => e.Msowner)
                     .HasColumnName("MSOwner")
@@ -299,6 +334,11 @@ namespace Microsoft.Crest.Web.API.Data
                 entity.Property(e => e.SowexpirationDate)
                     .HasColumnName("SOWExpirationDate")
                     .HasColumnType("datetime");
+
+                entity.HasOne(d => d.ItorgNavigation)
+                    .WithMany(p => p.SoW)
+                    .HasForeignKey(d => d.Itorg)
+                    .HasConstraintName("FK_SOW_ITOrg");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.SoW)

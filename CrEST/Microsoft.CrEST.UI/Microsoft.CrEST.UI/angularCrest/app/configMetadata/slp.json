@@ -20,7 +20,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-10",
+      "reportingPeriod": "2017-01",
       "pref": "H",
       "type": "P",
       "value": "100%",
@@ -48,7 +48,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-01",
       "pref": "H",
       "type": "P",
       "value": "63%",
@@ -76,7 +76,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-10",
+      "reportingPeriod": "2017-01",
       "pref": "H",
       "type": "P",
       "value": "75%",
@@ -104,7 +104,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-02",
       "pref": "L",
       "type": "P",
       "value": "100%",
@@ -132,7 +132,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-01",
       "pref": "L",
       "type": "P",
       "value": "75%",
@@ -160,7 +160,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-03",
       "pref": "L",
       "type": "P",
       "value": "63%",
@@ -188,7 +188,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-04",
       "pref": "L",
       "type": "P",
       "value": "2",
@@ -216,7 +216,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-04",
       "pref": "H",
       "type": "P",
       "value": "2",
@@ -244,7 +244,7 @@
       "weight": "20%",
       "remarks": "",
       "validationNotes": "",
-      "reportingPeriod": "2017-09",
+      "reportingPeriod": "2017-02",
       "pref": "H",
       "type": "P",
       "value": "NA",
@@ -260,23 +260,23 @@
     },
     {
       "id": 2,
-      "fiscalYear": "2017-09"
+      "fiscalYear": "2017-01"
     },
     {
       "id": 3,
-      "fiscalYear": "2017-10"
+      "fiscalYear": "2017-02"
     },
     {
       "id": 4,
-      "fiscalYear": "2017-11"
+      "fiscalYear": "2017-03"
     },
     {
       "id": 5,
-      "fiscalYear": "2017-12"
+      "fiscalYear": "2017-04"
     },
     {
       "id": 6,
-      "fiscalYear": "2018-01"
+      "fiscalYear": "2017-05"
     }
   ]
 }

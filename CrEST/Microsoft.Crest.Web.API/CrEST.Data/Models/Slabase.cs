@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Crest.Web.API.Models
+namespace CrEST.Data.Models
 {
     public partial class Slabase
     {
@@ -25,13 +25,14 @@ namespace Microsoft.Crest.Web.API.Models
         public bool? IsCustom { get; set; }
         public string ValidationNotes { get; set; }
         public string Remarks { get; set; }
-        public string Pref { get; set; }
-        public string Itorg { get; set; }
+        public int? Itorg { get; set; }
 
         public virtual ICollection<ServiceLevelPerformance> ServiceLevelPerformance { get; set; }
         public virtual CrestLevel1 CrestLevel1 { get; set; }
         public virtual CrestLevel2 CrestLevel2 { get; set; }
+        public virtual Itorg ItorgNavigation { get; set; }
         public virtual ServiceCatalog ServiceCatalog { get; set; }
+        public virtual ServiceClass ServiceClassNavigation { get; set; }
         public virtual SoW SoW { get; set; }
     }
 }

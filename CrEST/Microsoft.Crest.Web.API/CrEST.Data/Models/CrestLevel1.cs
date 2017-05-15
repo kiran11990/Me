@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Crest.Web.API.Models
+namespace CrEST.Data.Models
 {
     public partial class CrestLevel1
     {

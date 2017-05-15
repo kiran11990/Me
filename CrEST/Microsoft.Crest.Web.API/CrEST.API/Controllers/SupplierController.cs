@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Crest.Web.API.Models;
-using Microsoft.Crest.Web.API.Data;
-using Microsoft.Crest.Web.API.CrEST.BL;
+using CrEST.BL;
+using CrEST.Data.Models;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
@@ -10,16 +9,10 @@ namespace Microsoft.Crest.Web.API.Controllers
     public class SupplierController : Controller
     {		
 		private readonly ISupplierRepository _supplierRepository;
-
-		//public ValuesController(IValue crestValueRepository)
-		//{
-		//	_crestValueRepository = crestValueRepository;
-		//}
-
+        
 		public SupplierController()
 		{
-			CrESTContext _context = new Microsoft.Crest.Web.API.Data.CrESTContext();
-			_supplierRepository = new SupplierRepository(_context);
+			_supplierRepository = new SupplierRepository();
 		}
 
 		// GET api/values

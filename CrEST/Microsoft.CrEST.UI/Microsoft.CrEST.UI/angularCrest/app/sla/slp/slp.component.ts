@@ -60,33 +60,6 @@ export class SlpComponent implements OnInit {
                     //TODO : can we cleanup this?
                     for (var i = 0; i < _this.data.length; i++) {
                         _this.data[i].reportingPeriod = currentFP;
-                        _this.data[i].value = "";
-                        _this.data[i].valueRemarks = "";
-                    }
-                });
-        } else {
-            this.Message = "Please select current fiscal period to generate.";
-            this.MessageType = 2;  //MessageType 1 : alert success & MessageType 2 is for danger
-        }
-    }
-
-    AutoFill(fiscalYear: string) {
-        this.Message = "";
-        var _this = this;
-        //TODO o focus on previous period not current
-        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
-        var previousFP = this.GetPreviousFP();
-
-        if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod(previousFP)
-                .subscribe(result => {
-                    _this.data = result.filter(res => {
-                        return res.reportingPeriod == previousFP;
-                    });
-
-                    //TODO : can we cleanup this?
-                    for (var i = 0; i < _this.data.length; i++) {
-                        _this.data[i].reportingPeriod = currentFP;
                     }
                 });
         } else {

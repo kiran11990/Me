@@ -47,31 +47,6 @@ var SlpComponent = (function () {
                 //TODO : can we cleanup this?
                 for (var i = 0; i < _this.data.length; i++) {
                     _this.data[i].reportingPeriod = currentFP;
-                    _this.data[i].value = "";
-                    _this.data[i].valueRemarks = "";
-                }
-            });
-        }
-        else {
-            this.Message = "Please select current fiscal period to generate.";
-            this.MessageType = 2; //MessageType 1 : alert success & MessageType 2 is for danger
-        }
-    };
-    SlpComponent.prototype.AutoFill = function (fiscalYear) {
-        this.Message = "";
-        var _this = this;
-        //TODO o focus on previous period not current
-        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
-        var previousFP = this.GetPreviousFP();
-        if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod(previousFP)
-                .subscribe(function (result) {
-                _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == previousFP;
-                });
-                //TODO : can we cleanup this?
-                for (var i = 0; i < _this.data.length; i++) {
-                    _this.data[i].reportingPeriod = currentFP;
                 }
             });
         }
