@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Microsoft.Crest.Web.API
+namespace CrEST.API
 {
     public class Program
     {

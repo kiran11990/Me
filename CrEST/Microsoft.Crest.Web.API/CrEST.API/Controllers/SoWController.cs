@@ -7,16 +7,11 @@ using Microsoft.Crest.Web.API.CrEST.BL;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SowController : Controller
     {		
 		private readonly ISoWRepository _sowRepository;
-
-		//public SowController(ISoWRepository sowRepository)
-		//{
-		//	_sowRepository = sowRepository;
-		//}
-
+        
 		public SowController()
 		{
 			CrESTContext _context = new Data.CrESTContext();
