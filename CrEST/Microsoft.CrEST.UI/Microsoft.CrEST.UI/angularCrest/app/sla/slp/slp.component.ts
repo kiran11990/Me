@@ -340,8 +340,7 @@ export class SlpComponent implements OnInit {
         var previousFP = cellProperties.mainThis.GetPreviousFP();
         var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
         if (reportingPeriod = previousFP) {
-            instance.setCellMeta(row, col, 'readOnly', true);
-            //cellProperties.readOnly = true;
+            cellProperties.readOnly = true;
         }
 
 

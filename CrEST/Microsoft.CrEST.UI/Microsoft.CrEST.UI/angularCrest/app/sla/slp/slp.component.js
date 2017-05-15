@@ -288,7 +288,7 @@ var SlpComponent = (function () {
         var previousFP = cellProperties.mainThis.GetPreviousFP();
         var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
         if (reportingPeriod = previousFP) {
-            instance.setCellMeta(row, col, 'readOnly', true);
+            cellProperties.readOnly = true;
         }
         /**********validate whether entered value is valid based on minimumLevel value**********/
         cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
