@@ -26,7 +26,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 
         [HttpPost]
         [Route("SaveService")]
-        public ServiceData SaveSoW([FromBody]ServiceData item)
+        public ServiceData SaveService([FromBody]ServiceData item)
         {
             return _serviceRepository.SaveService(item);
         }
@@ -35,8 +35,7 @@ namespace Microsoft.Crest.Web.API.Controllers
         [Route("FindServices/{contractId}/'{applicationGroup}'")]
         public IEnumerable<ServiceData> FindServices([FromHeader]int contractId, [FromHeader]string applicationGroup)
         {
-            IEnumerable<ServiceData> results = _serviceRepository.FindServices(contractId, applicationGroup);
-            return results;
+            return _serviceRepository.FindServices(contractId, applicationGroup);
         }
 
         [HttpGet]
