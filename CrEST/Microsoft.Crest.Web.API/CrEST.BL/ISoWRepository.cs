@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Crest.Web.API.Models;
+using CrEST.Models;
 using System;
 
-namespace Microsoft.Crest.Web.API.CrEST.BL
+namespace CrEST.BL
 {
 	public interface ISoWRepository
 	{
@@ -12,6 +12,6 @@ namespace Microsoft.Crest.Web.API.CrEST.BL
 
 		SoW Put(SoW item);
 
-		IEnumerable<SoW> FindSoW(int contractId, string ITOrg, DateTime expiryDate, string msOwner);
+		IEnumerable<SoW> FindSoW(int contractId, string serviceLine, DateTime expiryDate, string msOwner);
 	}
 }

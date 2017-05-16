@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Crest.Web.API.Models;
-using Microsoft.Crest.Web.API.Data;
-using Microsoft.Crest.Web.API.CrEST.BL;
+using CrEST.BL;
+using CrEST.Data;
+using CrEST.Models;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class SupplierController : Controller
     {		
 		private readonly ISupplierRepository _supplierRepository;
@@ -18,7 +18,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 
 		public SupplierController()
 		{
-			CrESTContext _context = new Microsoft.Crest.Web.API.Data.CrESTContext();
+			CrESTContext _context = new CrEST.Data.CrESTContext();
 			_supplierRepository = new SupplierRepository(_context);
 		}
 

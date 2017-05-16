@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Crest.Web.API.Models
+namespace CrEST.Models
 {
     public partial class ServiceCatalog
     {
@@ -17,9 +17,7 @@ namespace Microsoft.Crest.Web.API.Models
         public string ServiceMetric { get; set; }
         public string ServiceMetricClass { get; set; }
         public string MinimumSl { get; set; }
-        public string MinimumLevel { get; set; }
         public string TargetSl { get; set; }
-        public string TargetLevel { get; set; }
         public string ServiceClass { get; set; }
         public string Type { get; set; }
         public string Source { get; set; }
@@ -27,6 +25,7 @@ namespace Microsoft.Crest.Web.API.Models
         public string MeasurementWindow { get; set; }
         public string Weightage { get; set; }
         public bool? ContinuousImprovement { get; set; }
+        public bool? IsCustom { get; set; }
 
         public virtual ICollection<Slabase> Slabase { get; set; }
         public virtual CrestLevel1 CrestL1 { get; set; }

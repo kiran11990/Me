@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Crest.Web.API.Models;
+using CrEST.Models;
 
-namespace Microsoft.Crest.Web.API.CrEST.BL
+namespace CrEST.BL
 {
 	public interface ISupplierRepository
 	{

@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Crest.Web.API.Models
+namespace CrEST.Models
 {
     public partial class Service
     {
+        public Service()
+        {
+            Application = new HashSet<Application>();
+            Slabase = new HashSet<Slabase>();
+        }
+
         public int ServiceId { get; set; }
         public int? SupplierId { get; set; }
         public int? SoWid { get; set; }
@@ -18,10 +24,9 @@ namespace Microsoft.Crest.Web.API.Models
         public decimal? AppGroupServiceFeeY4 { get; set; }
         public string ValidationNotes { get; set; }
         public string Remarks { get; set; }
-        public string Scid { get; set; }
-        public string Currency { get; set; }
-        public string Itorg { get; set; }
 
+        public virtual ICollection<Application> Application { get; set; }
+        public virtual ICollection<Slabase> Slabase { get; set; }
         public virtual CrestLevel1 CrestLevel1Navigation { get; set; }
         public virtual CrestLevel2 CrestLevel2Navigation { get; set; }
         public virtual CrestLevel3 CrestLevel3Navigation { get; set; }
