@@ -7,13 +7,13 @@ namespace CrEST.BL
 {
 	public interface ISoWRepository
 	{
-		IEnumerable<SoW> GetAll();
+		IEnumerable<SowData> GetAll();
 
 		SoW Get(int item);
 
 		SoW Put(SoW item);
 
-		IEnumerable<SoW> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner);
+		IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner);
 
         SowMetadata GetSowMetadata();
     }

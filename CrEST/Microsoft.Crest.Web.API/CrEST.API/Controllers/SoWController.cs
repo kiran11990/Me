@@ -19,7 +19,7 @@ namespace Microsoft.Crest.Web.API.Controllers
   
         [HttpGet]
         [Route("GetAllSoWs")]
-        public IEnumerable<SoW> GetAllSoWs()
+        public IEnumerable<SowData> GetAllSoWs()
         {
             return _sowRepository.GetAll();
         }
@@ -40,9 +40,9 @@ namespace Microsoft.Crest.Web.API.Controllers
 
 		[HttpGet]
         [Route("FindSoWs/{contractId}/{ITOrg}/{expiryDate}/'{msOwner}'")]
-        public IEnumerable<SoW> FindSoWs([FromHeader]int contractId, int ITOrg, [FromHeader]DateTime expiryDate, string msOwner)
+        public IEnumerable<SowData> FindSoWs([FromHeader]int contractId, int ITOrg, [FromHeader]DateTime expiryDate, string msOwner)
 		{
-			IEnumerable<SoW> results = _sowRepository.FindSoW(contractId, ITOrg, expiryDate, msOwner);			
+			IEnumerable<SowData> results = _sowRepository.FindSoW(contractId, ITOrg, expiryDate, msOwner);			
 			return results;
 		}
 

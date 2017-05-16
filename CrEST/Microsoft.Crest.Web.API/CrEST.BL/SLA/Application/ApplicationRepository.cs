@@ -83,9 +83,9 @@ namespace CrEST.BL
                 DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
                 cmd.CommandText = "spSearchApplication";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@ContractId", string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@ServiceLine", string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@Application", string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
+                cmd.Parameters.Add(new SqlParameter("@ServiceLine", serviceLine));
+                cmd.Parameters.Add(new SqlParameter("@Application", application));
 
                 using (var reader = cmd.ExecuteReader())
                 {

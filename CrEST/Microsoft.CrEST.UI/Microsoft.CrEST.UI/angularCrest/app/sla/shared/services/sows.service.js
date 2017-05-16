@@ -12,6 +12,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service';
 var SowService = (function () {
     function SowService(_constantService, http) {
@@ -21,7 +22,7 @@ var SowService = (function () {
     }
     SowService.prototype.getSows = function () {
         return this.http.get(this.getSow)
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.handleError);
     };
     SowService.prototype.getSowById = function (id) {
         return this.http.get(this.getSowUrl(id))
@@ -41,6 +42,12 @@ var SowService = (function () {
     };
     SowService.prototype.getSowUrl = function (id) {
         return this.getSowUrl + "/" + id;
+    };
+    SowService.prototype.handleError = function (error) {
+        var errMsg = (error.message) ? error.message :
+            error.status ? error.status + " - " + error.statusText : "Server error";
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     };
     return SowService;
 }());

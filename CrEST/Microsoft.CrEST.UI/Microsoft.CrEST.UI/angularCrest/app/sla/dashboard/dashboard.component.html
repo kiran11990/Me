@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header"> <a href="/">Dashboard</a> > SLA > Dashboard </div>
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <div style="display: block">
+            <canvas baseChart
+                    [datasets]="sowBarChartData"
+                    [labels]="sowBarChartLabels"
+                    [options]="sowBarChartOptions"
+                    [legend]="sowBarChartLegend"
+                    [chartType]="sowBarChartType"></canvas>
+        </div>
+        <button (click)="RefreshSowBarChart()">Update</button>
+    </div>
+    <div>
+        Second chart
+    </div>
+</div>

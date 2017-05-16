@@ -17,7 +17,7 @@ export class SowService {
 
     getSows() {
         return this.http.get(this.getSow)
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.handleError);
     }
 
     getSowById(id: any) {
@@ -43,6 +43,13 @@ export class SowService {
 
     private getSowUrl(id: any) {
         return this.getSowUrl + "/" + id;
+    }
+
+    public handleError(error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : "Server error";
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 }
 

@@ -3,6 +3,7 @@ import { SowComponent } from './sow/landing/sow.component';
 import { SowFormComponent } from './sow/sow-form/sow-form.component';
 import { SlaApplicationComponent } from './application/application.component';
 import { SlaServiceComponent } from './serviceline/serviceline.component';
+import { SlaDashboardComponent } from './dashboard/dashboard.component';
 import { SlpComponent } from './slp/slp.component';
 var slaRoutes = [
     { path: 'sows', component: SowComponent, pathMatch: 'full' },
@@ -15,8 +16,7 @@ var slaRoutes = [
     { path: 'services/add', component: SlaServiceComponent },
     { path: 'services/:id', component: SlaServiceComponent },
     { path: 'slps', component: SlpComponent, pathMatch: 'full' },
-    { path: 'slps/add', component: SlpComponent },
-    { path: 'slps/:id', component: SlpComponent },
+    { path: 'sladashboard', component: SlaDashboardComponent, pathMatch: 'full' }
 ];
 export var SlaRouting = RouterModule.forChild(slaRoutes);
 //# sourceMappingURL=sla.routing.js.map

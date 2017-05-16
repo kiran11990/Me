@@ -13,13 +13,13 @@ var ConstantService = (function () {
     function ConstantService(_config) {
         this._config = _config;
         this.apiBaseUrl = _config.get("apiBaseUri");
-        this.apiBaseUrlWithVersion = this.apiBaseUrl + "/api/v1.0";
+        this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
         this.CONFIG = {
             apiLocations: {
                 baseUrl: this.apiBaseUrl,
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
-                getsow: 'http://localhost:52537/configMetadata/sow.json',
+                getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
                 //slp
                 //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
                 getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
