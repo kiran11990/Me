@@ -247,9 +247,7 @@ namespace CrEST.Data
 
                 entity.Property(e => e.SOWEffectiveDate).HasColumnType("datetime");
 
-                entity.Property(e => e.SOWExpirationDate).HasColumnType("datetime");
-
-                entity.Property(e => e.InfyOwner).HasMaxLength(150);
+                entity.Property(e => e.SOWExpirationDate).HasColumnType("datetime");                
 
                 entity.Property(e => e.Msowner)
                     .HasColumnName("MSOwner")

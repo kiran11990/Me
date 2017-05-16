@@ -18,8 +18,7 @@ namespace CrEST.Models
         public int? ContractId { get; set; }
         public DateTime? SOWEffectiveDate { get; set; }
         public DateTime? SOWExpirationDate { get; set; }
-        public string Msowner { get; set; }
-        public string InfyOwner { get; set; }
+        public string Msowner { get; set; }        
         public double? ServiceCatalogVersion { get; set; }
         public int? PonumYear1 { get; set; }
         public decimal? SowamountYear1 { get; set; }

@@ -36,14 +36,13 @@ namespace Microsoft.Crest.Web.API.Controllers
 			return _sowRepository.Get(id);
 		}
 
-
 		[HttpPut("SaveSoW")]		
 		public SoW SaveSoW([FromBody]SoW item)
 		{
 			return _sowRepository.Put(item);
 		}
 
-		[HttpGet("{contractId}/'{serviceLine}'/{expiryDate}/'{msOwner}'")]
+		[HttpGet("FindSows/{contractId}/'{itOrg}'/{expiryDate}/'{msOwner}'")]
 		public IEnumerable<SoW> FindSows([FromHeader]int contractId, string itOrg, [FromHeader]DateTime expiryDate, string msOwner)
 		{
 			IEnumerable<SoW> results = _sowRepository.FindSoW(contractId, itOrg, expiryDate, msOwner);			
