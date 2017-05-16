@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using CrEST.BL;
 using CrEST.Data;
 using CrEST.Models;
+using System.Collections;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
@@ -23,22 +24,29 @@ namespace Microsoft.Crest.Web.API.Controllers
 			_sowRepository = new SoWRepository(_context);
 		}
 		
-		[HttpGet("{id}")]
-		public SoW GetSoWs(int id)
+		[HttpGet("GetAllSoWs")]
+		public IEnumerable GetAllSoWs()
+		{
+			return _sowRepository.GetAll();
+		}
+
+		[HttpGet("GetSoW/{id}")]
+		public SoW GetSoW(int id)
 		{
 			return _sowRepository.Get(id);
 		}
 
-		[HttpPut()]		
-		public SoW PutSoW([FromBody]SoW item)
+
+		[HttpPut("SaveSoW")]		
+		public SoW SaveSoW([FromBody]SoW item)
 		{
 			return _sowRepository.Put(item);
 		}
 
 		[HttpGet("{contractId}/'{serviceLine}'/{expiryDate}/'{msOwner}'")]
-		public IEnumerable<SoW> FindSows([FromHeader]int contractId, string serviceLine, [FromHeader]DateTime expiryDate, string msOwner)
+		public IEnumerable<SoW> FindSows([FromHeader]int contractId, string itOrg, [FromHeader]DateTime expiryDate, string msOwner)
 		{
-			IEnumerable<SoW> results = _sowRepository.FindSoW(contractId, serviceLine, expiryDate, msOwner);			
+			IEnumerable<SoW> results = _sowRepository.FindSoW(contractId, itOrg, expiryDate, msOwner);			
 			return results;
 		}
 

@@ -22,7 +22,7 @@ namespace CrEST.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=(local);Database=CrEST;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=HYDPCM390997D23\MSSQLSERVER14;Database=CrEST;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,12 +49,7 @@ namespace CrEST.Data
 
                 entity.Property(e => e.TM)
                     .HasColumnName("T&M")
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.ApplicationGroupNavigation)
-                    .WithMany(p => p.Application)
-                    .HasForeignKey(d => d.ApplicationGroup)
-                    .HasConstraintName("FK_Application_Service");
+                    .HasMaxLength(50);                
 
                 entity.HasOne(d => d.SoW)
                     .WithMany(p => p.Application)
@@ -202,53 +197,57 @@ namespace CrEST.Data
 
             modelBuilder.Entity<Slabase>(entity =>
             {
-                entity.ToTable("SLABase");
+				entity.ToTable("SLABase");
 
-                entity.Property(e => e.Environment).HasMaxLength(50);
+				entity.Property(e => e.ApplicationGroup).HasMaxLength(500);
 
-                entity.Property(e => e.Pref).HasMaxLength(5);
+				entity.Property(e => e.Environment).HasMaxLength(50);
 
-                entity.Property(e => e.PriorityLevel).HasMaxLength(50);
+				entity.Property(e => e.Itorg)
+					.IsRequired()
+					.HasColumnName("ITOrg")
+					.HasMaxLength(50);
 
-                entity.Property(e => e.SeverityLevel).HasMaxLength(50);
+				entity.Property(e => e.Pref).HasMaxLength(5);
 
-                entity.Property(e => e.SoWid).HasColumnName("SoWId");
+				entity.Property(e => e.PriorityLevel).HasMaxLength(50);
 
-                entity.Property(e => e.Type).HasMaxLength(5);
+				entity.Property(e => e.Scid)
+					.HasColumnName("SCID")
+					.HasMaxLength(25);
 
-                entity.HasOne(d => d.ApplicationGroup)
-                    .WithMany(p => p.Slabase)
-                    .HasForeignKey(d => d.ApplicationGroupId)
-                    .HasConstraintName("FK_SLABase_Service");
+				entity.Property(e => e.SeverityLevel).HasMaxLength(50);
 
-                entity.HasOne(d => d.CrestLevel1)
-                    .WithMany(p => p.Slabase)
-                    .HasForeignKey(d => d.CrestLevel1Id)
-                    .HasConstraintName("FK_SLABase_CrestLevel1");
+				entity.Property(e => e.SoWid).HasColumnName("SoWId");
 
-                entity.HasOne(d => d.CrestLevel2)
-                    .WithMany(p => p.Slabase)
-                    .HasForeignKey(d => d.CrestLevel2Id)
-                    .HasConstraintName("FK_SLP_CrestLevel2");
+				entity.HasOne(d => d.CrestLevel1)
+					.WithMany(p => p.Slabase)
+					.HasForeignKey(d => d.CrestLevel1Id)
+					.HasConstraintName("FK_SLABase_CrestLevel1");
 
-                entity.HasOne(d => d.ServiceCatalog)
-                    .WithMany(p => p.Slabase)
-                    .HasForeignKey(d => d.ServiceCatalogId)
-                    .HasConstraintName("FK_SLABase_ServiceCatalog");
+				entity.HasOne(d => d.CrestLevel2)
+					.WithMany(p => p.Slabase)
+					.HasForeignKey(d => d.CrestLevel2Id)
+					.HasConstraintName("FK_SLP_CrestLevel2");
 
-                entity.HasOne(d => d.SoW)
-                    .WithMany(p => p.Slabase)
-                    .HasForeignKey(d => d.SoWid)
-                    .HasConstraintName("FK_SLABase_SoW");
-            });
+				entity.HasOne(d => d.ServiceCatalog)
+					.WithMany(p => p.Slabase)
+					.HasForeignKey(d => d.ServiceCatalogId)
+					.HasConstraintName("FK_SLAServiceCatalog");
+
+				entity.HasOne(d => d.SoW)
+					.WithMany(p => p.Slabase)
+					.HasForeignKey(d => d.SoWid)
+					.HasConstraintName("FK_SLABase_SoW");
+			});
 
             modelBuilder.Entity<SoW>(entity =>
             {
                 entity.Property(e => e.SoWid).HasColumnName("SoWId");
 
-                entity.Property(e => e.EffectiveDate).HasColumnType("datetime");
+                entity.Property(e => e.SOWEffectiveDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
+                entity.Property(e => e.SOWExpirationDate).HasColumnType("datetime");
 
                 entity.Property(e => e.InfyOwner).HasMaxLength(150);
 
@@ -258,7 +257,7 @@ namespace CrEST.Data
 
                 entity.Property(e => e.PonumYear1).HasColumnName("PONumYear1");
 
-                entity.Property(e => e.ServiceLine).HasMaxLength(50);
+                entity.Property(e => e.ITOrg).HasMaxLength(50);
 
                 entity.Property(e => e.SowamountYear1)
                     .HasColumnName("SOWAmountYear1")
@@ -285,7 +284,7 @@ namespace CrEST.Data
 
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.Property(e => e.Supplier1)
+                entity.Property(e => e.SupplierId)
                     .HasColumnName("Supplier")
                     .HasColumnType("varchar(120)");
             });

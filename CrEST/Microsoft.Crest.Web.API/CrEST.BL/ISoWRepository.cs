@@ -12,6 +12,6 @@ namespace CrEST.BL
 
 		SoW Put(SoW item);
 
-		IEnumerable<SoW> FindSoW(int contractId, string serviceLine, DateTime expiryDate, string msOwner);
+		IEnumerable<SoW> FindSoW(int contractId, string itOrg, DateTime expiryDate, string msOwner);
 	}
 }

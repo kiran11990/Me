@@ -36,10 +36,10 @@ namespace CrEST.BL
 			if (existingItem != null)
 			{
 				existingItem.SupplierId = item.SupplierId;
-				existingItem.ServiceLine = item.ServiceLine;
+				existingItem.ITOrg = item.ITOrg;
 				existingItem.ContractId = item.ContractId;
-				existingItem.EffectiveDate = item.EffectiveDate;
-				existingItem.ExpirationDate = item.ExpirationDate;
+				existingItem.SOWEffectiveDate = item.SOWEffectiveDate;
+				existingItem.SOWExpirationDate = item.SOWExpirationDate;
 				existingItem.Msowner = item.Msowner;
 				existingItem.InfyOwner = item.InfyOwner;
 				existingItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
@@ -64,8 +64,8 @@ namespace CrEST.BL
 
 		public IEnumerable<SoW> FindSoW(int contractId, string serviceLine, DateTime expiryDate, string msOwner)
 		{
-			return _context.SoW.Where(s => s.ContractId == contractId && s.ServiceLine == serviceLine
-								&& s.ExpirationDate == expiryDate && s.Msowner == msOwner).AsEnumerable();		
+			return _context.SoW.Where(s => s.ContractId == contractId && s.ITOrg == serviceLine
+								&& s.SOWExpirationDate == expiryDate && s.Msowner == msOwner).AsEnumerable();		
 		}
 
 	}

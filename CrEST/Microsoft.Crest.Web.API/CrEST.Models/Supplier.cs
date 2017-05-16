@@ -11,12 +11,11 @@ namespace CrEST.Models
             SoW = new HashSet<SoW>();
         }
 
-        public int SupplierId { get; set; }
-        public string SupplierName { get; set; }
-        public bool? IsCrest { get; set; }
-        public string Supplier1 { get; set; }
+		public int SupplierId { get; set; }
+		public string SupplierName { get; set; }
+		public bool? IsCrest { get; set; }
 
-        public virtual ICollection<Service> Service { get; set; }
-        public virtual ICollection<SoW> SoW { get; set; }
-    }
+		public virtual ICollection<Service> Service { get; set; }
+		public virtual ICollection<SoW> SoW { get; set; }
+	}
 }
