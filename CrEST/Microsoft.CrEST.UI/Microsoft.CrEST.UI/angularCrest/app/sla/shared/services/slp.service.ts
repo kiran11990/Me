@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service'
 import { ReportingPeriod } from "../models/reportingperiod";
 import { Slp } from "../models/slp";
+import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
 export class SlpService {
@@ -16,7 +17,7 @@ export class SlpService {
     private generateSLPforCurrentPeriod: string;
     private getSlps: string;
 
-    constructor(private _constantService: ConstantService, private http: Http) {
+    constructor(private _constantService: ConstantService, private commonService: CommonService,  private http: Http) {
         this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
@@ -25,22 +26,22 @@ export class SlpService {
 
     GetReportingPeriods() {
         return this.http.get(this.getSlps)
-            .map(res => res.json().ReporintPeriods as ReportingPeriod[]);
+            .map(res => res.json().ReporintPeriods as ReportingPeriod[]).catch(this.commonService.handleError);
     }
 
     GetSlpByPeriod(fiscalYear: string) {
         return this.http.get(this.getSlps)
-            .map(res => res.json().ServiceLevelPerformance as Slp[]);
+            .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
     }
 
     SaveSLPs(data: Array<any>) {
         return this.http.post(this.saveSLPs, data)
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     GenerateSLPforCurrentPeriod(previousFP: string) {
         return this.http.get(this.getSlps + '/' + previousFP)
-            .map(res => res.json().ServiceLevelPerformance as Slp[]);
+            .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
     }
 }
 

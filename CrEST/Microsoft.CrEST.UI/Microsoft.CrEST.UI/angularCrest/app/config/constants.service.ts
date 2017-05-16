@@ -17,6 +17,7 @@ export class ConstantService {
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
                 getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
+                getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
 
                 //slp
                 //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'

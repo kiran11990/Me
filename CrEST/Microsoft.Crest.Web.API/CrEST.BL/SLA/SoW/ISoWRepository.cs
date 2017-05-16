@@ -16,5 +16,7 @@ namespace CrEST.BL
 		IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner);
 
         SowMetadata GetSowMetadata();
+
+        IEnumerable<SowData> GetActiveContracts();
     }
 }

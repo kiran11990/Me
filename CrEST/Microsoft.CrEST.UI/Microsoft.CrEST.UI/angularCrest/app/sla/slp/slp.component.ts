@@ -53,7 +53,7 @@ export class SlpComponent implements OnInit {
         if (currentFP == fiscalYear) {
             this._slpService.GenerateSLPforCurrentPeriod(currentFP)
                 .subscribe(result => {
-                    _this.data = result.filter(res => {
+                    _this.data = result.filter((res:any) => {
                         return res.reportingPeriod == previousFP;
                     });
 

@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './notfound/notfound.component';
-import { ConfigService, ConstantService } from './shared/shared';
+import { ConfigService, ConstantService, CommonService } from './shared/shared';
 
 
 import { SlaModule } from "./sla/sla.module";
@@ -23,7 +23,7 @@ import { Routing } from './app.routing';
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
-        ConfigService, ConstantService,
+        ConfigService, ConstantService, CommonService,
         {
             provide: APP_INITIALIZER,
             useFactory: (config: ConfigService) => () => config.load(),

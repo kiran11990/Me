@@ -53,5 +53,12 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _sowRepository.GetSowMetadata();
         }
 
+        [HttpGet]
+        [Route("GetActiveContracts")]
+        public IEnumerable<SowData> GetActiveContracts()
+        {
+            return _sowRepository.GetActiveContracts();
+        }
+
     }
 }

@@ -13,9 +13,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { ConstantService } from '../../../config/constants.service';
+import { CommonService } from '../../../shared/common.service';
 var SlpService = (function () {
-    function SlpService(_constantService, http) {
+    function SlpService(_constantService, commonService, http) {
         this._constantService = _constantService;
+        this.commonService = commonService;
         this.http = http;
         this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
@@ -24,25 +26,25 @@ var SlpService = (function () {
     }
     SlpService.prototype.GetReportingPeriods = function () {
         return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ReporintPeriods; });
+            .map(function (res) { return res.json().ReporintPeriods; }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GetSlpByPeriod = function (fiscalYear) {
         return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ServiceLevelPerformance; });
+            .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
     };
     SlpService.prototype.SaveSLPs = function (data) {
         return this.http.post(this.saveSLPs, data)
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
         return this.http.get(this.getSlps + '/' + previousFP)
-            .map(function (res) { return res.json().ServiceLevelPerformance; });
+            .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
     };
     return SlpService;
 }());
 SlpService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [ConstantService, Http])
+    __metadata("design:paramtypes", [ConstantService, CommonService, Http])
 ], SlpService);
 export { SlpService };
 //# sourceMappingURL=slp.service.js.map

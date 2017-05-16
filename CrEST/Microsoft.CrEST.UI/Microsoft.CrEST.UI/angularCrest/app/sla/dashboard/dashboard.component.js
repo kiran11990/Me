@@ -21,7 +21,10 @@ var SlaDashboardComponent = (function () {
         this.sowBarChartType = 'bar';
         this.sowBarChartLegend = true;
         this.sowBarChartData = [];
+        this.isDataAvailable = false;
+        this.contractIds = [];
         this.GetActiveContractIdsBarChart();
+        this.GetActiveContracts();
     }
     SlaDashboardComponent.prototype.GetActiveContractIdsBarChart = function () {
         var mainthis = this;
@@ -97,10 +100,15 @@ var SlaDashboardComponent = (function () {
                 { data: [sesitYr3, fipsYr3, ecYr3, mpsitYr3], label: 'Year 3' },
                 { data: [sesitYr4, fipsYr4, ecYr4, mpsitYr4], label: 'Year 4' }
             ];
+            mainthis.isDataAvailable = true;
         });
     };
-    SlaDashboardComponent.prototype.RefreshSowBarChart = function () {
-        this.GetActiveContractIdsBarChart();
+    SlaDashboardComponent.prototype.GetActiveContracts = function () {
+        var mainthis = this;
+        this.sowService.getActiveContracts()
+            .subscribe(function (data) {
+            mainthis.contractIds = data;
+        });
     };
     return SlaDashboardComponent;
 }());

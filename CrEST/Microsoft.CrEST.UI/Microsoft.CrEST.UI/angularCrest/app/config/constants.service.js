@@ -20,6 +20,7 @@ var ConstantService = (function () {
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
                 getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
+                getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
                 //slp
                 //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
                 getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',

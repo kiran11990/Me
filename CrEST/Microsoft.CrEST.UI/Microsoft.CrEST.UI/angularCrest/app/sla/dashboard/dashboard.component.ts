@@ -10,7 +10,6 @@ import { Sow } from '../shared/models/sow';
 export class SlaDashboardComponent {
 
     private sowData: Array<Sow> = [];
-
     public sowBarChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true
@@ -19,11 +18,15 @@ export class SlaDashboardComponent {
     public sowBarChartType: string = 'bar';
     public sowBarChartLegend: boolean = true;
     public sowBarChartData: any[] = [];
+    public isDataAvailable: boolean = false;
+
+
+    public contractIds: Array<Sow> = [];
 
     constructor(private sowService: SowService) {
         this.GetActiveContractIdsBarChart();
+        this.GetActiveContracts();
     }
-
 
     private GetActiveContractIdsBarChart() {
         var mainthis = this;
@@ -108,10 +111,17 @@ export class SlaDashboardComponent {
                     { data: [sesitYr3, fipsYr3, ecYr3, mpsitYr3], label: 'Year 3' },
                     { data: [sesitYr4, fipsYr4, ecYr4, mpsitYr4], label: 'Year 4' }
                 ];
+
+                mainthis.isDataAvailable = true;
             });
     }
 
-    public RefreshSowBarChart() {
-        this.GetActiveContractIdsBarChart();
+    private GetActiveContracts(){
+        var mainthis = this;
+        this.sowService.getActiveContracts()
+            .subscribe(data => {
+                mainthis.contractIds = data;
+            });
     }
+    
 }

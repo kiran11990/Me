@@ -5,8 +5,9 @@
 </div>
 
 <div class="row">
-    <div>
-        <div style="display: block">
+    <div class="col-lg-6">
+        <div>SOW Amounts(Per Year)</div>
+        <div style="display: block" *ngIf="isDataAvailable">>
             <canvas baseChart
                     [datasets]="sowBarChartData"
                     [labels]="sowBarChartLabels"
@@ -14,9 +15,21 @@
                     [legend]="sowBarChartLegend"
                     [chartType]="sowBarChartType"></canvas>
         </div>
-        <button (click)="RefreshSowBarChart()">Update</button>
     </div>
-    <div>
-        Second chart
+    <div class="col-lg-6" style="height:500px">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Contract ID</th>
+                    <th>Infy Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of contractIds" style="height:12px">
+                    <td>{{item.contractId}}</td>
+                    <td>{{item.infyOwner}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

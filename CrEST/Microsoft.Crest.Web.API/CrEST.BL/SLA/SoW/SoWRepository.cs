@@ -85,6 +85,32 @@ namespace CrEST.BL
             }
         }
 
+        public IEnumerable<SowData> GetActiveContracts()
+        {
+            List<SowData> sows = new List<SowData>();
+
+            using (CrESTContext db = new CrESTContext())
+            {
+                db.Database.OpenConnection();
+                DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+                cmd.CommandText = "spGetActiveContracts";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SowData sow = new SowData();
+                        sow.ContractId = reader.GetInt32(0);
+                        sow.InfyOwner = reader.IsDBNull(1)? string.Empty : reader.GetString(1);
+                        sow.SoweffectiveDate = reader.GetDateTime(2);
+                        sow.SowexpirationDate = reader.GetDateTime(3);
+                        sows.Add(sow);
+                    }
+                }
+            }
+            return sows;
+        }
 
         private IEnumerable<SowData> SearchSow(int contractId, int itOrg, string msOwner)
         {
