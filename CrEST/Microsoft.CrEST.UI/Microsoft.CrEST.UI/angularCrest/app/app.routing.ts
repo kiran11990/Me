@@ -10,4 +10,4 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: 'not-found' }
 ];
 
-export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: true });

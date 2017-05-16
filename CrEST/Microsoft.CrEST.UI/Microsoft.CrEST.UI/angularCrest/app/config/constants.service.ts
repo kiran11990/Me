@@ -14,7 +14,10 @@ export class ConstantService {
             apiLocations: {
                 baseUrl: this.apiBaseUrl,
                 //getsow: this.apiBaseUrl + 'api/sow'
-                getsow: 'http://localhost:52537/configMetadata/sample.json'
+                getApplication:'http://localhost:52537/configMetadata/application.json',
+                getsow: 'http://localhost:52537/configMetadata/sample.json',
+                getservice: 'http://localhost:52537/configMetadata/service.json'
+               
             }
         };
     }

@@ -7,9 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { SharedModule } from '../../shared/shared.module';
 import { SlaServiceComponent } from './serviceline.component';
+import { ServicelineFormComponent } from './serviceformaddupdate.component';
+import { Sservice } from '../shared/services/service.service';
 var SlaServiceModule = (function () {
     function SlaServiceModule() {
     }
@@ -22,10 +26,18 @@ SlaServiceModule = __decorate([
             FormsModule,
             ReactiveFormsModule,
             RouterModule,
-            HttpModule
+            HttpModule,
+            SharedModule,
+            BrowserModule
         ],
         declarations: [
-            SlaServiceComponent
+            SlaServiceComponent, ServicelineFormComponent
+        ],
+        //exports: [
+        //    SlaServiceComponent
+        //],
+        providers: [
+            Sservice
         ]
     })
 ], SlaServiceModule);

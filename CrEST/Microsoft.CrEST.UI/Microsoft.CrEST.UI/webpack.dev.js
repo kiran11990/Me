@@ -38,13 +38,13 @@ module.exports = {
                 loader: 'file-loader?name=assets/[name].[ext]',
             },
             //// Load css files which are required in vendor.ts
-            //{
-            //    test: /\.css$/,
-            //    loader: ExtractTextPlugin.extract({
-            //        fallbackLoader: "style-loader",
-            //        loader: "css-loader"
-            //    })
-            //}
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract({
+                    fallbackLoader: "style-loader",
+                    loader: "css-loader"
+                })
+            }
         ]
     },
     plugins: [

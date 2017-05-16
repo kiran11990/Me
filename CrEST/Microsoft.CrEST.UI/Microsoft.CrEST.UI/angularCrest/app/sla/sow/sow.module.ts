@@ -7,6 +7,8 @@ import { HttpModule } from '@angular/http';
 import { SowComponent } from './landing/sow.component';
 import { SowService } from '../shared/services/sows.service';
 import { SowFormComponent } from './sow-form/sow-form.component';
+import { SharedModule } from '../../shared/shared.module';
+
 
 @NgModule({
     imports: [
@@ -14,7 +16,7 @@ import { SowFormComponent } from './sow-form/sow-form.component';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        HttpModule
+        HttpModule, SharedModule
     ],
     declarations: [
         SowComponent,

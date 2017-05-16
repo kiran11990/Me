@@ -3,9 +3,9 @@
 @Component({
     selector: 'auto-complete',
     templateUrl: './autocomplete.component.html',
-    styleUrls: ['./autocomplete.component.css'],
+    styles: [String(require('./autocomplete.component.css'))],
 })
-export class VIAutoCompleteComponent implements OnInit {
+export class AutoCompleteComponent implements OnInit {
     @Input() elementToBind: HTMLElement;
     @Input() values: string[];
     @Input() tagId: string;
@@ -20,66 +20,21 @@ export class VIAutoCompleteComponent implements OnInit {
     ngOnInit() {
 
         var _this = this;
-        this.elementToBind.addEventListener("keydown", function (e) {
-
-            if (e.keyCode == 38) {
-
-                if (_this.foucusedItem > 1) {
-                    _this.foucusedItem = _this.foucusedItem - 1;
-                    _this.scrollIndex -= 25;
-
-                    if (_this.scrollIndex == _this.scrollMax - 125) {
-
-                        document.getElementById(_this.tagId).scrollTop = _this.scrollIndex - 100;
-                        _this.scrollMax -= 100;
-                    }
-                }
-            }
-            else if (e.keyCode == 40) {
-
-
-                if (_this.foucusedItem < _this.values.length) {
-                    _this.foucusedItem = _this.foucusedItem + 1;
-                    _this.scrollIndex += 25;
-
-                    if (_this.scrollIndex == _this.scrollMax) {
-                        document.getElementById(_this.tagId).scrollTop = _this.scrollIndex - 25;
-                        _this.scrollMax += 100;
-                    }
-                }
-            }
-            else {
-                if (e.keyCode == 13) {
-                    _this.notifyOnSelected.emit(_this.values[_this.foucusedItem - 1]);
-                    _this.resetPopupSettings(false);
-                }
-                else if (e.keyCode == 9) {
-                    _this.resetPopupSettings(false);
-                }
-                else {
-                    _this.resetPopupSettings(true);
-                }
-                document.getElementById(_this.tagId).scrollTop = 0;
-            }
-
-
-
-        });
         this.elementToBind.addEventListener("blur", function (e) {
-
             if (!_this.isFocusedOnItem) {
                 var currentValue = (<HTMLInputElement>this).value;
                 
                 if (currentValue != null && currentValue.trim() != "" && _this.values.indexOf(currentValue) == -1) {
                     currentValue = "";
-                   alert("valid");
                 }
-                else if (currentValue == "" && _this.values.indexOf(currentValue) == -1) {
+                else if (currentValue.trim() == "" && currentValue == undefined && _this.values.indexOf(currentValue) == -1) {
                     currentValue = "";
+                    _this.resetPopupSettings(false);
                 }
-                else if (currentValue.trim() == "") {
+                else if (currentValue.trim() == "" || currentValue == undefined) {
                     currentValue = "";
-                    alert("invalid");
+                    _this.resetPopupSettings(false);
+                    //alert("invalid");
                 }
 
                 _this.resetPopupSettings(false);
@@ -87,9 +42,11 @@ export class VIAutoCompleteComponent implements OnInit {
             }
         });
         this.elementToBind.addEventListener("focus", function (e) {
+            var currentValue = (<HTMLInputElement>this).value;
             _this.isFocusedOnItem = false;
             _this.resetPopupSettings(true);
         });
+
     }
 
 

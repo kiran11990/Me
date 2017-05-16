@@ -10,6 +10,7 @@ import { SlaServiceModule } from "./serviceline/serviceline.module";
 import { SlaApplicationModule } from "./application/application.module";
 import { SlpModule } from "./slp/slp.module";
 import { SlaRouting } from "./sla.routing";
+import { SharedModule } from '../shared/shared.module';
 var SlaModule = (function () {
     function SlaModule() {
     }
@@ -17,7 +18,7 @@ var SlaModule = (function () {
 }());
 SlaModule = __decorate([
     NgModule({
-        imports: [SowModule, SlaServiceModule, SlaApplicationModule, SlpModule, SlaRouting],
+        imports: [SowModule, SlaServiceModule, SlaApplicationModule, SlpModule, SlaRouting, SharedModule],
     })
 ], SlaModule);
 export { SlaModule };
