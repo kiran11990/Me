@@ -18,10 +18,20 @@ var ApplicationFormComponent = (function () {
         this.applicationService = applicationService;
         this.router = router;
         this.applicationList = new Application();
+        this.dropdownList = [];
         this.date = new Date();
         this.submitAttempt = false;
         this.outparam = '';
-        this.model = {
+        this.selectedItems = [];
+        this.dropdownSettings = {};
+        this.startDate = {
+            date: {
+                year: this.date.getFullYear(),
+                month: this.date.getMonth() + 1,
+                day: this.date.getDate()
+            }
+        };
+        this.endDate = {
             date: {
                 year: this.date.getFullYear(),
                 month: this.date.getMonth() + 1,
@@ -37,7 +47,11 @@ var ApplicationFormComponent = (function () {
         });
         //this.myDate = '2016-01-10';
     }
-    ApplicationFormComponent.prototype.onDateChanged = function (event) {
+    ApplicationFormComponent.prototype.onstartDateChanged = function (event) {
+        alert(event.formatted);
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
+    ApplicationFormComponent.prototype.onendDateChanged = function (event) {
         alert(event.formatted);
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     };

@@ -23,7 +23,14 @@ var ServicelineFormComponent = (function () {
         this.id = "";
         this.service = new Service();
         this.submitAttempt = false;
-        this.model = {
+        this.startDte = {
+            date: {
+                year: this.date.getFullYear(),
+                month: this.date.getMonth() + 1,
+                day: this.date.getDate()
+            }
+        };
+        this.endDate = {
             date: {
                 year: this.date.getFullYear(),
                 month: this.date.getMonth() + 1,
@@ -68,7 +75,11 @@ var ServicelineFormComponent = (function () {
     ServicelineFormComponent.prototype.submit = function () {
         console.log('success!');
     };
-    ServicelineFormComponent.prototype.onDateChanged = function (event) {
+    ServicelineFormComponent.prototype.onstartDateChanged = function (event) {
+        alert(event.formatted);
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
+    ServicelineFormComponent.prototype.onendDateChanged = function (event) {
         alert(event.formatted);
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     };

@@ -98,13 +98,20 @@ export class ServicelineFormComponent implements OnInit {
         console.log('success!');
     }
 
-    private model: Object = {
+    private startDte: Object = {
         date: {
             year: this.date.getFullYear(),
             month: this.date.getMonth() + 1,
             day: this.date.getDate()
         }
     };
+    private endDate: Object = {
+        date: {
+            year: this.date.getFullYear(),
+            month: this.date.getMonth() + 1,
+            day: this.date.getDate()
+        }
+    }
 
 
     private myDatePickerOptions: IMyDpOptions = {
@@ -113,12 +120,15 @@ export class ServicelineFormComponent implements OnInit {
     };
 
 
-    onDateChanged(event: IMyDateModel) {
+    onstartDateChanged(event: IMyDateModel) {
         alert(event.formatted)
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
 
-
+    onendDateChanged(event: IMyDateModel) {
+        alert(event.formatted)
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    }
     redirect() {
         if (confirm("Do you want Update")) {
         }

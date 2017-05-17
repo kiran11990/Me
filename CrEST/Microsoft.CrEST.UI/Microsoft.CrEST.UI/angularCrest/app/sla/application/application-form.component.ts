@@ -2,26 +2,29 @@
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Application } from "../shared/models/application";
+import { DropdownList } from "../shared/models/dropdownlist";
+import { SelectedItems } from "../shared/models/selecteditems";
 import { ApplicationService } from "./../shared/services/application.service";
 import { CommonModule } from '@angular/common';
 import { IMyDateModel } from 'mydatepicker';
 import { IMyDpOptions } from 'mydatepicker';
+
+
 @Component({
     selector: 'sla-applicationForm',
     template: require('./application-form.component.html'),
 
 })
-export class ApplicationFormComponent {
+export class ApplicationFormComponent implements OnInit {
     applicationList: Application = new Application();
+    public dropdownList: DropdownList[] = [];
     date: Date = new Date();
     submitAttempt = false;
     applicationForm: FormGroup;
 
     public outparam: string = '';
-    //private myDatePickerOptions: IMyDpOptions = {
-    //    // other options...
-    //    dateFormat: 'dd.mm.yyyy',
-    //};
+    public selectedItems: SelectedItems[] = [];
+    public dropdownSettings = {};
     public myDate: string;
     constructor(private _route: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder,) {
        
@@ -37,7 +40,7 @@ export class ApplicationFormComponent {
 
     }
     
-    private model: Object = {
+    private startDate: Object = {
         date: {
             year: this.date.getFullYear(),
             month: this.date.getMonth() + 1,
@@ -45,18 +48,27 @@ export class ApplicationFormComponent {
         }
     };
 
-
+    private endDate: Object = {
+        date: {
+            year: this.date.getFullYear(),
+            month: this.date.getMonth() + 1,
+            day: this.date.getDate()
+        }
+    };
     private myDatePickerOptions: IMyDpOptions = {
         // other options...
         dateFormat: 'dd.mm.yyyy',
     };
 
 
-    onDateChanged(event: IMyDateModel) {
-        alert(event.formatted)
+    onstartDateChanged(event: IMyDateModel) {
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
 
+    onendDateChanged(event: IMyDateModel) {
+       
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    }
     ngOnInit() {
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._route.snapshot.params['id'] != null) {

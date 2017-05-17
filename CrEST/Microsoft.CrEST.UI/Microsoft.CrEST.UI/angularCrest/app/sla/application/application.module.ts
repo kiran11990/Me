@@ -20,7 +20,7 @@ import { MyDatePickerModule } from 'mydatepicker';
         RouterModule,
         HttpModule,
         SharedModule,
-        MyDatePickerModule
+        MyDatePickerModule,
     ],
     declarations: [
         SlaApplicationComponent, ApplicationFormComponent

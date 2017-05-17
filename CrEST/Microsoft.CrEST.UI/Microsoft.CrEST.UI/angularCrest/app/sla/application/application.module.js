@@ -28,7 +28,7 @@ SlaApplicationModule = __decorate([
             RouterModule,
             HttpModule,
             SharedModule,
-            MyDatePickerModule
+            MyDatePickerModule,
         ],
         declarations: [
             SlaApplicationComponent, ApplicationFormComponent
