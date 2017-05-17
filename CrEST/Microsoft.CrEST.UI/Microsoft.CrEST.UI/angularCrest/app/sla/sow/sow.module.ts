@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -7,8 +7,8 @@ import { HttpModule } from '@angular/http';
 import { SowComponent } from './landing/sow.component';
 import { SowService } from '../shared/services/sows.service';
 import { SowFormComponent } from './sow-form/sow-form.component';
-import { SharedModule } from '../../shared/shared.module';
 
+import { HotTableModule } from 'ng2-handsontable';
 
 @NgModule({
     imports: [
@@ -16,7 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        HttpModule, SharedModule
+        HttpModule,
+        HotTableModule
     ],
     declarations: [
         SowComponent,
@@ -27,6 +28,7 @@ import { SharedModule } from '../../shared/shared.module';
     ],
     providers: [
         SowService
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SowModule { }
