@@ -60,11 +60,12 @@
     "json-loader": "^0.5.4",
     "lite-server": "^2.3.0",
     "lodash": "^4.17.4",
-    "node-sass": "^4.5.2",
+    "mdn-polyfills": "^2.2.0",
+    "node-sass": "^4.5.3",
     "protractor": "~5.1.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1",
-    "sass-loader": "^6.0.3",
+    "sass-loader": "^6.0.5",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.16.1",
     "ts-helpers": "^1.1.2",
@@ -72,9 +73,8 @@
     "tslint-loader": "^3.5.2",
     "typescript": "~2.2.2",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.3",
-    "webpack-dev-server": "^2.4.2",
-    "mdn-polyfills": "^2.2.0"
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "-vs-binding": {
     "BeforeBuild": [
