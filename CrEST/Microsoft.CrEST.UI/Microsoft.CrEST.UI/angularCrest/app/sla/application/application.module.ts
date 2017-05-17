@@ -10,7 +10,7 @@ import { ApplicationService } from '../shared/services/application.service';
 import { SharedModule } from '../../shared/shared.module';
 import { SlaApplicationComponent } from './application.component';
 import { ApplicationFormComponent } from './application-form.component';
-
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
     imports: [
@@ -19,7 +19,8 @@ import { ApplicationFormComponent } from './application-form.component';
         ReactiveFormsModule,
         RouterModule,
         HttpModule,
-        SharedModule
+        SharedModule,
+        MyDatePickerModule
     ],
     declarations: [
         SlaApplicationComponent, ApplicationFormComponent

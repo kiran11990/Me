@@ -105,7 +105,9 @@
                 <div class="row" style="margin-top:12px">
                     <div class="col-xs-2"> <label>Start Date</label></div>
                     <div class="col-xs-6">
-                        <input class="form-control" type="text" name="Startdate" />
+                      
+                        <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                                       (dateChanged)="onDateChanged($event)"  [(ngModel)]="model"></my-date-picker>
                     </div>
                 </div>
             </div>

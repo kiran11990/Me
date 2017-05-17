@@ -10,6 +10,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SlaServiceComponent } from './serviceline.component';
 import { ServicelineFormComponent } from './serviceformaddupdate.component';
 import { Sservice } from '../shared/services/service.service';
+import { MyDatePickerModule } from 'mydatepicker'
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { Sservice } from '../shared/services/service.service';
     RouterModule,
       HttpModule,
       SharedModule,
-      BrowserModule
+      BrowserModule,
+      MyDatePickerModule
   ],
   declarations: [
       SlaServiceComponent, ServicelineFormComponent

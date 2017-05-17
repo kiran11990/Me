@@ -1,11 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { Sow } from '../../shared/models/sow';
-//import { SowService } from '../../shared/services/sows.service';
-
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
+import { IMyDateModel } from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 
 
 @Component({
@@ -14,12 +13,12 @@ import { Service } from "../shared/models/service";
 })
 
 export class ServicelineFormComponent implements OnInit {
-
+    date: Date = new Date();
     serviceForm: FormGroup;
     title: string;
     public serviceList: Service[] = [];
     public editServiceList: Service[] = [];
-    public date: Date;
+
     public id: string = "";
 
     service: Service = new Service();
@@ -63,23 +62,7 @@ export class ServicelineFormComponent implements OnInit {
         });
     }
 
-    submitAttempt = false;
-
-    initSubmit() {
-        this.submitAttempt = true;
-    }
-
-    submit() {
-        console.log('success!');
-    }
-
-    redirect() {
-        if (confirm("Do you want Update")) {
-        }
-        else {
-            this.router.navigate(['services']);
-        }
-    }
+    
 
     ngOnInit() {
         if (this.route.snapshot.params['id'] != null) {
@@ -104,6 +87,45 @@ export class ServicelineFormComponent implements OnInit {
         }
     }
 
+
+    submitAttempt = false;
+
+    initSubmit() {
+        this.submitAttempt = true;
+    }
+
+    submit() {
+        console.log('success!');
+    }
+
+    private model: Object = {
+        date: {
+            year: this.date.getFullYear(),
+            month: this.date.getMonth() + 1,
+            day: this.date.getDate()
+        }
+    };
+
+
+    private myDatePickerOptions: IMyDpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
+
+
+    onDateChanged(event: IMyDateModel) {
+        alert(event.formatted)
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    }
+
+
+    redirect() {
+        if (confirm("Do you want Update")) {
+        }
+        else {
+            this.router.navigate(['services']);
+        }
+    }
     save() {
         var result,
             sowValue = this.serviceForm.value;

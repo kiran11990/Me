@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { AutoCompleteComponent } from '../shared/autocomplete/autocomplete.component';
 import { UserFilterPipe } from '../shared/pipe/userfilter.pipe';
 import { SearchPipe } from '../shared/pipe/search.pipe';
+import { MyDatePickerModule } from 'mydatepicker';
 var SharedModule = (function () {
     function SharedModule() {
     }
@@ -17,12 +18,12 @@ var SharedModule = (function () {
 }());
 SharedModule = __decorate([
     NgModule({
-        imports: [BrowserModule,
+        imports: [BrowserModule, MyDatePickerModule,
             FormsModule],
         declarations: [
             AutoCompleteComponent, UserFilterPipe, SearchPipe
         ],
-        exports: [AutoCompleteComponent, UserFilterPipe, SearchPipe]
+        exports: [AutoCompleteComponent, UserFilterPipe, SearchPipe, MyDatePickerModule]
     })
 ], SharedModule);
 export { SharedModule };

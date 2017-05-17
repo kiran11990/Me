@@ -1,11 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
-
 import { Http, Response, Headers } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
 
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";

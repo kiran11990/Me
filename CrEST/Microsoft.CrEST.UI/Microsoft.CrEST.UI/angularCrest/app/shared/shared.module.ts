@@ -6,13 +6,14 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AutoCompleteComponent } from '../shared/autocomplete/autocomplete.component'
 import { UserFilterPipe } from '../shared/pipe/userfilter.pipe';
 import { SearchPipe } from '../shared/pipe/search.pipe';
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
-    imports: [BrowserModule,
+    imports: [BrowserModule, MyDatePickerModule,
         FormsModule],
     declarations: [
         AutoCompleteComponent, UserFilterPipe, SearchPipe],
-    exports: [AutoCompleteComponent, UserFilterPipe, SearchPipe]
+    exports: [AutoCompleteComponent, UserFilterPipe, SearchPipe, MyDatePickerModule]
    
 })
 export class SharedModule { }

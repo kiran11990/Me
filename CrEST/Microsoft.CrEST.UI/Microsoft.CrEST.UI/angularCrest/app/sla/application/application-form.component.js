@@ -18,13 +18,29 @@ var ApplicationFormComponent = (function () {
         this.applicationService = applicationService;
         this.router = router;
         this.applicationList = new Application();
+        this.date = new Date();
         this.submitAttempt = false;
         this.outparam = '';
+        this.model = {
+            date: {
+                year: this.date.getFullYear(),
+                month: this.date.getMonth() + 1,
+                day: this.date.getDate()
+            }
+        };
+        this.myDatePickerOptions = {
+            // other options...
+            dateFormat: 'dd.mm.yyyy',
+        };
         this.applicationForm = formBuilder.group({
             'msowneralias': [null, Validators.required]
         });
         //this.myDate = '2016-01-10';
     }
+    ApplicationFormComponent.prototype.onDateChanged = function (event) {
+        alert(event.formatted);
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         //called after the constructor and called  after the first ngOnChanges() 
@@ -45,7 +61,6 @@ var ApplicationFormComponent = (function () {
         if (confirm("Do you want Update")) {
         }
         else {
-            debugger;
             this.router.navigate(['applications']);
         }
     };

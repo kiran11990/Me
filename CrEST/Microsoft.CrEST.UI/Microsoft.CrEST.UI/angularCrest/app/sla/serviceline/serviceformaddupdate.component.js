@@ -10,8 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { Sow } from '../../shared/models/sow';
-//import { SowService } from '../../shared/services/sows.service';
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
 var ServicelineFormComponent = (function () {
@@ -19,30 +17,29 @@ var ServicelineFormComponent = (function () {
         this.router = router;
         this.route = route;
         this.Sservice = Sservice;
+        this.date = new Date();
         this.serviceList = [];
         this.editServiceList = [];
         this.id = "";
         this.service = new Service();
         this.submitAttempt = false;
+        this.model = {
+            date: {
+                year: this.date.getFullYear(),
+                month: this.date.getMonth() + 1,
+                day: this.date.getDate()
+            }
+        };
+        this.myDatePickerOptions = {
+            // other options...
+            dateFormat: 'dd.mm.yyyy',
+        };
         this.serviceForm = formBuilder.group({
             'msowneralias': [null, Validators.required],
             'serviceline': [null, Validators.required],
             'scid': [null, Validators.required]
         });
     }
-    ServicelineFormComponent.prototype.initSubmit = function () {
-        this.submitAttempt = true;
-    };
-    ServicelineFormComponent.prototype.submit = function () {
-        console.log('success!');
-    };
-    ServicelineFormComponent.prototype.redirect = function () {
-        if (confirm("Do you want Update")) {
-        }
-        else {
-            this.router.navigate(['services']);
-        }
-    };
     ServicelineFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.route.snapshot.params['id'] != null) {
@@ -63,6 +60,23 @@ var ServicelineFormComponent = (function () {
             if (this.serviceList[i].contractid == this.route.snapshot.params['id']) {
                 this.service = this.serviceList[i];
             }
+        }
+    };
+    ServicelineFormComponent.prototype.initSubmit = function () {
+        this.submitAttempt = true;
+    };
+    ServicelineFormComponent.prototype.submit = function () {
+        console.log('success!');
+    };
+    ServicelineFormComponent.prototype.onDateChanged = function (event) {
+        alert(event.formatted);
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
+    ServicelineFormComponent.prototype.redirect = function () {
+        if (confirm("Do you want Update")) {
+        }
+        else {
+            this.router.navigate(['services']);
         }
     };
     ServicelineFormComponent.prototype.save = function () {
