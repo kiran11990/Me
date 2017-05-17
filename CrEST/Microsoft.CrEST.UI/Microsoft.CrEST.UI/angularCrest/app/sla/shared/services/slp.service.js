@@ -19,18 +19,18 @@ var SlpService = (function () {
         this._constantService = _constantService;
         this.commonService = commonService;
         this.http = http;
-        this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
+        this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
     }
     SlpService.prototype.GetReportingPeriods = function () {
-        return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ReporintPeriods; }).catch(this.commonService.handleError);
+        return this.http.get(this.getReportingPeriod)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    SlpService.prototype.GetSlpByPeriod = function (fiscalYear) {
-        return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
+    SlpService.prototype.GetSlps = function (period, useralias) {
+        return this.http.get(this.getSlps + '/' + period + '/' + useralias)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.SaveSLPs = function (data) {
         return this.http.post(this.saveSLPs, data)

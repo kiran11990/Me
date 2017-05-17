@@ -12,26 +12,26 @@ import { CommonService } from '../../../shared/common.service'
 @Injectable()
 export class SlpService {
 
-    private getCurrentPeriodSlpByUserAlias: string;
     private saveSLPs: string;
     private generateSLPforCurrentPeriod: string;
     private getSlps: string;
+    private getReportingPeriod: string;
 
     constructor(private _constantService: ConstantService, private commonService: CommonService,  private http: Http) {
-        this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
+        this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
     }
 
     GetReportingPeriods() {
-        return this.http.get(this.getSlps)
-            .map(res => res.json().ReporintPeriods as ReportingPeriod[]).catch(this.commonService.handleError);
+        return this.http.get(this.getReportingPeriod)
+            .map(res => res.json() as ReportingPeriod[]).catch(this.commonService.handleError);
     }
 
-    GetSlpByPeriod(fiscalYear: string) {
-        return this.http.get(this.getSlps)
-            .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
+    GetSlps(period: string, useralias: string) {
+        return this.http.get(this.getSlps + '/' + period + '/' + useralias)
+            .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 
     SaveSLPs(data: Array<any>) {

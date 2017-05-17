@@ -22,11 +22,10 @@ var ConstantService = (function () {
                 getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
                 //slp
-                //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
-                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
                 saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
-                generateSLPforCurrentPeriod: this.apiBaseUrl + 'api/slp/generateSLPforCurrentPeriod',
-                getSlps: 'http://localhost:52537/configMetadata/slp.json'
+                generateSLPforCurrentPeriod: this.apiBaseUrl + 'slp/generateSLPforCurrentPeriod',
+                getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
+                getReportingPeriod: this.apiBaseUrl + 'slp/GetReportingPeriod'
             }
         };
     }

@@ -86,7 +86,7 @@ export class SlpComponent implements OnInit {
             mainThis.periods = result;
             mainThis.selectedPeriod = mainThis.periods[0];
             mainThis.selectedPeriod.id = mainThis.periods[0].id;
-            mainThis.GetSLPData(mainThis.selectedPeriod.fiscalYear)
+            mainThis.GetSLPData(mainThis.selectedPeriod.period)
         });
     }
 
@@ -128,14 +128,14 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('supplier');
         this.colWidths.push(50);
         this.columns.push({
-            data: "supplier",
+            data: "supplierName",
             readOnly: true
         });
 
         this.colHeaders.push('scid');
         this.colWidths.push(50);
         this.columns.push({
-            data: "scid",
+            data: "sCID",
             readOnly: true
         });
 
@@ -156,21 +156,21 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Crest Level 1 Service');
         this.colWidths.push(50);
         this.columns.push({
-            data: "crestL1Service",
+            data: "crestevel1",
             readOnly: true
         });
 
         this.colHeaders.push('Crest Level 2 Service');
         this.colWidths.push(50);
         this.columns.push({
-            data: "crestL2Service",
+            data: "crestLevel2",
             readOnly: true
         });
 
         this.colHeaders.push('SLA ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "slaid",
+            data: "sLAID",
             readOnly: true
         });
 
@@ -212,7 +212,7 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Custom');
         this.colWidths.push(50);
         this.columns.push({
-            data: "custom",
+            data: "isCustom",
             readOnly: true
         });
 
@@ -233,9 +233,9 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Weight');
         this.colWidths.push(50);
         this.columns.push({
-            data: "weight",
+            data: "weightage",
             readOnly: true
-        });
+        }); 
 
         this.colHeaders.push('Remarks');
         this.colWidths.push(100);
