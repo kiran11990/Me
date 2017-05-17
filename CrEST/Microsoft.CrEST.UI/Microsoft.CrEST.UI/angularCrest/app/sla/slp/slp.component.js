@@ -73,7 +73,7 @@ var SlpComponent = (function () {
     };
     SlpComponent.prototype.GetSLPData = function (fiscalYear) {
         var _this = this;
-        this._slpService.GetSlpByPeriod(fiscalYear).subscribe(function (result) {
+        this._slpService.GetSlps(fiscalYear, '').subscribe(function (result) {
             //TODO : can we cleanup this?
             if (fiscalYear != "All") {
                 _this.data = result.filter(function (res) {

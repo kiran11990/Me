@@ -14,7 +14,7 @@ namespace Microsoft.Crest.Web.API.Controllers
         
 		public ServiceController()
 		{
-            _serviceRepository = new SlpRepository();
+            _serviceRepository = new ServiceRepository();
 		}
   
         [HttpGet]

@@ -92,7 +92,7 @@ export class SlpComponent implements OnInit {
 
     private GetSLPData(fiscalYear: string) {
         var _this = this;
-        this._slpService.GetSlpByPeriod(fiscalYear).subscribe((result: Array<Slp>) => {
+        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<Slp>) => {
             //TODO : can we cleanup this?
             if (fiscalYear != "All") {
                 _this.data = result.filter(res => {
