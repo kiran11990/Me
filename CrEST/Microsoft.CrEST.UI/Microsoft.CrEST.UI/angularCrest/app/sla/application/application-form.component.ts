@@ -2,13 +2,12 @@
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Application } from "../shared/models/application";
-import { DropdownList } from "../shared/models/dropdownlist";
-import { SelectedItems } from "../shared/models/selecteditems";
+import { ApplicationData } from "../shared/models/applicationdata";
 import { ApplicationService } from "./../shared/services/application.service";
 import { CommonModule } from '@angular/common';
 import { IMyDateModel } from 'mydatepicker';
 import { IMyDpOptions } from 'mydatepicker';
-
+import { Http } from '@angular/http';
 
 @Component({
     selector: 'sla-applicationForm',
@@ -17,16 +16,15 @@ import { IMyDpOptions } from 'mydatepicker';
 })
 export class ApplicationFormComponent implements OnInit {
     applicationList: Application = new Application();
-    public dropdownList: DropdownList[] = [];
+    applicationData: ApplicationData = new ApplicationData();
     date: Date = new Date();
     submitAttempt = false;
     applicationForm: FormGroup;
 
     public outparam: string = '';
-    public selectedItems: SelectedItems[] = [];
     public dropdownSettings = {};
     public myDate: string;
-    constructor(private _route: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder,) {
+    constructor(private _route: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder, private http: Http) {
        
 
         this.applicationForm = formBuilder.group({
@@ -40,13 +38,22 @@ export class ApplicationFormComponent implements OnInit {
 
     }
     
-    private startDate: Object = {
+     startDate: Object = {
         date: {
             year: this.date.getFullYear(),
             month: this.date.getMonth() + 1,
             day: this.date.getDate()
         }
     };
+
+     convert(str: any) {
+    var date = new Date(str),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+}
+
+
 
     private endDate: Object = {
         date: {
@@ -62,7 +69,12 @@ export class ApplicationFormComponent implements OnInit {
 
 
     onstartDateChanged(event: IMyDateModel) {
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+        //debugger;
+        //var result = this.convert(event.jsdate);
+        //this.applicationData.startDate = event.jsdate;
+        //alert(this.applicationData.startDate + "" +event.jsdate)
+        
+        
     }
 
     onendDateChanged(event: IMyDateModel) {
@@ -72,15 +84,20 @@ export class ApplicationFormComponent implements OnInit {
     ngOnInit() {
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._route.snapshot.params['id'] != null) {
-            this.applicationService.getApplications()
+            var id = this._route.snapshot.params['id'];
+            this.applicationService.getApplicationyId(id)
                 .subscribe(data => {
                     this.applicationList = data
                     
                 })
         }
     }
-    initSubmit() {
-        this.submitAttempt = true;
+    initSubmit(applicationData: ApplicationData) {
+        //this.submitAttempt = true;
+        this.applicationService.addApplication(this.applicationData)
+            .subscribe((result: boolean) => {
+               var result = result;
+            });
     }
 
     submit() {

@@ -1,4 +1,4 @@
-﻿/// <reference path="../autocomplete/autocomplete.component.ts" />
+﻿
 import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({

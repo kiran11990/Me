@@ -12,8 +12,13 @@ export class ConstantService {
         this.apiBaseUrlWithVersion = this.apiBaseUrl + "/api/v1.0";
         this.CONFIG = {
             apiLocations: {
-                baseUrl: this.apiBaseUrl,
-
+                baseUrl: this.apiBaseUrl, 
+                getApplication: 'http://localhost:53430/api/Application/GetAllApplications',
+                addApplication: 'http://localhost:53430/api/Application/SaveApplication',
+                findApplicationUrl: 'http://localhost:53430/api/Application/FindApplication/',
+                getApplicationbyId: 'http://localhost:53430/api/Application/GetApplicationById/',
+                //getsow: 'http://localhost:52537/configMetadata/sample.json',
+                getservice: 'http://localhost:52537/configMetadata/service.json',
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
                 getsow: 'http://localhost:52537/configMetadata/sow.json',

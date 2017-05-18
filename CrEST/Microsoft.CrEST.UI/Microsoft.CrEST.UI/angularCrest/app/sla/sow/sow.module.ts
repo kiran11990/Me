@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { SowComponent } from './landing/sow.component';
 import { SowService } from '../shared/services/sows.service';
 import { SowFormComponent } from './sow-form/sow-form.component';
+import { SharedModule } from '../../shared/shared.module';
 
 import { HotTableModule } from 'ng2-handsontable';
 
@@ -17,7 +18,8 @@ import { HotTableModule } from 'ng2-handsontable';
         ReactiveFormsModule,
         RouterModule,
         HttpModule,
-        HotTableModule
+        HotTableModule,
+        SharedModule
     ],
     declarations: [
         SowComponent,

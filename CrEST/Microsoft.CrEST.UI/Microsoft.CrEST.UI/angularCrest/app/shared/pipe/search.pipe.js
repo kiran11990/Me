@@ -9,46 +9,11 @@ import { Pipe } from '@angular/core';
 var SearchPipe = (function () {
     function SearchPipe() {
     }
-    SearchPipe.prototype.transform = function (value, args, arg1, arg2) {
-        var contactId = args;
-        var serviceLine = arg1;
-        var application = arg2;
-        if ((contactId.trim() !== '' || null || undefined) && (serviceLine.trim() !== '' || null || undefined) && (application.trim() !== '' || null || undefined)) {
-            return value.filter(function (value) {
-                return (value.contactId == contactId) && (value.serviceLine.toLowerCase().indexOf(serviceLine.toLowerCase()) !== -1) && (value.application.toLowerCase().indexOf(application.toLowerCase()) !== -1);
-            });
+    SearchPipe.prototype.transform = function (value, q) {
+        if (!q || q === '') {
+            return value;
         }
-        else if ((contactId.trim() != "" || null || undefined) && (serviceLine.trim() != "" || null || undefined) && (application.trim() == '' || null || undefined)) {
-            return value.filter(function (value) {
-                return (value.contactId == contactId) && (value.serviceLine.toLowerCase().indexOf(serviceLine.toLowerCase()) !== -1);
-            });
-        }
-        else if ((contactId.trim() != "" || null || undefined) && (serviceLine.trim() == "" || null || undefined) && (application.trim() != "" || null || undefined)) {
-            return value.filter(function (value) {
-                return (value.contactId == contactId) && (value.application.toLowerCase().indexOf(application.toLowerCase()) !== -1);
-            });
-        }
-        else if ((contactId.trim() == "" || null || undefined) && (serviceLine.trim() != "" || null || undefined) && (application.trim() != '' || null || undefined)) {
-            return value.filter(function (value) {
-                return (value.application.toLowerCase().indexOf(application.toLowerCase()) !== -1) && (value.serviceLine.toLowerCase().indexOf(serviceLine.toLowerCase()) !== -1);
-            });
-        }
-        else if (serviceLine.trim() != "" || null || undefined) {
-            return value.filter(function (value) {
-                return (value.serviceLine.toLowerCase().indexOf(serviceLine.toLowerCase()) !== -1);
-            });
-        }
-        else if (contactId.trim() != "" || null || undefined) {
-            return value.filter(function (value) {
-                return (value.contactId == contactId);
-            });
-        }
-        else if (application.trim() != "" || null || undefined) {
-            return value.filter(function (value) {
-                return (value.application.toLowerCase().indexOf(application.toLowerCase()) !== -1);
-            });
-        }
-        return value;
+        return value.filter(function (item) { return -1 < item.serviceLine.toLowerCase().indexOf(q.toLowerCase()); });
     };
     return SearchPipe;
 }());

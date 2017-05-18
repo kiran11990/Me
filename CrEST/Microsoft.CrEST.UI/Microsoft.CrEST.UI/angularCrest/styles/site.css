@@ -527,7 +527,14 @@ table.dataTable thead .sorting_desc_disabled {
             border-left-width: 0;
         }
 }
+.my-pagination {
+    background: red;
+}
+.my-pagination ul li:hover{
+   cursor:pointer;
 
+   
+}
 /*table {
     display: block;
     height: 500px;

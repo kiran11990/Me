@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import {ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { Router } from '@angular/router';
@@ -7,9 +7,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Application } from "../shared/models/application";
 import { ApplicationService } from "./../shared/services/application.service";
+import { PaginationInstance } from 'ngx-pagination';
+
+
 @Component({
     selector: 'sla-application',
     template: require('./application.component.html'),
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class SlaApplicationComponent {
     
@@ -38,7 +42,6 @@ export class SlaApplicationComponent {
             .subscribe(data => {
                 this.applicationList = data
                 if (this.applicationList) {
-                   /* debugge*/
                     this.autoComplete();
                 }
             });
@@ -52,10 +55,15 @@ export class SlaApplicationComponent {
     public searchServiceLine = '';
     public searchApplication = '';
     find() {
-        
-        this.searchContactId = this.contactId.trim();
-        this.searchServiceLine = this.serviceLine.trim();
-        this.searchApplication = this.application.trim();
+        //this.searchContactId = this.contactId.trim();
+        //this.searchServiceLine = this.serviceLine.trim();
+        //this.searchApplication = this.application.trim();
+        this.applicationService.findApplication(this.contactId, this.serviceLine, this.application)
+            .subscribe(data => {
+                this.applicationList = data
+
+            })
+       
     }
 
 
@@ -65,11 +73,11 @@ export class SlaApplicationComponent {
     //    this.id = id;
     //    this.router.navigate(['/applications', this.id]);
     //}
-    notifyContactId(ContactId: string) {
-        if (event) {
-            this.contactId = ContactId;
-        }
-    }
+    //notifyContactId(ContactId: string) {
+    //    if (event) {
+    //        this.contactId = ContactId;
+    //    }
+    //}
 
 
     notifyServiceLine(serviceLine: string) {
@@ -87,11 +95,48 @@ export class SlaApplicationComponent {
     autoComplete() {
         for (var i = 0; i < this.applicationList.length; i++) {
             //alert(this.applicationList[i].application +"this.applicationList[i].application")
-            this.ApplicationLists.push(this.applicationList[i].application);
-            this.contactIdList.push(this.applicationList[i].contactId);
+            this.ApplicationLists.push(this.applicationList[i].application1);
+            //this.contactIdList.push(this.applicationList[i].contactId);
             this.servicelineList.push(this.applicationList[i].serviceLine);
         }
     }
 
+
+    @Input('data') meals: string[] = [];
+
+    public filter: string = '';
+    public maxSize: number = 7;
+    public directionLinks: boolean = true;
+    public autoHide: boolean = false;
+    public config: PaginationInstance = {
+        id: 'advanced',
+        itemsPerPage: 10,
+        currentPage: 1
+    };
+    public labels: any = {
+        previousLabel: 'Previous',
+        nextLabel: 'Next',
+        screenReaderPaginationLabel: 'Pagination',
+        screenReaderPageLabel: 'page',
+        screenReaderCurrentLabel: `You're on page`
+    };
+
+    private popped: any[] = [];
+
+    onPageChange(number: number) {
+        console.log('change to page', number);
+        this.config.currentPage = number;
+    }
+
+    pushItem() {
+        let item = this.popped.pop() || 'A newly-created meal!';
+        this.applicationList.push(item);
+    }
+
+    popItem() {
+        this.popped.push(this.applicationList.pop());
+    }
+
+    
 }
 
