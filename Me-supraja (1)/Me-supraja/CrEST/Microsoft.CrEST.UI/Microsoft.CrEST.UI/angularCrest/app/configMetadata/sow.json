@@ -1,0 +1,74 @@
+[
+  {
+    "supplier": {
+      "name": "Infy",
+      "options": [
+        { "name": "Big Mac" },
+        { "name": "Big Mac & Co" },
+        { "name": "McRoyal" },
+        { "name": "Hamburger" },
+        { "name": "Cheeseburger" },
+        { "name": "Double Cheeseburger" }
+      ]
+    },
+    "serviceLine": {
+      "name": "Infy",
+      "options": [
+        { "name": "Big Mac" },
+        { "name": "Big Mac & Co" },
+        { "name": "McRoyal" },
+        { "name": "Hamburger" },
+        { "name": "Cheeseburger" },
+        { "name": "Double Cheeseburger" }
+      ]
+    },
+    "contractID": "2148385",
+    "effectiveDate": "12/7/2010",
+    "expirationDate": "12/7/2017",
+    "msOwnerAlias": "beckwest",
+    "serviceCatalogVersion": 1.2,
+    "poYr1": 900000,
+    "amountYr1": 900000,
+    "amountYr2": 900000,
+    "amountYr3": 900000,
+    "amountYr4": 900000,
+    "isCrest": "Yes",
+    "remarks": "This is T&M project. SLA not applicable"
+  },
+  {
+    "supplier": {
+      "name": "Infy2",
+      "options": [
+        { "name": "Big Mac" },
+        { "name": "Big Mac & Co" },
+        { "name": "McRoyal" },
+        { "name": "Hamburger" },
+        { "name": "Cheeseburger" },
+        { "name": "Double Cheeseburger" }
+      ]
+    },
+    "serviceLine": {
+      "name": "Infy1",
+      "options": [
+        { "name": "Big Mac" },
+        { "name": "Big Mac & Co" },
+        { "name": "McRoyal" },
+        { "name": "Hamburger" },
+        { "name": "Cheeseburger" },
+        { "name": "Double Cheeseburger" }
+      ]
+    },
+    "contractID": "2148385",
+    "effectiveDate": "12/7/2010",
+    "expirationDate": "12/7/2017",
+    "msOwnerAlias": "beckwest",
+    "serviceCatalogVersion": 1.2,
+    "poYr1": 900000,
+    "amountYr1": 900000,
+    "amountYr2": 900000,
+    "amountYr3": 900000,
+    "amountYr4": 900000,
+    "isCrest": "No",
+    "remarks": "This is T&M project. SLA not applicable"
+  }
+]
