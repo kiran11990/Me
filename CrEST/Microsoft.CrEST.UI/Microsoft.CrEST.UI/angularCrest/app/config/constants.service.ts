@@ -13,8 +13,17 @@ export class ConstantService {
         this.CONFIG = {
             apiLocations: {
                 baseUrl: this.apiBaseUrl,
+
+                //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
-                getsow: 'http://localhost:52537/configMetadata/sample.json'
+                getsow: 'http://localhost:52537/configMetadata/sow.json',
+
+                //slp
+                //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
+                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
+                saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
+                generateSLPforCurrentPeriod: this.apiBaseUrl + 'api/slp/generateSLPforCurrentPeriod',
+                getSlps: 'http://localhost:52537/configMetadata/slp.json'
             }
         };
     }

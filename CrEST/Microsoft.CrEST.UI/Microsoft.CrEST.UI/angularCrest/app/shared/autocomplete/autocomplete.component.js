@@ -8,8 +8,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-var VIAutoCompleteComponent = (function () {
-    function VIAutoCompleteComponent() {
+var AutoCompleteComponent = (function () {
+    function AutoCompleteComponent() {
         this.notifyOnSelected = new EventEmitter();
         this.foucusedItem = 0;
         this.isFocusedOnItem = false;
@@ -17,99 +17,65 @@ var VIAutoCompleteComponent = (function () {
         this.popupShow = false;
         this.scrollMax = 125;
     }
-    VIAutoCompleteComponent.prototype.ngOnInit = function () {
+    AutoCompleteComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.elementToBind.addEventListener("keydown", function (e) {
-            if (e.keyCode == 38) {
-                if (_this.foucusedItem > 1) {
-                    _this.foucusedItem = _this.foucusedItem - 1;
-                    _this.scrollIndex -= 25;
-                    if (_this.scrollIndex == _this.scrollMax - 125) {
-                        document.getElementById(_this.tagId).scrollTop = _this.scrollIndex - 100;
-                        _this.scrollMax -= 100;
-                    }
-                }
-            }
-            else if (e.keyCode == 40) {
-                if (_this.foucusedItem < _this.values.length) {
-                    _this.foucusedItem = _this.foucusedItem + 1;
-                    _this.scrollIndex += 25;
-                    if (_this.scrollIndex == _this.scrollMax) {
-                        document.getElementById(_this.tagId).scrollTop = _this.scrollIndex - 25;
-                        _this.scrollMax += 100;
-                    }
-                }
-            }
-            else {
-                if (e.keyCode == 13) {
-                    _this.notifyOnSelected.emit(_this.values[_this.foucusedItem - 1]);
-                    _this.resetPopupSettings(false);
-                }
-                else if (e.keyCode == 9) {
-                    _this.resetPopupSettings(false);
-                }
-                else {
-                    _this.resetPopupSettings(true);
-                }
-                document.getElementById(_this.tagId).scrollTop = 0;
-            }
-        });
         this.elementToBind.addEventListener("blur", function (e) {
             if (!_this.isFocusedOnItem) {
                 var currentValue = this.value;
                 if (currentValue != null && currentValue.trim() != "" && _this.values.indexOf(currentValue) == -1) {
                     currentValue = "";
-                    alert("valid");
                 }
-                else if (currentValue == "" && _this.values.indexOf(currentValue) == -1) {
+                else if (currentValue.trim() == "" && currentValue == undefined && _this.values.indexOf(currentValue) == -1) {
                     currentValue = "";
+                    _this.resetPopupSettings(false);
                 }
-                else if (currentValue.trim() == "") {
+                else if (currentValue.trim() == "" || currentValue == undefined) {
                     currentValue = "";
-                    alert("invalid");
+                    _this.resetPopupSettings(false);
                 }
                 _this.resetPopupSettings(false);
             }
         });
         this.elementToBind.addEventListener("focus", function (e) {
+            var currentValue = this.value;
             _this.isFocusedOnItem = false;
             _this.resetPopupSettings(true);
         });
     };
-    VIAutoCompleteComponent.prototype.selectedItem = function (item) {
+    AutoCompleteComponent.prototype.selectedItem = function (item) {
         this.notifyOnSelected.emit(item);
         this.resetPopupSettings(false);
     };
-    VIAutoCompleteComponent.prototype.resetPopupSettings = function (showPopUp) {
+    AutoCompleteComponent.prototype.resetPopupSettings = function (showPopUp) {
         this.popupShow = showPopUp;
         this.foucusedItem = 0;
         this.scrollIndex = 0;
         this.scrollMax = 125;
     };
-    return VIAutoCompleteComponent;
+    return AutoCompleteComponent;
 }());
 __decorate([
     Input(),
     __metadata("design:type", HTMLElement)
-], VIAutoCompleteComponent.prototype, "elementToBind", void 0);
+], AutoCompleteComponent.prototype, "elementToBind", void 0);
 __decorate([
     Input(),
     __metadata("design:type", Array)
-], VIAutoCompleteComponent.prototype, "values", void 0);
+], AutoCompleteComponent.prototype, "values", void 0);
 __decorate([
     Input(),
     __metadata("design:type", String)
-], VIAutoCompleteComponent.prototype, "tagId", void 0);
+], AutoCompleteComponent.prototype, "tagId", void 0);
 __decorate([
     Output(),
     __metadata("design:type", EventEmitter)
-], VIAutoCompleteComponent.prototype, "notifyOnSelected", void 0);
-VIAutoCompleteComponent = __decorate([
+], AutoCompleteComponent.prototype, "notifyOnSelected", void 0);
+AutoCompleteComponent = __decorate([
     Component({
         selector: 'auto-complete',
         templateUrl: './autocomplete.component.html',
-        styleUrls: ['./autocomplete.component.css'],
+        styles: [String(require('./autocomplete.component.css'))],
     })
-], VIAutoCompleteComponent);
-export { VIAutoCompleteComponent };
+], AutoCompleteComponent);
+export { AutoCompleteComponent };
 //# sourceMappingURL=autocomplete.component.js.map

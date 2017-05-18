@@ -5,18 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="angularCrest\app\cresthandson\**" />
     <Compile Remove="wwwroot\configMetadata\**" />
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\js\**" />
     <Compile Remove="wwwroot\vendor\**" />
+    <Content Remove="angularCrest\app\cresthandson\**" />
     <Content Remove="wwwroot\configMetadata\**" />
     <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\js\**" />
     <Content Remove="wwwroot\vendor\**" />
+    <EmbeddedResource Remove="angularCrest\app\cresthandson\**" />
     <EmbeddedResource Remove="wwwroot\configMetadata\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\vendor\**" />
+    <None Remove="angularCrest\app\cresthandson\**" />
     <None Remove="wwwroot\configMetadata\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\js\**" />
@@ -28,11 +32,6 @@
     <Content Remove="wwwroot/polyfills.js" />
     <Content Remove="wwwroot/polyfills.js.map" />
     <Content Remove="wwwroot/polyfills.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

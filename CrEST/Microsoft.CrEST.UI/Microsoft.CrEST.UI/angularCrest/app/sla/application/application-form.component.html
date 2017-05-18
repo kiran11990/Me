@@ -1,0 +1,213 @@
+﻿<div>
+    <form>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button type="button" class="btn btn-default" (click)=redirect()>Back</button>
+        </div>
+        <div>Application Update Form</div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Supplier</label></div>
+                    <div class=" col-xs-6">
+                        <select class="form-control" name="msowneralias"
+                                [(ngModel)]="msowneralias"></select>
+                        <!--<angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" name="Supplier"></angular2-multiselect>-->
+
+                        <!--<span *ngIf="applicationForm.controls['msowneralias'].hasError('required') && applicationForm.controls['msowneralias'].touched" class="alert alert-danger">Please enter ms owner alias.</span>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" style="margin-top:10px">
+                <div class="row">
+                    <div class="col-xs-2"> <label>Contract ID</label></div>
+                    <div class="col-xs-6">
+                        <select class="form-control" required
+                                [(ngModel)]="ContractID" name="ContractID"></select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Service Line</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="firstName" name="firstName" />
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Application</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="Application" name="Application" />
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Owner Alias</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="OwnerAlias" name="OwnerAlias" />
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Service Class (Optional)</label></div>
+                    <div class="col-xs-6">
+                        <select class="form-control" name="Serviceclass"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Run vs Grow</label></div>
+                    <div class="col-xs-6">
+                        <select class="form-control" required
+                                [(ngModel)]="Runvsgrow" name="Runvsgrow"></select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Application Group</label></div>
+                    <div class="col-xs-6">
+                        <select class="form-control" required
+                                [(ngModel)]="ApplicationGroup" name="ApplicationGroup">
+                            <!--<option value="volvo">Application Group 1</option>
+                            <option value="saab">Application Group 2</option>
+                            <option value="mercedes">Application Group 3</option>
+                            <option value="audi">Application Group 4</option>-->
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Start Date</label></div>
+                    <div class="col-xs-6">
+                      
+                        <my-date-picker name="startDate" [options]="myDatePickerOptions"
+                                       (dateChanged)="onstartDateChanged($event)"  [(ngModel)]="startDate"></my-date-picker>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>End Date</label></div>
+                    <div class="col-xs-6" style="margin-top:12px">
+                        <my-date-picker name="endDate" [options]="myDatePickerOptions"
+                                        (dateChanged)="onendDateChanged($event)" [(ngModel)]="endDate"></my-date-picker>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>End to End (Y/N)</label></div>
+                    <div class="col-xs-6">
+                        <input type="checkbox" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>EPM (Y/N)</label></div>
+                    <div class="col-xs-6">
+                        <input type="checkbox" value="" name="EPM" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>T&M</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="TandM" name="TandM" />
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Managed Capacity</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="ManagedCapacity" name="ManagedCapacity">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Managed Services</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" [(ngModel)]="ManagedServices" name="ManagedServices">
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Software AssetSearch able ID</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" name="Software" />
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>Remarks</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" name="Remarks" [(ngModel)]="Remarks" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row" style="margin-top:12px">
+                    <div class="col-xs-2"> <label>IT-ORG</label></div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" name="IT-ORG" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default" (click)=initSubmit()>Submit</button>
+    </form>
+</div>

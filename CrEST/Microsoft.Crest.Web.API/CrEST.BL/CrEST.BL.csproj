@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CrEST.Models\CrEST.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SLA\SLP\" />
+  </ItemGroup>
+
 </Project>
