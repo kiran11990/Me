@@ -22,9 +22,14 @@ var ApplicationService = (function () {
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication;
         this.findApplicationUrl = _constantService.CONFIG.apiLocations.findApplicationUrl;
         this.getApplicationbyUrl = _constantService.CONFIG.apiLocations.getApplicationbyId;
+        this.getapplicationMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
     }
     ApplicationService.prototype.getApplications = function () {
         return this.http.get(this.getApplicationUrl)
+            .map(function (res) { return res.json(); });
+    };
+    ApplicationService.prototype.getApplicationMetaData = function () {
+        return this.http.get(this.getapplicationMetaDataUrl)
             .map(function (res) { return res.json(); });
     };
     ApplicationService.prototype.findApplication = function (contractId, serviceline, application) {

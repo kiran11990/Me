@@ -14,18 +14,25 @@ export class ApplicationService {
     public addApplicationUrl: string;
     public findApplicationUrl: string;
     public getApplicationbyUrl: string;
+    public getapplicationMetaDataUrl: string;
     constructor(private _constantService: ConstantService, private http: Http) {
         this.getApplicationUrl = _constantService.CONFIG.apiLocations.getApplication;
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication
         this.findApplicationUrl = _constantService.CONFIG.apiLocations.findApplicationUrl;
         this.getApplicationbyUrl = _constantService.CONFIG.apiLocations.getApplicationbyId;
+        this.getapplicationMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
     }
 
     getApplications() {
         return this.http.get(this.getApplicationUrl)
             .map(res => res.json());
     } 
- 
+
+
+    getApplicationMetaData() {
+        return this.http.get(this.getapplicationMetaDataUrl)
+            .map(res => res.json());
+    }
     findApplication(contractId: any, serviceline: any, application: any) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.findApplicationUrl + contractId + "/'" + serviceline + "'" + "/'" + application + "'", { headers: header })

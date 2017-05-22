@@ -23,6 +23,7 @@ var ConstantService = (function () {
                 getApplicationbyId: 'http://localhost:53430/api/Application/GetApplicationById/',
                 //getsow: 'http://localhost:52537/configMetadata/sample.json',
                 getservice: 'http://localhost:52537/configMetadata/service.json',
+                getapplicationMetaData: 'http://localhost:53430/api/Application/GetApplicationMetadata',
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
                 getsow: 'http://localhost:52537/configMetadata/sow.json',
