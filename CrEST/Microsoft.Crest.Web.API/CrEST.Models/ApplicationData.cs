@@ -27,7 +27,7 @@ namespace CrEST.Models
         public string SupplierName { get; set; }
         public string OwnerAlias { get; set; }
         public int? Itorg { get; set; }
-        public string ITOrgName { get; set; }
+        public int? ITOrgName { get; set; }
 
     }
 }

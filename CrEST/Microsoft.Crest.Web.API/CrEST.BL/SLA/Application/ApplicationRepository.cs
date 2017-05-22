@@ -14,6 +14,7 @@ namespace CrEST.BL
     {
         public IEnumerable<ApplicationData> FindApplication(int contractId, string serviceLine, string application)
         {
+
             return GetApplications(contractId, serviceLine, application);
         }
 
@@ -22,7 +23,15 @@ namespace CrEST.BL
             return GetApplications(0, string.Empty, string.Empty);
         }
 
-        public ApplicationMetadata GetApplicatonMetadata()
+		public Application Get(int item)
+		{
+			using (CrESTContext _context = new CrESTContext())
+			{
+				return _context.Application.FirstOrDefault(s => s.ApplicationId == item);
+			}
+		}
+
+		public ApplicationMetadata GetApplicatonMetadata()
         {
             ApplicationMetadata data = new ApplicationMetadata();
 
@@ -57,12 +66,12 @@ namespace CrEST.BL
                     Remarks = application.Remarks,
                     ServiceLine = application.ServiceLine,
                     SoftwareAssetSearchableId = application.SoftwareAssetSearchableId,
-                    SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid,
+                    //SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid,
                     StartDate = application.StartDate,
                     TM = application.TM,
                     SupplierId = application.SupplierId
                 };
-
+				
                 var existingItem = _context.Application.FirstOrDefault(s => s.ApplicationId == application.ApplicationId);
                 if (existingItem != null)
                     _context.Application.Update(item);
@@ -83,9 +92,9 @@ namespace CrEST.BL
                 DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
                 cmd.CommandText = "spSearchApplication";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@ContractId", string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@ServiceLine", string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@Application", string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
+                cmd.Parameters.Add(new SqlParameter("@ServiceLine", serviceLine));
+                cmd.Parameters.Add(new SqlParameter("@Application", application));
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -111,8 +120,8 @@ namespace CrEST.BL
                             SoftwareAssetSearchableId = reader.GetString(15),
                             Remarks = reader.IsDBNull(16) ? string.Empty : reader.GetString(16),
                             OwnerAlias = reader.GetString(17),
-                            ITOrgName = reader.GetString(18)
-                        });
+                            ITOrgName = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18),
+						});
                     }
                 }
             }

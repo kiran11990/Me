@@ -24,7 +24,14 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _applicationRepository.GetAllApplications();
         }
 
-        [HttpPost]
+		[HttpGet]
+		[Route("GetApplicationById/{id}")]
+		public Application GetApplicationById(int id)
+		{
+			return _applicationRepository.Get(id);
+		}
+
+		[HttpPost]
         [Route("SaveApplication")]
         public ApplicationData SaveApplication([FromBody]ApplicationData item)
         {
@@ -32,7 +39,7 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("FindApplication/{contractId}/'{serviceLine}/'{application}''")]
+        [Route("FindApplication/{contractId}/'{serviceLine}/'{application}'")]
         public IEnumerable<ApplicationData> FindApplication([FromHeader]int contractId, [FromHeader]string serviceLine, [FromHeader]string application)
         {
             return _applicationRepository.FindApplication(contractId, serviceLine, application);
