@@ -49,34 +49,36 @@ namespace CrEST.BL
         {
             using (CrESTContext _context = new CrESTContext())
             {
-                Application item = new Application()
-                {
-                    ApplicationId = application.ApplicationId,
-                    Application1 = application.Application,
-                    ApplicationGroup = application.ApplicationGroup,
-                    EndDate = application.EndDate,
-                    EndToEnd = application.EndToEnd,
-                    Epm = application.Epm,
-                    Itorg = application.Itorg,
-                    ManagedCapacity = application.ManagedCapacity,
-                    ManagedService = application.ManagedService,
-                    OwnerAlias = application.OwnerAlias,
-                    RunOrGrow = application.RunOrGrow,
-                    ServiceClass = application.ServiceClass,
-                    Remarks = application.Remarks,
-                    ServiceLine = application.ServiceLine,
-                    SoftwareAssetSearchableId = application.SoftwareAssetSearchableId,
-                    //SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid,
-                    StartDate = application.StartDate,
-                    TM = application.TM,
-                    SupplierId = application.SupplierId
-                };
-				
-                var existingItem = _context.Application.FirstOrDefault(s => s.ApplicationId == application.ApplicationId);
-                if (existingItem != null)
-                    _context.Application.Update(item);
-                else
-                    _context.Application.Add(item);
+				Application existingItem = _context.Application.Where(s => s.ApplicationId == application.ApplicationId).SingleOrDefault();
+
+				if (existingItem == null)
+				{
+					existingItem = new Application();
+				}
+
+				existingItem.Application1 = application.Application;
+                existingItem.ApplicationGroup = application.ApplicationGroup;
+				existingItem.EndDate = application.EndDate;
+				existingItem.EndToEnd = application.EndToEnd;
+				existingItem.Epm = application.Epm;
+				existingItem.Itorg = application.Itorg;
+				existingItem.ManagedCapacity = application.ManagedCapacity;
+				existingItem.ManagedService = application.ManagedService;
+				existingItem.OwnerAlias = application.OwnerAlias;
+				existingItem.RunOrGrow = application.RunOrGrow;
+				existingItem.ServiceClass = application.ServiceClass;
+				existingItem.Remarks = application.Remarks;
+				existingItem.ServiceLine = application.ServiceLine;
+				existingItem.SoftwareAssetSearchableId = application.SoftwareAssetSearchableId;
+				existingItem.SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid;
+				existingItem.StartDate = application.StartDate;
+				existingItem.TM = application.TM;
+				existingItem.SupplierId = application.SupplierId;
+                
+
+                if (existingItem.ApplicationId == 0) 
+                    _context.Application.Add(existingItem);
+
                 _context.SaveChanges();
                 return application;
             }
