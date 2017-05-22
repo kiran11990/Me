@@ -14,9 +14,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { ConstantService } from '../../../config/constants.service';
+import { CommonService } from '../../../shared/common.service';
 var ApplicationService = (function () {
-    function ApplicationService(_constantService, http) {
+    function ApplicationService(_constantService, commonService, http) {
         this._constantService = _constantService;
+        this.commonService = commonService;
         this.http = http;
         this.getApplicationUrl = _constantService.CONFIG.apiLocations.getApplication;
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication;
@@ -25,34 +27,30 @@ var ApplicationService = (function () {
     }
     ApplicationService.prototype.getApplications = function () {
         return this.http.get(this.getApplicationUrl)
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.findApplication = function (contractId, serviceline, application) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.findApplicationUrl + contractId + "/'" + serviceline + "'" + "/'" + application + "'", { headers: header })
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.getApplicationyId = function (applicationId) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getApplicationbyUrl + applicationId, { headers: header })
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    //addSow(applicationData: any) {
-    //    return this.http.post(this.addApplication,applicationData)
-    //        .map(res => res.json());
-    //}
     ApplicationService.prototype.addApplication = function (applicationData) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(applicationData);
         return this.http
             .post(this.addApplicationUrl, body, { headers: header })
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     return ApplicationService;
 }());
 ApplicationService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [ConstantService, Http])
+    __metadata("design:paramtypes", [ConstantService, CommonService, Http])
 ], ApplicationService);
 export { ApplicationService };
 //# sourceMappingURL=application.service.js.map

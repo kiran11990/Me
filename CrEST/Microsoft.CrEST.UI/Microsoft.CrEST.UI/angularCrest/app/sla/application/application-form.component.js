@@ -49,13 +49,13 @@ var ApplicationFormComponent = (function () {
         });
         //this.mydate = '2016-01-10';
     }
-    ApplicationFormComponent.prototype.onstartdateChanged = function (event) {
-        this.startdate = event.jsdate;
-    };
-    ApplicationFormComponent.prototype.onenddateChanged = function (event) {
-        this.date = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    };
+    //onstartdateChanged(event: IMydateModel) {
+    //    this.startdate =  event.jsdate;
+    //}
+    //onenddateChanged(event: IMydateModel) {
+    //    this.date = event.jsdate;
+    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    //}
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         //called after the constructor and called  after the first ngOnChanges() 
@@ -69,7 +69,7 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.initSubmit = function (applicationData) {
         var now = new Date(this.startdate);
-        var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.date.getMinutes(), this.startdate.getSeconds()));
+        var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         //var enddate = new date(date.UTC(this.date.getFullYear(), this.date.getMonth(), this.date.getdate(), this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()));
         applicationData.startDate = startdate;
         //applicationData.endDate = enddate;

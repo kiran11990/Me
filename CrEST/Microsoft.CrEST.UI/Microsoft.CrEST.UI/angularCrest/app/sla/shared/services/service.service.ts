@@ -5,40 +5,41 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service'
+import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
 export class Sservice {
 
     public getservice: string;
 
-    constructor(private _constantService: ConstantService, private http: Http) {
+    constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
     }
     getService() {
         //debugger
         return this.http.get(this.getservice)
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     getServiceById(id: any) {
         return this.http.get(this.getSowUrl(id))
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
 
     addSow(service: any) {
         return this.http.post(this.getservice, JSON.stringify(service))
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     updateSow(service: any) {
         return this.http.put(this.getSowUrl(service.id), JSON.stringify(service))
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     deleteSow(id: any) {
         return this.http.delete(this.getSowUrl(id))
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     private getSowUrl(id: any) {

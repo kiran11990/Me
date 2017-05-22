@@ -3,8 +3,8 @@ import { SowComponent } from './sow/landing/sow.component';
 import { SowFormComponent } from './sow/sow-form/sow-form.component';
 import { SlaApplicationComponent } from './application/application.component';
 import { SlaServiceComponent } from './serviceline/serviceline.component';
-import { ServicelineFormComponent } from './serviceline/serviceformaddupdate.component';
 import { SlaDashboardComponent } from './dashboard/dashboard.component';
+import { ServicelineFormComponent } from './serviceline/serviceformaddupdate.component';
 import { SlpComponent } from './slp/slp.component';
 import { ApplicationFormComponent } from './application/application-form.component';
 var slaRoutes = [

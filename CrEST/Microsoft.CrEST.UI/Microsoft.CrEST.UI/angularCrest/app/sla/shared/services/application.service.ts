@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service';
 import { ApplicationData } from "../models/applicationdata";
+import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
 export class ApplicationService {
@@ -14,7 +15,7 @@ export class ApplicationService {
     public addApplicationUrl: string;
     public findApplicationUrl: string;
     public getApplicationbyUrl: string;
-    constructor(private _constantService: ConstantService, private http: Http) {
+    constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getApplicationUrl = _constantService.CONFIG.apiLocations.getApplication;
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication
         this.findApplicationUrl = _constantService.CONFIG.apiLocations.findApplicationUrl;
@@ -23,48 +24,27 @@ export class ApplicationService {
 
     getApplications() {
         return this.http.get(this.getApplicationUrl)
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     } 
  
     findApplication(contractId: any, serviceline: any, application: any) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.findApplicationUrl + contractId + "/'" + serviceline + "'" + "/'" + application + "'", { headers: header })
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
     getApplicationyId(applicationId: any) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getApplicationbyUrl + applicationId , { headers: header })
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
-
-    //addSow(applicationData: any) {
-    //    return this.http.post(this.addApplication,applicationData)
-    //        .map(res => res.json());
-    //}
-   
-
-
 
     addApplication(applicationData: ApplicationData): Observable<boolean> {
         var header = new Headers({ 'Content-Type': 'application/json'});
         let body = JSON.stringify(applicationData);
         return this.http
             .post(this.addApplicationUrl, body, { headers: header })
-            .map(res => res.json());
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
-    //updateSow(sow: any) {
-    //    return this.http.put(this.getSowUrl(sow.id), JSON.stringify(sow))
-    //        .map(res => res.json());
-    //}
-
-    //deleteSow(id: any) {
-    //    return this.http.delete(this.getSowUrl(id))
-    //        .map(res => res.json());
-    //}
-
-    //private getSowUrl(id: any) {
-    //    return this.getSowUrl + "/" + id;
-    //}
 }
 
 

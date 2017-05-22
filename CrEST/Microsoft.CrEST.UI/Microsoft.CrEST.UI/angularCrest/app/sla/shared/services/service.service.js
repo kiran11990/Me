@@ -13,32 +13,34 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { ConstantService } from '../../../config/constants.service';
+import { CommonService } from '../../../shared/common.service';
 var Sservice = (function () {
-    function Sservice(_constantService, http) {
+    function Sservice(_constantService, commonService, http) {
         this._constantService = _constantService;
+        this.commonService = commonService;
         this.http = http;
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
     }
     Sservice.prototype.getService = function () {
         //debugger
         return this.http.get(this.getservice)
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.getServiceById = function (id) {
         return this.http.get(this.getSowUrl(id))
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.addSow = function (service) {
         return this.http.post(this.getservice, JSON.stringify(service))
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.updateSow = function (service) {
         return this.http.put(this.getSowUrl(service.id), JSON.stringify(service))
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.deleteSow = function (id) {
         return this.http.delete(this.getSowUrl(id))
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.getSowUrl = function (id) {
         return this.getSowUrl + "/" + id;
@@ -47,7 +49,7 @@ var Sservice = (function () {
 }());
 Sservice = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [ConstantService, Http])
+    __metadata("design:paramtypes", [ConstantService, CommonService, Http])
 ], Sservice);
 export { Sservice };
 //export class AutocompleteComponent {

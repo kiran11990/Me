@@ -17,14 +17,14 @@ var ConstantService = (function () {
         this.CONFIG = {
             apiLocations: {
                 baseUrl: this.apiBaseUrl,
-                getApplication: 'http://localhost:53430/api/Application/GetAllApplications',
-                addApplication: 'http://localhost:53430/api/Application/SaveApplication',
-                findApplicationUrl: 'http://localhost:53430/api/Application/FindApplication/',
-                getApplicationbyId: 'http://localhost:53430/api/Application/GetApplicationById/',
-                //getsow: 'http://localhost:52537/configMetadata/sample.json',
+                //application
+                getApplication: this.apiBaseUrlWithAPI + 'Application/GetAllApplications',
+                addApplication: this.apiBaseUrlWithAPI + 'Application/SaveApplication',
+                findApplicationUrl: this.apiBaseUrlWithAPI + 'Application/FindApplication/',
+                getApplicationbyId: this.apiBaseUrlWithAPI + 'Application/GetApplicationById/',
+                //service
                 getservice: 'http://localhost:52537/configMetadata/service.json',
                 //sow
-                //getsow: this.apiBaseUrl + 'api/sow'
                 getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
                 //slp
