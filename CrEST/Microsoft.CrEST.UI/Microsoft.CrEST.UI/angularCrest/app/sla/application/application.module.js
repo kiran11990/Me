@@ -9,7 +9,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { ApplicationService } from '../shared/services/application.service';
+import { SharedModule } from '../../shared/shared.module';
 import { SlaApplicationComponent } from './application.component';
+import { ApplicationFormComponent } from './application-form.component';
+import { MyDatePickerModule } from 'mydatepicker';
 var SlaApplicationModule = (function () {
     function SlaApplicationModule() {
     }
@@ -22,11 +26,14 @@ SlaApplicationModule = __decorate([
             FormsModule,
             ReactiveFormsModule,
             RouterModule,
-            HttpModule
+            HttpModule,
+            SharedModule,
+            MyDatePickerModule,
         ],
         declarations: [
-            SlaApplicationComponent
-        ]
+            SlaApplicationComponent, ApplicationFormComponent
+        ],
+        providers: [ApplicationService]
     })
 ], SlaApplicationModule);
 export { SlaApplicationModule };

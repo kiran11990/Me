@@ -5,8 +5,8 @@
 /CrEST/Microsoft.CrEST.UI/Microsoft.CrEST.UI/bin
 /CrEST/Microsoft.CrEST.UI/Microsoft.CrEST.UI/obj
 
-/CrEST/Microsoft.Crest.Web.API/Microsoft.Crest.Web.API/obj
-/CrEST/Microsoft.Crest.Web.API/Microsoft.Crest.Web.API/bin
+/CrEST/Microsoft.Crest.Web.API/CrEST.API/obj
+/CrEST/Microsoft.Crest.Web.API/CrEST.API/bin
 /CrEST/Microsoft.Crest.Web.API/CrEST.BL/bin
 /CrEST/Microsoft.Crest.Web.API/CrEST.BL/obj
 /CrEST/Microsoft.Crest.Web.API/CrEST.Data/bin

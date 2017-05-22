@@ -6,5 +6,5 @@ var appRoutes = [
     { path: 'not-found', component: NotFoundComponent },
     { path: '**', redirectTo: 'not-found' }
 ];
-export var Routing = RouterModule.forRoot(appRoutes);
+export var Routing = RouterModule.forRoot(appRoutes, { useHash: true });
 //# sourceMappingURL=app.routing.js.map
