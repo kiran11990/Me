@@ -5,11 +5,11 @@ import { ConfigService } from '../config/config.service';
 @Injectable()
 export class ConstantService {
     private apiBaseUrl: string
-    private apiBaseUrlWithVersion: string
+    private apiBaseUrlWithAPI: string
     public CONFIG: any;
     constructor(private _config: ConfigService) {
         this.apiBaseUrl = _config.get("apiBaseUri");
-        this.apiBaseUrlWithVersion = this.apiBaseUrl + "/api/v1.0";
+        this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
         this.CONFIG = {
             apiLocations: {
                 baseUrl: this.apiBaseUrl, 
@@ -21,14 +21,14 @@ export class ConstantService {
                 getservice: 'http://localhost:52537/configMetadata/service.json',
                 //sow
                 //getsow: this.apiBaseUrl + 'api/sow'
-                getsow: 'http://localhost:52537/configMetadata/sow.json',
+                getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
+                getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
 
                 //slp
-                //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
-                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
                 saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
-                generateSLPforCurrentPeriod: this.apiBaseUrl + 'api/slp/generateSLPforCurrentPeriod',
-                getSlps: 'http://localhost:52537/configMetadata/slp.json'
+                generateSLPforCurrentPeriod: this.apiBaseUrl + 'slp/generateSLPforCurrentPeriod',
+                getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
+                getReportingPeriod: this.apiBaseUrl + 'slp/GetReportingPeriod'
             }
         };
     }

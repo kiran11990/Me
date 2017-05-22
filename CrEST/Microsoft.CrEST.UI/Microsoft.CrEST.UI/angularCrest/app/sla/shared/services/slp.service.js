@@ -13,36 +13,38 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { ConstantService } from '../../../config/constants.service';
+import { CommonService } from '../../../shared/common.service';
 var SlpService = (function () {
-    function SlpService(_constantService, http) {
+    function SlpService(_constantService, commonService, http) {
         this._constantService = _constantService;
+        this.commonService = commonService;
         this.http = http;
-        this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
+        this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
     }
     SlpService.prototype.GetReportingPeriods = function () {
-        return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ReporintPeriods; });
+        return this.http.get(this.getReportingPeriod)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    SlpService.prototype.GetSlpByPeriod = function (fiscalYear) {
-        return this.http.get(this.getSlps)
-            .map(function (res) { return res.json().ServiceLevelPerformance; });
+    SlpService.prototype.GetSlps = function (period, useralias) {
+        return this.http.get(this.getSlps + '/' + period + '/' + useralias)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.SaveSLPs = function (data) {
         return this.http.post(this.saveSLPs, data)
-            .map(function (res) { return res.json(); });
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
         return this.http.get(this.getSlps + '/' + previousFP)
-            .map(function (res) { return res.json().ServiceLevelPerformance; });
+            .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
     };
     return SlpService;
 }());
 SlpService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [ConstantService, Http])
+    __metadata("design:paramtypes", [ConstantService, CommonService, Http])
 ], SlpService);
 export { SlpService };
 //# sourceMappingURL=slp.service.js.map

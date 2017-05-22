@@ -543,5 +543,11 @@ table.dataTable thead .sorting_desc_disabled {
     overflow-y: scroll;
 }*/
 
+div.tablewrapper {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 
 
