@@ -14,6 +14,8 @@ import 'chart.js/src/chart.js';
 import { SlaDashboardComponent } from './dashboard.component';
 import { SowModule } from "../sow/sow.module";
 import { SowService } from '../shared/services/sows.service';
+import { SlpModule } from "../slp/slp.module";
+import { SlpService } from '../shared/services/slp.service';
 var SlaDashboardModule = (function () {
     function SlaDashboardModule() {
     }
@@ -28,12 +30,13 @@ SlaDashboardModule = __decorate([
             RouterModule,
             HttpModule,
             ChartsModule,
-            SowModule
+            SowModule,
+            SlpModule
         ],
         declarations: [
             SlaDashboardComponent
         ],
-        providers: [SowService]
+        providers: [SowService, SlpService]
     })
 ], SlaDashboardModule);
 export { SlaDashboardModule };

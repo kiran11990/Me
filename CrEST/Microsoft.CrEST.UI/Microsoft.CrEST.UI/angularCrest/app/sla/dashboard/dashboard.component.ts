@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { SowService } from '../shared/services/sows.service';
 import { Sow } from '../shared/models/sow';
+import { SlpService } from '../shared/services/slp.service';
+import { Slp } from '../shared/models/slp';
 
 @Component({
     selector: 'sla-dashboard',
@@ -23,9 +25,12 @@ export class SlaDashboardComponent {
 
     public contractIds: Array<Sow> = [];
 
-    constructor(private sowService: SowService) {
+    public slps: Array<Slp> = [];
+
+    constructor(private sowService: SowService, private slpService: SlpService) {
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
+        this.GetSlps();
     }
 
     private GetActiveContractIdsBarChart() {
@@ -123,5 +128,13 @@ export class SlaDashboardComponent {
                 mainthis.contractIds = data;
             });
     }
-    
+
+    private GetSlps()
+    {
+        var mainthis = this;
+        this.slpService.GetSlpsByStatus(2, "")
+            .subscribe(data => {
+                mainthis.slps = data;
+            });
+    }
 }

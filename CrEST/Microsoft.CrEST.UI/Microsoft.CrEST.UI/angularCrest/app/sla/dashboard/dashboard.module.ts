@@ -9,6 +9,8 @@ import 'chart.js/src/chart.js';
 import { SlaDashboardComponent } from './dashboard.component';
 import { SowModule } from "../sow/sow.module";
 import { SowService } from '../shared/services/sows.service';
+import { SlpModule } from "../slp/slp.module";
+import { SlpService } from '../shared/services/slp.service';
 
 @NgModule({
     imports: [
@@ -18,11 +20,12 @@ import { SowService } from '../shared/services/sows.service';
         RouterModule,
         HttpModule,
         ChartsModule,
-        SowModule
+        SowModule,
+        SlpModule
     ],
     declarations: [
         SlaDashboardComponent
     ],
-    providers: [SowService]
+    providers: [SowService, SlpService]
 })
 export class SlaDashboardModule { }

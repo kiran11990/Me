@@ -16,12 +16,14 @@ export class SlpService {
     private generateSLPforCurrentPeriod: string;
     private getSlps: string;
     private getReportingPeriod: string;
+    private getSlpByStatus: string;
 
     constructor(private _constantService: ConstantService, private commonService: CommonService,  private http: Http) {
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
         this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
+        this.getSlpByStatus = _constantService.CONFIG.apiLocations.getSlpByStatus;
     }
 
     GetReportingPeriods() {
@@ -42,6 +44,11 @@ export class SlpService {
     GenerateSLPforCurrentPeriod(previousFP: string) {
         return this.http.get(this.getSlps + '/' + previousFP)
             .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
+    }
+
+    GetSlpsByStatus(status: number, useralias: string) {
+        return this.http.get(this.getSlpByStatus + '/' + status)
+            .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 }
 

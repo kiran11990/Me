@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { SowService } from '../shared/services/sows.service';
+import { SlpService } from '../shared/services/slp.service';
 var SlaDashboardComponent = (function () {
-    function SlaDashboardComponent(sowService) {
+    function SlaDashboardComponent(sowService, slpService) {
         this.sowService = sowService;
+        this.slpService = slpService;
         this.sowData = [];
         this.sowBarChartOptions = {
             scaleShowVerticalLines: false,
@@ -23,8 +25,10 @@ var SlaDashboardComponent = (function () {
         this.sowBarChartData = [];
         this.isDataAvailable = false;
         this.contractIds = [];
+        this.slps = [];
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
+        this.GetSlps();
     }
     SlaDashboardComponent.prototype.GetActiveContractIdsBarChart = function () {
         var mainthis = this;
@@ -110,6 +114,13 @@ var SlaDashboardComponent = (function () {
             mainthis.contractIds = data;
         });
     };
+    SlaDashboardComponent.prototype.GetSlps = function () {
+        var mainthis = this;
+        this.slpService.GetSlpsByStatus(2, "")
+            .subscribe(function (data) {
+            mainthis.slps = data;
+        });
+    };
     return SlaDashboardComponent;
 }());
 SlaDashboardComponent = __decorate([
@@ -117,7 +128,7 @@ SlaDashboardComponent = __decorate([
         selector: 'sla-dashboard',
         templateUrl: './dashboard.component.html',
     }),
-    __metadata("design:paramtypes", [SowService])
+    __metadata("design:paramtypes", [SowService, SlpService])
 ], SlaDashboardComponent);
 export { SlaDashboardComponent };
 //# sourceMappingURL=dashboard.component.js.map

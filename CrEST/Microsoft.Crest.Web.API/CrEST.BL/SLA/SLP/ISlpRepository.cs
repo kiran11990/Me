@@ -8,5 +8,6 @@ namespace CrEST.BL
 	{
         IEnumerable<SLAData> GetSlps(string period, string alias);
         IEnumerable<ReportingPeriod> GetReportingPeriod();
+        IEnumerable<SLAData> GetSlpsByStatus(int status);
     }
 }

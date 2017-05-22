@@ -23,6 +23,7 @@ var SlpService = (function () {
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
         this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
+        this.getSlpByStatus = _constantService.CONFIG.apiLocations.getSlpByStatus;
     }
     SlpService.prototype.GetReportingPeriods = function () {
         return this.http.get(this.getReportingPeriod)
@@ -39,6 +40,10 @@ var SlpService = (function () {
     SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
         return this.http.get(this.getSlps + '/' + previousFP)
             .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
+    };
+    SlpService.prototype.GetSlpsByStatus = function (status, useralias) {
+        return this.http.get(this.getSlpByStatus + '/' + status)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     return SlpService;
 }());

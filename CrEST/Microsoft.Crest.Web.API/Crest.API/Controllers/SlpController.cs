@@ -31,5 +31,12 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _slpRepository.GetReportingPeriod();
         }
 
+        [HttpGet]
+        [Route("GetSlpsByStatus/{status}")]
+        public IEnumerable<SLAData> GetSlpsByStatus([FromHeader]int status)
+        {
+            return _slpRepository.GetSlpsByStatus(status);
+        }
+
     }
 }

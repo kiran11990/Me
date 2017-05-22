@@ -28,10 +28,11 @@ var ConstantService = (function () {
                 getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
                 //slp
-                saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
-                generateSLPforCurrentPeriod: this.apiBaseUrl + 'slp/generateSLPforCurrentPeriod',
+                saveSLPs: this.apiBaseUrlWithAPI + 'api/slp/saveSLP',
+                generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/generateSLPforCurrentPeriod',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
-                getReportingPeriod: this.apiBaseUrl + 'slp/GetReportingPeriod'
+                getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
+                getSlpByStatus: this.apiBaseUrlWithAPI + 'slp/GetSlpsByStatus'
             }
         };
     }
