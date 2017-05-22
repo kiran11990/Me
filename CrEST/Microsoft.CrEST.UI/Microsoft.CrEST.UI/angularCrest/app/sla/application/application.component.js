@@ -9,17 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Http } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { ApplicationService } from "./../shared/services/application.service";
 var SlaApplicationComponent = (function () {
-    function SlaApplicationComponent(http, _router, applicationService) {
+    function SlaApplicationComponent(http, _router, applicationService, _routeParameterd) {
         this.http = http;
         this.applicationService = applicationService;
+        this._routeParameterd = _routeParameterd;
         this.contactId = '';
         this.serviceLine = '';
         this.application = '';
+        this.SaveSucessfull = false;
         this.states = [];
         this.contactdetails = [];
         this.contactIdList = [];
@@ -53,6 +55,9 @@ var SlaApplicationComponent = (function () {
     }
     SlaApplicationComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (this._routeParameterd.snapshot.params['saveApplicationStatus']) {
+            this.SaveSucessfull = true;
+        }
         this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(function (data) {
@@ -94,9 +99,8 @@ var SlaApplicationComponent = (function () {
     };
     SlaApplicationComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.applicationList.length; i++) {
-            //alert(this.applicationList[i].application +"this.applicationList[i].application")
-            this.ApplicationLists.push(this.applicationList[i].application1);
-            //this.contactIdList.push(this.applicationList[i].contactId);
+            this.ApplicationLists.push(this.applicationList[i].application);
+            this.contactIdList.push(this.applicationList[i].contractId);
             this.servicelineList.push(this.applicationList[i].serviceLine);
         }
     };
@@ -123,7 +127,7 @@ SlaApplicationComponent = __decorate([
         template: require('./application.component.html'),
         changeDetection: ChangeDetectionStrategy.Default
     }),
-    __metadata("design:paramtypes", [Http, Router, ApplicationService])
+    __metadata("design:paramtypes", [Http, Router, ApplicationService, ActivatedRoute])
 ], SlaApplicationComponent);
 export { SlaApplicationComponent };
 //# sourceMappingURL=application.component.js.map

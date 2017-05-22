@@ -12,6 +12,7 @@ var slaRoutes = [
     { path: 'sows/:id', component: SowFormComponent },
     { path: 'applications', component: SlaApplicationComponent, pathMatch: 'full' },
     { path: 'applications/add', component: ApplicationFormComponent },
+    { path: 'applications/applicationStatus', component: SlaApplicationComponent },
     { path: 'applications/:id', component: ApplicationFormComponent },
     { path: 'services', component: SlaServiceComponent, pathMatch: 'full' },
     { path: 'services/add', component: ServicelineFormComponent },

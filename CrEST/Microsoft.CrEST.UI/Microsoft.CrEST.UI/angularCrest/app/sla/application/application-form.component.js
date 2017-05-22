@@ -15,58 +15,52 @@ import { ApplicationData } from "../shared/models/applicationdata";
 import { ApplicationService } from "./../shared/services/application.service";
 import { Http } from '@angular/http';
 var ApplicationFormComponent = (function () {
-    function ApplicationFormComponent(_route, applicationService, router, formBuilder, http) {
-        this._route = _route;
+    function ApplicationFormComponent(_routeParameterd, applicationService, router, formBuilder, http) {
+        this._routeParameterd = _routeParameterd;
         this.applicationService = applicationService;
         this.router = router;
         this.http = http;
         this.applicationList = new Application();
         this.applicationData = new ApplicationData();
-        this.date = new Date();
+        this.startdate = new Date();
         this.submitAttempt = false;
         this.outparam = '';
         this.dropdownSettings = {};
-        this.startDate = {
-            date: {
-                year: this.date.getFullYear(),
-                month: this.date.getMonth() + 1,
-                day: this.date.getDate()
-            }
-        };
-        this.endDate = {
-            date: {
-                year: this.date.getFullYear(),
-                month: this.date.getMonth() + 1,
-                day: this.date.getDate()
-            }
-        };
-        this.myDatePickerOptions = {
+        // startdate: Object = {
+        //    date: {
+        //        year: this.date.getFullYear(),
+        //        month: this.date.getMonth() + 1,
+        //        day: this.date.getdate()
+        //    }
+        //};
+        //private enddate: Object = {
+        //    date: {
+        //        year: this.date.getFullYear(),
+        //        month: this.date.getMonth() + 1,
+        //        day: this.date.getdate()
+        //    }
+        //};
+        this.mydatePickerOptions = {
             // other options...
             dateFormat: 'dd.mm.yyyy',
         };
         this.applicationForm = formBuilder.group({
             'msowneralias': [null, Validators.required]
         });
-        //this.myDate = '2016-01-10';
+        //this.mydate = '2016-01-10';
     }
-    ApplicationFormComponent.prototype.convert = function (str) {
-        var date = new Date(str), mnth = ("0" + (date.getMonth() + 1)).slice(-2), day = ("0" + date.getDate()).slice(-2);
-        return [date.getFullYear(), mnth, day].join("-");
+    ApplicationFormComponent.prototype.onstartdateChanged = function (event) {
+        this.startdate = event.jsdate;
     };
-    ApplicationFormComponent.prototype.onstartDateChanged = function (event) {
-        //debugger;
-        //var result = this.convert(event.jsdate);
-        //this.applicationData.startDate = event.jsdate;
-        //alert(this.applicationData.startDate + "" +event.jsdate)
-    };
-    ApplicationFormComponent.prototype.onendDateChanged = function (event) {
+    ApplicationFormComponent.prototype.onenddateChanged = function (event) {
+        this.date = event.jsdate;
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     };
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         //called after the constructor and called  after the first ngOnChanges() 
-        if (this._route.snapshot.params['id'] != null) {
-            var id = this._route.snapshot.params['id'];
+        if (this._routeParameterd.snapshot.params['id'] != null) {
+            var id = this._routeParameterd.snapshot.params['id'];
             this.applicationService.getApplicationyId(id)
                 .subscribe(function (data) {
                 _this.applicationList = data;
@@ -74,7 +68,11 @@ var ApplicationFormComponent = (function () {
         }
     };
     ApplicationFormComponent.prototype.initSubmit = function (applicationData) {
-        //this.submitAttempt = true;
+        var now = new Date(this.startdate);
+        var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.date.getMinutes(), this.startdate.getSeconds()));
+        //var enddate = new date(date.UTC(this.date.getFullYear(), this.date.getMonth(), this.date.getdate(), this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()));
+        applicationData.startDate = startdate;
+        //applicationData.endDate = enddate;
         this.applicationService.addApplication(this.applicationData)
             .subscribe(function (result) {
             var result = result;
@@ -85,9 +83,10 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.redirect = function () {
         if (confirm("Do you want Update")) {
+            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
         else {
-            this.router.navigate(['applications']);
+            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
     };
     return ApplicationFormComponent;

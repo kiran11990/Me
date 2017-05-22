@@ -46,7 +46,7 @@ export class ApplicationService {
 
 
     addApplication(applicationData: ApplicationData): Observable<boolean> {
-        var header = new Headers({ 'Content-Type': 'application/json' });
+        var header = new Headers({ 'Content-Type': 'application/json'});
         let body = JSON.stringify(applicationData);
         return this.http
             .post(this.addApplicationUrl, body, { headers: header })

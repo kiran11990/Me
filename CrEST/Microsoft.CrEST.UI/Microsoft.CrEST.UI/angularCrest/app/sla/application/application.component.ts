@@ -1,11 +1,11 @@
 ﻿import {ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { Application } from "../shared/models/application";
+import { ApplicationData } from "../shared/models/applicationData";
 import { ApplicationService } from "./../shared/services/application.service";
 import { PaginationInstance } from 'ngx-pagination';
 
@@ -22,21 +22,30 @@ export class SlaApplicationComponent {
     public serviceLine = '';
     public application = '';
     public id: string;
+    public SaveSucessfull: boolean = false;
     public states: any = [];
 
     public contactdetails: string[] = [];
-    public contactIdList: string[] = [];
+    public contactIdList: number[] = [];
     public servicelineList: string[] = [];
     public ApplicationLists: string[] = [];
-    public applicationList: Application[] = [];
+    public applicationList: ApplicationData[] = [];
     router: Router;
-    constructor(private http: Http, _router: Router, private applicationService: ApplicationService) {
+    constructor(private http: Http, _router: Router, private applicationService: ApplicationService, private _routeParameterd: ActivatedRoute) {
         this.router = _router;
        
     }
     
 
     ngOnInit() {
+        if (this._routeParameterd.snapshot.params['saveApplicationStatus']) {
+
+            this.SaveSucessfull = true;
+
+        }
+
+
+
         this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(data => {
@@ -94,9 +103,8 @@ export class SlaApplicationComponent {
 
     autoComplete() {
         for (var i = 0; i < this.applicationList.length; i++) {
-            //alert(this.applicationList[i].application +"this.applicationList[i].application")
-            this.ApplicationLists.push(this.applicationList[i].application1);
-            //this.contactIdList.push(this.applicationList[i].contactId);
+            this.ApplicationLists.push(this.applicationList[i].application);
+            this.contactIdList.push(this.applicationList[i].contractId);
             this.servicelineList.push(this.applicationList[i].serviceLine);
         }
     }

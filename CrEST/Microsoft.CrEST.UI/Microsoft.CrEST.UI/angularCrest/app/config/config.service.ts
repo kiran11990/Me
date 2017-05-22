@@ -46,4 +46,15 @@ export class ConfigService {
         console.log(this._config);
         return (<any>this._config)[key];
     }
+
+    setCustom(key: any, val: any) {
+        this._configCustom[key] = val;
+    }
+
+    getCustom(key: any) {
+
+        var msg = this._configCustom[key];
+
+        return (msg == undefined || msg == null) ? "" : msg;
+    }
 };

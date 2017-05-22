@@ -46,6 +46,13 @@ var ConfigService = (function () {
         console.log(this._config);
         return this._config[key];
     };
+    ConfigService.prototype.setCustom = function (key, val) {
+        this._configCustom[key] = val;
+    };
+    ConfigService.prototype.getCustom = function (key) {
+        var msg = this._configCustom[key];
+        return (msg == undefined || msg == null) ? "" : msg;
+    };
     return ConfigService;
 }());
 ConfigService = __decorate([
