@@ -18,8 +18,8 @@ namespace Microsoft.Crest.Web.API.Controllers
 		}
   
         [HttpGet]
-        [Route("GetSLPs/'{period}'")]
-        public IEnumerable<SLAData> GetSlps([FromHeader]string period)
+        [Route("GetSLPs/{period}")]
+        public IEnumerable<SLAData> GetSlps(string period)
         {
             return _slpRepository.GetSlps(period);
         }

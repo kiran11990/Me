@@ -14,6 +14,8 @@ namespace CrEST.BL
     {
         public IEnumerable<SLAData> GetSlps(string period)
         {
+            if (period.Equals("All"))
+                return GetSlaFromDb(string.Empty);
             return GetSlaFromDb(period);
         }
 

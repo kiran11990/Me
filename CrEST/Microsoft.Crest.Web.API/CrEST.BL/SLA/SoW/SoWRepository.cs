@@ -34,7 +34,7 @@ namespace CrEST.BL
 					while (reader.Read())
 					{
 						existingItem.SupplierName = reader.GetString(0);
-						existingItem.ItorgName = reader.GetInt32(1);
+						existingItem.ItorgName = reader.GetString(1);
 						existingItem.ContractId = reader.GetInt32(2);
 						existingItem.SoweffectiveDate = reader.GetDateTime(3);
 						existingItem.SowexpirationDate = reader.GetDateTime(4);

@@ -2,12 +2,12 @@ export class Slp {
     id: number
     slabaseId: number;
     supplierName: string;
-    sCID: string;
+    scid: string;
     contractId: number;
     applicationGroup: string;
     crestLevel1: string;
     crestLevel2: string;
-    sLAId: string;
+    slaId: string;
     serviceMetric: string;
     serviceClass: string;
     severityLevel: string;

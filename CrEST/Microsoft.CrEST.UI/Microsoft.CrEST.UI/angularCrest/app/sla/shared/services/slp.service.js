@@ -32,7 +32,7 @@ var SlpService = (function () {
     };
     SlpService.prototype.GetSlps = function (period, useralias) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlps + "/'" + period + "'", { headers: header })
+        return this.http.get(this.getSlps + "/" + period, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.SaveSLPs = function (data) {
