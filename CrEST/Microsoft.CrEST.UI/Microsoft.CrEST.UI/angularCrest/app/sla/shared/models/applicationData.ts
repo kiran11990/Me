@@ -22,7 +22,7 @@ export class ApplicationData {
    supplierName : string
    ownerAlias: string;
    itorg: number
-   itOrgName: number;
+   iTOrgName: number;
 }
 
 

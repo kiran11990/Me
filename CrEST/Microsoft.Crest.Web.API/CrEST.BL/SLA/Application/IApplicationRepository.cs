@@ -10,7 +10,7 @@ namespace CrEST.BL
 
         IEnumerable<ApplicationData> GetAllApplications();
 
-		ApplicationData GetById(int item);
+		Application Get(int item);
 
 		ApplicationData SaveApplication(ApplicationData application);
 

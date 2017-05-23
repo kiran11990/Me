@@ -26,9 +26,9 @@ namespace Microsoft.Crest.Web.API.Controllers
 
 		[HttpGet]
 		[Route("GetApplicationById/{id}")]
-		public ApplicationData GetApplicationById(int id)
+		public Application GetApplicationById(int id)
 		{
-			return _applicationRepository.GetById(id);
+			return _applicationRepository.Get(id);
 		}
 
 		[HttpPost]

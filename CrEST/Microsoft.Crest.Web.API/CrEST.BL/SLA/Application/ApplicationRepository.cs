@@ -23,48 +23,12 @@ namespace CrEST.BL
             return GetApplications(0, string.Empty, string.Empty);
         }
 
-		public ApplicationData GetById(int item)
+		public Application Get(int item)
 		{
-			using (CrESTContext db = new CrESTContext())
+			using (CrESTContext _context = new CrESTContext())
 			{
-				db.Database.OpenConnection();
-				DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
-				cmd.CommandText = "spGetApplicationById";
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.Add(new SqlParameter("@ApplicationId", item));
-
-				ApplicationData existingItem = new ApplicationData();
-
-				using (var reader = cmd.ExecuteReader())
-				{
-					while (reader.Read())
-					{												
-						existingItem.ApplicationId = reader.GetInt32(0);
-						existingItem.SupplierId = reader.GetInt32(1);
-						existingItem.SupplierName = reader.GetString(2);
-						existingItem.ContractId = reader.GetInt32(3);
-						existingItem.ServiceLine = reader.GetString(4);
-						existingItem.Application = reader.GetString(5);
-						existingItem.ServiceClass = reader.IsDBNull(6) ? default(int) : reader.GetInt32(6);
-						existingItem.RunOrGrow = reader.IsDBNull(7) ? default(int) : reader.GetInt32(7);
-						existingItem.ApplicationGroup = reader.GetString(8);
-						existingItem.StartDate = reader.GetDateTime(9);
-						existingItem.EndDate = reader.GetDateTime(10);
-						existingItem.EndToEnd = reader.GetBoolean(11);
-						existingItem.Epm = reader.GetBoolean(12);
-						existingItem.TM = reader.GetString(13);
-						existingItem.ManagedCapacity = reader.GetString(14);
-						existingItem.ManagedService = reader.GetString(15);
-						existingItem.SoftwareAssetSearchableId = reader.GetString(16);
-						existingItem.Remarks = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
-						existingItem.OwnerAlias = reader.GetString(18);
-						existingItem.ITOrgName = reader.IsDBNull(19) ? default(int) : reader.GetInt32(19);
-                        existingItem.SoWid = reader.GetInt32(20);
-                    }				
-				}
-
-				return existingItem;
-			}			
+				return _context.Application.FirstOrDefault(s => s.ApplicationId == item);
+			}
 		}
 
 		public ApplicationMetadata GetApplicatonMetadata()
@@ -85,36 +49,34 @@ namespace CrEST.BL
         {
             using (CrESTContext _context = new CrESTContext())
             {
-				Application existingItem = _context.Application.Where(s => s.ApplicationId == application.ApplicationId).SingleOrDefault();
-
-				if (existingItem == null)
-				{
-					existingItem = new Application();
-				}
-
-				existingItem.Application1 = application.Application;
-                existingItem.ApplicationGroup = application.ApplicationGroup;
-				existingItem.EndDate = application.EndDate;
-				existingItem.EndToEnd = application.EndToEnd;
-				existingItem.Epm = application.Epm;
-				existingItem.Itorg = application.Itorg;
-				existingItem.ManagedCapacity = application.ManagedCapacity;
-				existingItem.ManagedService = application.ManagedService;
-				existingItem.OwnerAlias = application.OwnerAlias;
-				existingItem.RunOrGrow = application.RunOrGrow;
-				existingItem.ServiceClass = application.ServiceClass;
-				existingItem.Remarks = application.Remarks;
-				existingItem.ServiceLine = application.ServiceLine;
-				existingItem.SoftwareAssetSearchableId = application.SoftwareAssetSearchableId;
-				existingItem.SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid;
-				existingItem.StartDate = application.StartDate;
-				existingItem.TM = application.TM;
-				existingItem.SupplierId = application.SupplierId;
-
-
-                if (existingItem.ApplicationId == 0) 
-                    _context.Application.Add(existingItem);
-
+                Application item = new Application()
+                {
+                    ApplicationId = application.ApplicationId,
+                    Application1 = application.Application,
+                    ApplicationGroup = application.ApplicationGroup,
+                    EndDate = application.EndDate,
+                    EndToEnd = application.EndToEnd,
+                    Epm = application.Epm,
+                    Itorg = application.Itorg,
+                    ManagedCapacity = application.ManagedCapacity,
+                    ManagedService = application.ManagedService,
+                    OwnerAlias = application.OwnerAlias,
+                    RunOrGrow = application.RunOrGrow,
+                    ServiceClass = application.ServiceClass,
+                    Remarks = application.Remarks,
+                    ServiceLine = application.ServiceLine,
+                    SoftwareAssetSearchableId = application.SoftwareAssetSearchableId,
+                    //SoWid = _context.SoW.Where(x => x.ContractId == application.ContractId).FirstOrDefault().SoWid,
+                    StartDate = application.StartDate,
+                    TM = application.TM,
+                    SupplierId = application.SupplierId
+                };
+				
+                var existingItem = _context.Application.FirstOrDefault(s => s.ApplicationId == application.ApplicationId);
+                if (existingItem != null)
+                    _context.Application.Update(item);
+                else
+                    _context.Application.Add(item);
                 _context.SaveChanges();
                 return application;
             }
@@ -159,9 +121,7 @@ namespace CrEST.BL
                             Remarks = reader.IsDBNull(16) ? string.Empty : reader.GetString(16),
                             OwnerAlias = reader.GetString(17),
                             ITOrgName = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18),
-                            SoWid = reader.GetInt32(19)
-
-                    });
+						});
                     }
                 }
             }
