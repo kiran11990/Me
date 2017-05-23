@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { SlpService } from "../shared/services/slp.service";
 import { SlpBusiness } from "../shared/business/slp.business";
+import { ReportingPeriod } from "../shared/models/reportingperiod";
 var SlpComponent = (function () {
     function SlpComponent(_slpService, _slpBusiness) {
         this._slpService = _slpService;
@@ -28,10 +29,10 @@ var SlpComponent = (function () {
         this.SetHeaders();
     };
     //**Actions and Events Start
-    SlpComponent.prototype.onChange = function (newObj) {
-        this.Message = "";
-        this.currentSelectedPeriod = newObj;
-        this.GetSLPData(newObj);
+    SlpComponent.prototype.onChange = function (newObj, _this) {
+        _this.selectedPeriod = _this.periods.filter(function (res) { return res.period == newObj; });
+        _this.currentSelectedPeriod = newObj;
+        this.GetSLPData(newObj.Period);
     };
     SlpComponent.prototype.Generate = function (fiscalYear) {
         this.Message = "";
@@ -66,23 +67,18 @@ var SlpComponent = (function () {
         var mainThis = this;
         this._slpService.GetReportingPeriods().subscribe(function (result) {
             mainThis.periods = result;
-            mainThis.selectedPeriod = mainThis.periods[0];
-            mainThis.selectedPeriod.id = mainThis.periods[0].id;
+            var allRP = new ReportingPeriod();
+            allRP.id = 0;
+            allRP.period = "All";
+            mainThis.periods.unshift(allRP);
+            mainThis.selectedPeriod = allRP;
             mainThis.GetSLPData(mainThis.selectedPeriod.period);
         });
     };
     SlpComponent.prototype.GetSLPData = function (fiscalYear) {
         var _this = this;
         this._slpService.GetSlps(fiscalYear, '').subscribe(function (result) {
-            //TODO : can we cleanup this?
-            if (fiscalYear != "All") {
-                _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == fiscalYear;
-                });
-            }
-            else {
-                _this.data = result;
-            }
+            _this.data = result;
         });
     };
     SlpComponent.prototype.getCurrentP = function () {
@@ -102,16 +98,16 @@ var SlpComponent = (function () {
             return this.getCurrentY() + "-" + (this.getCurrentP() - 1);
     };
     SlpComponent.prototype.SetHeaders = function () {
-        this.colHeaders.push('supplier');
+        this.colHeaders.push('Supplier');
         this.colWidths.push(50);
         this.columns.push({
             data: "supplierName",
             readOnly: true
         });
-        this.colHeaders.push('scid');
+        this.colHeaders.push('SCID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "sCID",
+            data: "scid",
             readOnly: true
         });
         this.colHeaders.push('Contract ID');
@@ -141,7 +137,7 @@ var SlpComponent = (function () {
         this.colHeaders.push('SLA ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "sLAID",
+            data: "slaId",
             readOnly: true
         });
         this.colHeaders.push('Service Metric');
@@ -252,11 +248,13 @@ var SlpComponent = (function () {
             mainThis: this
         });
         this.options = {
-            height: 396,
+            height: 750,
             stretchH: 'all',
             columnSorting: true,
             className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders
+            colHeaders: this.colHeaders,
+            manualColumnResize: true,
+            colWidths: [60, 60, 100, 250, 250, 250, 100, 500, 100, 100, 100, 100, 100, 250, 250, 100, 250, 150, 150, 100, 100, 100, 500, 100]
         };
     };
     SlpComponent.prototype.ValueRenderer = function (instance, td, row, col, prop, value, cellProperties) {
@@ -270,7 +268,7 @@ var SlpComponent = (function () {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        if (status == "1" || status == "NA") {
+        if (status == "1") {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.isValidHandsonData = false;
@@ -303,6 +301,7 @@ var SlpComponent = (function () {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
         td = cellProperties.mainThis.FormatCellValue(result, td);
+        td.innerText = "";
         return td;
     };
     ;

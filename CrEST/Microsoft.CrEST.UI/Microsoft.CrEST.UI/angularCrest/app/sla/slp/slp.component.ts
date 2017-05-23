@@ -38,10 +38,10 @@ export class SlpComponent implements OnInit {
     }
 
     //**Actions and Events Start
-    onChange(newObj: any) {
-        this.Message = "";
-        this.currentSelectedPeriod = newObj;
-        this.GetSLPData(newObj);
+    onChange(newObj: any, _this: any) {
+        _this.selectedPeriod = _this.periods.filter((res: any) => { return res.period == newObj });
+        _this.currentSelectedPeriod = newObj;
+        this.GetSLPData(newObj.Period);
     }
 
     Generate(fiscalYear: string) {
@@ -84,8 +84,11 @@ export class SlpComponent implements OnInit {
         var mainThis = this;
         this._slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
             mainThis.periods = result;
-            mainThis.selectedPeriod = mainThis.periods[0];
-            mainThis.selectedPeriod.id = mainThis.periods[0].id;
+            var allRP: ReportingPeriod = new ReportingPeriod();
+            allRP.id = 0;
+            allRP.period = "All";
+            mainThis.periods.unshift(allRP);
+            mainThis.selectedPeriod = allRP;
             mainThis.GetSLPData(mainThis.selectedPeriod.period)
         });
     }
@@ -93,14 +96,7 @@ export class SlpComponent implements OnInit {
     private GetSLPData(fiscalYear: string) {
         var _this = this;
         this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<Slp>) => {
-            //TODO : can we cleanup this?
-            if (fiscalYear != "All") {
-                _this.data = result.filter(res => {
-                    return res.reportingPeriod == fiscalYear;
-                });
-            } else {
-                _this.data = result;
-            }
+            _this.data = result;
         });
     }
 
@@ -125,17 +121,17 @@ export class SlpComponent implements OnInit {
     
     private SetHeaders() {
 
-        this.colHeaders.push('supplier');
+        this.colHeaders.push('Supplier');
         this.colWidths.push(50);
         this.columns.push({
             data: "supplierName",
             readOnly: true
         });
 
-        this.colHeaders.push('scid');
+        this.colHeaders.push('SCID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "sCID",
+            data: "scid",
             readOnly: true
         });
 
@@ -170,7 +166,7 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('SLA ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "sLAID",
+            data: "slaId",
             readOnly: true
         });
 
@@ -300,11 +296,13 @@ export class SlpComponent implements OnInit {
         });
 
         this.options = {
-            height: 396,
+            height: 750,
             stretchH: 'all',
             columnSorting: true,
             className: 'htCenter htMiddle',
-            colHeaders: this.colHeaders
+            colHeaders: this.colHeaders,
+            manualColumnResize: true,
+            colWidths: [60, 60, 100, 250, 250, 250, 100, 500, 100, 100, 100, 100, 100, 250, 250, 100, 250, 150, 150, 100, 100, 100, 500, 100]
         };
     }
     
@@ -323,7 +321,7 @@ export class SlpComponent implements OnInit {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        if (status == "1" || status == "NA")
+        if (status == "1")
         {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
@@ -363,7 +361,7 @@ export class SlpComponent implements OnInit {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
         td = cellProperties.mainThis.FormatCellValue(result, td);
-
+        td.innerText = "";
         return td;
     };
 

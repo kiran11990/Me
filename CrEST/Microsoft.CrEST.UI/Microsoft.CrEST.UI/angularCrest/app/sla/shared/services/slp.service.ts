@@ -34,7 +34,7 @@ export class SlpService {
 
     GetSlps(period: string, useralias: string) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlps + "/'" + period + "'", { headers: header })
+        return this.http.get(this.getSlps + "/" + period, { headers: header })
             .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 
