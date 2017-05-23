@@ -11,8 +11,8 @@
         </div>
         <div class="col-lg-5 col-sm-5">
             <select class="form-control" [ngModel]="selectedPeriod" (ngModelChange)="onChange($event)">
-                <option *ngFor="let period of periods" value={{period.fiscalYear}}>
-                    {{period.fiscalYear}}
+                <option *ngFor="let item of periods" value={{item.period}}>
+                    {{item.period}}
                 </option>
             </select>
         </div>

@@ -40,6 +40,7 @@ export class SlaDashboardComponent {
 
     onChange(newObj: any) {
         this.currentSelectedPeriod = newObj;
+        this.selectedPeriod.period = newObj;
     }
 
     ExportToExport(fiscalYear: string) {
@@ -156,7 +157,6 @@ export class SlaDashboardComponent {
         this.slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
             mainThis.periods = result;
             mainThis.selectedPeriod = mainThis.periods[0];
-            mainThis.selectedPeriod.id = mainThis.periods[0].id;
         });
     }
 }

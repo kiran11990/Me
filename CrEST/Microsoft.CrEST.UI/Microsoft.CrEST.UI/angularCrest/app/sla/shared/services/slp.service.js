@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -26,23 +26,28 @@ var SlpService = (function () {
         this.getSlpByStatus = _constantService.CONFIG.apiLocations.getSlpByStatus;
     }
     SlpService.prototype.GetReportingPeriods = function () {
-        return this.http.get(this.getReportingPeriod)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getReportingPeriod, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GetSlps = function (period, useralias) {
-        return this.http.get(this.getSlps + '/' + period + '/' + useralias)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + "/'" + period + "'", { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.SaveSLPs = function (data) {
-        return this.http.post(this.saveSLPs, data)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.post(this.saveSLPs, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
-        return this.http.get(this.getSlps + '/' + previousFP)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + '/' + previousFP, { headers: header })
             .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GetSlpsByStatus = function (status, useralias) {
-        return this.http.get(this.getSlpByStatus + '/' + status)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlpByStatus + '/' + status, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     return SlpService;

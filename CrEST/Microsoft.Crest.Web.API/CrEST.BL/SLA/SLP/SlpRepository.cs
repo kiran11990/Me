@@ -12,9 +12,9 @@ namespace CrEST.BL
 {
     public class SlpRepository : ISlpsRepository
     {
-        public IEnumerable<SLAData> GetSlps(string period, string alias)
+        public IEnumerable<SLAData> GetSlps(string period)
         {
-            return GetSlaFromDb(period, alias);
+            return GetSlaFromDb(period);
         }
 
         public IEnumerable<ReportingPeriod> GetReportingPeriod()
@@ -46,7 +46,7 @@ namespace CrEST.BL
         public IEnumerable<SLAData> GetSlpsByStatus(int status)
         {
             List<SLAData> result = new List<SLAData>();
-            var slas = GetSlaFromDb(string.Empty, string.Empty);
+            var slas = GetSlaFromDb(string.Empty);
             foreach (var sla in slas)
             {
                 if (sla.Value != "NA" && (sla.MinimumLevel != "TBD" && sla.MinimumLevel != "To be baselined")  && (sla.TargetLevel != "TBD" && sla.TargetLevel != "To be baselined"))
@@ -66,7 +66,7 @@ namespace CrEST.BL
             return result;
         }
 
-        private IEnumerable<SLAData> GetSlaFromDb(string period, string alias)
+        private IEnumerable<SLAData> GetSlaFromDb(string period)
         {
             List<SLAData> slas = new List<SLAData>();
 

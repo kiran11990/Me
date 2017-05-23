@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -27,27 +27,32 @@ export class SlpService {
     }
 
     GetReportingPeriods() {
-        return this.http.get(this.getReportingPeriod)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getReportingPeriod, { headers: header })
             .map(res => res.json() as ReportingPeriod[]).catch(this.commonService.handleError);
     }
 
     GetSlps(period: string, useralias: string) {
-        return this.http.get(this.getSlps + '/' + period + '/' + useralias)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + "/'" + period + "'", { headers: header })
             .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 
     SaveSLPs(data: Array<any>) {
-        return this.http.post(this.saveSLPs, data)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.post(this.saveSLPs, { headers: header })
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     GenerateSLPforCurrentPeriod(previousFP: string) {
-        return this.http.get(this.getSlps + '/' + previousFP)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + '/' + previousFP, { headers: header })
             .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
     }
 
     GetSlpsByStatus(status: number, useralias: string) {
-        return this.http.get(this.getSlpByStatus + '/' + status)
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlpByStatus + '/' + status, { headers: header })
             .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 }

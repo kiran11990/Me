@@ -117,7 +117,7 @@ var SlpComponent = (function () {
         this.colHeaders.push('Contract ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "contractID",
+            data: "contractId",
             readOnly: true
         });
         this.colHeaders.push('Application Group');
@@ -129,7 +129,7 @@ var SlpComponent = (function () {
         this.colHeaders.push('Crest Level 1 Service');
         this.colWidths.push(50);
         this.columns.push({
-            data: "crestevel1",
+            data: "crestLevel1",
             readOnly: true
         });
         this.colHeaders.push('Crest Level 2 Service');
