@@ -26,10 +26,18 @@ var SlaDashboardComponent = (function () {
         this.isDataAvailable = false;
         this.contractIds = [];
         this.slps = [];
+        this.periods = [];
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
         this.GetSlps();
+        this.GetReportingPeriods();
     }
+    SlaDashboardComponent.prototype.onChange = function (newObj) {
+        this.currentSelectedPeriod = newObj;
+    };
+    SlaDashboardComponent.prototype.ExportToExport = function (fiscalYear) {
+        var _this = this;
+    };
     SlaDashboardComponent.prototype.GetActiveContractIdsBarChart = function () {
         var mainthis = this;
         this.sowService.getSows()
@@ -119,6 +127,14 @@ var SlaDashboardComponent = (function () {
         this.slpService.GetSlpsByStatus(2, "")
             .subscribe(function (data) {
             mainthis.slps = data;
+        });
+    };
+    SlaDashboardComponent.prototype.GetReportingPeriods = function () {
+        var mainThis = this;
+        this.slpService.GetReportingPeriods().subscribe(function (result) {
+            mainThis.periods = result;
+            mainThis.selectedPeriod = mainThis.periods[0];
+            mainThis.selectedPeriod.id = mainThis.periods[0].id;
         });
     };
     return SlaDashboardComponent;

@@ -3,6 +3,7 @@ import { SowService } from '../shared/services/sows.service';
 import { Sow } from '../shared/models/sow';
 import { SlpService } from '../shared/services/slp.service';
 import { Slp } from '../shared/models/slp';
+import { ReportingPeriod } from '../shared/models/reportingperiod';
 
 @Component({
     selector: 'sla-dashboard',
@@ -24,13 +25,25 @@ export class SlaDashboardComponent {
 
 
     public contractIds: Array<Sow> = [];
-
     public slps: Array<Slp> = [];
+    public periods: Array<ReportingPeriod> = [];
+    public selectedPeriod: ReportingPeriod;
+    public currentSelectedPeriod: any
+
 
     constructor(private sowService: SowService, private slpService: SlpService) {
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
         this.GetSlps();
+        this.GetReportingPeriods();
+    }
+
+    onChange(newObj: any) {
+        this.currentSelectedPeriod = newObj;
+    }
+
+    ExportToExport(fiscalYear: string) {
+        var _this = this;
     }
 
     private GetActiveContractIdsBarChart() {
@@ -136,5 +149,14 @@ export class SlaDashboardComponent {
             .subscribe(data => {
                 mainthis.slps = data;
             });
+    }
+
+    private GetReportingPeriods() {
+        var mainThis = this;
+        this.slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
+            mainThis.periods = result;
+            mainThis.selectedPeriod = mainThis.periods[0];
+            mainThis.selectedPeriod.id = mainThis.periods[0].id;
+        });
     }
 }
