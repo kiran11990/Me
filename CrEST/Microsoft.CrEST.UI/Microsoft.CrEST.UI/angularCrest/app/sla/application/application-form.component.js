@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/// <reference path="../shared/models/applicationmetadata.ts" />
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,32 +16,34 @@ import { ApplicationData } from "../shared/models/applicationdata";
 import { ApplicationService } from "./../shared/services/application.service";
 import { Http } from '@angular/http';
 var ApplicationFormComponent = (function () {
-    function ApplicationFormComponent(_routeParameterd, applicationService, router, formBuilder, http) {
-        this._routeParameterd = _routeParameterd;
+    function ApplicationFormComponent(_routeParams, applicationService, router, formBuilder, http) {
+        this._routeParams = _routeParams;
         this.applicationService = applicationService;
         this.router = router;
         this.http = http;
         this.applicationList = new Application();
         this.applicationData = new ApplicationData();
         this.startdate = new Date();
+        this.endDate = new Date();
         this.submitAttempt = false;
+        this.applicationMetaData = [];
         this.outparam = '';
         this.dropdownSettings = {};
-        // startdate: Object = {
-        //    date: {
-        //        year: this.date.getFullYear(),
-        //        month: this.date.getMonth() + 1,
-        //        day: this.date.getdate()
-        //    }
-        //};
-        //private enddate: Object = {
-        //    date: {
-        //        year: this.date.getFullYear(),
-        //        month: this.date.getMonth() + 1,
-        //        day: this.date.getdate()
-        //    }
-        //};
-        this.mydatePickerOptions = {
+        this.startDate = {
+            date: {
+                year: this.startdate.getFullYear(),
+                month: this.startdate.getMonth() + 1,
+                day: this.startdate.getDate()
+            }
+        };
+        this.enddate = {
+            date: {
+                year: this.startdate.getFullYear(),
+                month: this.startdate.getMonth() + 1,
+                day: this.startdate.getDate()
+            }
+        };
+        this.myDatePickerOptions = {
             // other options...
             dateFormat: 'dd.mm.yyyy',
         };
@@ -49,33 +52,48 @@ var ApplicationFormComponent = (function () {
         });
         //this.mydate = '2016-01-10';
     }
-    //onstartdateChanged(event: IMydateModel) {
-    //    this.startdate =  event.jsdate;
-    //}
-    //onenddateChanged(event: IMydateModel) {
-    //    this.date = event.jsdate;
-    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    //}
+    ApplicationFormComponent.prototype.onstartDateChanged = function (event) {
+        this.startdate = event.jsdate;
+    };
+    ApplicationFormComponent.prototype.onendDateChanged = function (event) {
+        this.endDate = event.jsdate;
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
-        if (this._routeParameterd.snapshot.params['id'] != null) {
-            var id = this._routeParameterd.snapshot.params['id'];
+        if (this._routeParams.snapshot.params['id'] != null) {
+            debugger;
+            var id = this._routeParams.snapshot.params['id'];
+            this.getApplicationMetaData();
             this.applicationService.getApplicationyId(id)
                 .subscribe(function (data) {
-                _this.applicationList = data;
+                _this.applicationData = data;
             });
         }
     };
+    ApplicationFormComponent.prototype.getApplicationMetaData = function () {
+        var _this = this;
+        this.applicationService.getApplicationMetaData()
+            .subscribe(function (data) {
+            _this.applicationMetaData = data;
+        });
+    };
     ApplicationFormComponent.prototype.initSubmit = function (applicationData) {
-        var now = new Date(this.startdate);
+        var _this = this;
         var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
-        //var enddate = new date(date.UTC(this.date.getFullYear(), this.date.getMonth(), this.date.getdate(), this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()));
+        var enddate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
         applicationData.startDate = startdate;
+        applicationData.endDate = enddate;
         //applicationData.endDate = enddate;
         this.applicationService.addApplication(this.applicationData)
             .subscribe(function (result) {
             var result = result;
+            if (result == 1) {
+                alert("updatedsuccessfully");
+                _this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
+            }
         });
     };
     ApplicationFormComponent.prototype.submit = function () {

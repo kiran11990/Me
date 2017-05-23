@@ -9,9 +9,9 @@ namespace CrEST.BL
 	{
 		IEnumerable<SowData> GetAll();
 
-		SoW Get(int item);
+		SowData GetById(int item);
 
-		SoW Put(SoW item);
+		SowData SaveSOW(SowData item);
 
 		IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner);
 

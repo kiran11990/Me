@@ -26,7 +26,7 @@ export class SlaApplicationComponent {
     public states: any = [];
 
     public contactdetails: string[] = [];
-    public contactIdList: number[] = [];
+    public contactIdList: string[] = [];
     public servicelineList: string[] = [];
     public ApplicationLists: string[] = [];
     public applicationList: ApplicationData[] = [];
@@ -35,7 +35,6 @@ export class SlaApplicationComponent {
         this.router = _router;
        
     }
-    
 
     ngOnInit() {
         if (this._routeParameterd.snapshot.params['saveApplicationStatus']) {
@@ -43,9 +42,6 @@ export class SlaApplicationComponent {
             this.SaveSucessfull = true;
 
         }
-
-
-
         this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(data => {
@@ -56,7 +52,6 @@ export class SlaApplicationComponent {
             });
        
     }
-    
 
     public filteredList: string[] = [];
     public ContactIdList: string[] = [];
@@ -64,29 +59,18 @@ export class SlaApplicationComponent {
     public searchServiceLine = '';
     public searchApplication = '';
     find() {
-        //this.searchContactId = this.contactId.trim();
-        //this.searchServiceLine = this.serviceLine.trim();
-        //this.searchApplication = this.application.trim();
         this.applicationService.findApplication(this.contactId, this.serviceLine, this.application)
             .subscribe(data => {
                 this.applicationList = data
-
             })
        
     }
 
-
-    //edit(id: any) {
-    //    alert(id + "the value should be")
-
-    //    this.id = id;
-    //    this.router.navigate(['/applications', this.id]);
-    //}
-    //notifyContactId(ContactId: string) {
-    //    if (event) {
-    //        this.contactId = ContactId;
-    //    }
-    //}
+    notifyContactId(ContactId: string) {
+        if (event) {
+            this.contactId = ContactId;
+        }
+    }
 
 
     notifyServiceLine(serviceLine: string) {
@@ -104,13 +88,11 @@ export class SlaApplicationComponent {
     autoComplete() {
         for (var i = 0; i < this.applicationList.length; i++) {
             this.ApplicationLists.push(this.applicationList[i].application);
-            this.contactIdList.push(this.applicationList[i].contractId);
+            this.contactIdList.push(this.applicationList[i].contractId.toString());
             this.servicelineList.push(this.applicationList[i].serviceLine);
         }
     }
 
-
-    @Input('data') meals: string[] = [];
 
     public filter: string = '';
     public maxSize: number = 7;

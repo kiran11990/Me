@@ -26,16 +26,16 @@ namespace Microsoft.Crest.Web.API.Controllers
         
         [HttpGet]
 		[Route("GetSoWById/{id}")]
-		public SoW GetSoWById(int id)
+		public SowData GetSoWById(int id)
 		{
-			return _sowRepository.Get(id);
+			return _sowRepository.GetById(id);
 		}
 
 		[HttpPost]
         [Route("SaveSoW")]
-		public SoW SaveSoW([FromBody]SoW item)
+		public SowData SaveSoW([FromBody]SowData item)
 		{
-			return _sowRepository.Put(item);
+			return _sowRepository.SaveSOW(item);
 		}
 
 		[HttpGet]

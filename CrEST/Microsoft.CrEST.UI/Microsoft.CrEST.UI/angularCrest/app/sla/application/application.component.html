@@ -14,7 +14,7 @@
         <div style="margin-top:12px">
             <div class="col-lg-3">
                 <input id="contactids" #varSearchcontactid type="text" [(ngModel)]='contactId' class="form-control" placeholder="contactid" />
-             <!--   <auto-complete [tagId]="contactids" [values]='contactIdList|filterUser:contactId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'> </auto-complete>-->
+                <auto-complete [tagId]="contactids" [values]='contactIdList|filterUser:contactId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'> </auto-complete>
             </div>
             <div class="col-lg-3">
                 <input class="form-control" id="serviceline" #varSearchserviceline type="text" [(ngModel)]='serviceLine' placeholder="serviceline" aria-label="Search User"  />
@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-lg-3">
-                <input class="form-control" id="application" #varSearchapplication type="text" [(ngModel)]='application' placeholder="apllication" aria-label="Search User" />
+                <input class="form-control" id="application" #varSearchapplication type="text" [(ngModel)]='application' placeholder="application" aria-label="Search User" />
                 <auto-complete [tagId]='application' [values]='ApplicationLists|filterUser:application' [elementToBind]='varSearchapplication' (notifyOnSelected)='notifyApplication($event)'> </auto-complete>
             </div>
 
@@ -69,7 +69,7 @@
                     <td>{{item.soWid}}</td>
                     <td>{{item.contractId}}</td>
                     <td>{{item.serviceLine}}</td>
-                    <td>{{item.application1}}</td>
+                    <td>{{item.application}}</td>
                     <td>{{item.serviceClass}}</td>
                     <td>{{item.runOrGrow}}</td>
                     <td>{{item.applicationGroup}}</td>
@@ -85,7 +85,7 @@
                     <td>{{item.supplierName}}</td>
                     <td>{{item.ownerAlias}}</td>
                     <td>{{item.itorg}}</td>
-                    <td>{{item.iTOrgName}}</td>
+                    <td>{{item.itOrgName}}</td>
                     <td>
                        <!--<button (click)="edit(i)">Edit</button>-->
                         <a class="btn btn-primary" [routerLink]="['/applications', item.applicationId]">Edit</a>

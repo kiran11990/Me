@@ -10,107 +10,136 @@ using System.Data.SqlClient;
 
 namespace CrEST.BL
 {
-    public class SoWRepository : ISoWRepository
-    {
-        public IEnumerable<SowData> GetAll()
-        {
-            return SearchSow(0, 0, string.Empty);
-        }
+	public class SoWRepository : ISoWRepository
+	{
+		public IEnumerable<SowData> GetAll()
+		{
+			return SearchSow(0, 0, string.Empty);
+		}
 
-        public SoW Get(int item)
-        {
-            using (CrESTContext _context = new CrESTContext())
-            {
-                return _context.SoW.FirstOrDefault(s => s.SoWid == item);
-            }
-        }
+		public SowData GetById(int item)
+		{
+			using (CrESTContext db = new CrESTContext())
+			{
+				db.Database.OpenConnection();
+				DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+				cmd.CommandText = "spGetSoWById";
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.Add(new SqlParameter("@SoWId", item));
 
-        public SoW Put(SoW item)
-        {
-            using (CrESTContext _context = new CrESTContext())
-            {
-                if (item == null)
-                {
-                    return item;
-                }
+				SowData existingItem = new SowData();
 
-                SoW existingItem = _context.SoW.FirstOrDefault(s => s.SoWid == item.SoWid);
-                if (existingItem != null)
-                {
-                    existingItem.SupplierId = item.SupplierId;
-                    existingItem.Itorg = item.Itorg;
-                    existingItem.ContractId = item.ContractId;
-                    existingItem.SoweffectiveDate = item.SoweffectiveDate;
-                    existingItem.SowexpirationDate = item.SowexpirationDate;
-                    existingItem.Msowner = item.Msowner;
-                    existingItem.InfyOwner = item.InfyOwner;
-                    existingItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
-                    existingItem.PonumYear1 = item.PonumYear1;
-                    existingItem.SowamountYear1 = item.SowamountYear1;
-                    existingItem.SowamountYear2 = item.SowamountYear2;
-                    existingItem.SowamountYear3 = item.SowamountYear3;
-                    existingItem.SowamountYear4 = item.SowamountYear4;
-                    existingItem.IsCrest = item.IsCrest;
-                    existingItem.Remarks = item.Remarks;
-                    _context.SoW.Update(existingItem);
-                    item = existingItem;
-                }
-                else
-                {
-                    _context.SoW.Add(item);
-                }
+				using (var reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						existingItem.SupplierName = reader.GetString(0);
+						existingItem.ItorgName = reader.GetInt32(1);
+						existingItem.ContractId = reader.GetInt32(2);
+						existingItem.SoweffectiveDate = reader.GetDateTime(3);
+						existingItem.SowexpirationDate = reader.GetDateTime(4);
+						existingItem.Msowner = reader.GetString(5);
+						existingItem.ServiceCatalogVersion = reader.GetDouble(6);
+						existingItem.PonumYear1 = reader.GetInt32(7);
+						existingItem.Currency = reader.GetString(8);
+						existingItem.SowamountYear1 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9);
+						existingItem.SowamountYear2 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10);
+						existingItem.SowamountYear3 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11);
+						existingItem.SowamountYear4 = reader.IsDBNull(12) ? default(decimal) : reader.GetDecimal(12);
+						existingItem.IsCrest = reader.GetBoolean(13);
+						existingItem.Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14);
+						existingItem.CompanyCode = reader.GetInt32(15);
+						existingItem.SoWid = reader.GetInt32(16);
+						existingItem.InfyOwner = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
+					}
+				}
 
-                _context.SaveChanges();
-                return item;
-            }
-        }
+				return existingItem;
+			}
+		}
 
-        public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner)
-        {
-            return SearchSow(contractId, ITOrg, msOwner);
-        }
+		public SowData SaveSOW(SowData item)
+		{
+			using (CrESTContext _context = new CrESTContext())
+			{
+				SoW existingItem = _context.SoW.Where(s => s.SoWid == item.SoWid).SingleOrDefault();
 
-        public SowMetadata GetSowMetadata()
-        {
-            using (CrESTContext _context = new CrESTContext())
-            {
-                SowMetadata sowMetadata = new SowMetadata();
+				if (existingItem == null)
+				{
+					existingItem = new SoW();
+				}
 
-                sowMetadata.Suppliers = _context.Supplier.ToList();
-                sowMetadata.ItOrg = _context.Itorg.ToList();
-                sowMetadata.ContractIds = _context.SoW.Where(x => x.ContractId != null).Select(x => x.ContractId.Value).Distinct().ToList();
-                sowMetadata.CompanyCodes = _context.SoW.Where(x => x.CompanyCode != null).Select(x => x.CompanyCode.Value).ToList();
+				existingItem.SupplierId = _context.Supplier.Where(x => x.SupplierId == item.SupplierId).FirstOrDefault().SupplierId;
+				existingItem.Itorg = item.Itorg;
+				existingItem.ContractId = item.ContractId;
+				existingItem.SoweffectiveDate = item.SoweffectiveDate;
+				existingItem.SowexpirationDate = item.SowexpirationDate;
+				existingItem.Msowner = item.Msowner;
+				existingItem.InfyOwner = item.InfyOwner;
+				existingItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
+				existingItem.PonumYear1 = item.PonumYear1;
+				existingItem.SowamountYear1 = item.SowamountYear1;
+				existingItem.SowamountYear2 = item.SowamountYear2;
+				existingItem.SowamountYear3 = item.SowamountYear3;
+				existingItem.SowamountYear4 = item.SowamountYear4;
+				existingItem.IsCrest = item.IsCrest;
+				existingItem.Remarks = item.Remarks;				
 
-                return sowMetadata;
-            }
-        }
+				if (existingItem.SoWid == 0)
+					_context.SoW.Add(existingItem);
 
-        public IEnumerable<SowData> GetActiveContracts()
-        {
-            List<SowData> sows = new List<SowData>();
+				_context.SaveChanges();
+				return item;
+			}
+		}
 
-            using (CrESTContext db = new CrESTContext())
-            {
-                db.Database.OpenConnection();
-                DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
-                cmd.CommandText = "spGetActiveContracts";
-                cmd.CommandType = CommandType.StoredProcedure;
 
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        SowData sow = new SowData();
-                        sow.ContractId = reader.GetInt32(0);
-                        sow.InfyOwner = reader.IsDBNull(1)? string.Empty : reader.GetString(1);
-                        sow.SoweffectiveDate = reader.GetDateTime(2);
-                        sow.SowexpirationDate = reader.GetDateTime(3);
-                        sows.Add(sow);
-                    }
-                }
-            }
-            return sows;
-        }
+		public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner)
+		{
+			return SearchSow(contractId, ITOrg, msOwner);
+		}
+
+		public SowMetadata GetSowMetadata()
+		{
+			using (CrESTContext _context = new CrESTContext())
+			{
+				SowMetadata sowMetadata = new SowMetadata();
+
+				sowMetadata.Suppliers = _context.Supplier.ToList();
+				sowMetadata.ItOrg = _context.Itorg.ToList();
+				sowMetadata.ContractIds = _context.SoW.Where(x => x.ContractId != null).Select(x => x.ContractId.Value).Distinct().ToList();
+				sowMetadata.CompanyCodes = _context.SoW.Where(x => x.CompanyCode != null).Select(x => x.CompanyCode.Value).ToList();
+
+				return sowMetadata;
+			}
+		}
+
+		public IEnumerable<SowData> GetActiveContracts()
+		{
+			List<SowData> sows = new List<SowData>();
+
+			using (CrESTContext db = new CrESTContext())
+			{
+				db.Database.OpenConnection();
+				DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+				cmd.CommandText = "spGetActiveContracts";
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				using (var reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						SowData sow = new SowData();
+						sow.ContractId = reader.GetInt32(0);
+						sow.InfyOwner = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+						sow.SoweffectiveDate = reader.GetDateTime(2);
+						sow.SowexpirationDate = reader.GetDateTime(3);
+						sows.Add(sow);
+					}
+				}
+			}
+			return sows;
+		}
 
         private IEnumerable<SowData> SearchSow(int contractId, int itOrg, string msOwner)
         {
@@ -128,7 +157,7 @@ namespace CrEST.BL
                 cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
 
-				using (var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {

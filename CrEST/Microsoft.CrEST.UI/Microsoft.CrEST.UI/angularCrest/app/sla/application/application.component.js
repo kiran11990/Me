@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/catch';
@@ -33,7 +33,6 @@ var SlaApplicationComponent = (function () {
         this.searchContactId = '';
         this.searchServiceLine = '';
         this.searchApplication = '';
-        this.meals = [];
         this.filter = '';
         this.maxSize = 7;
         this.directionLinks = true;
@@ -69,24 +68,16 @@ var SlaApplicationComponent = (function () {
     };
     SlaApplicationComponent.prototype.find = function () {
         var _this = this;
-        //this.searchContactId = this.contactId.trim();
-        //this.searchServiceLine = this.serviceLine.trim();
-        //this.searchApplication = this.application.trim();
         this.applicationService.findApplication(this.contactId, this.serviceLine, this.application)
             .subscribe(function (data) {
             _this.applicationList = data;
         });
     };
-    //edit(id: any) {
-    //    alert(id + "the value should be")
-    //    this.id = id;
-    //    this.router.navigate(['/applications', this.id]);
-    //}
-    //notifyContactId(ContactId: string) {
-    //    if (event) {
-    //        this.contactId = ContactId;
-    //    }
-    //}
+    SlaApplicationComponent.prototype.notifyContactId = function (ContactId) {
+        if (event) {
+            this.contactId = ContactId;
+        }
+    };
     SlaApplicationComponent.prototype.notifyServiceLine = function (serviceLine) {
         if (event) {
             this.serviceLine = serviceLine;
@@ -100,7 +91,7 @@ var SlaApplicationComponent = (function () {
     SlaApplicationComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.applicationList.length; i++) {
             this.ApplicationLists.push(this.applicationList[i].application);
-            this.contactIdList.push(this.applicationList[i].contractId);
+            this.contactIdList.push(this.applicationList[i].contractId.toString());
             this.servicelineList.push(this.applicationList[i].serviceLine);
         }
     };
@@ -117,10 +108,6 @@ var SlaApplicationComponent = (function () {
     };
     return SlaApplicationComponent;
 }());
-__decorate([
-    Input('data'),
-    __metadata("design:type", Array)
-], SlaApplicationComponent.prototype, "meals", void 0);
 SlaApplicationComponent = __decorate([
     Component({
         selector: 'sla-application',
