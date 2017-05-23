@@ -10,7 +10,7 @@ namespace CrEST.Models
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public int? Itorg { get; set; }
-        public int? ItorgName { get; set; }
+        public string ItorgName { get; set; }
         public int? ContractId { get; set; }
         public DateTime? SoweffectiveDate { get; set; }
         public DateTime? SowexpirationDate { get; set; }
@@ -25,6 +25,6 @@ namespace CrEST.Models
         public decimal? SowamountYear4 { get; set; }
         public bool? IsCrest { get; set; }
         public string Remarks { get; set; }
-        public int? CompanyCode { get; set; }		
-	}
+        public int? CompanyCode { get; set; }
+    }
 }

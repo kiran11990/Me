@@ -1,21 +1,22 @@
 export class Slp {
-    id: string
-    supplier: string;
-    scid: string;
-    contractID: string;
+    id: number
+    slabaseId: number;
+    supplierName: string;
+    sCID: string;
+    contractId: number;
     applicationGroup: string;
-    crestL1Service: string;
-    crestL2Service: string;
-    slaId: string;
+    crestLevel1: string;
+    crestLevel2: string;
+    sLAId: string;
     serviceMetric: string;
     serviceClass: string;
     severityLevel: string;
     priorityLevel: string;
     environment: string;
-    custom: string;
+    isCustom: boolean;
     minimumLevel: string;
     targetLevel: string;
-    weight: string;
+    weightage : string;
     remarks: string;
     validationNotes: string;
     reportingPeriod: string;
@@ -24,5 +25,9 @@ export class Slp {
     value: string;
     valueRemarks: string;
     chk: string;
+    createdBy: string;
+    createdDate: string;
+    lastModifiedBy: string;
+    lastModifiedDate: string;
 }
 

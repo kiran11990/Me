@@ -120,23 +120,13 @@ namespace CrEST.BL
             {
                 db.Database.OpenConnection();
                 DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
-				//cmd.CommandText = "spSearchSoW";
-				//cmd.CommandType = CommandType.StoredProcedure;
-				//cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
-				//cmd.Parameters.Add(new SqlParameter("@ITOrg", itOrg));
-				//cmd.Parameters.Add(new SqlParameter("@MSOwner", msOwner));
-				//cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));
-				//cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
-
-				if (contractId == 0 && itOrg == 0 && msOwner == string.Empty)
-				{
-					cmd.CommandText = "SELECT SU.SupplierName, SoW.ITOrg, SoW.ContractId, SoW.SOWEffectiveDate, SoW.SOWExpirationDate, SoW.MSOwner,  SoW.ServiceCatalogVersion, SoW.PONumYear1, SoW.Currency, SoW.SOWAmountYear1, SoW.SOWAmountYear2, SoW.SOWAmountYear3, SoW.SOWAmountYear4, SoW.IsCrest, SoW.Remarks, SoW.CompanyCode, SoW.SoWId, SoW.InfyOwner FROM SoW INNER JOIN Supplier SU WITH (NOLOCK) ON SoW.SupplierId = SU.SupplierId";
-				}
-				else
-				{
-					cmd.CommandText = string.Format("SELECT SU.SupplierName, SoW.ITOrg, SoW.ContractId, SoW.SOWEffectiveDate, SoW.SOWExpirationDate, SoW.MSOwner,  SoW.ServiceCatalogVersion, SoW.PONumYear1, SoW.Currency, SoW.SOWAmountYear1, SoW.SOWAmountYear2, SoW.SOWAmountYear3, SoW.SOWAmountYear4, SoW.IsCrest, SoW.Remarks, SoW.CompanyCode, SoW.SoWId, SoW.InfyOwner FROM SoW INNER JOIN Supplier SU WITH (NOLOCK) ON SoW.SupplierId = SU.SupplierId WHERE (ContractId = {0}) AND (ITOrg = {1}) AND (MSOwner = '{2}')", contractId, itOrg, msOwner);
-				}
-				cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "spSearchSoW";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
+                cmd.Parameters.Add(new SqlParameter("@ITOrg", itOrg));
+                cmd.Parameters.Add(new SqlParameter("@MSOwner", msOwner));
+                cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
 
 				using (var reader = cmd.ExecuteReader())
                 {
@@ -144,7 +134,7 @@ namespace CrEST.BL
                     {
                         SowData sow = new SowData();
                         sow.SupplierName = reader.GetString(0);
-                        sow.ItorgName = reader.GetInt32(1);
+                        sow.ItorgName = reader.GetString(1);
                         sow.ContractId = reader.GetInt32(2);
                         sow.SoweffectiveDate = reader.GetDateTime(3);
                         sow.SowexpirationDate = reader.GetDateTime(4);

@@ -5,7 +5,7 @@ import { Application } from "../shared/models/application";
 import { ApplicationData } from "../shared/models/applicationdata";
 import { ApplicationService } from "./../shared/services/application.service";
 import { CommonModule } from '@angular/common';
-import { IMydateModel, IMyDpOptions } from 'mydatepicker';
+import { /*IMydateModel,*/ IMyDpOptions } from 'mydatepicker';
 import { Http } from '@angular/http';
 
 @Component({
@@ -62,15 +62,15 @@ export class ApplicationFormComponent implements OnInit {
     };
 
 
-    onstartdateChanged(event: IMydateModel) {
-        this.startdate =  event.jsdate;
+    //onstartdateChanged(event: IMydateModel) {
+    //    this.startdate =  event.jsdate;
         
-    }
+    //}
 
-    onenddateChanged(event: IMydateModel) {
-        this.date = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    }
+    //onenddateChanged(event: IMydateModel) {
+    //    this.date = event.jsdate;
+    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    //}
     ngOnInit() {
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._routeParameterd.snapshot.params['id'] != null) {
@@ -84,7 +84,7 @@ export class ApplicationFormComponent implements OnInit {
     }
     initSubmit(applicationData: ApplicationData) {
         var now = new Date(this.startdate);
-        var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.date.getMinutes(), this.startdate.getSeconds()));
+        var startdate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         //var enddate = new date(date.UTC(this.date.getFullYear(), this.date.getMonth(), this.date.getdate(), this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()));
         applicationData.startDate = startdate;
         //applicationData.endDate = enddate;

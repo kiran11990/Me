@@ -53,7 +53,7 @@ export class SlpComponent implements OnInit {
         if (currentFP == fiscalYear) {
             this._slpService.GenerateSLPforCurrentPeriod(currentFP)
                 .subscribe(result => {
-                    _this.data = result.filter(res => {
+                    _this.data = result.filter((res:any) => {
                         return res.reportingPeriod == previousFP;
                     });
 
@@ -86,13 +86,13 @@ export class SlpComponent implements OnInit {
             mainThis.periods = result;
             mainThis.selectedPeriod = mainThis.periods[0];
             mainThis.selectedPeriod.id = mainThis.periods[0].id;
-            mainThis.GetSLPData(mainThis.selectedPeriod.fiscalYear)
+            mainThis.GetSLPData(mainThis.selectedPeriod.period)
         });
     }
 
     private GetSLPData(fiscalYear: string) {
         var _this = this;
-        this._slpService.GetSlpByPeriod(fiscalYear).subscribe((result: Array<Slp>) => {
+        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<Slp>) => {
             //TODO : can we cleanup this?
             if (fiscalYear != "All") {
                 _this.data = result.filter(res => {
@@ -128,21 +128,21 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('supplier');
         this.colWidths.push(50);
         this.columns.push({
-            data: "supplier",
+            data: "supplierName",
             readOnly: true
         });
 
         this.colHeaders.push('scid');
         this.colWidths.push(50);
         this.columns.push({
-            data: "scid",
+            data: "sCID",
             readOnly: true
         });
 
         this.colHeaders.push('Contract ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "contractID",
+            data: "contractId",
             readOnly: true
         });
 
@@ -156,21 +156,21 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Crest Level 1 Service');
         this.colWidths.push(50);
         this.columns.push({
-            data: "crestL1Service",
+            data: "crestLevel1",
             readOnly: true
         });
 
         this.colHeaders.push('Crest Level 2 Service');
         this.colWidths.push(50);
         this.columns.push({
-            data: "crestL2Service",
+            data: "crestLevel2",
             readOnly: true
         });
 
         this.colHeaders.push('SLA ID');
         this.colWidths.push(50);
         this.columns.push({
-            data: "slaid",
+            data: "sLAID",
             readOnly: true
         });
 
@@ -212,7 +212,7 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Custom');
         this.colWidths.push(50);
         this.columns.push({
-            data: "custom",
+            data: "isCustom",
             readOnly: true
         });
 
@@ -233,9 +233,9 @@ export class SlpComponent implements OnInit {
         this.colHeaders.push('Weight');
         this.colWidths.push(50);
         this.columns.push({
-            data: "weight",
+            data: "weightage",
             readOnly: true
-        });
+        }); 
 
         this.colHeaders.push('Remarks');
         this.colWidths.push(100);

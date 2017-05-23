@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -7,40 +7,53 @@ import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service'
 import { ReportingPeriod } from "../models/reportingperiod";
 import { Slp } from "../models/slp";
+import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
 export class SlpService {
 
-    private getCurrentPeriodSlpByUserAlias: string;
     private saveSLPs: string;
     private generateSLPforCurrentPeriod: string;
     private getSlps: string;
+    private getReportingPeriod: string;
+    private getSlpByStatus: string;
 
-    constructor(private _constantService: ConstantService, private http: Http) {
-        this.getCurrentPeriodSlpByUserAlias = _constantService.CONFIG.apiLocations.getCurrentPeriodSlpByUserAlias;
+    constructor(private _constantService: ConstantService, private commonService: CommonService,  private http: Http) {
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
+        this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
+        this.getSlpByStatus = _constantService.CONFIG.apiLocations.getSlpByStatus;
     }
 
     GetReportingPeriods() {
-        return this.http.get(this.getSlps)
-            .map(res => res.json().ReporintPeriods as ReportingPeriod[]);
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getReportingPeriod, { headers: header })
+            .map(res => res.json() as ReportingPeriod[]).catch(this.commonService.handleError);
     }
 
-    GetSlpByPeriod(fiscalYear: string) {
-        return this.http.get(this.getSlps)
-            .map(res => res.json().ServiceLevelPerformance as Slp[]);
+    GetSlps(period: string, useralias: string) {
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + "/'" + period + "'", { headers: header })
+            .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 
     SaveSLPs(data: Array<any>) {
-        return this.http.post(this.saveSLPs, data)
-            .map(res => res.json());
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.post(this.saveSLPs, { headers: header })
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     GenerateSLPforCurrentPeriod(previousFP: string) {
-        return this.http.get(this.getSlps + '/' + previousFP)
-            .map(res => res.json().ServiceLevelPerformance as Slp[]);
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlps + '/' + previousFP, { headers: header })
+            .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
+    }
+
+    GetSlpsByStatus(status: number, useralias: string) {
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.getSlpByStatus + '/' + status, { headers: header })
+            .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 }
 

@@ -5,30 +5,35 @@ import { ConfigService } from '../config/config.service';
 @Injectable()
 export class ConstantService {
     private apiBaseUrl: string
-    private apiBaseUrlWithVersion: string
+    private apiBaseUrlWithAPI: string
     public CONFIG: any;
     constructor(private _config: ConfigService) {
         this.apiBaseUrl = _config.get("apiBaseUri");
-        this.apiBaseUrlWithVersion = this.apiBaseUrl + "/api/v1.0";
+        this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
         this.CONFIG = {
             apiLocations: {
                 baseUrl: this.apiBaseUrl, 
-                getApplication: 'http://localhost:53430/api/Application/GetAllApplications',
-                addApplication: 'http://localhost:53430/api/Application/SaveApplication',
-                findApplicationUrl: 'http://localhost:53430/api/Application/FindApplication/',
-                getApplicationbyId: 'http://localhost:53430/api/Application/GetApplicationById/',
-                //getsow: 'http://localhost:52537/configMetadata/sample.json',
+
+                //application
+                getApplication: this.apiBaseUrlWithAPI + 'Application/GetAllApplications',
+                addApplication: this.apiBaseUrlWithAPI + 'Application/SaveApplication',
+                findApplicationUrl: this.apiBaseUrlWithAPI + 'Application/FindApplication/',
+                getApplicationbyId: this.apiBaseUrlWithAPI + 'Application/GetApplicationById/',
+
+                //service
                 getservice: 'http://localhost:52537/configMetadata/service.json',
+
+
                 //sow
-                //getsow: this.apiBaseUrl + 'api/sow'
-                getsow: 'http://localhost:52537/configMetadata/sow.json',
+                getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
+                getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
 
                 //slp
-                //getCurrentPeriodSlpByUserAlias: this.apiBaseUrl + 'api/getCurrentPeriodSlpByUserAlias'
-                getCurrentPeriodSlpByUserAlias: 'http://localhost:52537/configMetadata/slp.json',
-                saveSLPs: this.apiBaseUrl + 'api/slp/saveSLP',
-                generateSLPforCurrentPeriod: this.apiBaseUrl + 'api/slp/generateSLPforCurrentPeriod',
-                getSlps: 'http://localhost:52537/configMetadata/slp.json'
+                saveSLPs: this.apiBaseUrlWithAPI + 'api/slp/saveSLP',
+                generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/generateSLPforCurrentPeriod',
+                getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
+                getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
+                getSlpByStatus: this.apiBaseUrlWithAPI + 'slp/GetSlpsByStatus'
             }
         };
     }
