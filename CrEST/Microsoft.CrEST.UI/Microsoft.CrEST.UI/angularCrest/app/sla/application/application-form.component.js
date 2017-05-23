@@ -48,7 +48,25 @@ var ApplicationFormComponent = (function () {
             dateFormat: 'dd.mm.yyyy',
         };
         this.applicationForm = formBuilder.group({
-            'msowneralias': [null, Validators.required]
+            'supplier': ['', Validators.required],
+            'contactId': ['', Validators.required],
+            'serviceline': ['', Validators.required],
+            'Application': ['', Validators.required],
+            'OwnerAlias': ['', Validators.required],
+            'Serviceclass': [''],
+            'Runvsgrow': ['', Validators.required],
+            'ApplicationGroup': ['', Validators.required],
+            'startDate': ['', Validators.required],
+            'endDate': ['', Validators.required],
+            'endtoend': ['Y'],
+            'epm': ['Y'],
+            'tm': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
+            'ManagedCapacity': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
+            'ManagedServices': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
+            'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'sowId': ['', Validators.required],
+            'itOrg': ['']
         });
         //this.mydate = '2016-01-10';
     }
@@ -64,12 +82,12 @@ var ApplicationFormComponent = (function () {
         this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._routeParams.snapshot.params['id'] != null) {
-            debugger;
             var id = this._routeParams.snapshot.params['id'];
             this.getApplicationMetaData();
             this.applicationService.getApplicationyId(id)
                 .subscribe(function (data) {
                 _this.applicationData = data;
+                debugger;
             });
         }
     };

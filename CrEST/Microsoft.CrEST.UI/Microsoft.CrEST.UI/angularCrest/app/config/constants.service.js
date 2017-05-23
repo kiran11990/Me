@@ -22,6 +22,7 @@ var ConstantService = (function () {
                 addApplication: this.apiBaseUrlWithAPI + 'Application/SaveApplication',
                 findApplicationUrl: this.apiBaseUrlWithAPI + 'Application/FindApplication/',
                 getApplicationbyId: this.apiBaseUrlWithAPI + 'Application/GetApplicationById/',
+                getapplicationMetaData: this.apiBaseUrlWithAPI + 'Application/GetApplicationMetadata',
                 //service
                 getservice: 'http://localhost:52537/configMetadata/service.json',
                 //sow

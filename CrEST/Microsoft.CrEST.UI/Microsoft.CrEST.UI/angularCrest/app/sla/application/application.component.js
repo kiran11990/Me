@@ -53,10 +53,14 @@ var SlaApplicationComponent = (function () {
         this.router = _router;
     }
     SlaApplicationComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this._routeParameterd.snapshot.params['saveApplicationStatus']) {
+        if (this._routeParameterd.snapshot.params['applicationStatus']) {
+            this.getApplicationList();
             this.SaveSucessfull = true;
         }
+        this.getApplicationList();
+    };
+    SlaApplicationComponent.prototype.getApplicationList = function () {
+        var _this = this;
         this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(function (data) {

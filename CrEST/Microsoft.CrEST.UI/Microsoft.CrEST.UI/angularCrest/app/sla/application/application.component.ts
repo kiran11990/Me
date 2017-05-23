@@ -37,11 +37,16 @@ export class SlaApplicationComponent {
     }
 
     ngOnInit() {
-        if (this._routeParameterd.snapshot.params['saveApplicationStatus']) {
-
+        if (this._routeParameterd.snapshot.params['applicationStatus']) {
+            this.getApplicationList();
             this.SaveSucessfull = true;
-
         }
+        this.getApplicationList();
+        
+       
+    }
+
+    getApplicationList() {
         this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(data => {
@@ -50,7 +55,6 @@ export class SlaApplicationComponent {
                     this.autoComplete();
                 }
             });
-       
     }
 
     public filteredList: string[] = [];

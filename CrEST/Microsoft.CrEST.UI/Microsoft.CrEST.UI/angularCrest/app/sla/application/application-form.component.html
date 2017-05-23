@@ -1,289 +1,202 @@
 ﻿<div>
-    <form>
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-            <button type="button" class="btn btn-default" (click)=redirect()>Back</button>
-        </div>
-        <div>Application Update Form</div>
+    <h2>Application Update Form</h2>
+    <form [formGroup]="applicationForm" (ngSubmit)="submitForm(applicationForm.value)">
 
         <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Supplier</label></div>
-                    <div class=" col-xs-6">
-                        <select class="form-control" name="supplierName"
-                                [(ngModel)]="applicationData.supplierName">
-                            <option  *ngFor="let item of applicationMetaData.suppliers"
-                                    [value]="item.supplierId">{{item.supplierName}}</option>
-                           
-                        </select>
-                        <!--<angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" name="Supplier"></angular2-multiselect>-->
-
-                        <!--<span *ngIf="applicationForm.controls['msowneralias'].hasError('required') && applicationForm.controls['msowneralias'].toukd" class="alert alert-danger">Please enter ms owner alias.</span>-->
-                    </div>
+            <div class="col-xs-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['supplier'].valid && applicationForm.controls['supplier'].touched}">
+                    <label>Supplier*:</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['supplier']" [(ngModel)]="applicationData.supplierId" style="width:50%">
+                        <option *ngFor="let item of applicationMetaData.suppliers"
+                                [ngValue]="item.supplierId" [selected]="applicationData.supplierId == item.supplierId">
+                            {{item.supplierName}}
+                        </option>
+                    </select>
+                    <div *ngIf="applicationForm.controls['supplier'].hasError('required') && applicationForm.controls['supplier'].touched" class="alert alert-danger">Please select a supplier.</div>
                 </div>
             </div>
-            <div class="col-xs-6" style="margin-top:10px">
-                <div class="row">
-                    <div class="col-xs-2"> <label>Contract ID</label></div>
-                    <div class="col-xs-6">
-                        <select class="form-control" required
-                                [(ngModel)]="applicationData.contractId" name="ContractID">
-                            <option *ngFor="let item of applicationMetaData.contractIds"
-                                    [value]="item"
-                                   >
-                                {{item}}
-                            </option>
-                        </select>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Service Line</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.serviceLine" name="firstName" />
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Application</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.application" name="Application" />
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Owner Alias</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.ownerAlias" name="OwnerAlias" />
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Service Class (Optional)</label></div>
-                    <div class="col-xs-6">
-                        <select class="form-control" name="Serviceclass"[(ngModel)]="applicationData.serviceClass">
-                            <option *ngFor="let item of applicationMetaData.serviceClass"
-                                    [value]="item.id">
-                                {{item.serviceClassName}}
-                            </option>
-
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Run Or Grow</label></div>
-                    <div class="col-xs-6">
-                        <select class="form-control" required
-                                [(ngModel)]="applicationData.runOrGrow" name="Runvsgrow"></select>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Application Group</label></div>
-                    <div class="col-xs-6">
-                        <select class="form-control" required
-                                [(ngModel)]="applicationData.applicationGroup" name="ApplicationGroup">
-                            <!--<option value="volvo">Application Group 1</option>
-                            <option value="saab">Application Group 2</option>
-                            <option value="mercedes">Application Group 3</option>
-                            <option value="audi">Application Group 4</option>-->
-                        </select>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Start Date</label></div>
-                    <div class="col-xs-6">
-                      
-                        <my-date-picker name="startDate" [options]="myDatePickerOptions"
-                                       (dateChanged)="onstartDateChanged($event)"  [(ngModel)]="startDate"></my-date-picker>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>End Date</label></div>
-                    <div class="col-xs-6" style="margin-top:12px">
-                        <my-date-picker name="endDate" [options]="myDatePickerOptions"
-                                        (dateChanged)="onendDateChanged($event)" [(ngModel)]="enddate"></my-date-picker>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>End to End (Y/N)</label></div>
-                    <div class="col-xs-6">
-                        <input type="checkbox" value="false" name="endToEnd" [(ngModel)]="applicationData.endToEnd" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>EPM (Y/N)</label></div>
-                    <div class="col-xs-6">
-                        <input type="checkbox" value="false"[(ngModel)]="applicationData.epm" name="EPM" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>T&M</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.tm" name="tm" />
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Managed Capacity</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.managedCapacity" name="ManagedCapacity">
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Managed Services</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" [(ngModel)]="applicationData.managedService" name="ManagedServices">
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Software AssetSearch able ID</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="Software" [(ngModel)]="applicationData.softwareAssetSearchableId" />
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>Remarks</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="Remarks" [(ngModel)]="applicationData.remarks" />
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>IT-ORG</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="IT-ORG" [(ngModel)]="applicationData.itorg" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>supplierId</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="supplierId" [(ngModel)]="applicationData.supplierId" />
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>supplierName</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="supplierName" [(ngModel)]="applicationData.supplierName" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>SowId</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="sowId" [(ngModel)]="applicationData.soWid" />
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>TOrgName</label></div>
-                    <div class="col-xs-6">
-                        <input class="form-control" type="text" name="iTOrgName" [(ngModel)]="applicationData.itOrgName" />
-
-                    </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['contactId'].valid && applicationForm.controls['contactId'].touched}"  >
+                    <label>Contract ID*:</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['contactId']" [(ngModel)]="applicationData.contractId" style="width:50%">
+                        <option *ngFor="let item of applicationMetaData.contractIds"
+                                [ngValue]="item" [selected]="applicationData.contractId ==item">
+                            {{item}}
+                        </option>
+                    </select>
+                    <div *ngIf="applicationForm.controls['contactId'].hasError('required') && applicationForm.controls['contactId'].touched" class="alert alert-danger">Please select contract ID.</div>
                 </div>
             </div>
 
         </div>
         <div class="row">
-            <div class="col-xs-6">
-                <div class="row" style="margin-top:12px">
-                    <div class="col-xs-2"> <label>TOrgName</label></div>
-                    <div class="col-xs-6">
-                        <select class="form-control" name="supplierName"
-                                [(ngModel)]="applicationData.itOrgName">
-                            <option *ngFor="let item of applicationMetaData.itOrg"
-                                    [value]="item.itorgId">
-                                {{item.itorgName}}
-                            </option>
-                           
-                        </select>
-
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['serviceline'].valid && applicationForm.controls['serviceline'].touched}"  >
+                    <label>Service Line*:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['serviceline']" [(ngModel)]="applicationData.serviceLine"style="width:50%" />
+                    <div *ngIf="applicationForm.controls['serviceline'].hasError('required') && applicationForm.controls['serviceline'].touched" class="alert alert-danger">Please enter service line.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Application'].valid && applicationForm.controls['Application'].touched}">
+                    <label>Application*:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['Application']" [(ngModel)]="applicationData.application"  style="width:50%" />
+                    <div *ngIf="applicationForm.controls['Application'].hasError('required') && applicationForm.controls['Application'].touched" class="alert alert-danger">Please enter Application.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['OwnerAlias'].valid && applicationForm.controls['OwnerAlias'].touched}">
+                    <label>Owner Alias*:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['OwnerAlias']" [(ngModel)]="applicationData.ownerAlias" style="width:50%" />
+                    <div *ngIf="applicationForm.controls['OwnerAlias'].hasError('required') && applicationForm.controls['OwnerAlias'].touched" class="alert alert-danger">Please enter Owner Alias.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group">
+                    <label>Service Class (Optional):</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['Serviceclass']" [(ngModel)]="applicationData.serviceClass" style="width:50%">
+                        <option *ngFor="let item of applicationMetaData.serviceClass"
+                                [value]="item.id">
+                            {{item.serviceClassName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Runvsgrow'].valid && applicationForm.controls['Runvsgrow'].touched}">
+                    <label>Run vs Grow*:</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['Runvsgrow']" [(ngModel)]="applicationData.runOrGrow" style="width:50%"></select>
+                    <div *ngIf="applicationForm.controls['Runvsgrow'].hasError('required') && applicationForm.controls['Runvsgrow'].touched" class="alert alert-danger">Please select Run vs grow.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ApplicationGroup'].valid && applicationForm.controls['ApplicationGroup'].touched}">
+                    <label>Application Group*:</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['ApplicationGroup']" [(ngModel)]="applicationData.applicationGroup" style="width:50%"></select>
+                    <div *ngIf="applicationForm.controls['ApplicationGroup'].hasError('required') && applicationForm.controls['ApplicationGroup'].touched" class="alert alert-danger">Please select a Application Group.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div [ngClass]="{'has-error':!applicationForm.controls['startDate'].valid && applicationForm.controls['startDate'].touched}">
+                    <label>Start Date</label>
+                    <my-date-picker [options]="myDatePickerOptions" class="form-control" [formControl]="applicationForm.controls['startDate']" [(ngModel)]="startDate"
+                                    (dateChanged)="onstartDateChanged($event)" style="width:50%"></my-date-picker>
+                    <div *ngIf="applicationForm.controls['Runvsgrow'].hasError('required') && applicationForm.controls['startDate'].touched" class="alert alert-danger">Please enter startDate.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['endDate'].valid && applicationForm.controls['endDate'].touched}">
+                    <label>End Date</label>
+                    <my-date-picker class="form-control" [options]="myDatePickerOptions" [formControl]="applicationForm.controls['endDate']" [(ngModel)]="enddate"
+                                    (dateChanged)="onendDateChanged($event)" style="width:50%"></my-date-picker>
+                    <div *ngIf="applicationForm.controls['endDate'].hasError('required') && applicationForm.controls['endDate'].touched" class="alert alert-danger">Please enter endDate.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 small">
+                <div class="form-group">
+                    <label>End to End (Y/N):</label>
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" name="endtoend" value="Y" [formControl]="applicationForm.controls['endtoend']" [(ngModel)]="applicationData.endToEnd">
+                            Yes
+                        </label>
                     </div>
                 </div>
             </div>
 
+            <div class="col-xs-6 small">
+                <div class="form-group">
+                    <label>EPM (Y/N):</label>
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" name="epm" value="Y" [formControl]="applicationForm.controls['epm']" [(ngModel)]="applicationData.epm">
+                            Yes
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <input type="button" class="btn btn-default" (click)=initSubmit(applicationData) value="Submit" name="Submit">
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['tm'].valid && applicationForm.controls['tm'].touched}">
+                    <label>T&M:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['tm']" [(ngModel)]="applicationData.tm"  style="width:50%"/>
+                    <div *ngIf="applicationForm.controls['tm'].hasError('pattern') && applicationForm.controls['tm'].touched" class="alert alert-danger">Please enter in percentage.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ManagedCapacity'].valid && applicationForm.controls['ManagedCapacity'].touched}">
+                    <label>Managed Capacity:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['ManagedCapacity']" [(ngModel)]="applicationData.managedCapacity" style="width:50%"/>
+                    <div *ngIf="applicationForm.controls['ManagedCapacity'].hasError('pattern') && applicationForm.controls['ManagedCapacity'].touched" class="alert alert-danger">Please enter in percentage.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ManagedServices'].valid && applicationForm.controls['ManagedServices'].touched}">
+                    <label>Managed Services:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['ManagedServices']" [(ngModel)]="applicationData.managedService" style="width:50%" />
+                    <div *ngIf="applicationForm.controls['ManagedServices'].hasError('pattern') && applicationForm.controls['ManagedServices'].touched" class="alert alert-danger">Please enter in percentage.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Software'].valid && applicationForm.controls['Software'].touched}">
+                    <label>Software AssetSearch able ID:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['Software']" [(ngModel)]="applicationData.softwareAssetSearchableId"  style="width:50%"/>
+                    <div *ngIf="applicationForm.controls['Software'].hasError('pattern') && applicationForm.controls['Software'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['remarks'].valid && applicationForm.controls['remarks'].touched}">
+                    <label>Remarks:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['remarks']" [(ngModel)]="applicationData.remarks" style="width:50%" />
+                    <div *ngIf="applicationForm.controls['remarks'].hasError('pattern') && applicationForm.controls['remarks'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
+                </div>
+            </div>
+            <div class="col-lg-6 small">
+                <div class="form-group">
+                    <label>IT-ORG:</label>
+                    <select class="form-control" [formControl]="applicationForm.controls['itOrg']" [(ngModel)]="applicationData.itOrgName" style="width:50%">
+                        <option *ngFor="let item of applicationMetaData.itOrg"
+                                [value]="item.itorgId" [selected]="applicationData.itOrgName ==item.itorgId">
+                            {{item.itorgName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row small">
+
+            <div class="col-lg-6 small">
+                <div class="form-group"  [ngClass]="{'has-error':!applicationForm.controls['sowId'].valid && applicationForm.controls['sowId'].touched}">
+                    <label>SowId:</label>
+                    <input class="form-control" [formControl]="applicationForm.controls['sowId']" type="text" [(ngModel)]="applicationData.soWid"  style="width:50%"/>
+                    <div *ngIf="applicationForm.controls['sowId'].hasError('required') && applicationForm.controls['sowId'].touched" class="alert alert-danger">Please enter Owner Alias.</div>
+                
+                
+                </div>
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6 text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.valid" (click)=initSubmit(applicationData)>Submit</button>
+            </div>
+            <div class="col-lg-6 text-left">
+                <button type="button" class="btn btn-primary" (click)="BackClick($event);">Back</button>
+            </div>
+        </div>
+
     </form>
 </div>

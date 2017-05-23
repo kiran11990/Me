@@ -548,6 +548,8 @@ div.tablewrapper {
     overflow-y: auto;
     overflow-x: hidden;
 }
-
+.form-control{
+    width:50%;
+}
 
 
