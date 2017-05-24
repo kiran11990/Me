@@ -22,6 +22,8 @@ var SlpComponent = (function () {
         this.valueRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
         this.remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
         this.isValidHandsonData = true;
+        this.showGenerateAction = false;
+        this.showSaveAction = false;
         this.periods = new Array();
     }
     SlpComponent.prototype.ngOnInit = function () {
@@ -29,10 +31,24 @@ var SlpComponent = (function () {
         this.SetHeaders();
     };
     //**Actions and Events Start
-    SlpComponent.prototype.onChange = function (newObj, _this) {
-        _this.selectedPeriod = _this.periods.filter(function (res) { return res.period == newObj; });
-        _this.currentSelectedPeriod = newObj;
-        this.GetSLPData(newObj.Period);
+    SlpComponent.prototype.onChange = function (selectedPeriod, _this) {
+        _this.selectedPeriod = selectedPeriod;
+        var currentFP = _this.getCurrentY() + "-" + ('0' + _this.getCurrentP()).slice(-2);
+        var previousFP = _this.GetPreviousFP();
+        _this.currentSelectedPeriod = selectedPeriod.period;
+        if (_this.currentSelectedPeriod == currentFP) {
+            _this.showGenerateAction = true;
+            _this.showSaveAction = true;
+        }
+        else if (_this.currentSelectedPeriod == previousFP) {
+            _this.showGenerateAction = false;
+            _this.showSaveAction = true;
+        }
+        else {
+            _this.showGenerateAction = false;
+            _this.showSaveAction = false;
+        }
+        this.GetSLPData(selectedPeriod.period);
     };
     SlpComponent.prototype.Generate = function (fiscalYear) {
         this.Message = "";
@@ -92,104 +108,106 @@ var SlpComponent = (function () {
         return fiscalYear;
     };
     SlpComponent.prototype.GetPreviousFP = function () {
+        var minusCurrentPeriod = this.getCurrentP() + 11;
+        var plusCurrentPeriod = this.getCurrentP() - 1;
         if (this.getCurrentP() == 1)
-            return (this.getCurrentY() - 1) + "-" + (this.getCurrentP() + 11);
+            return (this.getCurrentY() - 1) + "-" + ('0' + minusCurrentPeriod).slice(-2);
         else
-            return this.getCurrentY() + "-" + (this.getCurrentP() - 1);
+            return this.getCurrentY() + "-" + ('0' + plusCurrentPeriod).slice(-2);
     };
     SlpComponent.prototype.SetHeaders = function () {
         this.colHeaders.push('Supplier');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "supplierName",
             readOnly: true
         });
         this.colHeaders.push('SCID');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "scid",
             readOnly: true
         });
         this.colHeaders.push('Contract ID');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "contractId",
             readOnly: true
         });
         this.colHeaders.push('Application Group');
-        this.colWidths.push(50);
+        this.colWidths.push(250);
         this.columns.push({
             data: "applicationGroup",
             readOnly: true
         });
         this.colHeaders.push('Crest Level 1 Service');
-        this.colWidths.push(50);
+        this.colWidths.push(250);
         this.columns.push({
             data: "crestLevel1",
             readOnly: true
         });
         this.colHeaders.push('Crest Level 2 Service');
-        this.colWidths.push(50);
+        this.colWidths.push(250);
         this.columns.push({
             data: "crestLevel2",
             readOnly: true
         });
         this.colHeaders.push('SLA ID');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "slaId",
             readOnly: true
         });
         this.colHeaders.push('Service Metric');
-        this.colWidths.push(50);
+        this.colWidths.push(250);
         this.columns.push({
             data: "serviceMetric",
             readOnly: true
         });
         this.colHeaders.push('Service Class');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "serviceClass",
             readOnly: true
         });
         this.colHeaders.push('Severity Level');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "severityLevel",
             readOnly: true
         });
         this.colHeaders.push('Priority Level');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "priorityLevel",
             readOnly: true
         });
         this.colHeaders.push('Environment');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "environment",
             readOnly: true
         });
         this.colHeaders.push('Custom');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "isCustom",
             readOnly: true
         });
         this.colHeaders.push('Minimum Level');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "minimumLevel",
             readOnly: true
         });
         this.colHeaders.push('Target Level');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "targetLevel",
             readOnly: true
         });
         this.colHeaders.push('Weight');
-        this.colWidths.push(50);
+        this.colWidths.push(100);
         this.columns.push({
             data: "weightage",
             readOnly: true
@@ -207,25 +225,25 @@ var SlpComponent = (function () {
             readOnly: true
         });
         this.colHeaders.push('Period');
-        this.colWidths.push(50);
+        this.colWidths.push(200);
         this.columns.push({
             data: "reportingPeriod",
             readOnly: true
         });
         this.colHeaders.push('Pref');
-        this.colWidths.push(50);
+        this.colWidths.push(60);
         this.columns.push({
             data: "pref",
             readOnly: true
         });
         this.colHeaders.push('Type');
-        this.colWidths.push(50);
+        this.colWidths.push(60);
         this.columns.push({
             data: "type",
             readOnly: true
         });
         this.colHeaders.push('Value');
-        this.colWidths.push(50);
+        this.colWidths.push(60);
         this.columns.push({
             data: "value",
             validator: this.valueRegexValidator,
@@ -233,7 +251,7 @@ var SlpComponent = (function () {
             mainThis: this
         });
         this.colHeaders.push('Value Remarks');
-        this.colWidths.push(100);
+        this.colWidths.push(500);
         this.columns.push({
             data: "valueRemarks",
             validator: this.remarksRegexValidtor,
@@ -253,8 +271,7 @@ var SlpComponent = (function () {
             columnSorting: true,
             className: 'htCenter htMiddle',
             colHeaders: this.colHeaders,
-            manualColumnResize: true,
-            colWidths: [60, 60, 100, 250, 250, 250, 100, 500, 100, 100, 100, 100, 100, 250, 250, 100, 250, 150, 150, 100, 100, 100, 500, 100]
+            manualColumnResize: true
         };
     };
     SlpComponent.prototype.ValueRenderer = function (instance, td, row, col, prop, value, cellProperties) {
@@ -300,21 +317,25 @@ var SlpComponent = (function () {
     SlpComponent.prototype.statusRenderer = function (instance, td, row, col, prop, value, cellProperties) {
         var data = cellProperties.mainThis.data;
         var result = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        td = cellProperties.mainThis.FormatCellValue(result, td);
-        td.innerText = "";
-        return td;
+        if (td !== undefined) {
+            td = cellProperties.mainThis.FormatCellValue(result, td);
+            td.innerText = "";
+            return td;
+        }
     };
     ;
     SlpComponent.prototype.FormatCellValue = function (status, td) {
-        if (status == "3")
-            td.style.backgroundColor = "#008000"; //green
-        else if (status == "2")
-            td.style.backgroundColor = "#FFFF00"; //yellow
-        else if (status == "1")
-            td.style.backgroundColor = "#FF0000"; //red
-        else if (status == "NA")
-            td.innerText = "NA";
-        return td;
+        if (td !== undefined) {
+            if (status == "3")
+                td.style.backgroundColor = "#008000"; //green
+            else if (status == "2")
+                td.style.backgroundColor = "#FFFF00"; //yellow
+            else if (status == "1")
+                td.style.backgroundColor = "#FF0000"; //red
+            else if (status == "NA")
+                td.innerText = "NA";
+            return td;
+        }
     };
     return SlpComponent;
 }());

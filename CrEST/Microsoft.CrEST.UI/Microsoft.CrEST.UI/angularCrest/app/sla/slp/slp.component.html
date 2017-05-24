@@ -15,17 +15,17 @@
                 </div>
                 <div class="col-lg-6 col-sm-6">
                     <select class="form-control" [ngModel]="selectedPeriod" (ngModelChange)="onChange($event, this)">
-                        <option *ngFor="let item of periods" [value]="item">
+                        <option *ngFor="let item of periods" [ngValue]="item">
                             {{item.period}}
                         </option>
                     </select>
                 </div>
             </div>
             <div class="pull-right">
-                <div class="col-lg-6 col-sm-6 fixed-action-btn">
+                <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showGenerateAction">
                     <a class="btn btn-primary" (click)="Generate(currentSelectedPeriod)">Generate</a>
                 </div>
-                <div class="col-lg-6 col-sm-6 fixed-action-btn">
+                <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showSaveAction">
                     <a class="btn btn-primary" (click)="Save()">Save</a>
                 </div>
             </div>
