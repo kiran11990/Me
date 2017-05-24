@@ -120,7 +120,7 @@ export class SlpComponent implements OnInit {
 
     private getCurrentP() {
         var d = new Date();
-        var currentMonth = d.getMonth();
+        var currentMonth = d.getMonth() + 1;
         return currentMonth;
     }
 

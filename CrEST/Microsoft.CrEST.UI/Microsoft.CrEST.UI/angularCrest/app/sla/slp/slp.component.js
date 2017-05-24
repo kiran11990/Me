@@ -99,7 +99,7 @@ var SlpComponent = (function () {
     };
     SlpComponent.prototype.getCurrentP = function () {
         var d = new Date();
-        var currentMonth = d.getMonth();
+        var currentMonth = d.getMonth() + 1;
         return currentMonth;
     };
     SlpComponent.prototype.getCurrentY = function () {

@@ -12,9 +12,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly ISoWRepository _sowRepository;
         
-		public SowController()
+		public SowController(CrESTContext context)
 		{
-			_sowRepository = new SoWRepository();
+			_sowRepository = new SoWRepository(context);
 		}
   
         [HttpGet]
@@ -38,13 +38,13 @@ namespace Microsoft.Crest.Web.API.Controllers
 			return _sowRepository.SaveSOW(item);
 		}
 
-		[HttpGet]
+        [HttpGet]
         [Route("FindSoWs/{contractId}/{ITOrg}/{effectiveDate}/{expiryDate}/'{msOwner}'")]
         public IEnumerable<SowData> FindSoWs([FromHeader]int contractId, int ITOrg, [FromHeader]DateTime effectiveDate, [FromHeader]DateTime expiryDate, string msOwner)
-		{
-			IEnumerable<SowData> results = _sowRepository.FindSoW(contractId, ITOrg, effectiveDate, expiryDate, msOwner);	 		
-			return results;
-		}
+        {
+            IEnumerable<SowData> results = _sowRepository.FindSoW(contractId, ITOrg, effectiveDate, expiryDate, msOwner);
+            return results;
+        }
 
         [HttpGet]
         [Route("GetSowMetadata")]

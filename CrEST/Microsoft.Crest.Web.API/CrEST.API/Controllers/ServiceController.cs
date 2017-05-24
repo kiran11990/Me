@@ -12,9 +12,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly IServiceRepository _serviceRepository;
         
-		public ServiceController()
+		public ServiceController(CrESTContext context)
 		{
-            _serviceRepository = new ServiceRepository();
+            _serviceRepository = new ServiceRepository(context);
 		}
   
         [HttpGet]

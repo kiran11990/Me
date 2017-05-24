@@ -12,9 +12,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly ISlpsRepository _slpRepository;
         
-		public SlpController()
+		public SlpController(CrESTContext context)
 		{
-            _slpRepository = new SlpRepository();
+            _slpRepository = new SlpRepository(context);
 		}
   
         [HttpGet]
@@ -33,9 +33,23 @@ namespace Microsoft.Crest.Web.API.Controllers
 
         [HttpGet]
         [Route("GetSlpsByStatus/{status}")]
-        public IEnumerable<SLAData> GetSlpsByStatus([FromHeader]int status)
+        public IEnumerable<SLAData> GetSlpsByStatus(int status)
         {
             return _slpRepository.GetSlpsByStatus(status);
+        }
+
+        [HttpGet]
+        [Route("GenerateSlps/{period}/{status}")]
+        public string GenerateSlps(string period, string createdBy = "")
+        {
+            return _slpRepository.GenerateSlps(period, createdBy);
+        }
+
+        [HttpPost]
+        [Route("SaveSlps")]
+        public string SaveSlps([FromBody]List<SLAData> slps)
+        {
+            return _slpRepository.SaveSlps(slps);
         }
 
     }
