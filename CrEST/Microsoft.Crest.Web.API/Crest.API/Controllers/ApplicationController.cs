@@ -39,8 +39,8 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("FindApplication/{contractId}/{serviceLine}/{application}")]
-        public IEnumerable<ApplicationData> FindApplication(int contractId, string serviceLine,string application)
+        [Route("FindApplication")]
+        public IEnumerable<ApplicationData> FindApplication([FromQuery]int contractId, [FromQuery]string serviceLine, [FromQuery]string application)
         {
             return _applicationRepository.FindApplication(contractId, serviceLine, application);
         }
