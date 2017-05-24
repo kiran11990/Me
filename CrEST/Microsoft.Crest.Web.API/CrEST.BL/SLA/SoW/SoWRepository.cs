@@ -154,12 +154,15 @@ namespace CrEST.BL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
                 cmd.Parameters.Add(new SqlParameter("@ITOrg", itOrg));
+				if (msOwner == null)
+					cmd.Parameters.Add(new SqlParameter("@MSOwner", string.Empty));
+				else
                 cmd.Parameters.Add(new SqlParameter("@MSOwner", msOwner));
-				if (effectiveDate == null)				
+				if (effectiveDate == null || effectiveDate == new DateTime())				
 					cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));				
 				else
 					cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", effectiveDate));
-				if(expiryDate == null)
+				if(expiryDate == null || expiryDate == new DateTime())
 					cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
 				else
 					cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", expiryDate));
