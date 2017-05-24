@@ -17,6 +17,6 @@ namespace CrEST.BL
 
         SowMetadata GetSowMetadata();
 
-        IEnumerable<SowData> GetActiveContracts();
+        IEnumerable<SowData> GetActiveContracts(); 
     }
 }

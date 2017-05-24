@@ -126,7 +126,7 @@ namespace CrEST.BL
 				cmd.CommandText = "spGetActiveContracts";
 				cmd.CommandType = CommandType.StoredProcedure;
 
-				using (var reader = cmd.ExecuteReader())
+				using (var reader = cmd.ExecuteReader()) 
 				{
 					while (reader.Read())
 					{
