@@ -1,4 +1,4 @@
-﻿import {ChangeDetectionStrategy, Component, Input } from '@angular/core';
+﻿import {ChangeDetectionStrategy, Component, Input,OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { PaginationInstance } from 'ngx-pagination';
     template: require('./application.component.html'),
     changeDetection: ChangeDetectionStrategy.Default
 })
-export class SlaApplicationComponent {
+export class SlaApplicationComponent implements OnInit {
     
     sla_application: "Sla Application";
     public contactId = '';
@@ -38,18 +38,19 @@ export class SlaApplicationComponent {
 
     ngOnInit() {
         if (this._routeParameterd.snapshot.params['applicationStatus']) {
-            this.getApplicationList();
+            //this.getApplicationList();
             this.SaveSucessfull = true;
         }
+        debugger
         this.getApplicationList();
-        
        
     }
 
     getApplicationList() {
-        this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(data => {
+                debugger;
+                this.applicationList = [];
                 this.applicationList = data
                 if (this.applicationList) {
                     this.autoComplete();

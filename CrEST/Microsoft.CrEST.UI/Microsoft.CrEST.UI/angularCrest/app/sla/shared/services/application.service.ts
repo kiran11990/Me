@@ -38,7 +38,7 @@ export class ApplicationService {
         return this.http.get(this.findApplicationUrl + contractId + "/" + serviceline + "/" + application)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
-    getApplicationyId(applicationId: any) {
+    getApplicationbyId(applicationId: any) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getApplicationbyUrl + applicationId , { headers: header })
             .map(res => res.json()).catch(this.commonService.handleError);

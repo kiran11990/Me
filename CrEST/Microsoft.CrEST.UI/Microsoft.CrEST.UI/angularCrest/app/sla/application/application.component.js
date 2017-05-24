@@ -54,16 +54,18 @@ var SlaApplicationComponent = (function () {
     }
     SlaApplicationComponent.prototype.ngOnInit = function () {
         if (this._routeParameterd.snapshot.params['applicationStatus']) {
-            this.getApplicationList();
+            //this.getApplicationList();
             this.SaveSucessfull = true;
         }
+        debugger;
         this.getApplicationList();
     };
     SlaApplicationComponent.prototype.getApplicationList = function () {
         var _this = this;
-        this.applicationList = [];
         this.applicationService.getApplications()
             .subscribe(function (data) {
+            debugger;
+            _this.applicationList = [];
             _this.applicationList = data;
             if (_this.applicationList) {
                 _this.autoComplete();

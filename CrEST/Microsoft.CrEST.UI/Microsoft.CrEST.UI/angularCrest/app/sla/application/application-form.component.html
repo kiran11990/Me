@@ -1,6 +1,6 @@
 ﻿<div>
     <h2>Application Update Form</h2>
-    <form [formGroup]="applicationForm" (ngSubmit)="submitForm(applicationForm.value)">
+    <form [formGroup]="applicationForm" (ngSubmit)="initSubmit(applicationForm.value)">
 
         <div class="row">
             <div class="col-xs-6 small">
@@ -69,15 +69,22 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Runvsgrow'].valid && applicationForm.controls['Runvsgrow'].touched}">
                     <label>Run vs Grow*:</label>
-                    <select class="form-control" [formControl]="applicationForm.controls['Runvsgrow']" [(ngModel)]="applicationData.runOrGrow" style="width:50%"></select>
+                    <select class="form-control" [formControl]="applicationForm.controls['Runvsgrow']" [(ngModel)]="applicationData.runOrGrow" style="width:50%">
+                        <option *ngFor="let item of runOrGrow"
+                                [value]="item.id" [selected]="applicationData.runOrGrow ==item.id">
+                            {{item.name}}
+                        </option>
+                      
+                    </select>
                     <div *ngIf="applicationForm.controls['Runvsgrow'].hasError('required') && applicationForm.controls['Runvsgrow'].touched" class="alert alert-danger">Please select Run vs grow.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ApplicationGroup'].valid && applicationForm.controls['ApplicationGroup'].touched}">
                     <label>Application Group*:</label>
-                    <select class="form-control" [formControl]="applicationForm.controls['ApplicationGroup']" [(ngModel)]="applicationData.applicationGroup" style="width:50%"></select>
-                    <div *ngIf="applicationForm.controls['ApplicationGroup'].hasError('required') && applicationForm.controls['ApplicationGroup'].touched" class="alert alert-danger">Please select a Application Group.</div>
+
+                    <input type="text" class="form-control" [formControl]="applicationForm.controls['ApplicationGroup']" [(ngModel)]="applicationData.applicationGroup" style="width:50%"/>
+                    <div *ngIf="applicationForm.controls['ApplicationGroup'].hasError('required') && applicationForm.controls['ApplicationGroup'].touched" class="alert alert-danger">Please enter Group.</div>
                 </div>
             </div>
         </div>
@@ -191,10 +198,10 @@
         </div>
         <div class="form-group">
             <div class="col-lg-6 text-right">
-                <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.valid" (click)=initSubmit(applicationData)>Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.valid">Submit</button>
             </div>
             <div class="col-lg-6 text-left">
-                <button type="button" class="btn btn-primary" (click)="BackClick($event);">Back</button>
+                <button type="button" class="btn btn-primary" (click)="redirect()">Back</button>
             </div>
         </div>
 

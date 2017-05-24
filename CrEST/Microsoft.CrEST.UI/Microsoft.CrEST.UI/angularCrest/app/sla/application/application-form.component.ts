@@ -6,6 +6,7 @@ import { Application } from "../shared/models/application";
 import { ApplicationData } from "../shared/models/applicationdata";
 import { ApplicationService } from "./../shared/services/application.service";
 import { ApplicationMetaData } from "../shared/models/applicationmetadata";
+import { RunOrGrow } from "../shared/models/applicationmetadata";
 import { CommonModule } from '@angular/common';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { Http } from '@angular/http';
@@ -23,10 +24,11 @@ export class ApplicationFormComponent implements OnInit {
     submitAttempt = false;
     public applicationMetaData: ApplicationMetaData[] = [];
     applicationForm: FormGroup;
-
+    //public runvsgrow: number[] = [];
     public outparam: string = '';
     public dropdownSettings = {};
     public mydate: string;
+    public runOrGrow: RunOrGrow[] = [];
     constructor(private _routeParams: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder, private http: Http) {
        
 
@@ -74,7 +76,7 @@ export class ApplicationFormComponent implements OnInit {
             year: this.startdate.getFullYear(),
             month: this.startdate.getMonth() + 1,
             day: this.startdate.getDate()
-        }
+        } 
     };
     private myDatePickerOptions: IMyDpOptions = {
         // other options...
@@ -90,15 +92,44 @@ export class ApplicationFormComponent implements OnInit {
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
     ngOnInit() {
+        this.runOrGrow = [{
+            id: 1,
+            name: "run"
+        },
+        {
+            id: 2,
+            name: "grow"
+        },
+        {
+            id: 1,
+            name: "run and grow"
+        }]; 
         this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
-            this.getApplicationMetaData();
-            this.applicationService.getApplicationyId(id)
+            this.applicationService.getApplicationbyId(id)
                 .subscribe(data => {
                     this.applicationData = data
-                    debugger;
+                    var datepickerEndDate = new Date(this.applicationData.endDate);
+                    var datepickerStartDate = new Date(this.applicationData.startDate);
+                    this.enddate = <IMyDateModel>{
+                        date: {
+                            year: datepickerEndDate.getFullYear(),
+                            month: datepickerEndDate.getMonth()+1,
+                            day: datepickerEndDate.getDate()
+                        },
+                       
+                    }
+                    this.startDate = <IMyDateModel>{
+                        date: {
+                            year: datepickerStartDate.getFullYear(),
+                            month: datepickerStartDate.getMonth()+1,
+                            day: datepickerStartDate.getDate()
+                        },
+
+                    }
+                    
                 })
         }
     }
@@ -120,7 +151,7 @@ export class ApplicationFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                    alert("updatedsuccessfully")
+                    //alert("updatedsuccessfully")
                     this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
                 }
             });

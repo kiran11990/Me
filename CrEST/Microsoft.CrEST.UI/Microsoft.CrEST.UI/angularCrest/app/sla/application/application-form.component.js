@@ -27,8 +27,10 @@ var ApplicationFormComponent = (function () {
         this.endDate = new Date();
         this.submitAttempt = false;
         this.applicationMetaData = [];
+        //public runvsgrow: number[] = [];
         this.outparam = '';
         this.dropdownSettings = {};
+        this.runOrGrow = [];
         this.startDate = {
             date: {
                 year: this.startdate.getFullYear(),
@@ -79,15 +81,41 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.runOrGrow = [{
+                id: 1,
+                name: "run"
+            },
+            {
+                id: 2,
+                name: "grow"
+            },
+            {
+                id: 1,
+                name: "run and grow"
+            }];
         this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
-            this.getApplicationMetaData();
-            this.applicationService.getApplicationyId(id)
+            this.applicationService.getApplicationbyId(id)
                 .subscribe(function (data) {
                 _this.applicationData = data;
-                debugger;
+                var datepickerEndDate = new Date(_this.applicationData.endDate);
+                var datepickerStartDate = new Date(_this.applicationData.startDate);
+                _this.enddate = {
+                    date: {
+                        year: datepickerEndDate.getFullYear(),
+                        month: datepickerEndDate.getMonth() + 1,
+                        day: datepickerEndDate.getDate()
+                    },
+                };
+                _this.startDate = {
+                    date: {
+                        year: datepickerStartDate.getFullYear(),
+                        month: datepickerStartDate.getMonth() + 1,
+                        day: datepickerStartDate.getDate()
+                    },
+                };
             });
         }
     };
@@ -109,7 +137,7 @@ var ApplicationFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                alert("updatedsuccessfully");
+                //alert("updatedsuccessfully")
                 _this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
             }
         });

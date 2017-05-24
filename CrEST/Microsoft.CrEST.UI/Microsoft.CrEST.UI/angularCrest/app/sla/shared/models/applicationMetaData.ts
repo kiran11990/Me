@@ -21,3 +21,9 @@ export class ServiceClass {
     public id: number;
     public serviceClassName: string;
 }
+
+export class RunOrGrow {
+
+    public id: number;
+    public name: string;
+}
