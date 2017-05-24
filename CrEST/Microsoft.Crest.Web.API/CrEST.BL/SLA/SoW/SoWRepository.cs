@@ -14,7 +14,7 @@ namespace CrEST.BL
 	{
 		public IEnumerable<SowData> GetAll()
 		{
-			return SearchSow(0, 0, string.Empty);
+			return SearchSow(0, 0, null, null, string.Empty);
 		}
 
 		public SowData GetById(int item)
@@ -34,7 +34,7 @@ namespace CrEST.BL
 					while (reader.Read())
 					{
 						existingItem.SupplierName = reader.GetString(0);
-						existingItem.ItorgName = reader.GetInt32(1);
+						existingItem.Itorg = reader.GetInt32(1);
 						existingItem.ContractId = reader.GetInt32(2);
 						existingItem.SoweffectiveDate = reader.GetDateTime(3);
 						existingItem.SowexpirationDate = reader.GetDateTime(4);
@@ -51,6 +51,7 @@ namespace CrEST.BL
 						existingItem.CompanyCode = reader.GetInt32(15);
 						existingItem.SoWid = reader.GetInt32(16);
 						existingItem.InfyOwner = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
+						existingItem.ItorgName = db.Itorg.Where(s => s.ItorgId == reader.GetInt32(1)).FirstOrDefault().ItorgName;
 					}
 				}
 
@@ -94,9 +95,9 @@ namespace CrEST.BL
 		}
 
 
-		public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime expiryDate, string msOwner)
+		public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime effectiveDate, DateTime expiryDate, string msOwner)
 		{
-			return SearchSow(contractId, ITOrg, msOwner);
+			return SearchSow(contractId, ITOrg, effectiveDate, expiryDate, msOwner);
 		}
 
 		public SowMetadata GetSowMetadata()
@@ -141,10 +142,10 @@ namespace CrEST.BL
 			return sows;
 		}
 
-        private IEnumerable<SowData> SearchSow(int contractId, int itOrg, string msOwner)
+        private IEnumerable<SowData> SearchSow(int contractId, int itOrg, DateTime? effectiveDate, DateTime? expiryDate, string msOwner)
         {
             List<SowData> sows = new List<SowData>();
-
+						
             using (CrESTContext db = new CrESTContext())
             {
                 db.Database.OpenConnection();
@@ -154,13 +155,19 @@ namespace CrEST.BL
                 cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
                 cmd.Parameters.Add(new SqlParameter("@ITOrg", itOrg));
                 cmd.Parameters.Add(new SqlParameter("@MSOwner", msOwner));
-                cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
+				if (effectiveDate == null)				
+					cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));				
+				else
+					cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", effectiveDate));
+				if(expiryDate == null)
+					cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", string.Empty));
+				else
+					cmd.Parameters.Add(new SqlParameter("@SOWExpirationDate", expiryDate));
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    {							
                         SowData sow = new SowData();
                         sow.SupplierName = reader.GetString(0);
                         sow.ItorgName = reader.GetString(1);
@@ -170,16 +177,18 @@ namespace CrEST.BL
                         sow.Msowner = reader.GetString(5);
                         sow.ServiceCatalogVersion = reader.GetDouble(6);
                         sow.PonumYear1 = reader.GetInt32(7);
-                        sow.Currency = reader.GetString(8);
-                        sow.SowamountYear1 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9);
+                        sow.Currency = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+						sow.SowamountYear1 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9);
                         sow.SowamountYear2 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10);
                         sow.SowamountYear3 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11);
                         sow.SowamountYear4 = reader.IsDBNull(12) ? default(decimal) : reader.GetDecimal(12);
                         sow.IsCrest = reader.GetBoolean(13);
                         sow.Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14);
-                        sow.CompanyCode = reader.GetInt32(15);
-                        sow.SoWid = reader.GetInt32(16);
+                        sow.CompanyCode = reader.IsDBNull(15) ? default(int) : reader.GetInt32(15);
+                        sow.SoWid = reader.IsDBNull(16) ? default(int) : reader.GetInt32(16);
                         sow.InfyOwner = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
+						sow.Itorg = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18);
+						sow.SupplierId = reader.IsDBNull(19) ? default(int) : reader.GetInt32(19);
                         sows.Add(sow);
                     }
                 }
