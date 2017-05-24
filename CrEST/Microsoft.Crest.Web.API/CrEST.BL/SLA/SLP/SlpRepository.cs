@@ -170,7 +170,7 @@ namespace CrEST.BL
                     sla.CrestLevel2 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
                     sla.SLAId = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
                     sla.ServiceMetric = reader.GetString(9);
-                    sla.ServiceClass = reader.IsDBNull(10) ? default(int) : (reader.GetInt32(10));
+                    sla.ServiceClass = reader.IsDBNull(10) ? string.Empty : (reader.GetString(10));
                     sla.SeverityLevel = reader.IsDBNull(11) ? string.Empty : (reader.GetString(11));
                     sla.PriorityLevel = reader.IsDBNull(12) ? string.Empty : (reader.GetString(12));
                     sla.Environment = reader.IsDBNull(13) ? string.Empty : (reader.GetString(13));

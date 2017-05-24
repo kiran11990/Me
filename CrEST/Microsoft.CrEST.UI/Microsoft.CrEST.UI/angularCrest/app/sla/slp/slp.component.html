@@ -23,10 +23,10 @@
             </div>
             <div class="pull-right">
                 <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showGenerateAction">
-                    <a class="btn btn-primary" (click)="Generate(currentSelectedPeriod)">Generate</a>
+                    <a class="btn btn-primary" (click)="Generate(currentSelectedPeriod, this)">Generate</a>
                 </div>
                 <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showSaveAction">
-                    <a class="btn btn-primary" (click)="Save()">Save</a>
+                    <a class="btn btn-primary" (click)="Save(this)">Save</a>
                 </div>
             </div>
         </div>

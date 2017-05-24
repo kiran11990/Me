@@ -44,10 +44,10 @@ export class SlpService {
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
-    GenerateSLPforCurrentPeriod(previousFP: string) {
+    GenerateSLPforCurrentPeriod(currentFP: string) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlps + '/' + previousFP, { headers: header })
-            .map(res => res.json().ServiceLevelPerformance as Slp[]).catch(this.commonService.handleError);
+        return this.http.get(this.getSlps + '/' + currentFP, { headers: header })
+            .map(res => res.json()).catch(this.commonService.handleError);
     }
 
     GetSlpsByStatus(status: number, useralias: string) {

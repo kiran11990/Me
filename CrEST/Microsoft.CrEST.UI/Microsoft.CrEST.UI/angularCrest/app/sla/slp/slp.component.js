@@ -50,32 +50,37 @@ var SlpComponent = (function () {
         }
         this.GetSLPData(selectedPeriod.period);
     };
-    SlpComponent.prototype.Generate = function (fiscalYear) {
-        this.Message = "";
-        var _this = this;
-        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
-        var previousFP = this.GetPreviousFP();
-        if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod(currentFP)
+    SlpComponent.prototype.Generate = function (fiscalYear, _this) {
+        var currentFP = _this.getCurrentY() + "-" + _this.getCurrentP();
+        this._slpService.GenerateSLPforCurrentPeriod(currentFP)
+            .subscribe(function (result) {
+            if (result == "INF1000") {
+                _this.Message = "SLAs for currentPeriod are generated successfully.";
+                _this.MessageType = 1;
+            }
+            else if (result == "ERR1000") {
+                _this.Message = "Unable to generate SLAs as there are SLAs already present for current period!!";
+                _this.MessageType = 2;
+            }
+            else {
+                _this.Message = "Unable to generate SLAs due to some issue. Please try later.";
+                _this.MessageType = 2;
+            }
+        });
+    };
+    SlpComponent.prototype.Save = function (mainThis) {
+        if (mainThis.isValidHandsonData) {
+            this._slpService.SaveSLPs(mainThis.data)
                 .subscribe(function (result) {
-                _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == previousFP;
-                });
-                //TODO : can we cleanup this?
-                for (var i = 0; i < _this.data.length; i++) {
-                    _this.data[i].reportingPeriod = currentFP;
+                if (result == "INF1000") {
+                    mainThis.Message = "Saved successfully.";
+                    mainThis.MessageType = 1;
+                }
+                else {
+                    mainThis.Message = "Unable to save data. Please try later.";
+                    mainThis.MessageType = 2;
                 }
             });
-        }
-        else {
-            this.Message = "Please select current fiscal period to generate.";
-            this.MessageType = 2; //MessageType 1 : alert success & MessageType 2 is for danger
-        }
-    };
-    SlpComponent.prototype.Save = function () {
-        if (this.isValidHandsonData) {
-            this.Message = "Saved Successfully";
-            this.MessageType = 1; //MessageType 1 : alert success & MessageType 2 is for danger
         }
     };
     //**Actions and Events End

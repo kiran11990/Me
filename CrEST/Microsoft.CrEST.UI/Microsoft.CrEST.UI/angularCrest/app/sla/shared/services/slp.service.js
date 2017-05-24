@@ -40,10 +40,10 @@ var SlpService = (function () {
         return this.http.post(this.saveSLPs, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    SlpService.prototype.GenerateSLPforCurrentPeriod = function (previousFP) {
+    SlpService.prototype.GenerateSLPforCurrentPeriod = function (currentFP) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlps + '/' + previousFP, { headers: header })
-            .map(function (res) { return res.json().ServiceLevelPerformance; }).catch(this.commonService.handleError);
+        return this.http.get(this.getSlps + '/' + currentFP, { headers: header })
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SlpService.prototype.GetSlpsByStatus = function (status, useralias) {
         var header = new Headers({ 'Content-Type': 'application/json' });

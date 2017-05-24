@@ -62,38 +62,39 @@ export class SlpComponent implements OnInit {
         this.GetSLPData(selectedPeriod.period);
     }
 
-    Generate(fiscalYear: string) {
-        this.Message = "";
-        var _this = this;
-        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
-        var previousFP = this.GetPreviousFP();
+    Generate(fiscalYear: string, _this: any) {
+        var currentFP = _this.getCurrentY() + "-" + _this.getCurrentP();
 
-        if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod(currentFP)
-                .subscribe(result => {
-                    _this.data = result.filter((res:any) => {
-                        return res.reportingPeriod == previousFP;
-                    });
-
-                    //TODO : can we cleanup this?
-                    for (var i = 0; i < _this.data.length; i++) {
-                        _this.data[i].reportingPeriod = currentFP;
-                    }
-                });
-        } else {
-            this.Message = "Please select current fiscal period to generate.";
-            this.MessageType = 2;  //MessageType 1 : alert success & MessageType 2 is for danger
-        }
+        this._slpService.GenerateSLPforCurrentPeriod(currentFP)
+            .subscribe(result => {
+                if (result == "INF1000") {
+                    _this.Message = "SLAs for currentPeriod are generated successfully.";
+                    _this.MessageType = 1;
+                }
+                else if (result == "ERR1000") {
+                    _this.Message = "Unable to generate SLAs as there are SLAs already present for current period!!";
+                    _this.MessageType = 2;
+                }
+                else {
+                    _this.Message = "Unable to generate SLAs due to some issue. Please try later.";
+                    _this.MessageType = 2;
+                }
+            });
     }
 
-    Save() {
-        if (this.isValidHandsonData) {
-            this.Message = "Saved Successfully";
-            this.MessageType = 1;  //MessageType 1 : alert success & MessageType 2 is for danger
-            //this._slpService.SaveSLPs(this.data)
-            //    .subscribe(data => {
-            //        this.data = data;
-            //    });
+    Save(mainThis: any) {
+        if (mainThis.isValidHandsonData) {
+            this._slpService.SaveSLPs(mainThis.data)
+                .subscribe(result => {
+                    if (result == "INF1000") {
+                        mainThis.Message = "Saved successfully.";
+                        mainThis.MessageType = 1;
+                    }
+                    else {
+                        mainThis.Message = "Unable to save data. Please try later.";
+                        mainThis.MessageType = 2;
+                    }
+                });
         }
     }
     //**Actions and Events End
@@ -138,7 +139,7 @@ export class SlpComponent implements OnInit {
         else
             return this.getCurrentY() + "-" + ('0' + plusCurrentPeriod).slice(-2);
     }
-    
+
     private SetHeaders() {
 
         this.colHeaders.push('Supplier');
@@ -251,7 +252,7 @@ export class SlpComponent implements OnInit {
         this.columns.push({
             data: "weightage",
             readOnly: true
-        }); 
+        });
 
         this.colHeaders.push('Remarks');
         this.colWidths.push(100);
@@ -324,7 +325,7 @@ export class SlpComponent implements OnInit {
             manualColumnResize: true
         };
     }
-    
+
 
     private ValueRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
         var previousFP = cellProperties.mainThis.GetPreviousFP();
@@ -334,14 +335,13 @@ export class SlpComponent implements OnInit {
         }
 
 
-       /**********validate whether entered value is valid based on minimumLevel value**********/
+        /**********validate whether entered value is valid based on minimumLevel value**********/
         cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
 
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
-        if (status == "1")
-        {
+        if (status == "1") {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.isValidHandsonData = false;
@@ -360,8 +360,7 @@ export class SlpComponent implements OnInit {
         return td;
     };
 
-    private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any)
-    {
+    private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
 
         //check for percentage and numbers
@@ -386,8 +385,7 @@ export class SlpComponent implements OnInit {
         }
     };
 
-    private FormatCellValue(status: string, td: any)
-    {
+    private FormatCellValue(status: string, td: any) {
         if (td !== undefined) {
             if (status == "3")
                 td.style.backgroundColor = "#008000"; //green
@@ -400,5 +398,5 @@ export class SlpComponent implements OnInit {
             return td;
         }
     }
-    
+
 }
