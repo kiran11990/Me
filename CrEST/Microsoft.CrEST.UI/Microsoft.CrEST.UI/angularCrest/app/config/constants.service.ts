@@ -7,6 +7,7 @@ export class ConstantService {
     private apiBaseUrl: string
     private apiBaseUrlWithAPI: string
     public CONFIG: any;
+    public CONSTANTS: any;
     constructor(private _config: ConfigService) {
         this.apiBaseUrl = _config.get("apiBaseUri");
         this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
@@ -30,11 +31,23 @@ export class ConstantService {
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
 
                 //slp
-                saveSLPs: this.apiBaseUrlWithAPI + 'api/slp/saveSLP',
-                generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/generateSLPforCurrentPeriod',
+                saveSLPs: this.apiBaseUrlWithAPI + 'slp/SaveSlps',
+                generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
                 getSlpByStatus: this.apiBaseUrlWithAPI + 'slp/GetSlpsByStatus'
+            }
+        };
+
+        this.CONSTANTS = {
+            Messages: {
+                INF0001: 'Saved successfully.',
+                INF0002: 'SLAs for the current period has been generated successfully.',
+
+                ERR0001: 'Unable to save data. Please try later.',
+                ERR0002: 'Please correct the data and save again',
+                ERR0003: 'Unable to generate SLAs due to some issue. Please try later.',
+                ERR0004: 'Unable to generate SLAs as there are SLAs already present for current period!!'
             }
         };
     }

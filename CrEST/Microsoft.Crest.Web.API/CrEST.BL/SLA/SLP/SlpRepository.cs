@@ -83,6 +83,7 @@ namespace CrEST.BL
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@ReportingPeriod", period));
             cmd.Parameters.Add(new SqlParameter("@CreatedBy", createdBy));
+            cmd.CommandTimeout = 300;
 
             using (var reader = cmd.ExecuteReader())
             {

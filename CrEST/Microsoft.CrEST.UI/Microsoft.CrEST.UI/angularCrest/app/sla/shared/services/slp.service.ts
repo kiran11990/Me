@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -38,16 +38,17 @@ export class SlpService {
             .map(res => res.json() as Slp[]).catch(this.commonService.handleError);
     }
 
-    SaveSLPs(data: Array<any>) {
+    SaveSLPs(data: Slp[]) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(this.saveSLPs, { headers: header })
-            .map(res => res.json()).catch(this.commonService.handleError);
+        let options = new RequestOptions({ headers: header });
+        return this.http.post(this.saveSLPs, data, options)
+            .map(res => res.text()).catch(this.commonService.handleError);
     }
 
-    GenerateSLPforCurrentPeriod(currentFP: string) {
+    GenerateSLPforCurrentPeriod(currentFP: string, createdBy: string) {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlps + '/' + currentFP, { headers: header })
-            .map(res => res.json()).catch(this.commonService.handleError);
+        return this.http.get(this.generateSLPforCurrentPeriod + "/" + currentFP + "/" + createdBy, { headers: header })
+            .map(res => res.text()).catch(this.commonService.handleError);
     }
 
     GetSlpsByStatus(status: number, useralias: string) {

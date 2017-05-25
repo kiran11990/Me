@@ -49,6 +49,10 @@ namespace Microsoft.Crest.Web.API.Controllers
         [Route("SaveSlps")]
         public string SaveSlps([FromBody]List<SLAData> slps)
         {
+            if (slps == null)
+            {
+                throw new ArgumentNullException("slps");
+            }
             return _slpRepository.SaveSlps(slps);
         }
 

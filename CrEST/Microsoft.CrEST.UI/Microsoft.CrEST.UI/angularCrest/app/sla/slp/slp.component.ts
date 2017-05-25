@@ -7,6 +7,8 @@ import { SlpService } from "../shared/services/slp.service";
 import { SlpBusiness } from "../shared/business/slp.business";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
 import { Slp } from "../shared/models/slp";
+import { HandsonCells } from "../shared/models/handson";
+import { ConstantService } from "../../config/constants.service";
 
 @Component({
     selector: 'sla-slp',
@@ -26,12 +28,27 @@ export class SlpComponent implements OnInit {
     public currentSelectedPeriod: any
     valueRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
     remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
-    isValidHandsonData: boolean = true;
     showGenerateAction: boolean = false;
     showSaveAction: boolean = false;
+    invalidHandsonCells: Array<HandsonCells> = [];
 
-    constructor(private _slpService: SlpService, private _slpBusiness: SlpBusiness) {
+    INF0001: string;
+    INF0002: string;
+    ERR0001: string;
+    ERR0002: string;
+    ERR0003: string;
+    ERR0004: string;
+
+    constructor(private _slpService: SlpService, private _slpBusiness: SlpBusiness, private _constantService: ConstantService) {
         this.periods = new Array<ReportingPeriod>();
+
+        this.INF0001 = _constantService.CONSTANTS.Messages.INF0001;
+        this.INF0002 = _constantService.CONSTANTS.Messages.INF0002;
+
+        this.ERR0001 = _constantService.CONSTANTS.Messages.ERR0001;
+        this.ERR0002 = _constantService.CONSTANTS.Messages.ERR0002;
+        this.ERR0003 = _constantService.CONSTANTS.Messages.ERR0003;
+        this.ERR0004 = _constantService.CONSTANTS.Messages.ERR0004;
     }
 
     ngOnInit() {
@@ -41,8 +58,9 @@ export class SlpComponent implements OnInit {
 
     //**Actions and Events Start
     onChange(selectedPeriod: any, _this: any) {
+        _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.getCurrentY() + "-" + ('0' + _this.getCurrentP()).slice(-2);
+        var currentFP = _this.GetCurrentFP();
         var previousFP = _this.GetPreviousFP();
         _this.currentSelectedPeriod = selectedPeriod.period;
 
@@ -63,38 +81,52 @@ export class SlpComponent implements OnInit {
     }
 
     Generate(fiscalYear: string, _this: any) {
-        var currentFP = _this.getCurrentY() + "-" + _this.getCurrentP();
+        _this.Message = "";
+        var currentFP = _this.GetCurrentFP();
 
-        this._slpService.GenerateSLPforCurrentPeriod(currentFP)
+        //TODO
+        this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
             .subscribe(result => {
                 if (result == "INF1000") {
-                    _this.Message = "SLAs for currentPeriod are generated successfully.";
+                    _this.Message = _this.INF0002;
                     _this.MessageType = 1;
+                    _this.GetSLPData(currentFP);
                 }
                 else if (result == "ERR1000") {
-                    _this.Message = "Unable to generate SLAs as there are SLAs already present for current period!!";
+                    _this.Message = _this.ERR0004;
                     _this.MessageType = 2;
                 }
                 else {
-                    _this.Message = "Unable to generate SLAs due to some issue. Please try later.";
+                    _this.Message = _this.ERR0003;
                     _this.MessageType = 2;
                 }
             });
     }
 
     Save(mainThis: any) {
-        if (mainThis.isValidHandsonData) {
+        mainThis.Message = "";
+        if (mainThis.invalidHandsonCells.length <= 0) {
+            //TODO
+            mainThis.data.map(function (item: any) {
+                item.lastModifiedBy = "supraja_tatichetla";
+                return item;
+            })
+
             this._slpService.SaveSLPs(mainThis.data)
                 .subscribe(result => {
                     if (result == "INF1000") {
-                        mainThis.Message = "Saved successfully.";
+                        mainThis.Message = mainThis.INF0001;
                         mainThis.MessageType = 1;
                     }
                     else {
-                        mainThis.Message = "Unable to save data. Please try later.";
+                        mainThis.Message = mainThis.ERR0001;
                         mainThis.MessageType = 2;
                     }
                 });
+        }
+        else {
+            mainThis.Message = mainThis.ERR0002;
+            mainThis.MessageType = 2;
         }
     }
     //**Actions and Events End
@@ -129,6 +161,10 @@ export class SlpComponent implements OnInit {
         var d = new Date();
         var fiscalYear = d.getFullYear();
         return fiscalYear;
+    }
+
+    private GetCurrentFP() {
+        return this.getCurrentY() + "-" + ('0' + this.getCurrentP()).slice(-2);
     }
 
     private GetPreviousFP() {
@@ -326,17 +362,13 @@ export class SlpComponent implements OnInit {
         };
     }
 
-
     private ValueRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
-        var previousFP = cellProperties.mainThis.GetPreviousFP();
-        var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
-        if (reportingPeriod = previousFP) {
-            cellProperties.readOnly = true;
-        }
-
+        var cells: HandsonCells = new HandsonCells();
+        cells.col = col;
+        cells.row = row;
 
         /**********validate whether entered value is valid based on minimumLevel value**********/
-        cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
+        cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties, cells);
 
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
@@ -344,10 +376,17 @@ export class SlpComponent implements OnInit {
         if (status == "1") {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
-            cellProperties.mainThis.isValidHandsonData = false;
+            cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
-        else
-            cellProperties.mainThis.isValidHandsonData = true;
+        else {
+            var valueRemarksCell = instance.getCellMeta(row, col + 1);
+            valueRemarksCell.valid = true;
+            for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
+                if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
+                    cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
+                }
+            }
+        }
 
         /***********Set status column**********/
         if (value != "NA" || value) {
@@ -360,19 +399,26 @@ export class SlpComponent implements OnInit {
         return td;
     };
 
-    private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {
+    private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any, cells: any) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
-
+       
         //check for percentage and numbers
         if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
             var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
-            //td.style.backgroundColor = ''
-            cellProperties.mainThis.isValidHandsonData = false;
+            cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
-        else
-            cellProperties.mainThis.isValidHandsonData = true;
+        else {
+            var valuesCell = instance.getCellMeta(row, col);
+            valuesCell.valid = false;
+
+            for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
+                if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
+                    cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
+                }
+            }
+        }
     }
 
     private statusRenderer(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any) {

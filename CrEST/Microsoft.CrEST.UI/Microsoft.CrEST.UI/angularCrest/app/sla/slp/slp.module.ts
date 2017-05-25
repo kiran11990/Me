@@ -8,6 +8,7 @@ import { HotTableModule } from 'ng2-handsontable';
 import { SlpComponent } from './slp.component';
 import { SlpService } from '../shared/services/slp.service';
 import { SlpBusiness } from '../shared/business/slp.business';
+import { ConstantService } from "../../config/constants.service";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { SlpBusiness } from '../shared/business/slp.business';
         SlpComponent
     ],
     providers: [
-        SlpService, SlpBusiness
+        SlpService, SlpBusiness, ConstantService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

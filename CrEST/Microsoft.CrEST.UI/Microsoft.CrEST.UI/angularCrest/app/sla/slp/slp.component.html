@@ -3,7 +3,7 @@
         <div class="page-header"> <a href="/">Dashboard</a> > SLA > Sevice Level Performance </div>
     </div>
 </div>
-<div [ngClass]="{alert: true, 'alert-success alert-dismissable': MessageType == 1, 'alert-danger alert-dismissable': MessageType == 2 }" *ngIf="Message">
+<div [ngClass]="{alert: true, 'alert-success alert-dismissable': MessageType == 1, 'alert-danger alert-dismissable': MessageType == 2, 'alert-info alert-dismissable': MessageType == 3 }" *ngIf="Message">
     {{Message}}
 </div>
 <div class="row">
