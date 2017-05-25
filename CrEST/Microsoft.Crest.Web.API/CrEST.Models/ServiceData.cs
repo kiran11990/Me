@@ -24,6 +24,7 @@ namespace CrEST.Models
         public string Remarks { get; set; }
         public string Scid { get; set; }
         public string Currency { get; set; }
-        public string Itorg { get; set; }
-    }
+        public int Itorg { get; set; }
+		public string ItorgName { get; set; }
+	}
 }

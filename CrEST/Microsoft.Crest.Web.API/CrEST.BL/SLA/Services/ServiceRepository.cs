@@ -12,7 +12,49 @@ namespace CrEST.BL
 {
     public class ServiceRepository : IServiceRepository
     {
-        public IEnumerable<ServiceData> GetAllServices()
+		public ServiceData GetById(int item)
+		{
+			List<ServiceData> services = new List<ServiceData>();
+
+			using (CrESTContext db = new CrESTContext())
+			{
+				db.Database.OpenConnection();
+				DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+				cmd.CommandText = "spGetServiceById";
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.Add(new SqlParameter("@ServiceId", item));
+
+				ServiceData existingItem = new ServiceData();
+
+				using (var reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						existingItem.ServiceId = reader.GetInt32(0);
+						existingItem.Supplier = reader.GetString(1);
+						existingItem.Scid = reader.GetString(2);
+						existingItem.ContractId = reader.GetInt32(3);
+						existingItem.ApplicationGroup = reader.GetString(4);
+						existingItem.CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+						existingItem.CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+						existingItem.CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
+						existingItem.AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8);
+						existingItem.AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9);
+						existingItem.AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10);
+						existingItem.AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11);
+						existingItem.Currency = reader.GetString(12);
+						existingItem.ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13);
+						existingItem.Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14);
+						existingItem.ItorgName = reader.GetString(15);
+						existingItem.SupplierId = reader.GetInt32(16);						
+					}
+				}
+
+				return existingItem;
+			}			
+		}
+
+		public IEnumerable<ServiceData> GetAllServices()
         {
             List<ServiceData> services = new List<ServiceData>();
 
@@ -44,7 +86,7 @@ namespace CrEST.BL
 							Currency = reader.GetString(12),
 							ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
 							Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-							Itorg = reader.GetString(15),
+							ItorgName = reader.GetString(15),
 							SupplierId = reader.GetInt32(16)
                         });
                     }
@@ -75,7 +117,7 @@ namespace CrEST.BL
                     Remarks = service.Remarks,
                     Scid = service.Scid,
                     Currency = service.Currency,
-                    Itorg = _context.Itorg.FirstOrDefault(x => x.ItorgName == service.Itorg).ItorgId
+                    Itorg = _context.Itorg.FirstOrDefault(x => x.ItorgName == service.ItorgName).ItorgId
                 };
 
                 var existingItem = _context.Service.FirstOrDefault(s => s.ServiceId == service.ServiceId);
@@ -105,25 +147,27 @@ namespace CrEST.BL
                 {
                     while (reader.Read())
                     {
-                        services.Add(new ServiceData()
-                        {
-                            ServiceId = reader.GetInt32(0),
-                            Supplier = reader.GetString(1),
-                            Scid = reader.GetString(2),
-                            ContractId = reader.GetInt32(3),
-                            ApplicationGroup = reader.GetString(4),
-                            CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
-                            CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
-                            CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
-                            AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8),
-                            AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9),
-                            AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10),
-                            AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11),
-                            Currency = reader.GetString(12),
-                            ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
-                            Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-                            Itorg = reader.GetString(15)
-                        });
+						services.Add(new ServiceData()
+						{
+							Scid = reader.GetString(0),
+							ServiceId = reader.GetInt32(1),
+							SupplierId = reader.GetInt32(2),
+							ContractId = reader.GetInt32(3),
+							ApplicationGroup = reader.GetString(4),
+							CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
+							CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
+							CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
+							AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8),
+							AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9),
+							AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10),
+							AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11),
+							Currency = reader.GetString(12),
+							ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
+							Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
+							Itorg = reader.GetInt32(15),
+							Supplier = db.Supplier.Where(x => x.SupplierId == reader.GetInt32(2)).FirstOrDefault().SupplierName,
+							ItorgName = db.Itorg.Where(x => x.ItorgId == reader.GetInt32(15)).FirstOrDefault().ItorgName
+						});
                     }
                 }
             }

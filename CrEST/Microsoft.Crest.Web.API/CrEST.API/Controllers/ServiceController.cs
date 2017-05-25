@@ -16,8 +16,15 @@ namespace Microsoft.Crest.Web.API.Controllers
 		{
             _serviceRepository = new ServiceRepository();
 		}
-  
-        [HttpGet]
+
+		[HttpGet]
+		[Route("GetServiceById/{id}")]
+		public ServiceData GetServiceById(int id)
+		{
+			return _serviceRepository.GetById(id);
+		}		
+
+		[HttpGet]
         [Route("GetAllServices")]
         public IEnumerable<ServiceData> GetAllServices()
         {
@@ -32,8 +39,8 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("FindServices/{contractId}/'{applicationGroup}'")]
-        public IEnumerable<ServiceData> FindServices([FromHeader]int contractId, [FromHeader]string applicationGroup)
+        [Route("FindServices")]
+        public IEnumerable<ServiceData> FindServices([FromQuery]int contractId, [FromQuery]string applicationGroup)
         {
             return _serviceRepository.FindServices(contractId, applicationGroup);
         }
