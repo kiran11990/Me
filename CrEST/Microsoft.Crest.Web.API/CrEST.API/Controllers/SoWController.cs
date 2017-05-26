@@ -12,12 +12,12 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly ISoWRepository _sowRepository;
         
-		public SowController()
+		public SowController(CrESTContext context)
 		{
-			_sowRepository = new SoWRepository();
-		}
-  
-        [HttpGet]
+			_sowRepository = new SoWRepository(context);
+		}		
+
+		[HttpGet]
         [Route("GetAllSoWs")]
         public IEnumerable<SowData> GetAllSoWs()
         {
