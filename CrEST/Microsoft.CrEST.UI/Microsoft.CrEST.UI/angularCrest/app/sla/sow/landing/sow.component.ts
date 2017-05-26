@@ -1,7 +1,13 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import { SowService } from "../../shared/services/sows.service";
-import { Sow } from "../../shared/models/sow";  
-import { HotTableModule } from 'ng2-handsontable';
+import { Sow } from "../../shared/models/sow";
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
     selector: 'sow-grid',
@@ -10,118 +16,38 @@ import { HotTableModule } from 'ng2-handsontable';
 
 export class SowComponent {
     private sows: Sow[] = [];
-    //Bind to hot table
-    private data: Array<any>;
- 
-    private colHeaders: Array<string> = [
-    'Supplier',
-    'Service Line',
-    'Contract ID',
-    'SOW Effective Date',
-    'SOW Expiration Date',
-    'MS Owner Alias',
-    'Service Catalog Version',
-    'PO# Yr 1',
-    'SOW Amount Yr 1',
-    'SOW Amount Yr 2',
-    'SOW Amount Yr 3',
-    'SOW Amount Yr 4',
-    'IsCrest?',
-    'Remarks'
-    ];
-
-    private columns: Array<any> = [
-        {
-            data: 'supplier.name',
-            source: 'supplier.options',
-            optionField: 'name',
-            type: 'autocomplete',
-            strict: false,
-            visibleRows: 4
-        },
-        {
-            data: 'serviceLine.name',
-            source: 'serviceLine.options',
-            optionField: 'name',
-            type: 'autocomplete',
-            strict: false,
-            visibleRows: 4
-        },
-        {
-            data: 'contractID'
-        },
-        {
-            data: 'effectiveDate'
-        },
-        {
-            data: 'expirationDate',
-        },
-        {
-            data: 'msOwnerAlias',
-        },
-        {
-            data: 'serviceCatalogVersion',
-        },
-        {
-            data: 'poYr1',
-        },
-        {
-            data: 'amountYr1',
-            type: 'numeric',
-            format: '$ 0,0.00'
-        },
-        {
-            data: 'amountYr2',
-            type: 'numeric',
-            format: '$ 0,0.00'
-        },
-        {
-            data: 'amountYr3',
-            type: 'numeric',
-            format: '$ 0,0.00'
-        },
-        {
-            data: 'amountYr4',
-            type: 'numeric',
-            format: '$ 0,0.00'
-        },
-        {
-            data: 'isCrest',
-            type: 'checkbox',
-            checkedTemplate: 'Yes',
-            uncheckedTemplate: 'No'
-        },
-        {
-            data: 'remarks'
-        }
-    ];
-
-    private colWidths: Array<number> = [
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, 30];
-    private options: any = {
-        stretchH: 'all',
-        columnSorting: true,
-        contextMenu: [
-            'row_above', 'row_below', 'remove_row'
-        ]
-    };
-    private afterChange(e: any) {
-        console.log(e);
-    }
-    private afterOnCellMouseDown(e: any) {
-        console.log(e);
-    }
 
     constructor(private sowService: SowService) { }
 
-    ngOnInit() {
-        //this.sowService.getSows()
-        //    .subscribe(data => this.sows = data);
+    public contractid = '';
+    public serviceLine = '';
+    public msOwnerAlias = '';
 
+    public contractIDList: string[] = [];
+    public servicelineList: string[] = [];
+    public msOwnerAliasList: string[] = [];
+
+    ngOnInit() {
         this.sowService.getSows()
-            .subscribe(data => this.data = data);
+            .subscribe(data => {
+                this.sows = data
+                if (this.sows) {
+                    this.autoComplete();
+                }
+            });
     }
+
+    public searchContractId = '';
+    public searchServiceLine = '';
+    public searchMsowner = '';
+    find() {
+        this.sowService.(this.contactId, this.serviceLine, this.application)
+            .subscribe(data => {
+                this.applicationList = data
+            })
+
+    }
+
 
     deleteSow(sow: any) {
         if (confirm("Are you sure you want to delete " + sow.name + "?")) {
@@ -138,4 +64,62 @@ export class SowComponent {
         }
     }
 
+    notifyContractId(contractID: string) {
+        if (event) {
+            this.contractid = contractID;
+        }
+    }
+
+    notifyServiceLine(serviceLine: string) {
+        if (event) {
+            this.serviceLine = serviceLine;
+        }
+    }
+
+    notifymsOwnerAlias(msOwnerAlias: string) {
+        if (event) {
+            this.msOwnerAlias = msOwnerAlias;
+        }
+    }
+
+    autoComplete() {
+        for (var i = 0; i < this.sows.length; i++) {
+            this.contractIDList.push(this.sows[i].contractId.toString());
+            //this.servicelineList.push(this.sows[i].);
+            this.msOwnerAliasList.push(this.sows[i].msowner);
+        }
+    }
+
+    public filter: string = '';
+    public maxSize: number = 7;
+    public directionLinks: boolean = true;
+    public autoHide: boolean = false;
+    public config: PaginationInstance = {
+        id: 'advanced',
+        itemsPerPage: 10,
+        currentPage: 1
+    };
+    public labels: any = {
+        previousLabel: 'Previous',
+        nextLabel: 'Next',
+        screenReaderPaginationLabel: 'Pagination',
+        screenReaderPageLabel: 'page',
+        screenReaderCurrentLabel: `You're on page`
+    };
+
+    private popped: any[] = [];
+
+    onPageChange(number: number) {
+        console.log('change to page', number);
+        this.config.currentPage = number;
+    }
+
+    pushItem() {
+        let item = this.popped.pop() || 'A newly-created meal!';
+        this.sows.push(item);
+    }
+
+    popItem() {
+        this.popped.push(this.sows.pop());
+    }
 }

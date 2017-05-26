@@ -1,10 +1,13 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿/// <reference path="../../shared/services/application.service.ts" />
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
+//import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
+import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
+import { RunOrGrow } from "../../shared/models/applicationmetadata";
 import { SowService } from '../../shared/services/sows.service';
-
+import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 @Component({
     selector: 'sow-form',
     templateUrl: './sow-form.component.html'
@@ -12,64 +15,171 @@ import { SowService } from '../../shared/services/sows.service';
 
 export class SowFormComponent implements OnInit {
 
-    form: FormGroup;
+    sowForm: FormGroup;
     title: string;
+    effectiveDate: Date = new Date();
+    expirationDate: Date = new Date();
+    sowMetaData: ApplicationMetaData = new ApplicationMetaData();
     sow: Sow = new Sow();
-
+    //private sow: Sow[] = [];
+    startdate: Date = new Date();
+    enddate: Date = new Date();
+    private currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
     constructor(
         formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private SowService: SowService
+        private SowService: SowService,
     ) {
-        this.form = formBuilder.group({
-            name: ['', [
-                Validators.required,
-                Validators.minLength(3)
-            ]],
-            email: ['', [
-                Validators.required
-            ]],
-            phone: [],
-            address: formBuilder.group({
-                street: ['', Validators.minLength(3)],
-                suite: [],
-                city: ['', Validators.maxLength(30)],
-                zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-            })
+
+
+        this.sowForm = formBuilder.group({
+            
+            'supplierId': ['', Validators.required],
+            'contractId': ['', Validators.required],
+            'startDate': ['', Validators.required],
+            'endDate': ['', Validators.required],
+            'serviceline': ['', Validators.required],
+            'itorg': ['', Validators.required],
+            'soweffectiveDate': ['', Validators.required], //Date
+            'sowexpirationDate': ['', Validators.required], //Date
+            'msowner': [null, Validators.required],
+            'servicecatalogno': ['', Validators.required],
+            'ponumYear1': ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]], //Number
+            'currency': ['', Validators.required],
+            'sowamountYear1': ['', [Validators.required, Validators.pattern(this.currencyPattern)]], //currency
+            'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],//currency
+            'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],//currency
+            'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],//currency
+            'iscrest': ['Y', Validators.required],
+            'remark': [''],
+            'infyOwner': [''],
+            'ssovalidated': [''],
+            'companycode': ['', Validators.required]
         });
+
+        this.sow.soweffectiveDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
+        this.sow.sowexpirationDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
     }
+
+
+
+    private id: any;
+
+    onChange(value: any) {
+       
+        this.sow.supplierId = value;
+
+    }
+
+    onContactChange(value: any) {
+        this.sow.contractId = value;
+
+    }
+
+    private soweffectiveDate: Object = {
+        date: {
+            year: this.startdate.getFullYear(),
+            month: this.startdate.getMonth() + 1,
+            day: this.startdate.getDate()
+        }
+    };
+
+   
+
+    private sowexpirationDate: Object = {
+        date: {
+            year: this.startdate.getFullYear(),
+            month: this.startdate.getMonth() + 1,
+            day: this.startdate.getDate()
+        }
+    };
+    private myDatePickerOptions: IMyDpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
+
+
+    oneffectiveDateChanged(event: IMyDateModel) {
+        this.effectiveDate = event.jsdate;
+    }
+
+    onexpirationDateChanged(event: IMyDateModel) {
+        this.expirationDate = event.jsdate;
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    }
+
+
 
     ngOnInit() {
-        var id = this.route.params.subscribe(params => {
-            var id = params['id'];
+        this.getApplicationMetaData();
+        this.id = this.route.snapshot.params['id'];
+        alert(this.id);
+        this.title = this.id ? 'Edit Sow' : 'New Sow';
+        if (this.title == "Edit Sow") {
+            this.SowService.getSowById(this.id)
+                .subscribe(data => {
+                    this.sow = data
+                    var soweffectiveDate = new Date(this.sow.soweffectiveDate);
+                    var sowexpirationDate = new Date(this.sow.sowexpirationDate);
+                    this.sowexpirationDate = <IMyDateModel>{
+                        date: {
+                            year: sowexpirationDate.getFullYear(),
+                            month: sowexpirationDate.getMonth() + 1,
+                            day: sowexpirationDate.getDate()
+                        },
 
-            this.title = id ? 'Edit Sow' : 'New Sow';
-
-            if (!id)
-                return;
-
-            this.SowService.getSowById(id)
-                .subscribe(
-                sow => this.sow = sow,
-                response => {
-                    if (response.status == 404) {
-                        this.router.navigate(['NotFound']);
                     }
+                    this.soweffectiveDate = <IMyDateModel>{
+                        date: {
+                            year: soweffectiveDate.getFullYear(),
+                            month: soweffectiveDate.getMonth() + 1,
+                            day: soweffectiveDate.getDate()
+                        },
+
+                    }
+
+
+
+
                 });
-        });
-    }
+          
 
-    save() {
-        var result,
-            sowValue = this.form.value;
-
-        if (sowValue.id) {
-            result = this.SowService.updateSow(sowValue);
-        } else {
-            result = this.SowService.addSow(sowValue);
         }
 
-        result.subscribe(data => this.router.navigate(['sows']));
+
+      
+
+    }
+
+
+    
+    getApplicationMetaData() {
+        this.SowService.getsowMetaData()
+            .subscribe(data => {
+                this.sowMetaData = data;
+            })
+    }
+  
+
+
+    submitForm(sow: Sow) {
+        sow.soweffectiveDate = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
+        sow.sowexpirationDate = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
+        //applicationData.endDate = enddate;
+
+        this.SowService.addSow(this.sow)
+            .subscribe((result: number) => {
+                var result = result;
+                if (result == 1) {
+                    alert("updatedsuccessfully")
+                    this.router.navigate(['sow', { applicationStatus: "updatedsuccessfully" }]);
+                }
+            });
+    }
+    BackClick(event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.router.navigateByUrl('/sows');
     }
 }

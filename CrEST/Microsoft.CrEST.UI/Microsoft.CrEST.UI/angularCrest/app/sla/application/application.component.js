@@ -57,14 +57,12 @@ var SlaApplicationComponent = (function () {
             //this.getApplicationList();
             this.SaveSucessfull = true;
         }
-        debugger;
         this.getApplicationList();
     };
     SlaApplicationComponent.prototype.getApplicationList = function () {
         var _this = this;
         this.applicationService.getApplications()
             .subscribe(function (data) {
-            debugger;
             _this.applicationList = [];
             _this.applicationList = data;
             if (_this.applicationList) {

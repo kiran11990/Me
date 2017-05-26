@@ -7,59 +7,138 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/// <reference path="../../shared/services/application.service.ts" />
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+//import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
+import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
 import { SowService } from '../../shared/services/sows.service';
 var SowFormComponent = (function () {
     function SowFormComponent(formBuilder, router, route, SowService) {
         this.router = router;
         this.route = route;
         this.SowService = SowService;
+        this.effectiveDate = new Date();
+        this.expirationDate = new Date();
+        this.sowMetaData = new ApplicationMetaData();
         this.sow = new Sow();
-        this.form = formBuilder.group({
-            name: ['', [
-                    Validators.required,
-                    Validators.minLength(3)
-                ]],
-            email: ['', [
-                    Validators.required
-                ]],
-            phone: [],
-            address: formBuilder.group({
-                street: ['', Validators.minLength(3)],
-                suite: [],
-                city: ['', Validators.maxLength(30)],
-                zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-            })
+        //private sow: Sow[] = [];
+        this.startdate = new Date();
+        this.enddate = new Date();
+        this.currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
+        this.soweffectiveDate = {
+            date: {
+                year: this.startdate.getFullYear(),
+                month: this.startdate.getMonth() + 1,
+                day: this.startdate.getDate()
+            }
+        };
+        this.sowexpirationDate = {
+            date: {
+                year: this.startdate.getFullYear(),
+                month: this.startdate.getMonth() + 1,
+                day: this.startdate.getDate()
+            }
+        };
+        this.myDatePickerOptions = {
+            // other options...
+            dateFormat: 'dd.mm.yyyy',
+        };
+        this.sowForm = formBuilder.group({
+            'supplierId': ['', Validators.required],
+            'contractId': ['', Validators.required],
+            'startDate': ['', Validators.required],
+            'endDate': ['', Validators.required],
+            'serviceline': ['', Validators.required],
+            'itorg': ['', Validators.required],
+            'soweffectiveDate': ['', Validators.required],
+            'sowexpirationDate': ['', Validators.required],
+            'msowner': [null, Validators.required],
+            'servicecatalogno': ['', Validators.required],
+            'ponumYear1': ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+            'currency': ['', Validators.required],
+            'sowamountYear1': ['', [Validators.required, Validators.pattern(this.currencyPattern)]],
+            'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],
+            'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],
+            'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],
+            'iscrest': ['Y', Validators.required],
+            'remark': [''],
+            'infyOwner': [''],
+            'ssovalidated': [''],
+            'companycode': ['', Validators.required]
         });
+        this.sow.soweffectiveDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
+        this.sow.sowexpirationDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
     }
+    SowFormComponent.prototype.onChange = function (value) {
+        this.sow.supplierId = value;
+    };
+    SowFormComponent.prototype.onContactChange = function (value) {
+        this.sow.contractId = value;
+    };
+    SowFormComponent.prototype.oneffectiveDateChanged = function (event) {
+        this.effectiveDate = event.jsdate;
+    };
+    SowFormComponent.prototype.onexpirationDateChanged = function (event) {
+        this.expirationDate = event.jsdate;
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
     SowFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var id = this.route.params.subscribe(function (params) {
-            var id = params['id'];
-            _this.title = id ? 'Edit Sow' : 'New Sow';
-            if (!id)
-                return;
-            _this.SowService.getSowById(id)
-                .subscribe(function (sow) { return _this.sow = sow; }, function (response) {
-                if (response.status == 404) {
-                    _this.router.navigate(['NotFound']);
-                }
+        this.getApplicationMetaData();
+        this.id = this.route.snapshot.params['id'];
+        alert(this.id);
+        this.title = this.id ? 'Edit Sow' : 'New Sow';
+        if (this.title == "Edit Sow") {
+            this.SowService.getSowById(this.id)
+                .subscribe(function (data) {
+                _this.sow = data;
+                var soweffectiveDate = new Date(_this.sow.soweffectiveDate);
+                var sowexpirationDate = new Date(_this.sow.sowexpirationDate);
+                _this.sowexpirationDate = {
+                    date: {
+                        year: sowexpirationDate.getFullYear(),
+                        month: sowexpirationDate.getMonth() + 1,
+                        day: sowexpirationDate.getDate()
+                    },
+                };
+                _this.soweffectiveDate = {
+                    date: {
+                        year: soweffectiveDate.getFullYear(),
+                        month: soweffectiveDate.getMonth() + 1,
+                        day: soweffectiveDate.getDate()
+                    },
+                };
             });
+        }
+    };
+    SowFormComponent.prototype.getApplicationMetaData = function () {
+        var _this = this;
+        this.SowService.getsowMetaData()
+            .subscribe(function (data) {
+            _this.sowMetaData = data;
         });
     };
-    SowFormComponent.prototype.save = function () {
+    SowFormComponent.prototype.submitForm = function (sow) {
         var _this = this;
-        var result, sowValue = this.form.value;
-        if (sowValue.id) {
-            result = this.SowService.updateSow(sowValue);
-        }
-        else {
-            result = this.SowService.addSow(sowValue);
-        }
-        result.subscribe(function (data) { return _this.router.navigate(['sows']); });
+        sow.soweffectiveDate = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
+        sow.sowexpirationDate = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
+        //applicationData.endDate = enddate;
+        this.SowService.addSow(this.sow)
+            .subscribe(function (result) {
+            var result = result;
+            if (result == 1) {
+                alert("updatedsuccessfully");
+                _this.router.navigate(['sow', { applicationStatus: "updatedsuccessfully" }]);
+            }
+        });
+    };
+    SowFormComponent.prototype.BackClick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.router.navigateByUrl('/sows');
     };
     return SowFormComponent;
 }());

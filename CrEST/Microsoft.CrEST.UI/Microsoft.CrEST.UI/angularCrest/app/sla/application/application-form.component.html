@@ -45,6 +45,24 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row">
+            <!--<div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['applicationId'].valid && applicationForm.controls['applicationId'].touched}">
+                    <label>ApplicationId*:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['applicationId']" [(ngModel)]="applicationData.applicationId" style="width:50%" />
+                    <div *ngIf="applicationForm.controls['applicationId'].hasError('required') && applicationForm.controls['applicationId'].touched" class="alert alert-danger">Please enter service line.</div>
+                </div>
+            </div>-->
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['supplierName'].valid && applicationForm.controls['supplierName'].touched}">
+                    <label>supplierName*:</label>
+                    <input class="form-control" type="text" [formControl]="applicationForm.controls['supplierName']" [(ngModel)]="applicationData.supplierName" style="width:50%" />
+                    <div *ngIf="applicationForm.controls['supplierName'].hasError('required') && applicationForm.controls['supplierName'].touched" class="alert alert-danger">Please enter Application.</div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['OwnerAlias'].valid && applicationForm.controls['OwnerAlias'].touched}">
@@ -112,7 +130,7 @@
                     <label>End to End (Y/N):</label>
                     <div>
                         <label class="radio-inline">
-                            <input type="radio" name="endtoend" value="Y" [formControl]="applicationForm.controls['endtoend']" [(ngModel)]="applicationData.endToEnd">
+                            <input type="radio" name="endtoend" value=true [formControl]="applicationForm.controls['endtoend']" [(ngModel)]="applicationData.endToEnd">
                             Yes
                         </label>
                     </div>
@@ -124,7 +142,7 @@
                     <label>EPM (Y/N):</label>
                     <div>
                         <label class="radio-inline">
-                            <input type="radio" name="epm" value="Y" [formControl]="applicationForm.controls['epm']" [(ngModel)]="applicationData.epm">
+                            <input type="radio" name="epm" value=true [formControl]="applicationForm.controls['epm']" [(ngModel)]="applicationData.epm">
                             Yes
                         </label>
                     </div>
@@ -193,9 +211,18 @@
                 
                 
                 </div>
-                
-            </div>
+                <div class="col-lg-6 small">
+                    <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['itorg'].valid && applicationForm.controls['itorg'].touched}">
+                        <label>itorg:</label>
+                        <input class="form-control" [formControl]="applicationForm.controls['itorg']" type="text" [(ngModel)]="applicationData.itorg" style="width:50%" />
+                        <div *ngIf="applicationForm.controls['itorg'].hasError('required') && applicationForm.controls['itorg'].touched" class="alert alert-danger">Please enter Owner Alias.</div>
+
+
+                    </div>
+
+                </div>
         </div>
+            </div>
         <div class="form-group">
             <div class="col-lg-6 text-right">
                 <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.valid">Submit</button>

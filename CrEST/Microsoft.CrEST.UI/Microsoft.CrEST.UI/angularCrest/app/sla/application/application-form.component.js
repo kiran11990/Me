@@ -54,22 +54,27 @@ var ApplicationFormComponent = (function () {
             'contactId': ['', Validators.required],
             'serviceline': ['', Validators.required],
             'Application': ['', Validators.required],
+            //'applicationId': ['', Validators.required],
+            'supplierName': ['', Validators.required],
             'OwnerAlias': ['', Validators.required],
             'Serviceclass': [''],
             'Runvsgrow': ['', Validators.required],
             'ApplicationGroup': ['', Validators.required],
             'startDate': ['', Validators.required],
             'endDate': ['', Validators.required],
-            'endtoend': ['Y'],
-            'epm': ['Y'],
+            'endtoend': [''],
+            'epm': [''],
             'tm': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
             'ManagedCapacity': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
             'ManagedServices': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
             'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'sowId': ['', Validators.required],
-            'itOrg': ['']
+            'itOrg': [''],
+            'itorg': ['']
         });
+        this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
+        this.applicationData.startDate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
         //this.mydate = '2016-01-10';
     }
     ApplicationFormComponent.prototype.onstartDateChanged = function (event) {

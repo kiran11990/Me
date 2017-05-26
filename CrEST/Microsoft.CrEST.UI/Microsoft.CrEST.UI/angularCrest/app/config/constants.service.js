@@ -26,7 +26,10 @@ var ConstantService = (function () {
                 //service
                 getservice: 'http://localhost:52537/configMetadata/service.json',
                 //sow
-                getsow: this.apiBaseUrlWithAPI + 'sow/GetAllSoWs',
+                getSow: this.apiBaseUrlWithAPI + 'SoW/GetAllSoWs',
+                getSowById: this.apiBaseUrlWithAPI + 'SoW/GetSoWById/',
+                findSoWs: this.apiBaseUrlWithAPI + 'SoW/FindSoWs/',
+                saveSow: this.apiBaseUrlWithAPI + 'SoW/SaveSoW',
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
                 //slp
                 saveSLPs: this.apiBaseUrlWithAPI + 'api/slp/saveSLP',

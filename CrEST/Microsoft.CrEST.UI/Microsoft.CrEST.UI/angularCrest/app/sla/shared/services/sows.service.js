@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -19,19 +19,38 @@ var SowService = (function () {
         this._constantService = _constantService;
         this.commonService = commonService;
         this.http = http;
-        this.getSow = _constantService.CONFIG.apiLocations.getsow;
+        this.getSow = _constantService.CONFIG.apiLocations.getSow;
+        this.getSowByIdUrl = _constantService.CONFIG.apiLocations.getSowById;
         this.getActiveContract = _constantService.CONFIG.apiLocations.getActiveContract;
+        this.getsowMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
+        this.saveSowUrl = _constantService.CONFIG.apiLocations.saveSow;
+        this.findSowUrl = _constantService.CONFIG.apiLocations.findSoWs;
     }
     SowService.prototype.getSows = function () {
         return this.http.get(this.getSow)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getSowById = function (id) {
-        return this.http.get(this.getSowUrl(id))
+        return this.http.get(this.getSowByIdUrl + "/" + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
+    SowService.prototype.findSow = function (contractId, serviceline, application) {
+        return this.http.get(this.findSowUrl + contractId + "/" + serviceline + "/" + application)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
+    };
+    SowService.prototype.getsowMetaData = function () {
+        return this.http.get(this.getsowMetaDataUrl)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
+    };
+    //addSow(sow: any) {
+    //    return this.http.post(this.saveSowUrl)
+    //        .map(res => res.json()).catch(this.commonService.handleError);
+    //}
     SowService.prototype.addSow = function (sow) {
-        return this.http.post(this.getSow, JSON.stringify(sow))
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        var body = JSON.stringify(sow);
+        return this.http
+            .post(this.saveSowUrl, body, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.updateSow = function (sow) {

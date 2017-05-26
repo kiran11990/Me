@@ -1,9 +1,9 @@
-var ApplicationMetaData = (function () {
-    function ApplicationMetaData() {
+var SowMetaData = (function () {
+    function SowMetaData() {
     }
-    return ApplicationMetaData;
+    return SowMetaData;
 }());
-export { ApplicationMetaData };
+export { SowMetaData };
 ;
 var Supplier = (function () {
     function Supplier() {
@@ -23,10 +23,4 @@ var ServiceClass = (function () {
     return ServiceClass;
 }());
 export { ServiceClass };
-var RunOrGrow = (function () {
-    function RunOrGrow() {
-    }
-    return RunOrGrow;
-}());
-export { RunOrGrow };
-//# sourceMappingURL=applicationmetadata.js.map
+//# sourceMappingURL=sowMetaData.js.map

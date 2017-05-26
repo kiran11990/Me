@@ -41,7 +41,6 @@ export class SlaApplicationComponent implements OnInit {
             //this.getApplicationList();
             this.SaveSucessfull = true;
         }
-        debugger
         this.getApplicationList();
        
     }
@@ -49,7 +48,6 @@ export class SlaApplicationComponent implements OnInit {
     getApplicationList() {
         this.applicationService.getApplications()
             .subscribe(data => {
-                debugger;
                 this.applicationList = [];
                 this.applicationList = data
                 if (this.applicationList) {

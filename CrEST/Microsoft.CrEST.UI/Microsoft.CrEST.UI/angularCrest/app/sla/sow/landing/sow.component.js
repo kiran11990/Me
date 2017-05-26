@@ -8,116 +8,56 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import { SowService } from "../../shared/services/sows.service";
 var SowComponent = (function () {
     function SowComponent(sowService) {
         this.sowService = sowService;
         this.sows = [];
-        this.colHeaders = [
-            'Supplier',
-            'Service Line',
-            'Contract ID',
-            'SOW Effective Date',
-            'SOW Expiration Date',
-            'MS Owner Alias',
-            'Service Catalog Version',
-            'PO# Yr 1',
-            'SOW Amount Yr 1',
-            'SOW Amount Yr 2',
-            'SOW Amount Yr 3',
-            'SOW Amount Yr 4',
-            'IsCrest?',
-            'Remarks'
-        ];
-        this.columns = [
-            {
-                data: 'supplier.name',
-                source: 'supplier.options',
-                optionField: 'name',
-                type: 'autocomplete',
-                strict: false,
-                visibleRows: 4
-            },
-            {
-                data: 'serviceLine.name',
-                source: 'serviceLine.options',
-                optionField: 'name',
-                type: 'autocomplete',
-                strict: false,
-                visibleRows: 4
-            },
-            {
-                data: 'contractID'
-            },
-            {
-                data: 'effectiveDate'
-            },
-            {
-                data: 'expirationDate',
-            },
-            {
-                data: 'msOwnerAlias',
-            },
-            {
-                data: 'serviceCatalogVersion',
-            },
-            {
-                data: 'poYr1',
-            },
-            {
-                data: 'amountYr1',
-                type: 'numeric',
-                format: '$ 0,0.00'
-            },
-            {
-                data: 'amountYr2',
-                type: 'numeric',
-                format: '$ 0,0.00'
-            },
-            {
-                data: 'amountYr3',
-                type: 'numeric',
-                format: '$ 0,0.00'
-            },
-            {
-                data: 'amountYr4',
-                type: 'numeric',
-                format: '$ 0,0.00'
-            },
-            {
-                data: 'isCrest',
-                type: 'checkbox',
-                checkedTemplate: 'Yes',
-                uncheckedTemplate: 'No'
-            },
-            {
-                data: 'remarks'
-            }
-        ];
-        this.colWidths = [
-            null, null, null, null, null, null, null,
-            null, null, null, null, null, null, 30
-        ];
-        this.options = {
-            stretchH: 'all',
-            columnSorting: true,
-            contextMenu: [
-                'row_above', 'row_below', 'remove_row'
-            ]
+        this.contractid = '';
+        this.serviceLine = '';
+        this.msOwnerAlias = '';
+        this.contractIDList = [];
+        this.servicelineList = [];
+        this.msOwnerAliasList = [];
+        this.searchContractId = '';
+        this.searchServiceLine = '';
+        this.searchMsowner = '';
+        this.filter = '';
+        this.maxSize = 7;
+        this.directionLinks = true;
+        this.autoHide = false;
+        this.config = {
+            id: 'advanced',
+            itemsPerPage: 10,
+            currentPage: 1
         };
+        this.labels = {
+            previousLabel: 'Previous',
+            nextLabel: 'Next',
+            screenReaderPaginationLabel: 'Pagination',
+            screenReaderPageLabel: 'page',
+            screenReaderCurrentLabel: "You're on page"
+        };
+        this.popped = [];
     }
-    SowComponent.prototype.afterChange = function (e) {
-        console.log(e);
-    };
-    SowComponent.prototype.afterOnCellMouseDown = function (e) {
-        console.log(e);
-    };
     SowComponent.prototype.ngOnInit = function () {
-        //this.sowService.getSows()
-        //    .subscribe(data => this.sows = data);
         var _this = this;
         this.sowService.getSows()
-            .subscribe(function (data) { return _this.data = data; });
+            .subscribe(function (data) {
+            _this.sows = data;
+            if (_this.sows) {
+                _this.autoComplete();
+            }
+        });
+    };
+    SowComponent.prototype.find = function () {
+        var _this = this;
+        this.sowService.(this.contactId, this.serviceLine, this.application)
+            .subscribe(function (data) {
+            _this.applicationList = data;
+        });
     };
     SowComponent.prototype.deleteSow = function (sow) {
         var _this = this;
@@ -131,6 +71,39 @@ var SowComponent = (function () {
                 _this.sows.splice(index, 0, sow);
             });
         }
+    };
+    SowComponent.prototype.notifyContractId = function (contractID) {
+        if (event) {
+            this.contractid = contractID;
+        }
+    };
+    SowComponent.prototype.notifyServiceLine = function (serviceLine) {
+        if (event) {
+            this.serviceLine = serviceLine;
+        }
+    };
+    SowComponent.prototype.notifymsOwnerAlias = function (msOwnerAlias) {
+        if (event) {
+            this.msOwnerAlias = msOwnerAlias;
+        }
+    };
+    SowComponent.prototype.autoComplete = function () {
+        for (var i = 0; i < this.sows.length; i++) {
+            this.contractIDList.push(this.sows[i].contractId.toString());
+            //this.servicelineList.push(this.sows[i].);
+            this.msOwnerAliasList.push(this.sows[i].msowner);
+        }
+    };
+    SowComponent.prototype.onPageChange = function (number) {
+        console.log('change to page', number);
+        this.config.currentPage = number;
+    };
+    SowComponent.prototype.pushItem = function () {
+        var item = this.popped.pop() || 'A newly-created meal!';
+        this.sows.push(item);
+    };
+    SowComponent.prototype.popItem = function () {
+        this.popped.push(this.sows.pop());
     };
     return SowComponent;
 }());

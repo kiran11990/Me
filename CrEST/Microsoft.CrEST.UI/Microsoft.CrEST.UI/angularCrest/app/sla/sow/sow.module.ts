@@ -8,7 +8,8 @@ import { SowComponent } from './landing/sow.component';
 import { SowService } from '../shared/services/sows.service';
 import { SowFormComponent } from './sow-form/sow-form.component';
 import { SharedModule } from '../../shared/shared.module';
-
+import { MyDatePickerModule } from 'mydatepicker';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { HotTableModule } from 'ng2-handsontable';
 
 @NgModule({
@@ -19,7 +20,9 @@ import { HotTableModule } from 'ng2-handsontable';
         RouterModule,
         HttpModule,
         HotTableModule,
-        SharedModule
+        SharedModule,
+        MyDatePickerModule,
+        NgxPaginationModule
     ],
     declarations: [
         SowComponent,
