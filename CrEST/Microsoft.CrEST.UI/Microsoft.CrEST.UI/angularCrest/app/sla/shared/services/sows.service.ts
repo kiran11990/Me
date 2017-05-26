@@ -39,7 +39,7 @@ export class SowService {
 
 
     findSow(contractId: string, serviceline: string, application: string) {
-        return this.http.get(this.findSowUrl + contractId + "/" + serviceline + "/" + application)
+        return this.http.get(this.findSowUrl +'?contractId=' + contractId + "&ITOrg=" + serviceline + "&effectiveDate=" + application + "&expiryDate=" + application)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     getsowMetaData() {

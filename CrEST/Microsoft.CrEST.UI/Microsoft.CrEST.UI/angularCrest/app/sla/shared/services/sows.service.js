@@ -35,7 +35,7 @@ var SowService = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.findSow = function (contractId, serviceline, application) {
-        return this.http.get(this.findSowUrl + contractId + "/" + serviceline + "/" + application)
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + serviceline + "&effectiveDate=" + application + "&expiryDate=" + application)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getsowMetaData = function () {

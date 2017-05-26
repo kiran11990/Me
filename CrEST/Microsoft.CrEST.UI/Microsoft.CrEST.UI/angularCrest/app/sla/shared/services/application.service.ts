@@ -35,7 +35,8 @@ export class ApplicationService {
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     findApplication(contractId: string, serviceline: string, application: string) {
-        return this.http.get(this.findApplicationUrl + contractId + "/" + serviceline + "/" + application)
+      
+        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + serviceline + "&application=" + application )
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     getApplicationbyId(applicationId: any) {

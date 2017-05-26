@@ -11,9 +11,11 @@ import { CommonService } from '../../../shared/common.service'
 export class Sservice {
 
     public getservice: string;
+    public getserviceByID: string;
 
     constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
+        this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
     }
     getService() {
         //debugger
@@ -22,7 +24,7 @@ export class Sservice {
     }
 
     getServiceById(id: any) {
-        return this.http.get(this.getSowUrl(id))
+        return this.http.get(this.getserviceByID + "/" + id)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
