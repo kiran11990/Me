@@ -12,7 +12,14 @@ namespace CrEST.BL
 {
     public class ApplicationRepository : IApplicationRepository
     {
-        public IEnumerable<ApplicationData> FindApplication(int contractId, string serviceLine, string application)
+		private readonly CrESTContext _context;
+
+		public ApplicationRepository(CrESTContext context)
+		{
+			_context = context;
+		}
+
+		public IEnumerable<ApplicationData> FindApplication(int contractId, string serviceLine, string application)
         {
 
             return GetApplications(contractId, serviceLine, application);
@@ -25,10 +32,9 @@ namespace CrEST.BL
 
 		public ApplicationData GetById(int item)
 		{
-			using (CrESTContext db = new CrESTContext())
-			{
-				db.Database.OpenConnection();
-				DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+			
+				_context.Database.OpenConnection();
+				DbCommand cmd = _context.Database.GetDbConnection().CreateCommand();
 				cmd.CommandText = "spGetApplicationById";
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.Add(new SqlParameter("@ApplicationId", item));
@@ -64,28 +70,26 @@ namespace CrEST.BL
 				}
 
 				return existingItem;
-			}			
+						
 		}
 
 		public ApplicationMetadata GetApplicatonMetadata()
         {
             ApplicationMetadata data = new ApplicationMetadata();
 
-            using (CrESTContext _context = new CrESTContext())
-            {
+            
                 data.ContractIds = _context.SoW.Where(x => x.ContractId != null).Select(x => x.ContractId.Value).Distinct().ToList();
                 data.ItOrg = _context.Itorg.ToList();
                 data.Suppliers = _context.Supplier.ToList();
                 data.ServiceClass = _context.ServiceClass.ToList();
-            }
+            
 
             return data;
         }
 
         public int SaveApplication(ApplicationData applicationData)
         {
-            using (CrESTContext _context = new CrESTContext())
-            {
+            
 				Application application = _context.Application.Where(s => s.ApplicationId == applicationData.ApplicationId).SingleOrDefault();
 
 				if (application == null)
@@ -117,17 +121,16 @@ namespace CrEST.BL
                     _context.Application.Add(application);
 
                 return _context.SaveChanges();
-            }
+            
         }
 
         private List<ApplicationData> GetApplications(int contractId, string serviceLine, string application)
         {
             List<ApplicationData> applications = new List<ApplicationData>();
 
-            using (CrESTContext db = new CrESTContext())
-            {
-                db.Database.OpenConnection();
-                DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
+
+			_context.Database.OpenConnection();
+                DbCommand cmd = _context.Database.GetDbConnection().CreateCommand();
                 cmd.CommandText = "spSearchApplication";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
@@ -170,7 +173,7 @@ namespace CrEST.BL
                     });
                     }
                 }
-            }
+            
 
             return applications;
         }
