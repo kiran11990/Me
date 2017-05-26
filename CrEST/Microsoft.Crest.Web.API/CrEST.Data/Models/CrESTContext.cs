@@ -18,6 +18,7 @@ namespace CrEST.Data.Models
         public virtual DbSet<Slabase> Slabase { get; set; }
         public virtual DbSet<SoW> SoW { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -340,13 +341,33 @@ namespace CrEST.Data.Models
                     .WithMany(p => p.SoW)
                     .HasForeignKey(d => d.Itorg)
                     .HasConstraintName("FK_SOW_ITOrg");
-
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.SoW)
                     .HasForeignKey(d => d.SupplierId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Sow_Supplier");
             });
+
+            modelBuilder.Entity<Itorg>(entity =>
+            {
+                entity.ToTable("ITOrg");
+
+                entity.Property(e => e.ItorgId).HasColumnName("ITOrgId");
+
+                entity.Property(e => e.ItorgName)
+                    .IsRequired()
+                    .HasColumnName("ITOrgName")
+                    .HasMaxLength(20);
+            });
+
+            //Added for Login 
+            modelBuilder.Entity<Login>(entity =>
+            {
+                entity.Property(e => e.UserName).HasColumnName("UserName");
+
+                entity.Property(e => e.RoleName).HasColumnType("RoleName");
+            });
         }
     }
-}
+}      
+    
