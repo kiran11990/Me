@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CrEST.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrEST.API
 {
@@ -15,10 +17,10 @@ namespace CrEST.API
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-          .SetBasePath(env.ContentRootPath)
-          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-          .AddEnvironmentVariables();
+                              .SetBasePath(env.ContentRootPath)
+                              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                              .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                              .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -27,6 +29,7 @@ namespace CrEST.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CrESTContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CrestDatabase")));
             // Add framework services.
             services.AddMvc();
         }

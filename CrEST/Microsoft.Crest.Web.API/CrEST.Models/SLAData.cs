@@ -25,7 +25,7 @@ namespace CrEST.Models
         public string CrestLevel2 { get; set; }
         public string SLAId { get; set; }
         public string ServiceMetric { get; set; }
-        public int ServiceClass { get; set; }
+        public string ServiceClass { get; set; }
         public string SeverityLevel { get; set; }
         public string PriorityLevel { get; set; }
         public string Environment { get; set; }

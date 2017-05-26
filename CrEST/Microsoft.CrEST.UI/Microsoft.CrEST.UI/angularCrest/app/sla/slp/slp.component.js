@@ -11,20 +11,29 @@ import { Component } from '@angular/core';
 import { SlpService } from "../shared/services/slp.service";
 import { SlpBusiness } from "../shared/business/slp.business";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
+import { HandsonCells } from "../shared/models/handson";
+import { ConstantService } from "../../config/constants.service";
 var SlpComponent = (function () {
-    function SlpComponent(_slpService, _slpBusiness) {
+    function SlpComponent(_slpService, _slpBusiness, _constantService) {
         this._slpService = _slpService;
         this._slpBusiness = _slpBusiness;
+        this._constantService = _constantService;
         this.data = [];
         this.colHeaders = [];
         this.columns = [];
         this.colWidths = [];
         this.valueRegexValidator = /^(\d\d?(\.\d\d?)?%|100(\.00?)?%|NA|na|\d)$/;
         this.remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
-        this.isValidHandsonData = true;
         this.showGenerateAction = false;
         this.showSaveAction = false;
+        this.invalidHandsonCells = [];
         this.periods = new Array();
+        this.INF0001 = _constantService.CONSTANTS.Messages.INF0001;
+        this.INF0002 = _constantService.CONSTANTS.Messages.INF0002;
+        this.ERR0001 = _constantService.CONSTANTS.Messages.ERR0001;
+        this.ERR0002 = _constantService.CONSTANTS.Messages.ERR0002;
+        this.ERR0003 = _constantService.CONSTANTS.Messages.ERR0003;
+        this.ERR0004 = _constantService.CONSTANTS.Messages.ERR0004;
     }
     SlpComponent.prototype.ngOnInit = function () {
         this.GetReportingPeriods();
@@ -32,8 +41,9 @@ var SlpComponent = (function () {
     };
     //**Actions and Events Start
     SlpComponent.prototype.onChange = function (selectedPeriod, _this) {
+        _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.getCurrentY() + "-" + ('0' + _this.getCurrentP()).slice(-2);
+        var currentFP = _this.GetCurrentFP();
         var previousFP = _this.GetPreviousFP();
         _this.currentSelectedPeriod = selectedPeriod.period;
         if (_this.currentSelectedPeriod == currentFP) {
@@ -50,32 +60,50 @@ var SlpComponent = (function () {
         }
         this.GetSLPData(selectedPeriod.period);
     };
-    SlpComponent.prototype.Generate = function (fiscalYear) {
-        this.Message = "";
-        var _this = this;
-        var currentFP = this.getCurrentY() + "-" + this.getCurrentP();
-        var previousFP = this.GetPreviousFP();
-        if (currentFP == fiscalYear) {
-            this._slpService.GenerateSLPforCurrentPeriod(currentFP)
+    SlpComponent.prototype.Generate = function (fiscalYear, _this) {
+        _this.Message = "";
+        var currentFP = _this.GetCurrentFP();
+        //TODO
+        this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
+            .subscribe(function (result) {
+            if (result == "INF1000") {
+                _this.Message = _this.INF0002;
+                _this.MessageType = 1;
+                _this.GetSLPData(currentFP);
+            }
+            else if (result == "ERR1000") {
+                _this.Message = _this.ERR0004;
+                _this.MessageType = 2;
+            }
+            else {
+                _this.Message = _this.ERR0003;
+                _this.MessageType = 2;
+            }
+        });
+    };
+    SlpComponent.prototype.Save = function (mainThis) {
+        mainThis.Message = "";
+        if (mainThis.invalidHandsonCells.length <= 0) {
+            //TODO
+            mainThis.data.map(function (item) {
+                item.lastModifiedBy = "supraja_tatichetla";
+                return item;
+            });
+            this._slpService.SaveSLPs(mainThis.data)
                 .subscribe(function (result) {
-                _this.data = result.filter(function (res) {
-                    return res.reportingPeriod == previousFP;
-                });
-                //TODO : can we cleanup this?
-                for (var i = 0; i < _this.data.length; i++) {
-                    _this.data[i].reportingPeriod = currentFP;
+                if (result == "INF1000") {
+                    mainThis.Message = mainThis.INF0001;
+                    mainThis.MessageType = 1;
+                }
+                else {
+                    mainThis.Message = mainThis.ERR0001;
+                    mainThis.MessageType = 2;
                 }
             });
         }
         else {
-            this.Message = "Please select current fiscal period to generate.";
-            this.MessageType = 2; //MessageType 1 : alert success & MessageType 2 is for danger
-        }
-    };
-    SlpComponent.prototype.Save = function () {
-        if (this.isValidHandsonData) {
-            this.Message = "Saved Successfully";
-            this.MessageType = 1; //MessageType 1 : alert success & MessageType 2 is for danger
+            mainThis.Message = mainThis.ERR0002;
+            mainThis.MessageType = 2;
         }
     };
     //**Actions and Events End
@@ -99,13 +127,16 @@ var SlpComponent = (function () {
     };
     SlpComponent.prototype.getCurrentP = function () {
         var d = new Date();
-        var currentMonth = d.getMonth();
+        var currentMonth = d.getMonth() + 1;
         return currentMonth;
     };
     SlpComponent.prototype.getCurrentY = function () {
         var d = new Date();
         var fiscalYear = d.getFullYear();
         return fiscalYear;
+    };
+    SlpComponent.prototype.GetCurrentFP = function () {
+        return this.getCurrentY() + "-" + ('0' + this.getCurrentP()).slice(-2);
     };
     SlpComponent.prototype.GetPreviousFP = function () {
         var minusCurrentPeriod = this.getCurrentP() + 11;
@@ -275,23 +306,28 @@ var SlpComponent = (function () {
         };
     };
     SlpComponent.prototype.ValueRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-        var previousFP = cellProperties.mainThis.GetPreviousFP();
-        var reportingPeriod = cellProperties.mainThis.data[row].reportingPeriod;
-        if (reportingPeriod = previousFP) {
-            cellProperties.readOnly = true;
-        }
+        var cells = new HandsonCells();
+        cells.col = col;
+        cells.row = row;
         /**********validate whether entered value is valid based on minimumLevel value**********/
-        cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties);
+        cellProperties.mainThis.ValidateValue(instance, td, row, col, prop, value, cellProperties, cells);
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
         if (status == "1") {
             var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
-            cellProperties.mainThis.isValidHandsonData = false;
+            cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
-        else
-            cellProperties.mainThis.isValidHandsonData = true;
+        else {
+            var valueRemarksCell = instance.getCellMeta(row, col + 1);
+            valueRemarksCell.valid = true;
+            for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
+                if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
+                    cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
+                }
+            }
+        }
         /***********Set status column**********/
         if (value != "NA" || value) {
             var tdStatus = instance.getCell(row, col + 2, true);
@@ -301,18 +337,24 @@ var SlpComponent = (function () {
         return td;
     };
     ;
-    SlpComponent.prototype.ValidateValue = function (instance, td, row, col, prop, value, cellProperties) {
+    SlpComponent.prototype.ValidateValue = function (instance, td, row, col, prop, value, cellProperties, cells) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
         //check for percentage and numbers
         if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
             var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
-            //td.style.backgroundColor = ''
-            cellProperties.mainThis.isValidHandsonData = false;
+            cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
-        else
-            cellProperties.mainThis.isValidHandsonData = true;
+        else {
+            var valuesCell = instance.getCellMeta(row, col);
+            valuesCell.valid = false;
+            for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
+                if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
+                    cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
+                }
+            }
+        }
     };
     SlpComponent.prototype.statusRenderer = function (instance, td, row, col, prop, value, cellProperties) {
         var data = cellProperties.mainThis.data;
@@ -344,7 +386,7 @@ SlpComponent = __decorate([
         selector: 'sla-slp',
         templateUrl: './slp.component.html',
     }),
-    __metadata("design:paramtypes", [SlpService, SlpBusiness])
+    __metadata("design:paramtypes", [SlpService, SlpBusiness, ConstantService])
 ], SlpComponent);
 export { SlpComponent };
 //# sourceMappingURL=slp.component.js.map

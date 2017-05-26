@@ -3,7 +3,7 @@
         <div class="page-header"> <a href="/">Dashboard</a> > SLA > Sevice Level Performance </div>
     </div>
 </div>
-<div [ngClass]="{alert: true, 'alert-success alert-dismissable': MessageType == 1, 'alert-danger alert-dismissable': MessageType == 2 }" *ngIf="Message">
+<div [ngClass]="{alert: true, 'alert-success alert-dismissable': MessageType == 1, 'alert-danger alert-dismissable': MessageType == 2, 'alert-info alert-dismissable': MessageType == 3 }" *ngIf="Message">
     {{Message}}
 </div>
 <div class="row">
@@ -23,10 +23,10 @@
             </div>
             <div class="pull-right">
                 <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showGenerateAction">
-                    <a class="btn btn-primary" (click)="Generate(currentSelectedPeriod)">Generate</a>
+                    <a class="btn btn-primary" (click)="Generate(currentSelectedPeriod, this)">Generate</a>
                 </div>
                 <div class="col-lg-6 col-sm-6 fixed-action-btn" *ngIf="showSaveAction">
-                    <a class="btn btn-primary" (click)="Save()">Save</a>
+                    <a class="btn btn-primary" (click)="Save(this)">Save</a>
                 </div>
             </div>
         </div>
