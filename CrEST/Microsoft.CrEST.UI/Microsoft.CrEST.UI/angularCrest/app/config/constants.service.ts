@@ -23,9 +23,11 @@ export class ConstantService {
                 getapplicationMetaData: this.apiBaseUrlWithAPI + 'Application/GetApplicationMetadata',
 
                 //service
-                getservice: 'http://localhost:52537/configMetadata/service.json',
-
-                
+                getservice: this.apiBaseUrlWithAPI + 'Service/GetAllServices',
+                getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
+                saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',
+                findServices: this.apiBaseUrlWithAPI + 'Service/FindServices/',
+                getServiceMetadata: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadata',
                 //sow
                 getSow: this.apiBaseUrlWithAPI + 'SoW/GetAllSoWs',
                 getSowById: this.apiBaseUrlWithAPI + 'SoW/GetSoWById/',

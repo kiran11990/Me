@@ -12,7 +12,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Sservice } from "../shared/services/service.service";
 var SlaServiceComponent = (function () {
-    // public serviceData: string[] = [];
     function SlaServiceComponent(Service) {
         this.Service = Service;
         this.sample = "";
@@ -29,19 +28,33 @@ var SlaServiceComponent = (function () {
         this.servicelineList = [];
         this.ApplicationLists = [];
         this.SupplierList = [];
-        //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
-        //    this.router = _router;
         this.serviceList = [];
         this.filteredList = [];
         this.ContactIdList = [];
         this.searchContactId = '';
         // public searchServiceLine = '';
         this.searchApplicationgroup = '';
+        this.filter = '';
+        this.maxSize = 7;
+        this.directionLinks = true;
+        this.autoHide = false;
+        this.config = {
+            id: 'advanced',
+            itemsPerPage: 10,
+            currentPage: 1
+        };
+        this.labels = {
+            previousLabel: 'Previous',
+            nextLabel: 'Next',
+            screenReaderPaginationLabel: 'Pagination',
+            screenReaderPageLabel: 'page',
+            screenReaderCurrentLabel: "You're on page"
+        };
+        this.popped = [];
     }
     SlaServiceComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.serviceList = [];
-        //this.serviceData = [];
         this.Service.getService()
             .subscribe(function (data) {
             _this.serviceList = data;
@@ -55,21 +68,11 @@ var SlaServiceComponent = (function () {
         //this.searchServiceLine = this.serviceLine.trim();
         this.searchApplicationgroup = this.applicationgroup.trim();
     };
-    //edit(id: any) {
-    //    alert(id + "the value should be")
-    //    this.id = id;
-    //    this.router.navigate(['/applications', this.id]);
-    //}
     SlaServiceComponent.prototype.notifyContactId = function (contractid) {
         if (event) {
             this.contractid = contractid;
         }
     };
-    //notifySupplier(supplier: string) {
-    //    if (event) {
-    //        this.supplier = supplier;
-    //    }
-    //}
     SlaServiceComponent.prototype.notifyApplication = function (Service) {
         if (event) {
             this.applicationgroup = Service;
@@ -80,6 +83,17 @@ var SlaServiceComponent = (function () {
             this.ApplicationLists.push(this.serviceList[i].ApplicationGroup);
             this.contactIdList.push(this.serviceList[i].contractid);
         }
+    };
+    SlaServiceComponent.prototype.onPageChange = function (number) {
+        console.log('change to page', number);
+        this.config.currentPage = number;
+    };
+    SlaServiceComponent.prototype.pushItem = function () {
+        var item = this.popped.pop() || 'A newly-created meal!';
+        this.serviceList.push(item);
+    };
+    SlaServiceComponent.prototype.popItem = function () {
+        this.popped.push(this.serviceList.pop());
     };
     return SlaServiceComponent;
 }());

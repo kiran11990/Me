@@ -20,6 +20,7 @@ var Sservice = (function () {
         this.commonService = commonService;
         this.http = http;
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
+        this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
     }
     Sservice.prototype.getService = function () {
         //debugger
@@ -27,7 +28,7 @@ var Sservice = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.getServiceById = function (id) {
-        return this.http.get(this.getSowUrl(id))
+        return this.http.get(this.getserviceByID + "/" + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.addSow = function (service) {

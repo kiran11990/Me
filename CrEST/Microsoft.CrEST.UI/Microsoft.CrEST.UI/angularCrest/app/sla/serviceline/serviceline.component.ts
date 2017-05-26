@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-
+import { PaginationInstance } from 'ngx-pagination';
 
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
@@ -34,17 +34,12 @@ export class SlaServiceComponent {
     public servicelineList: string[] = [];
     public ApplicationLists: string[] = [];
     public SupplierList:string[]=[];
-    //public applicationList: Application[] = [];
     router: Router;
-    //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
-    //    this.router = _router;
-
     public serviceList: Service[] = [];
-   // public serviceData: string[] = [];
     constructor(private Service: Sservice) { }
     ngOnInit() {
         this.serviceList = [];
-        //this.serviceData = [];
+       
         this.Service.getService()
             .subscribe(data => {
                 this.serviceList = data
@@ -69,12 +64,6 @@ export class SlaServiceComponent {
     }
 
 
-    //edit(id: any) {
-    //    alert(id + "the value should be")
-
-    //    this.id = id;
-    //    this.router.navigate(['/applications', this.id]);
-    //}
     notifyContactId(contractid: string) {
         if (event) {
             this.contractid = contractid;
@@ -82,11 +71,6 @@ export class SlaServiceComponent {
     }
 
 
-    //notifySupplier(supplier: string) {
-    //    if (event) {
-    //        this.supplier = supplier;
-    //    }
-    //}
 
     notifyApplication(Service: string) {
         if (event) {
@@ -100,6 +84,41 @@ export class SlaServiceComponent {
             this.contactIdList.push(this.serviceList[i].contractid);
             //this.SupplierList.push(this.serviceList[i].supplier);
         }
+    }
+
+
+
+    public filter: string = '';
+    public maxSize: number = 7;
+    public directionLinks: boolean = true;
+    public autoHide: boolean = false;
+    public config: PaginationInstance = {
+        id: 'advanced',
+        itemsPerPage: 10,
+        currentPage: 1
+    };
+    public labels: any = {
+        previousLabel: 'Previous',
+        nextLabel: 'Next',
+        screenReaderPaginationLabel: 'Pagination',
+        screenReaderPageLabel: 'page',
+        screenReaderCurrentLabel: `You're on page`
+    };
+
+    private popped: any[] = [];
+
+    onPageChange(number: number) {
+        console.log('change to page', number);
+        this.config.currentPage = number;
+    }
+
+    pushItem() {
+        let item = this.popped.pop() || 'A newly-created meal!';
+        this.serviceList.push(item);
+    }
+
+    popItem() {
+        this.popped.push(this.serviceList.pop());
     }
 
 }

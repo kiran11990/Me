@@ -35,7 +35,7 @@ var ApplicationService = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.findApplication = function (contractId, serviceline, application) {
-        return this.http.get(this.findApplicationUrl + contractId + "/" + serviceline + "/" + application)
+        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + serviceline + "&application=" + application)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.getApplicationbyId = function (applicationId) {

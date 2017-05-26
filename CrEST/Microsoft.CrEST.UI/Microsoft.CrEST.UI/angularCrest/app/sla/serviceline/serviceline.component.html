@@ -65,19 +65,14 @@
                                 <th data-field="name">App Group Services Fee Yr 4</th>
                                 <th data-field="name">Validation Notes</th>
                                 <th data-field="name">Remarks</th>
-                                <!--<th data-field="name">Cross Check</th>
-                                <th data-field="name">Tag</th>
-                                <th data-field="name">SCID</th>
-                                <th data-field="name">Count</th>-->
-                                <!--<th data-field="name">Edit</th>
-                                <th data-field="name">Delete</th>-->
+                               
                                 
                             </tr>
                         </thead>
                         <tbody>
                             <!--<tr *ngFor="let service of serviceList">-->
-                                <tr *ngFor="let service of serviceList">
-                                    <td>{{service.Supplier}}</td>
+                                <tr *ngFor="let service of serviceList |paginate: config" style="height:12px"">
+                                 <td>{{service.Supplier}}</td>
                                 <td>{{ service.SCID }}</td>
                                 <td>{{ service.contractid }}</td>
                                 <td>{{ service.ApplicationGroup }}</td>
@@ -91,18 +86,9 @@
                                 <td>{{ service.ValidationNotes }}</td>
                                 <td>{{ service.Remarks }}</td>                                                         
                                 <td>  
-                                    
                                     <a class="btn btn-primary" [routerLink]="['/services', service.contractid]">Edit</a>
-
-                                    <!--<a class="btn btn-primary" routerLink="/services/add",service.contractid>Edit</a>-->
-
-                                    <!--<a [routerLink]="['/services/add', service.contractid]">Edit</a>-->
-                                    <!--<a class="btn btn-primary" [routerLink]="['/applications', item.contactId]">Edit</a>-->
                                 </td>
-                                <!--<td>
-                                    <a class="btn btn-primary" (click)="deleteSow(service)" href="">Delete</a>
-                                </td>-->
-                               
+                                
                             </tr>
                         </tbody>
                         
