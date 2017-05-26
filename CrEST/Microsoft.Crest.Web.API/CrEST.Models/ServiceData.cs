@@ -7,7 +7,7 @@ namespace CrEST.Models
     public class ServiceData
     {
         public int ServiceId { get; set; }
-        public string SupplierId { get; set; }
+        public int SupplierId { get; set; }
         public string Supplier { get; set; }
         public int ContractId { get; set; }
         public string ApplicationGroup { get; set; }
@@ -24,6 +24,7 @@ namespace CrEST.Models
         public string Remarks { get; set; }
         public string Scid { get; set; }
         public string Currency { get; set; }
-        public string Itorg { get; set; }
-    }
+        public int Itorg { get; set; }
+		public string ItorgName { get; set; }
+	}
 }
