@@ -57,6 +57,7 @@ namespace CrEST.BL
 					existingItem.SoWid = reader.GetInt32(16);
 					existingItem.InfyOwner = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
 					existingItem.ItorgName = _context.Itorg.Where(s => s.ItorgId == reader.GetInt32(1)).FirstOrDefault().ItorgName;
+					existingItem.SupplierId = reader.GetInt32(18);
 				}
 			}
 
