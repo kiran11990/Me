@@ -20,6 +20,7 @@ var ApplicationService = (function () {
         this._constantService = _constantService;
         this.commonService = commonService;
         this.http = http;
+        this.endDate = new Date();
         this.getApplicationUrl = _constantService.CONFIG.apiLocations.getApplication;
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication;
         this.findApplicationUrl = _constantService.CONFIG.apiLocations.findApplicationUrl;
@@ -27,7 +28,8 @@ var ApplicationService = (function () {
         this.getapplicationMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
     }
     ApplicationService.prototype.getApplications = function () {
-        return this.http.get(this.getApplicationUrl)
+        var header = new Headers({ 'Cache-Control': 'no-cache' });
+        return this.http.get(this.getApplicationUrl, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.getApplicationMetaData = function () {
@@ -35,7 +37,8 @@ var ApplicationService = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.findApplication = function (contractId, serviceline, application) {
-        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + serviceline + "&application=" + application)
+        var encodedserviceline = encodeURIComponent(serviceline);
+        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + encodedserviceline + "&application=" + application)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.getApplicationbyId = function (applicationId) {

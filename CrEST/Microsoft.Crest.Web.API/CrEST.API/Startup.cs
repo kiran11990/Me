@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using CrEST.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using CrEST.BL;
 
 namespace CrEST.API
 {
@@ -32,6 +33,14 @@ namespace CrEST.API
             services.AddDbContext<CrESTContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CrestDatabase")));
             // Add framework services.
             services.AddMvc();
+            services.AddTransient<IApplicationRepository, ApplicationRepository>();
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +48,7 @@ namespace CrEST.API
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            app.UseCors("MyPolicy");
             app.UseMvc();
         }
     }

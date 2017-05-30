@@ -46,7 +46,6 @@ var ApplicationFormComponent = (function () {
             }
         };
         this.myDatePickerOptions = {
-            // other options...
             dateFormat: 'dd.mm.yyyy',
         };
         this.applicationForm = formBuilder.group({
@@ -55,7 +54,7 @@ var ApplicationFormComponent = (function () {
             'serviceline': ['', Validators.required],
             'Application': ['', Validators.required],
             //'applicationId': ['', Validators.required],
-            'supplierName': ['', Validators.required],
+            //'supplierName': ['', Validators.required],
             'OwnerAlias': ['', Validators.required],
             'Serviceclass': [''],
             'Runvsgrow': ['', Validators.required],
@@ -71,7 +70,6 @@ var ApplicationFormComponent = (function () {
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'sowId': ['', Validators.required],
             'itOrg': [''],
-            'itorg': ['']
         });
         this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         this.applicationData.startDate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
@@ -82,7 +80,6 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.onendDateChanged = function (event) {
         this.endDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     };
     ApplicationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -100,8 +97,10 @@ var ApplicationFormComponent = (function () {
             }];
         this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
+        this.title = this._routeParams.snapshot.params['id'] ? 'Edit Application' : 'New Application';
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
+            this.routeID = this._routeParams.snapshot.params['id'];
             this.applicationService.getApplicationbyId(id)
                 .subscribe(function (data) {
                 _this.applicationData = data;
@@ -124,6 +123,21 @@ var ApplicationFormComponent = (function () {
             });
         }
     };
+    ApplicationFormComponent.prototype.onChange = function (value) {
+        this.applicationData.supplierId = value;
+    };
+    ApplicationFormComponent.prototype.onContactChange = function (value) {
+        this.applicationData.contractId = value;
+    };
+    ApplicationFormComponent.prototype.onServiceclassChange = function (value) {
+        this.applicationData.serviceClass = value;
+    };
+    ApplicationFormComponent.prototype.onrunOrGrowChange = function (value) {
+        this.applicationData.runOrGrow = value;
+    };
+    ApplicationFormComponent.prototype.onitOrgChange = function (value) {
+        this.applicationData.itOrgName = value;
+    };
     ApplicationFormComponent.prototype.getApplicationMetaData = function () {
         var _this = this;
         this.applicationService.getApplicationMetaData()
@@ -142,7 +156,7 @@ var ApplicationFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                //alert("updatedsuccessfully")
+                _this.routeID ? alert("updatedsuccessfully") : alert("application added successfully");
                 _this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
             }
         });

@@ -11,8 +11,8 @@
                 <label for="contractId">Contract ID</label>
                 <!--<input class="form-control" />-->
 
-                <input id="contractid" #varSearchcontactid type="text" [(ngModel)]='contractid' class="form-control" placeholder="contractid" />
-                <auto-complete [tagId]="contractid" [values]='contactIdList|filterUser:contractid' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'>
+                <input id="contractid" #varSearchcontactid type="text" [(ngModel)]='contractId' class="form-control" placeholder="contractId" />
+                <auto-complete [tagId]="contractId" [values]='contactIdList|filterUser:contractId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'>
                 </auto-complete>
 
 
@@ -32,7 +32,7 @@
             </div>
             
             <div class="col-lg-2 fixed-action-btn">
-                <a class="btn btn-primary" routerLink="find()">Search</a>
+                <a class="btn btn-primary" (click)="find()">Search</a>
             </div>
         </div>
         <div class="row">
@@ -65,26 +65,31 @@
                                 <th data-field="name">App Group Services Fee Yr 4</th>
                                 <th data-field="name">Validation Notes</th>
                                 <th data-field="name">Remarks</th>
-                               
+                                <th data-field="name">Currency</th>
+                                <th data-field="name">ItorgName</th>
+                                <th data-field="name"></th>
+
                                 
                             </tr>
                         </thead>
                         <tbody>
                             <!--<tr *ngFor="let service of serviceList">-->
-                                <tr *ngFor="let service of serviceList |paginate: config" style="height:12px"">
-                                 <td>{{service.Supplier}}</td>
-                                <td>{{ service.SCID }}</td>
-                                <td>{{ service.contractid }}</td>
-                                <td>{{ service.ApplicationGroup }}</td>
-                                <td>{{ service.CrESTlevel1Service }}</td>
-                                <td>{{ service.CrESTlevel2Service }}</td>
-                                <td>{{ service.CrESTlevel3Service }}</td>
-                                <td>{{ service.AppGroupServicesFeeYr1 }}</td>
-                                <td>{{ service.AppGroupServicesFeeYr2 }}</td>
-                                <td>{{ service.AppGroupServicesFeeYr3 }}</td>
-                                <td>{{ service.AppGroupServicesFeeYr4 }}</td>
-                                <td>{{ service.ValidationNotes }}</td>
-                                <td>{{ service.Remarks }}</td>                                                         
+                                <tr *ngFor="let service of serviceList|paginate: config" style="height:12px">
+                                    <td>{{service.supplier}}</td>
+                                    <td>{{ service.scid }}</td>
+                                    <td>{{ service.contractId }}</td>
+                                    <td>{{ service.applicationGroup }}</td>
+                                    <td>{{ service.crestLevel1 }}</td>
+                                    <td>{{ service.crestLevel2 }}</td>
+                                    <td>{{ service.crestLevel3 }}</td>
+                                    <td>{{ service.appGroupServiceFeeY1 }}</td>
+                                    <td>{{ service.appGroupServiceFeeY2 }}</td>
+                                    <td>{{ service.appGroupServiceFeeY3 }}</td>
+                                    <td>{{ service.appGroupServiceFeeY4 }}</td>
+                                    <td>{{ service.validationNotes }}</td>
+                                    <td>{{ service.remarks }}</td>     
+                                    <td>{{ service.currency }}</td>
+                                    <td>{{ service.itorgName }}</td>     
                                 <td>  
                                     <a class="btn btn-primary" [routerLink]="['/services', service.contractid]">Edit</a>
                                 </td>
@@ -93,6 +98,18 @@
                         </tbody>
                         
                     </table>
+                    <div class="has-text-centered" style="background-color:cornflowerBlue"  *ngIf="serviceList.length>10">
+                        <pagination-controls [id]="config.id"
+                                             [maxSize]="maxSize"
+                                             [directionLinks]="directionLinks"
+                                             [autoHide]="autoHide"
+                                             [previousLabel]="labels.previousLabel"
+                                             [nextLabel]="labels.nextLabel"
+                                             [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                             [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                             [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                             (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>

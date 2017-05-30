@@ -19,6 +19,7 @@ var ServicelineFormComponent = (function () {
         this.router = router;
         this.route = route;
         this.Sservice = Sservice;
+        this.serviceMetaData = [];
         this.serviceList = [];
         this.editServiceList = [];
         this.id = "";
@@ -27,7 +28,7 @@ var ServicelineFormComponent = (function () {
         this.serviceForm = formBuilder.group({
             'supplier': ['', Validators.required],
             'SCID': ['', Validators.required],
-            'contractid': ['', Validators.required],
+            'contractId': ['', Validators.required],
             'ApplicationGroup': ['', Validators.required],
             'crestLvl1': ['', Validators.required],
             'crestLvl2': ['', Validators.required],
@@ -44,6 +45,7 @@ var ServicelineFormComponent = (function () {
     }
     ServicelineFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
         //alert(this.title);
@@ -59,6 +61,14 @@ var ServicelineFormComponent = (function () {
             else {
             }
         }
+    };
+    ServicelineFormComponent.prototype.SericeMetaData = function () {
+        var _this = this;
+        this.Sservice.getServiceMetaData()
+            .subscribe(function (data) {
+            _this.serviceMetaData = data;
+            debugger;
+        });
     };
     //getServiceListbyID() {
     //    for (var i = 0; i < this.serviceList.length; i++) {

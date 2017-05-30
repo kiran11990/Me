@@ -8,6 +8,7 @@ export class ConstantService {
     private apiBaseUrlWithAPI: string
     public CONFIG: any;
     public CONSTANTS: any;
+    
     constructor(private _config: ConfigService) {
         this.apiBaseUrl = _config.get("apiBaseUri");
         this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
@@ -26,13 +27,14 @@ export class ConstantService {
                 getservice: this.apiBaseUrlWithAPI + 'Service/GetAllServices',
                 getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
                 saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',
-                findServices: this.apiBaseUrlWithAPI + 'Service/FindServices/',
-                getServiceMetadata: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadata',
+                findService: this.apiBaseUrlWithAPI + 'Service/FindServices/',
+                getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadata',
                 //sow
                 getSow: this.apiBaseUrlWithAPI + 'SoW/GetAllSoWs',
                 getSowById: this.apiBaseUrlWithAPI + 'SoW/GetSoWById/',
                 findSoWs: this.apiBaseUrlWithAPI + 'SoW/FindSoWs/',
                 saveSow: this.apiBaseUrlWithAPI + 'SoW/SaveSoW',
+                getSowMetaData: this.apiBaseUrlWithAPI + 'sow/GetSowMetadata',
                 getActiveContract: this.apiBaseUrlWithAPI + 'sow/GetActiveContracts',
 
                 //slp

@@ -18,7 +18,7 @@ var SlaServiceComponent = (function () {
         //Foreach(var x in ayyy)
         this.serviceline = "Sla Service";
         this.contactId = '';
-        this.contractid = '';
+        this.contractId = '';
         this.serviceLine = '';
         this.applicationgroup = '';
         this.states = [];
@@ -28,12 +28,14 @@ var SlaServiceComponent = (function () {
         this.servicelineList = [];
         this.ApplicationLists = [];
         this.SupplierList = [];
+        //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
+        //    this.router = _router;
         this.serviceList = [];
         this.filteredList = [];
         this.ContactIdList = [];
         this.searchContactId = '';
-        // public searchServiceLine = '';
         this.searchApplicationgroup = '';
+        //@Input('data') meals: string[] = [];
         this.filter = '';
         this.maxSize = 7;
         this.directionLinks = true;
@@ -64,13 +66,15 @@ var SlaServiceComponent = (function () {
         });
     };
     SlaServiceComponent.prototype.find = function () {
-        this.searchContactId = this.contractid.trim();
-        //this.searchServiceLine = this.serviceLine.trim();
-        this.searchApplicationgroup = this.applicationgroup.trim();
+        var _this = this;
+        this.Service.findService(this.contractId, this.applicationgroup)
+            .subscribe(function (data) {
+            _this.serviceList = data;
+        });
     };
     SlaServiceComponent.prototype.notifyContactId = function (contractid) {
         if (event) {
-            this.contractid = contractid;
+            this.contractId = contractid;
         }
     };
     SlaServiceComponent.prototype.notifyApplication = function (Service) {
@@ -80,8 +84,8 @@ var SlaServiceComponent = (function () {
     };
     SlaServiceComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.serviceList.length; i++) {
-            this.ApplicationLists.push(this.serviceList[i].ApplicationGroup);
-            this.contactIdList.push(this.serviceList[i].contractid);
+            this.ApplicationLists.push(this.serviceList[i].applicationGroup);
+            this.contactIdList.push(this.serviceList[i].contractId.toString());
         }
     };
     SlaServiceComponent.prototype.onPageChange = function (number) {
@@ -105,17 +109,4 @@ SlaServiceComponent = __decorate([
     __metadata("design:paramtypes", [Sservice])
 ], SlaServiceComponent);
 export { SlaServiceComponent };
-//filter() {
-//    if (this.query !== "") {
-//        this.filteredList = this.countries.filter(function (el) {
-//            return el.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
-//        }.bind(this));
-//    } else {
-//        this.filteredList = [];
-//    }
-//}
-//select(item) {
-//    this.query = item;
-//    this.filteredList = [];
-//}
 //# sourceMappingURL=serviceline.component.js.map

@@ -15,6 +15,7 @@ import { SlaServiceComponent } from './serviceline.component';
 import { ServicelineFormComponent } from './serviceformaddupdate.component';
 import { Sservice } from '../shared/services/service.service';
 import { MyDatePickerModule } from 'mydatepicker';
+import { NgxPaginationModule } from 'ngx-pagination';
 var SlaServiceModule = (function () {
     function SlaServiceModule() {
     }
@@ -30,7 +31,8 @@ SlaServiceModule = __decorate([
             HttpModule,
             SharedModule,
             BrowserModule,
-            MyDatePickerModule
+            MyDatePickerModule,
+            NgxPaginationModule
         ],
         declarations: [
             SlaServiceComponent, ServicelineFormComponent

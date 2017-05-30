@@ -64,7 +64,7 @@ namespace CrEST.BL
 
 		}
 
-		public SowData SaveSOW(SowData item)
+		public int SaveSOW(SowData item)
 		{
 
 			SoW existingItem = _context.SoW.Where(s => s.SoWid == item.SoWid).SingleOrDefault();
@@ -93,10 +93,9 @@ namespace CrEST.BL
 			if (existingItem.SoWid == 0)
 				_context.SoW.Add(existingItem);
 
-			_context.SaveChanges();
-			return item;
+            return _context.SaveChanges();
 
-		}
+        }
 
 
 		public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime effectiveDate, DateTime expiryDate, string msOwner)

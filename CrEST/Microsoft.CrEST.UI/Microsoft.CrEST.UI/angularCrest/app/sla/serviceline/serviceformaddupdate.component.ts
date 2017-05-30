@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
+import { ServiceMetaData } from "../shared/models/serviceMetaData";
 //import { IMyDateModel } from 'mydatepicker';
 //import { IMyDpOptions } from 'mydatepicker';
 
@@ -16,6 +17,7 @@ export class ServicelineFormComponent implements OnInit {
     // date: Date = new Date();
     serviceForm: FormGroup;
     title: string;
+    public serviceMetaData: ServiceMetaData[] = [];
     public serviceList: Service[] = [];
     public editServiceList: Service[] = [];
 
@@ -33,7 +35,7 @@ export class ServicelineFormComponent implements OnInit {
 
             'supplier': ['', Validators.required],
             'SCID': ['', Validators.required],
-            'contractid': ['', Validators.required],
+            'contractId': ['', Validators.required],
             'ApplicationGroup': ['', Validators.required],
             'crestLvl1': ['', Validators.required],
             'crestLvl2': ['', Validators.required],
@@ -52,6 +54,7 @@ export class ServicelineFormComponent implements OnInit {
 
 
     ngOnInit() {
+        this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
         //alert(this.title);
@@ -69,6 +72,15 @@ export class ServicelineFormComponent implements OnInit {
 
             }
         }
+    }
+
+
+    SericeMetaData() {
+        this.Sservice.getServiceMetaData()
+            .subscribe(data => {
+                this.serviceMetaData = data;
+                debugger;
+            })
     }
     //getServiceListbyID() {
     //    for (var i = 0; i < this.serviceList.length; i++) {

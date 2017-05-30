@@ -21,6 +21,8 @@ var Sservice = (function () {
         this.http = http;
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
         this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
+        this.findServiceUrl = _constantService.CONFIG.apiLocations.findService;
+        this.getServiceMetaDataUrl = _constantService.CONFIG.apiLocations.getServiceMetaData;
     }
     Sservice.prototype.getService = function () {
         //debugger
@@ -31,20 +33,18 @@ var Sservice = (function () {
         return this.http.get(this.getserviceByID + "/" + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
+    Sservice.prototype.getServiceMetaData = function () {
+        return this.http.get(this.getServiceMetaDataUrl)
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
+    };
     Sservice.prototype.addSow = function (service) {
         return this.http.post(this.getservice, JSON.stringify(service))
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    Sservice.prototype.updateSow = function (service) {
-        return this.http.put(this.getSowUrl(service.id), JSON.stringify(service))
+    Sservice.prototype.findService = function (contractId, applicationGroup) {
+        var applicationGroups = encodeURIComponent(applicationGroup);
+        return this.http.get(this.findServiceUrl + '?contractId=' + contractId + "&applicationGroup=" + applicationGroups)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
-    };
-    Sservice.prototype.deleteSow = function (id) {
-        return this.http.delete(this.getSowUrl(id))
-            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
-    };
-    Sservice.prototype.getSowUrl = function (id) {
-        return this.getSowUrl + "/" + id;
     };
     return Sservice;
 }());

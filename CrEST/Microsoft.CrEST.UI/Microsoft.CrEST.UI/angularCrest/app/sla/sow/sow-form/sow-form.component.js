@@ -49,8 +49,6 @@ var SowFormComponent = (function () {
         this.sowForm = formBuilder.group({
             'supplierId': ['', Validators.required],
             'contractId': ['', Validators.required],
-            'startDate': ['', Validators.required],
-            'endDate': ['', Validators.required],
             'serviceline': ['', Validators.required],
             'itorg': ['', Validators.required],
             'soweffectiveDate': ['', Validators.required],
@@ -63,7 +61,7 @@ var SowFormComponent = (function () {
             'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],
             'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],
             'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],
-            'iscrest': ['Y', Validators.required],
+            'iscrest': ['', Validators.required],
             'remark': [''],
             'infyOwner': [''],
             'ssovalidated': [''],
@@ -78,6 +76,9 @@ var SowFormComponent = (function () {
     SowFormComponent.prototype.onContactChange = function (value) {
         this.sow.contractId = value;
     };
+    SowFormComponent.prototype.onChangeComponeyCode = function (value) {
+        this.sow.companyCode = value;
+    };
     SowFormComponent.prototype.oneffectiveDateChanged = function (event) {
         this.effectiveDate = event.jsdate;
     };
@@ -89,10 +90,10 @@ var SowFormComponent = (function () {
         var _this = this;
         this.getApplicationMetaData();
         this.id = this.route.snapshot.params['id'];
-        alert(this.id);
+        alert(this.route.snapshot.params['id']);
         this.title = this.id ? 'Edit Sow' : 'New Sow';
         if (this.title == "Edit Sow") {
-            this.SowService.getSowById(this.id)
+            this.SowService.getSowById(this.route.snapshot.params['id'])
                 .subscribe(function (data) {
                 _this.sow = data;
                 var soweffectiveDate = new Date(_this.sow.soweffectiveDate);
@@ -130,8 +131,8 @@ var SowFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                alert("updatedsuccessfully");
-                _this.router.navigate(['sow', { applicationStatus: "updatedsuccessfully" }]);
+                _this.id ? alert("updatedsuccessfully") : alert("application added successfully");
+                _this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
             }
         });
     };

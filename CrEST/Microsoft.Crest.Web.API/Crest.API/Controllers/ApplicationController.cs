@@ -4,16 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using CrEST.BL;
 using CrEST.Data.Models;
 using CrEST.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyPolicy")]
     public class ApplicationController : Controller
     {		
 		private readonly IApplicationRepository _applicationRepository;
         
-		public ApplicationController(CrESTContext context)
+		public ApplicationController(CrESTContext context, IApplicationRepository applicationRepository)
 		{
+            _applicationRepository = applicationRepository;
             _applicationRepository = new ApplicationRepository(context);
 		}
   

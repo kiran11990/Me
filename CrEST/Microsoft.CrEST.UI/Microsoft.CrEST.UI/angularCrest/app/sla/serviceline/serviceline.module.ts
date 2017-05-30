@@ -11,7 +11,7 @@ import { SlaServiceComponent } from './serviceline.component';
 import { ServicelineFormComponent } from './serviceformaddupdate.component';
 import { Sservice } from '../shared/services/service.service';
 import { MyDatePickerModule } from 'mydatepicker'
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -22,7 +22,8 @@ import { MyDatePickerModule } from 'mydatepicker'
       HttpModule,
       SharedModule,
       BrowserModule,
-      MyDatePickerModule
+      MyDatePickerModule,
+      NgxPaginationModule
   ],
   declarations: [
       SlaServiceComponent, ServicelineFormComponent
