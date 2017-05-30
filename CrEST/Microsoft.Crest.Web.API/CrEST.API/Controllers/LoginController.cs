@@ -27,9 +27,9 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _loginRepository.GetUserNames(UserName, password);
         }
         [Route("GetUsers")]
-        public IEnumerable<RegisterData>GetUsersRegistered()
+        public IEnumerable<RegisterData>GetUsersRegistered(string Username,string UserType)
         {
-            return _loginRepository.GetUsersRegistered();
+            return _loginRepository.GetUsersRegistered(Username,UserType);
         }
 
     }

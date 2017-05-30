@@ -36,6 +36,7 @@ SlaApplicationModule = __decorate([
             SlaApplicationComponent, ApplicationFormComponent
         ],
         providers: [ApplicationService]
+        //schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
 ], SlaApplicationModule);
 export { SlaApplicationModule };

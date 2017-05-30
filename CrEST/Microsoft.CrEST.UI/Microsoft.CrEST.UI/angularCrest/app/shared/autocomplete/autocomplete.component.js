@@ -32,6 +32,7 @@ var AutoCompleteComponent = (function () {
                 else if (currentValue.trim() == "" || currentValue == undefined) {
                     currentValue = "";
                     _this.resetPopupSettings(false);
+                    //alert("invalid");
                 }
                 _this.resetPopupSettings(false);
             }

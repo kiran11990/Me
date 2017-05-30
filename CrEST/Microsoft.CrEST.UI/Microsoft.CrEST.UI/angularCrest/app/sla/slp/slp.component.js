@@ -76,6 +76,10 @@ var SlpComponent = (function () {
         if (this.isValidHandsonData) {
             this.Message = "Saved Successfully";
             this.MessageType = 1; //MessageType 1 : alert success & MessageType 2 is for danger
+            //this._slpService.SaveSLPs(this.data)
+            //    .subscribe(data => {
+            //        this.data = data;
+            //    });
         }
     };
     //**Actions and Events End

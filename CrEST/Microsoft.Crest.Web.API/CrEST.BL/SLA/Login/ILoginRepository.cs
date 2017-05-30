@@ -8,7 +8,7 @@ namespace CrEST.BL
     public interface ILoginRepository
     {
         IEnumerable<LoginData> GetUserNames(string UserName, string password);
-        IEnumerable<LoginData> GetAllUsers();
+        IEnumerable<LoginData> ValidateUser(string UserName, string Password, string UserType);
         IEnumerable<RegisterData> GetUsersRegistered(string UserName,string UserType);
     }
 }

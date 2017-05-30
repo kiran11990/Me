@@ -23,4 +23,10 @@ var ServiceClass = (function () {
     return ServiceClass;
 }());
 export { ServiceClass };
+var RunOrGrow = (function () {
+    function RunOrGrow() {
+    }
+    return RunOrGrow;
+}());
+export { RunOrGrow };
 //# sourceMappingURL=applicationmetadata.js.map

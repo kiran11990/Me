@@ -45,6 +45,29 @@ var ServicelineFormComponent = (function () {
             'msowneralias': [null, Validators.required],
             'serviceline': [null, Validators.required],
             'scid': [null, Validators.required]
+            // We can use more than one validator per field. If we want to use more than one validator we have to wrap our array of validators with a Validators.compose function. Here we are using a required, minimum length and maximum length validator.
+            //'contractid': [null, Validators.required],
+            //'serviceline': [null, Validators.required],
+            //'soweffectivedate': [null, Validators.required], //Date
+            //'sowexpirationdate': [null, Validators.required], //Date
+            //'msowneralias': [null, Validators.required],
+            //'servicecatalogno': [null, Validators.required,],
+            ////'servicecatalogno': ['', ],
+            //'poyr1': [null, Validators.required], //Number
+            //'currency': [null, Validators.required],
+            ////'sowAmountYr1': [null, Validators.required, Validators.pattern('^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?\.[0-9]{1,2}$')], //currency
+            ////'sowAmountYr2': ['', Validators.pattern('/^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?\.[0-9]{1,2}$')],//currency
+            ////'sowAmountYr3': ['', Validators.pattern('/^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?\.[0-9]{1,2}$')],//currency
+            ////'sowAmountYr4': ['', Validators.pattern('/^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?\.[0-9]{1,2}$')],//currency
+            //'sowAmountYr1': [null, Validators.required], //currency
+            //'sowAmountYr2': [''],//currency
+            //'sowAmountYr3': [''],//currency
+            //'sowAmountYr4': [''],//currency
+            //'iscrest': ['', Validators.required],
+            //'remark': [''],
+            //'ssolead': [''],
+            //'ssovalidated': [''],
+            //'companycode': ['', Validators.required]
         });
     }
     ServicelineFormComponent.prototype.ngOnInit = function () {
