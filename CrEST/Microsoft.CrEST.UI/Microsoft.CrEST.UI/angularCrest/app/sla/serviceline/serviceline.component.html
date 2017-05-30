@@ -8,27 +8,15 @@
     <div class="col-lg-12">
         <div class="form-group row">
             <div class="col-lg-3">
-                <label for="contractId">Contract ID</label>
-                <!--<input class="form-control" />-->
-
-                <input id="contractid" #varSearchcontactid type="text" [(ngModel)]='contractId' class="form-control" placeholder="contractId" />
+                <input id="contractid" #varSearchcontactid type="text" [(ngModel)]='contractId' class="form-control" placeholder="Contract Id" />
                 <auto-complete [tagId]="contractId" [values]='contactIdList|filterUser:contractId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'>
                 </auto-complete>
 
-
             </div>
             <div class="col-lg-3">
-                <label for="serviceLine">Application Group</label>
-                <!--<input class="form-control"  type="text" [(ngModel)]="sample"/>-->
-
-                <input id="application" #varSearchapplication type="text" [(ngModel)]='applicationgroup' class="form-control" placeholder="Search User" />
+                <input id="application" #varSearchapplication type="text" [(ngModel)]='applicationgroup' class="form-control" placeholder="Application Group" />
                 <auto-complete [tagId]='application' [values]='ApplicationLists|filterUser:applicationgroup' [elementToBind]='varSearchapplication' (notifyOnSelected)='notifyApplication($event)'>
                 </auto-complete>
-
-                <!--<input id="supplier" #varSearchapplication type="text" [(ngModel)]='supplier' class="form-control" placeholder="Search User" />
-                <auto-complete [tagId]='supplier' [values]='SupplierList|filterUser:supplier' [elementToBind]='varSearchapplication' (notifyOnSelected)='notifySupplier($event)'>
-                </auto-complete>-->
-
             </div>
             
             <div class="col-lg-2 fixed-action-btn">
@@ -36,44 +24,47 @@
             </div>
         </div>
         <div class="row">
-            <div class="panel panel-default">
-                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                    <a class="btn btn-primary"
-                       routerLink="/services/add">
-                        Add
-                    </a>
-                </div>
-                <!--<div class="panel-heading">
-                    Services
-                </div>-->
-               
-                <div class="panel-body">
-                   
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th data-field="name">Supplier</th>
-                                <th data-field="name">SCID</th>
-                                <th data-field="name">Contract ID</th>
-                                <th data-field="name">Application Group</th>
-                                <th data-field="name">CrEST Level-1 Service</th>
-                                <th data-field="name">CrEST Level-2 Service</th>
-                                <th data-field="name">CrEST Level-3 Service*</th>
-                                <th data-field="name">App Group Services Fee Yr 1</th>
-                                <th data-field="name">App Group Services Fee Yr 2</th>
-                                <th data-field="name">App Group Services Fee Yr 3</th>
-                                <th data-field="name">App Group Services Fee Yr 4</th>
-                                <th data-field="name">Validation Notes</th>
-                                <th data-field="name">Remarks</th>
-                                <th data-field="name">Currency</th>
-                                <th data-field="name">ItorgName</th>
-                                <th data-field="name"></th>
+            <div class="col-lg-6">
+                <p>
+                    Displaying {{ serviceList.length }} Services.
+                </p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <div class="panel panel-default">
+                    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                        <a class="btn btn-primary"
+                           routerLink="/services/add">
+                            Add
+                        </a>
+                    </div>
+                    </div>
+                    <div class="panel-body">
 
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--<tr *ngFor="let service of serviceList">-->
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th data-field="name">Supplier</th>
+                                    <th data-field="name">SCID</th>
+                                    <th data-field="name">Contract ID</th>
+                                    <th data-field="name">Application Group</th>
+                                    <th data-field="name">CrEST Level-1 Service</th>
+                                    <th data-field="name">CrEST Level-2 Service</th>
+                                    <th data-field="name">CrEST Level-3 Service*</th>
+                                    <th data-field="name">App Group Services Fee Yr 1</th>
+                                    <th data-field="name">App Group Services Fee Yr 2</th>
+                                    <th data-field="name">App Group Services Fee Yr 3</th>
+                                    <th data-field="name">App Group Services Fee Yr 4</th>
+                                    <th data-field="name">Validation Notes</th>
+                                    <th data-field="name">Remarks</th>
+                                    <th data-field="name">Currency</th>
+                                    <th data-field="name">ItorgName</th>
+                                    <th data-field="name"></th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--<tr *ngFor="let service of serviceList">-->
                                 <tr *ngFor="let service of serviceList|paginate: config" style="height:12px">
                                     <td>{{service.supplier}}</td>
                                     <td>{{ service.scid }}</td>
@@ -87,31 +78,31 @@
                                     <td>{{ service.appGroupServiceFeeY3 }}</td>
                                     <td>{{ service.appGroupServiceFeeY4 }}</td>
                                     <td>{{ service.validationNotes }}</td>
-                                    <td>{{ service.remarks }}</td>     
+                                    <td>{{ service.remarks }}</td>
                                     <td>{{ service.currency }}</td>
-                                    <td>{{ service.itorgName }}</td>     
-                                <td>  
-                                    <a class="btn btn-primary" [routerLink]="['/services', service.contractid]">Edit</a>
-                                </td>
-                                
-                            </tr>
-                        </tbody>
-                        
-                    </table>
-                    <div class="has-text-centered" style="background-color:cornflowerBlue"  *ngIf="serviceList.length>10">
-                        <pagination-controls [id]="config.id"
-                                             [maxSize]="maxSize"
-                                             [directionLinks]="directionLinks"
-                                             [autoHide]="autoHide"
-                                             [previousLabel]="labels.previousLabel"
-                                             [nextLabel]="labels.nextLabel"
-                                             [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                                             [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                                             [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                                             (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                                    <td>{{ service.itorgName }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" [routerLink]="['/services', service.contractid]">Edit</a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <div class="has-text-centered" style="background-color:cornflowerBlue" *ngIf="serviceList.length>10">
+                            <pagination-controls [id]="config.id"
+                                                 [maxSize]="maxSize"
+                                                 [directionLinks]="directionLinks"
+                                                 [autoHide]="autoHide"
+                                                 [previousLabel]="labels.previousLabel"
+                                                 [nextLabel]="labels.nextLabel"
+                                                 [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                                 (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>

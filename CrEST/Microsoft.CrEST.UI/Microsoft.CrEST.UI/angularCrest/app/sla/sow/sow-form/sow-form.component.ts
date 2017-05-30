@@ -24,6 +24,9 @@ export class SowFormComponent implements OnInit {
     //private sow: Sow[] = [];
     startdate: Date = new Date();
     enddate: Date = new Date();
+    public id: number;
+
+    public routeID: number;
     private currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
     constructor(
         formBuilder: FormBuilder,
@@ -37,7 +40,7 @@ export class SowFormComponent implements OnInit {
             
             'supplierId': ['', Validators.required],
             'contractId': ['', Validators.required],
-            'serviceline': ['', Validators.required],
+            //'serviceline': ['', Validators.required],
             'itorg': ['', Validators.required],
             'soweffectiveDate': ['', Validators.required], //Date
             'sowexpirationDate': ['', Validators.required], //Date
@@ -62,7 +65,7 @@ export class SowFormComponent implements OnInit {
 
 
 
-    private id: any;
+   
 
     onChange(value: any) {
         this.sow.supplierId = value;
@@ -75,7 +78,14 @@ export class SowFormComponent implements OnInit {
     onChangeComponeyCode(value: any) {
         this.sow.companyCode = value;
     }
+    onitorgChange(value: number) {
+        this.sow.itorg = value;
+        alert(this.sow.itorg);
 
+    }
+    onChangecurrency(value: any) {
+        this.sow.currency = value;
+    }
     private soweffectiveDate: Object = {
         date: {
             year: this.startdate.getFullYear(),
@@ -107,14 +117,15 @@ export class SowFormComponent implements OnInit {
         this.expirationDate = event.jsdate;
         // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
-
+    
 
 
     ngOnInit() {
+        this.sow.currency="USD"
         this.getApplicationMetaData();
         this.id = this.route.snapshot.params['id'];
-        alert(this.route.snapshot.params['id'])
         this.title = this.id ? 'Edit Sow' : 'New Sow';
+        this.routeID = this.route.snapshot.params['id'];
         if (this.title == "Edit Sow") {
 
             this.SowService.getSowById(this.route.snapshot.params['id'])
@@ -161,7 +172,7 @@ export class SowFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                  this.id? alert("updatedsuccessfully") : alert("application added successfully")
+                    this.route.snapshot.params['id']? alert("updatedsuccessfully") : alert("sow added successfully")
                   this.router.navigate(['sows', {sowStatus: "updatedsuccessfully" }]);
                 }
             });

@@ -7,7 +7,7 @@
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['supplier'].valid && applicationForm.controls['supplier'].touched}">
                     <label>Supplier*:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['supplier']" [(ngModel)]="applicationData.supplierId" style="width:50%" (ngModelChange)="onChange($event)" >
-                        <option *ngIf="title=='New Application'" value="0">select suppliers</option>
+                        <option *ngIf="title=='New Application'" value="0">Select Suppliers</option>
                         <option *ngFor="let item of applicationMetaData.suppliers"
                                 [ngValue]="item.supplierId" [selected]="applicationData.supplierId == item.supplierId">
                             {{item.supplierName}}
@@ -20,7 +20,7 @@
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['contactId'].valid && applicationForm.controls['contactId'].touched}"  >
                     <label>Contract ID*:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['contactId']" [(ngModel)]="applicationData.contractId" style="width:50%">
-                        <option *ngIf="title=='New Application'" value="0">select Contract</option>
+                        <option *ngIf="title=='New Application'" value="0">Select Contract</option>
                         <option *ngFor="let item of applicationMetaData.contractIds"
                                 [ngValue]="item" [selected]="applicationData.contractId ==item">
                             {{item}}
@@ -61,7 +61,7 @@
 
                     <label>Service Class (Optional):</label>
                     <select class="form-control" [formControl]="applicationForm.controls['Serviceclass']" [(ngModel)]="applicationData.serviceClass" style="width:50%" (ngModelChange)="onServiceclassChange($event)" >
-                        <option *ngIf="title=='New Application'" value="0">select serviceClass</option>
+                        <option *ngIf="title=='New Application'" value="0">Select ServiceClass</option>
                         <option *ngFor="let item of applicationMetaData.serviceClass"
                                 [value]="item.id">
                             {{item.serviceClassName}}
@@ -75,7 +75,7 @@
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Runvsgrow'].valid && applicationForm.controls['Runvsgrow'].touched}">
                     <label>Run vs Grow*:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['Runvsgrow']" [(ngModel)]="applicationData.runOrGrow" style="width:50%" (ngModelChange)="onrunOrGrowChange($event)" >
-                        <option *ngIf="title=='New Application'" value="0">select RunvsGrow</option>
+                        <option *ngIf="title=='New Application'" value="0">Select RunvsGrow</option>
                         <option *ngFor="let item of runOrGrow"
                                 [value]="item.id" [selected]="applicationData.runOrGrow ==item.id">
                             {{item.name}}
@@ -171,7 +171,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Software'].valid && applicationForm.controls['Software'].touched}">
-                    <label>Software AssetSearch able ID:</label>
+                    <label>Software AssetSearch Lable ID:</label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['Software']" [(ngModel)]="applicationData.softwareAssetSearchableId"  style="width:50%"/>
                     <div *ngIf="applicationForm.controls['Software'].hasError('pattern') && applicationForm.controls['Software'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
                 </div>
@@ -189,7 +189,7 @@
                 <div class="form-group">
                     <label>IT-ORG:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['itOrg']" [(ngModel)]="applicationData.itOrgName" style="width:50%" (ngModelChange)="onitOrgChange($event)" >
-                        <option *ngIf="title=='New Application'|| applicationData.itOrgName==0" value="0">select itOrg</option>
+                        <option *ngIf="title=='New Application'|| applicationData.itOrgName==0" value="0">Select Itorg</option>
                         <option *ngFor="let item of applicationMetaData.itOrg"
                                 [value]="item.itorgId" [selected]="applicationData.itOrgName ==item.itorgId">
                             {{item.itorgName}}

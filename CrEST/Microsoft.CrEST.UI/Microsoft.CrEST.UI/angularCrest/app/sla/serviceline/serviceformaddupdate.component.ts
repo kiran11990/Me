@@ -52,7 +52,6 @@ export class ServicelineFormComponent implements OnInit {
     }
 
 
-
     ngOnInit() {
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
@@ -65,7 +64,6 @@ export class ServicelineFormComponent implements OnInit {
                 this.Sservice.getServiceById(this.id)
                     .subscribe(data => {
                         this.serviceList = data
-                       
                     })
             }
             else {
@@ -79,7 +77,6 @@ export class ServicelineFormComponent implements OnInit {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
                 this.serviceMetaData = data;
-                debugger;
             })
     }
     //getServiceListbyID() {

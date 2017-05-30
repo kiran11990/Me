@@ -49,7 +49,7 @@ var SowFormComponent = (function () {
         this.sowForm = formBuilder.group({
             'supplierId': ['', Validators.required],
             'contractId': ['', Validators.required],
-            'serviceline': ['', Validators.required],
+            //'serviceline': ['', Validators.required],
             'itorg': ['', Validators.required],
             'soweffectiveDate': ['', Validators.required],
             'sowexpirationDate': ['', Validators.required],
@@ -79,6 +79,13 @@ var SowFormComponent = (function () {
     SowFormComponent.prototype.onChangeComponeyCode = function (value) {
         this.sow.companyCode = value;
     };
+    SowFormComponent.prototype.onitorgChange = function (value) {
+        this.sow.itorg = value;
+        alert(this.sow.itorg);
+    };
+    SowFormComponent.prototype.onChangecurrency = function (value) {
+        this.sow.currency = value;
+    };
     SowFormComponent.prototype.oneffectiveDateChanged = function (event) {
         this.effectiveDate = event.jsdate;
     };
@@ -88,10 +95,11 @@ var SowFormComponent = (function () {
     };
     SowFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.sow.currency = "USD";
         this.getApplicationMetaData();
         this.id = this.route.snapshot.params['id'];
-        alert(this.route.snapshot.params['id']);
         this.title = this.id ? 'Edit Sow' : 'New Sow';
+        this.routeID = this.route.snapshot.params['id'];
         if (this.title == "Edit Sow") {
             this.SowService.getSowById(this.route.snapshot.params['id'])
                 .subscribe(function (data) {
@@ -131,7 +139,7 @@ var SowFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                _this.id ? alert("updatedsuccessfully") : alert("application added successfully");
+                _this.route.snapshot.params['id'] ? alert("updatedsuccessfully") : alert("sow added successfully");
                 _this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
             }
         });

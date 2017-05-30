@@ -14,7 +14,7 @@ export class Sservice {
     public getserviceByID: string;
     public findServiceUrl: string;
     public getServiceMetaDataUrl: string;
-
+    public contractorIds: any = [];
     constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
         this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
@@ -37,7 +37,7 @@ export class Sservice {
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     
-    addSow(service: any) {
+    addservice(service: any) {
         return this.http.post(this.getservice, JSON.stringify(service))
             .map(res => res.json()).catch(this.commonService.handleError);
     }

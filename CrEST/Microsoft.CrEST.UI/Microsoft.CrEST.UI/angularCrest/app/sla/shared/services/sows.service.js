@@ -27,15 +27,16 @@ var SowService = (function () {
         this.findSowUrl = _constantService.CONFIG.apiLocations.findSoWs;
     }
     SowService.prototype.getSows = function () {
-        return this.http.get(this.getSow)
+        var header = new Headers({ 'Cache-Control': 'no-cache' });
+        return this.http.get(this.getSow, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getSowById = function (id) {
         return this.http.get(this.getSowByIdUrl + "/" + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    SowService.prototype.findSow = function (contractId, ItOrg, application, effectiveDate, expiryDate) {
-        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&effectiveDate=" + effectiveDate + "&expiryDate=" + expiryDate)
+    SowService.prototype.findSow = function (contractId, ItOrg, msOwener) {
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&msOwner=" + msOwener)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getsowMetaData = function () {

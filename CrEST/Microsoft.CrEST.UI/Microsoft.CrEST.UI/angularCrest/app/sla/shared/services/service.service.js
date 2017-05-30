@@ -19,6 +19,7 @@ var Sservice = (function () {
         this._constantService = _constantService;
         this.commonService = commonService;
         this.http = http;
+        this.contractorIds = [];
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
         this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
         this.findServiceUrl = _constantService.CONFIG.apiLocations.findService;
@@ -37,7 +38,7 @@ var Sservice = (function () {
         return this.http.get(this.getServiceMetaDataUrl)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    Sservice.prototype.addSow = function (service) {
+    Sservice.prototype.addservice = function (service) {
         return this.http.post(this.getservice, JSON.stringify(service))
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
