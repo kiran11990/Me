@@ -22,7 +22,7 @@ var SowService = (function () {
         this.getSow = _constantService.CONFIG.apiLocations.getSow;
         this.getSowByIdUrl = _constantService.CONFIG.apiLocations.getSowById;
         this.getActiveContract = _constantService.CONFIG.apiLocations.getActiveContract;
-        this.getsowMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
+        this.getsowMetaDataUrl = _constantService.CONFIG.apiLocations.getSowMetaData;
         this.saveSowUrl = _constantService.CONFIG.apiLocations.saveSow;
         this.findSowUrl = _constantService.CONFIG.apiLocations.findSoWs;
     }
@@ -34,8 +34,8 @@ var SowService = (function () {
         return this.http.get(this.getSowByIdUrl + "/" + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
-    SowService.prototype.findSow = function (contractId, serviceline, application) {
-        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + serviceline + "&effectiveDate=" + application + "&expiryDate=" + application)
+    SowService.prototype.findSow = function (contractId, ItOrg, application, effectiveDate, expiryDate) {
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&effectiveDate=" + effectiveDate + "&expiryDate=" + expiryDate)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getsowMetaData = function () {

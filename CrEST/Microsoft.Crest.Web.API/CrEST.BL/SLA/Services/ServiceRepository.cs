@@ -138,7 +138,10 @@ namespace CrEST.BL
 			cmd.CommandText = "spSearchService";
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
-			cmd.Parameters.Add(new SqlParameter("@ApplicationGroup", applicationGroup));
+            if (applicationGroup == null)
+                cmd.Parameters.Add(new SqlParameter("@ApplicationGroup", string.Empty));
+            else
+            cmd.Parameters.Add(new SqlParameter("@ApplicationGroup", applicationGroup));
 
 			using (var reader = cmd.ExecuteReader())
 			{

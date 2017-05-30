@@ -4,11 +4,12 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['supplierId'].valid && sowForm.controls['supplierId'].touched}">
-                    <label>Supplier*:</label>
+                    <label>Supplier*:{{sow.supplierId}}</label>
                     <select class="form-control" [formControl]="sowForm.controls['supplierId']" [(ngModel)]="sow.supplierId"  (ngModelChange)="onChange($event)"  style="width:50%">
+                        <option *ngIf="title=='New Sow'" value="0">select suppliers</option>
                         <option *ngFor="let item of sowMetaData.suppliers"
-                                [ngValue]="item.supplierId" [selected]="sowMetaData.supplierId == item.supplierId">
-                            {{item.supplierName}}
+                                [ngValue]="item.supplierId" [selected]="sow.supplierId == item.supplierId">
+                          {{item.supplierId}}  {{item.supplierName}}
                         </option>
                     </select>
                     <div *ngIf="sowForm.controls['supplierId'].hasError('required') && sowForm.controls['supplierId'].touched" class="alert alert-danger">Please select a supplier.</div>
@@ -17,9 +18,8 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['serviceline'].valid && sowForm.controls['serviceline'].touched}">
                     <label>Service Line*:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['serviceline']" [(ngModel)]="sow.serviceLine" style="width:50%">
-                        <option>MSSIT</option>
-                    </select>
+                   
+                    <input class="form-control" type="text" [formControl]="sowForm.controls['serviceline']" [(ngModel)]="sow.serviceLine" style="width:50%" />
                     <div *ngIf="sowForm.controls['serviceline'].hasError('required') && sowForm.controls['serviceline'].touched" class="alert alert-danger">Please select service line.</div>
                 </div>
             </div>
@@ -36,8 +36,9 @@
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['itorg'].valid && sowForm.controls['itorg'].touched}">
                     <label>Itorg:</label>
                     <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorgId" style="width:50%"  >
+                        <option *ngIf="title=='New Sow'" value="0">select itorg</option>
                         <option *ngFor="let item of sowMetaData.itOrg"
-                                [value]="item.itorgId" [selected]="sowMetaData.itorgName ==item.itorgId">
+                                [value]="item.itorgId" [selected]="sow.itorg ==item.itorgId">
                             {{item.itorgName}}
                         </option>
                     </select>
@@ -51,8 +52,9 @@
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['contractId'].valid && sowForm.controls['contractId'].touched}">
                     <label>ContractId*:</label>
                     <select class="form-control" [formControl]="sowForm.controls['contractId']" [(ngModel)]="sow.contractId" style="width:50%"  (ngModelChange)="onContactChange($event)">
+                        <option *ngIf="title=='New Sow'" value="0">select contractId</option>
                         <option *ngFor="let item of sowMetaData.contractIds"
-                                [ngValue]="item" [selected]="sowMetaData.contractId ==item">
+                                [ngValue]="item" [selected]="sow.contractId ==item">
                             {{item}}
                         </option>
                     </select>
@@ -107,8 +109,8 @@
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['currency'].valid && sowForm.controls['currency'].touched}">
                     <label>Currency*:</label>
                     <select class="form-control" [formControl]="sowForm.controls['currency']" [(ngModel)]="sow.currency" style="width:50%">
-                        <option>INR</option>
-                        <option>USD</option>
+                        <option [selected]="sow.currency ==INR">INR</option>
+                        <option [selected]="sow.currency ==USD">USD</option>
                     </select>
                     <div *ngIf="sowForm.controls['currency'].hasError('required') && sowForm.controls['currency'].touched" class="alert alert-danger">Please select currency.</div>
                 </div>
@@ -116,8 +118,12 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['companycode'].valid && sowForm.controls['companycode'].touched}">
                     <label>companyCode Code*:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['companycode']" [(ngModel)]="sow.companyCode" style="width:50%">
-                        <option>1010</option>
+                    <select class="form-control" [formControl]="sowForm.controls['companycode']" [(ngModel)]="sow.companyCode" (ngModelChange)="onChangeComponeyCode($event)" style="width:50%">
+                        <option *ngIf="title=='New Sow'" value="0">select companyCode</option>
+                        <option *ngFor="let item of sowMetaData.companyCodes"
+                                [ngValue]="item" [selected]="sow.companyCode ==item">
+                            {{item}}
+                        </option>
                     </select>
                     <div *ngIf="sowForm.controls['companycode'].hasError('required') && sowForm.controls['companycode'].touched" class="alert alert-danger">Please select currency code.</div>
                 </div>
@@ -163,11 +169,11 @@
                     <div *ngIf="sowForm.controls['iscrest'].hasError('required') && sowForm.controls['iscrest'].touched" class="alert alert-danger">Please select Crest flag.</div>
                     <div>
                         <label class="radio-inline">
-                            <input type="radio" name="crest" value=true [formControl]="sowForm.controls['iscrest']"[(ngModel)]="sow.isCrest" >
+                            <input type="radio" name="crest" value=true [checked]="sow.isCrest===true" [formControl]="sowForm.controls['iscrest']"[(ngModel)]="sow.isCrest" >
                             Yes
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="crest" value=false [formControl]="sowForm.controls['iscrest']" [(ngModel)]="sow.isCrest">
+                            <input type="radio" name="crest" value=false  [checked]="sow.isCrest===false" [formControl]="sowForm.controls['iscrest']" [(ngModel)]="sow.isCrest">
                             No
                         </label>
                     </div>
@@ -183,7 +189,7 @@
         
         <div class="form-group">
             <div class="col-lg-6 text-right">
-                <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.valid">Submit</button>
+                <button type="submit" class="btn btn-primary" >Submit</button>
             </div>
             <div class="col-lg-6 text-left">
                 <button type="button" class="btn btn-primary" (click)="BackClick($event);">Back</button>

@@ -28,15 +28,15 @@ var SlaApplicationComponent = (function () {
         this.servicelineList = [];
         this.ApplicationLists = [];
         this.applicationList = [];
+        this.filter = '';
+        this.maxSize = 7;
+        this.directionLinks = true;
+        this.autoHide = false;
         this.filteredList = [];
         this.ContactIdList = [];
         this.searchContactId = '';
         this.searchServiceLine = '';
         this.searchApplication = '';
-        this.filter = '';
-        this.maxSize = 7;
-        this.directionLinks = true;
-        this.autoHide = false;
         this.config = {
             id: 'advanced',
             itemsPerPage: 10,

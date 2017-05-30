@@ -22,6 +22,7 @@ export class ApplicationFormComponent implements OnInit {
     startdate: Date = new Date();
     endDate: Date = new Date();
     submitAttempt = false;
+    routeID: number;
     public applicationMetaData: ApplicationMetaData[] = [];
     applicationForm: FormGroup;
     //public runvsgrow: number[] = [];
@@ -29,6 +30,7 @@ export class ApplicationFormComponent implements OnInit {
     public dropdownSettings = {};
     public mydate: string;
     public runOrGrow: RunOrGrow[] = [];
+    public title: any;
     constructor(private _routeParams: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder, private http: Http) {
        
 
@@ -40,7 +42,7 @@ export class ApplicationFormComponent implements OnInit {
             'serviceline': ['', Validators.required],
             'Application': ['', Validators.required],
             //'applicationId': ['', Validators.required],
-            'supplierName': ['', Validators.required],
+            //'supplierName': ['', Validators.required],
             'OwnerAlias': ['', Validators.required],
             'Serviceclass': [''],
             'Runvsgrow': ['', Validators.required],
@@ -56,7 +58,7 @@ export class ApplicationFormComponent implements OnInit {
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'sowId': ['', Validators.required],
             'itOrg': [''],
-            'itorg':['']
+            //'itorg':['']
         })
         this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         this.applicationData.startDate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
@@ -84,7 +86,6 @@ export class ApplicationFormComponent implements OnInit {
         } 
     };
     private myDatePickerOptions: IMyDpOptions = {
-        // other options...
         dateFormat: 'dd.mm.yyyy',
     };
 
@@ -94,7 +95,6 @@ export class ApplicationFormComponent implements OnInit {
 
     onendDateChanged(event: IMyDateModel) {
         this.endDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
     ngOnInit() {
         this.runOrGrow = [{
@@ -111,8 +111,10 @@ export class ApplicationFormComponent implements OnInit {
         }]; 
         this.getApplicationMetaData();
         //called after the constructor and called  after the first ngOnChanges() 
+        this.title = this._routeParams.snapshot.params['id'] ? 'Edit Application' : 'New Application';
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
+            this.routeID = this._routeParams.snapshot.params['id'];
             this.applicationService.getApplicationbyId(id)
                 .subscribe(data => {
                     this.applicationData = data
@@ -139,6 +141,27 @@ export class ApplicationFormComponent implements OnInit {
         }
     }
 
+    onChange(value: any) {
+        this.applicationData.supplierId = value;
+    }
+
+    onContactChange(value: any) {
+        this.applicationData.contractId = value;
+
+    }
+    onServiceclassChange(value: any) {
+        this.applicationData.serviceClass = value;
+    }
+
+    onrunOrGrowChange(value: any) {
+        this.applicationData.runOrGrow = value;
+    }
+    onitOrgChange(value: any) {
+        this.applicationData.itOrgName = value;
+    }
+
+
+    
     getApplicationMetaData() {
         this.applicationService.getApplicationMetaData()
             .subscribe(data => {
@@ -156,7 +179,7 @@ export class ApplicationFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                    //alert("updatedsuccessfully")
+                    this.routeID ? alert("updatedsuccessfully") : alert("application added successfully")
                     this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
                 }
             });

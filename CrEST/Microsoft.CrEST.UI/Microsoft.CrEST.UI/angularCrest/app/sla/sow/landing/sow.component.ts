@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import { SowService } from "../../shared/services/sows.service";
 import { Sow } from "../../shared/models/sow";
 import { PaginationInstance } from 'ngx-pagination';
+import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 
 @Component({
     selector: 'sow-grid',
@@ -17,17 +18,30 @@ import { PaginationInstance } from 'ngx-pagination';
 export class SowComponent {
     private sows: Sow[] = [];
 
-    constructor(private sowService: SowService) { }
+    constructor(private sowService: SowService, private _routeParameterd: ActivatedRoute) { }
 
     public contractid = '';
     public serviceLine = '';
     public msOwnerAlias = '';
-
+    public contractID = '';
+    public application = '';
+    public owneralias = '';
+    public ItOrg: any;
+    public itOrg: any;
     public contractIDList: string[] = [];
-    public servicelineList: string[] = [];
+    public ItOrgList: string[] = [];
     public msOwnerAliasList: string[] = [];
+   effectiveDate: Date = new Date();
+   expirationDate: Date = new Date();
+   soweffectiveDates: Date = new Date();
+   sowexpirationDates: Date = new Date();
 
-    ngOnInit() {
+   ngOnInit() {
+       if (this._routeParameterd.snapshot.params['sowStatus']) {
+           //this.getApplicationList();
+          
+       }
+
         this.sowService.getSows()
             .subscribe(data => {
                 this.sows = data
@@ -40,15 +54,33 @@ export class SowComponent {
     public searchContractId = '';
     public searchServiceLine = '';
     public searchMsowner = '';
+
+    private myDatePickerOptions: IMyDpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
+    oneffectiveDateChanged(event: IMyDateModel) {
+        this.effectiveDate = event.jsdate;
+      
+    }
+
+    onexpirationDateChanged(event: IMyDateModel) {
+        this.expirationDate = event.jsdate;
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    }
+
     find() {
-        this.sowService.(this.contactId, this.serviceLine, this.application)
+
+
+        //this.soweffectiveDates = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
+        //this.sowexpirationDates = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
+        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias, this.effectiveDate.toUTCString(), this.expirationDate.toUTCString())
             .subscribe(data => {
-                this.applicationList = data
+                this.sows = data
             })
 
     }
-
-
+  
     deleteSow(sow: any) {
         if (confirm("Are you sure you want to delete " + sow.name + "?")) {
             var index = this.sows.indexOf(sow);
@@ -66,13 +98,13 @@ export class SowComponent {
 
     notifyContractId(contractID: string) {
         if (event) {
-            this.contractid = contractID;
+            this.contractID = contractID;
         }
     }
 
-    notifyServiceLine(serviceLine: string) {
+    notifyItOrg(ItOrg: string) {
         if (event) {
-            this.serviceLine = serviceLine;
+            this.itOrg = ItOrg;
         }
     }
 
@@ -85,7 +117,7 @@ export class SowComponent {
     autoComplete() {
         for (var i = 0; i < this.sows.length; i++) {
             this.contractIDList.push(this.sows[i].contractId.toString());
-            //this.servicelineList.push(this.sows[i].);
+            this.ItOrgList.push(this.sows[i].itorgName);
             this.msOwnerAliasList.push(this.sows[i].msowner);
         }
     }

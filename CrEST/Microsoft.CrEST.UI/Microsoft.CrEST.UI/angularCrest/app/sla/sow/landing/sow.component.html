@@ -11,17 +11,34 @@
                 <input id="contractIDs" #varSearchcontractid type="text" [(ngModel)]='contractID' class="form-control" placeholder="Contract ID" />
                 <auto-complete [tagId]="contractIDs" [values]='contractIDList|filterUser:contractID' [elementToBind]='varSearchcontractid' (notifyOnSelected)='notifyContractId($event)'> </auto-complete>
             </div>
-            <!--<div class="col-lg-3">
-                <label for="serviceLine">Service Line</label>
-                <input class="form-control" id="serviceline" #varSearchserviceline type="text" [(ngModel)]='serviceLine' placeholder="Service Line" />
-                <auto-complete [tagId]='servicelines' [values]='servicelineList|filterUser:serviceLine' [elementToBind]='varSearchserviceline' (notifyOnSelected)='notifyServiceLine($event)'> </auto-complete>
-            </div>-->
+            <div class="col-lg-3">
+                <label for="serviceLine">itOrg</label>
+                <input class="form-control" id="itOrg" #varSearchitOrg type="text" [(ngModel)]='itOrg' placeholder="itOrg" />
+                <auto-complete [tagId]='itOrg' [values]='ItOrgList|filterUser:itOrg' [elementToBind]='varSearchitOrg' (notifyOnSelected)='notifyItOrg($event)'> </auto-complete>
+            </div>
 
             <div class="col-lg-3">
                 <label for="msOwnerAlias">MS Owner Alias</label>
                 <input class="form-control" id="msOwnerAlias" #varSearchmsOwnerAlias type="text" [(ngModel)]='msOwnerAlias' placeholder="MS Owner Alias" />
                 <auto-complete [tagId]='msOwnerAliass' [values]='msOwnerAliasList|filterUser:msOwnerAlias' [elementToBind]='varSearchmsOwnerAlias' (notifyOnSelected)='notifymsOwnerAlias($event)'> </auto-complete>
             </div>
+            <div class="col-lg-3">
+                <label for="msOwnerAlias">soweffectiveDate</label>
+                <my-date-picker [options]="myDatePickerOptions" 
+                                (dateChanged)="oneffectiveDateChanged($event)" style="width:50%" name="soweffectiveDate"></my-date-picker>
+
+            </div>
+            <div class="col-lg-3">
+                <label for="msOwnerAlias">sowendDate</label>
+                <my-date-picker  [options]="myDatePickerOptions"
+                                (dateChanged)="onexpirationDateChanged($event)" style="width:50%" name="sowendDate"></my-date-picker>
+
+            </div>
+
+
+
+           
+
             <div class="col-lg-3" style="margin-top:25px">
                 <button class="btn btn-primary" (click)="find()">Find</button>
             </div>
@@ -104,7 +121,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="has-text-centered" style="background-color:cornflowerBlue">
+                    <div class="has-text-centered" style="background-color:cornflowerBlue"  *ngIf="sows.length>10">
                         <pagination-controls [id]="config.id"
                                              [maxSize]="maxSize"
                                              [directionLinks]="directionLinks"

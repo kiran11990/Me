@@ -96,7 +96,7 @@
                 
             </tbody>
           </table>
-            <div class="has-text-centered" style="background-color:cornflowerBlue">
+            <div class="has-text-centered" style="background-color:cornflowerBlue" *ngIf="applicationList.length>10">
                 <pagination-controls [id]="config.id"
                                      [maxSize]="maxSize"
                                      [directionLinks]="directionLinks"

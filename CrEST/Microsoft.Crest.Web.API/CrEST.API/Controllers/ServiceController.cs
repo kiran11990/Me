@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using CrEST.BL;
 using CrEST.Data.Models;
 using CrEST.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyPolicy")]
     public class ServiceController : Controller
     {		
 		private readonly IServiceRepository _serviceRepository;

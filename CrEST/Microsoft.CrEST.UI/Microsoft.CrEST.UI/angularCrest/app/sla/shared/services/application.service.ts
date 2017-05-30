@@ -16,6 +16,7 @@ export class ApplicationService {
     public findApplicationUrl: string;
     public getApplicationbyUrl: string;
     public getapplicationMetaDataUrl: string;
+    public endDate: Date = new Date();
     constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getApplicationUrl = _constantService.CONFIG.apiLocations.getApplication;
         this.addApplicationUrl = _constantService.CONFIG.apiLocations.addApplication
@@ -25,7 +26,9 @@ export class ApplicationService {
     }
 
     getApplications() {
-        return this.http.get(this.getApplicationUrl)
+
+        var header = new Headers({ 'Cache-Control': 'no-cache' });
+        return this.http.get(this.getApplicationUrl, { headers: header })
             .map(res => res.json()).catch(this.commonService.handleError);
     } 
 
@@ -35,8 +38,8 @@ export class ApplicationService {
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     findApplication(contractId: string, serviceline: string, application: string) {
-      
-        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + serviceline + "&application=" + application )
+        var encodedserviceline = encodeURIComponent(serviceline);
+        return this.http.get(this.findApplicationUrl + '?contractId=' + contractId + "&serviceLine=" + encodedserviceline + "&application=" + application )
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     getApplicationbyId(applicationId: any) {

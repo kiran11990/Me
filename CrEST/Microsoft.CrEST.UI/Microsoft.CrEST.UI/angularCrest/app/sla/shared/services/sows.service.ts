@@ -22,7 +22,7 @@ export class SowService {
         this.getSow = _constantService.CONFIG.apiLocations.getSow;
         this.getSowByIdUrl = _constantService.CONFIG.apiLocations.getSowById;
         this.getActiveContract = _constantService.CONFIG.apiLocations.getActiveContract;
-        this.getsowMetaDataUrl = _constantService.CONFIG.apiLocations.getapplicationMetaData;
+        this.getsowMetaDataUrl = _constantService.CONFIG.apiLocations.getSowMetaData;
         this.saveSowUrl = _constantService.CONFIG.apiLocations.saveSow;
         this.findSowUrl = _constantService.CONFIG.apiLocations.findSoWs;
     }
@@ -38,8 +38,9 @@ export class SowService {
     }
 
 
-    findSow(contractId: string, serviceline: string, application: string) {
-        return this.http.get(this.findSowUrl +'?contractId=' + contractId + "&ITOrg=" + serviceline + "&effectiveDate=" + application + "&expiryDate=" + application)
+    findSow(contractId: string, ItOrg: string, application: string, effectiveDate: string, expiryDate: string) {
+   
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&effectiveDate=" + effectiveDate + "&expiryDate=" + expiryDate)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     getsowMetaData() {

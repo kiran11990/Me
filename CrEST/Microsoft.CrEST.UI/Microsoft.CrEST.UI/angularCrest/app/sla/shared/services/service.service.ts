@@ -12,10 +12,14 @@ export class Sservice {
 
     public getservice: string;
     public getserviceByID: string;
+    public findServiceUrl: string;
+    public getServiceMetaDataUrl: string;
 
     constructor(private _constantService: ConstantService, private commonService: CommonService, private http: Http) {
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
         this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
+        this.findServiceUrl = _constantService.CONFIG.apiLocations.findService;
+        this.getServiceMetaDataUrl = _constantService.CONFIG.apiLocations.getServiceMetaData;
     }
     getService() {
         //debugger
@@ -28,25 +32,35 @@ export class Sservice {
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
-
+    getServiceMetaData() {
+        return this.http.get(this.getServiceMetaDataUrl)
+            .map(res => res.json()).catch(this.commonService.handleError);
+    }
+    
     addSow(service: any) {
         return this.http.post(this.getservice, JSON.stringify(service))
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
-    updateSow(service: any) {
-        return this.http.put(this.getSowUrl(service.id), JSON.stringify(service))
+
+    findService(contractId: string, applicationGroup: string) {
+        var applicationGroups = encodeURIComponent(applicationGroup);
+        return this.http.get(this.findServiceUrl + '?contractId=' + contractId + "&applicationGroup=" + applicationGroups)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
+    //updateSow(service: any) {
+    //    return this.http.put(this.getSowUrl(service.id), JSON.stringify(service))
+    //        .map(res => res.json()).catch(this.commonService.handleError);
+    //}
 
-    deleteSow(id: any) {
-        return this.http.delete(this.getSowUrl(id))
-            .map(res => res.json()).catch(this.commonService.handleError);
-    }
+    //deleteSow(id: any) {
+    //    return this.http.delete(this.getSowUrl(id))
+    //        .map(res => res.json()).catch(this.commonService.handleError);
+    //}
 
-    private getSowUrl(id: any) {
-        return this.getSowUrl + "/" + id;
-    }
+    //private getSowUrl(id: any) {
+    //    return this.getSowUrl + "/" + id;
+    //}
 }
 //export class AutocompleteComponent {
 //    public query = '';

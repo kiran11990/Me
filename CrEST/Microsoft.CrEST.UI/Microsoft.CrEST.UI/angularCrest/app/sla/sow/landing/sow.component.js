@@ -8,22 +8,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { SowService } from "../../shared/services/sows.service";
 var SowComponent = (function () {
-    function SowComponent(sowService) {
+    function SowComponent(sowService, _routeParameterd) {
         this.sowService = sowService;
+        this._routeParameterd = _routeParameterd;
         this.sows = [];
         this.contractid = '';
         this.serviceLine = '';
         this.msOwnerAlias = '';
+        this.contractID = '';
+        this.application = '';
+        this.owneralias = '';
         this.contractIDList = [];
-        this.servicelineList = [];
+        this.ItOrgList = [];
         this.msOwnerAliasList = [];
+        this.effectiveDate = new Date();
+        this.expirationDate = new Date();
+        this.soweffectiveDates = new Date();
+        this.sowexpirationDates = new Date();
         this.searchContractId = '';
         this.searchServiceLine = '';
         this.searchMsowner = '';
+        this.myDatePickerOptions = {
+            // other options...
+            dateFormat: 'dd.mm.yyyy',
+        };
         this.filter = '';
         this.maxSize = 7;
         this.directionLinks = true;
@@ -44,6 +57,8 @@ var SowComponent = (function () {
     }
     SowComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (this._routeParameterd.snapshot.params['sowStatus']) {
+        }
         this.sowService.getSows()
             .subscribe(function (data) {
             _this.sows = data;
@@ -52,11 +67,20 @@ var SowComponent = (function () {
             }
         });
     };
+    SowComponent.prototype.oneffectiveDateChanged = function (event) {
+        this.effectiveDate = event.jsdate;
+    };
+    SowComponent.prototype.onexpirationDateChanged = function (event) {
+        this.expirationDate = event.jsdate;
+        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    };
     SowComponent.prototype.find = function () {
         var _this = this;
-        this.sowService.(this.contactId, this.serviceLine, this.application)
+        //this.soweffectiveDates = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
+        //this.sowexpirationDates = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
+        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias, this.effectiveDate.toUTCString(), this.expirationDate.toUTCString())
             .subscribe(function (data) {
-            _this.applicationList = data;
+            _this.sows = data;
         });
     };
     SowComponent.prototype.deleteSow = function (sow) {
@@ -74,12 +98,12 @@ var SowComponent = (function () {
     };
     SowComponent.prototype.notifyContractId = function (contractID) {
         if (event) {
-            this.contractid = contractID;
+            this.contractID = contractID;
         }
     };
-    SowComponent.prototype.notifyServiceLine = function (serviceLine) {
+    SowComponent.prototype.notifyItOrg = function (ItOrg) {
         if (event) {
-            this.serviceLine = serviceLine;
+            this.itOrg = ItOrg;
         }
     };
     SowComponent.prototype.notifymsOwnerAlias = function (msOwnerAlias) {
@@ -90,7 +114,7 @@ var SowComponent = (function () {
     SowComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.sows.length; i++) {
             this.contractIDList.push(this.sows[i].contractId.toString());
-            //this.servicelineList.push(this.sows[i].);
+            this.ItOrgList.push(this.sows[i].itorgName);
             this.msOwnerAliasList.push(this.sows[i].msowner);
         }
     };
@@ -112,7 +136,7 @@ SowComponent = __decorate([
         selector: 'sow-grid',
         templateUrl: './sow.component.html',
     }),
-    __metadata("design:paramtypes", [SowService])
+    __metadata("design:paramtypes", [SowService, ActivatedRoute])
 ], SowComponent);
 export { SowComponent };
 //# sourceMappingURL=sow.component.js.map

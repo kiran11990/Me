@@ -33,7 +33,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 
 		[HttpPost]
         [Route("SaveSoW")]
-		public SowData SaveSoW([FromBody]SowData item)
+		public int SaveSoW([FromBody]SowData item)
 		{
 			return _sowRepository.SaveSOW(item);
 		}

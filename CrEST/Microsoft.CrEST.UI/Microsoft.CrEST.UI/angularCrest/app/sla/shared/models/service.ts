@@ -1,16 +1,20 @@
 ﻿export class Service {
     supplier: string;
-    SCID: string;
-    contractid: string;
-    ApplicationGroup: string;
-    CrESTlevel1Servic: string;
-    CrESTlevel2Service: string;
-    CrESTlevel3Service: string;
-    AppGroupServicesFeeYr1: string;
-    AppGroupServicesFeeYr2: string;
-    AppGroupServicesFeeYr3: string;
-    AppGroupServicesFeeYr4: string;
-    ValidationNotes: string;
-    Remarks: string;
-    ITORG: string;
+    scid: string;
+    contractId: string;
+    applicationGroup: string;
+    crestLevel1: string;
+    crestLevel2: string;
+    crestLevel3: string;
+    appGroupServiceFeeY1: string;
+    appGroupServiceFeeY2: string;
+    appGroupServiceFeeY3: string;
+    appGroupServiceFeeY4: string;
+    validationNotes: string;
+    remarks: string;
+    itorg: string;
+    currency: string;
+    itorgName: string;
+
+   
 }

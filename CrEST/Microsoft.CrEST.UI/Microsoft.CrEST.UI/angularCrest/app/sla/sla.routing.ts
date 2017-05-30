@@ -13,7 +13,7 @@ import { ApplicationFormComponent } from './application/application-form.compone
 const slaRoutes: Routes = [
     { path: 'sows', component: SowComponent, pathMatch: 'full' },
     { path: 'sows/add', component: SowFormComponent },
-    { path: 'sows/applicationStatus', component: SowComponent },
+    { path: 'sows/sowStatus', component: SowComponent },
     { path: 'sows/:id', component: SowFormComponent },
 
     { path: 'applications', component: SlaApplicationComponent, pathMatch: 'full' },

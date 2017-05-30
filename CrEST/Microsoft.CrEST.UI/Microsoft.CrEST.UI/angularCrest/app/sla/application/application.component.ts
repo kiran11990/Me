@@ -31,6 +31,10 @@ export class SlaApplicationComponent implements OnInit {
     public ApplicationLists: string[] = [];
     public applicationList: ApplicationData[] = [];
     router: Router;
+    public filter: string = '';
+    public maxSize: number = 7;
+    public directionLinks: boolean = true;
+    public autoHide: boolean = false;
     constructor(private http: Http, _router: Router, private applicationService: ApplicationService, private _routeParameterd: ActivatedRoute) {
         this.router = _router;
        
@@ -97,10 +101,7 @@ export class SlaApplicationComponent implements OnInit {
     }
 
 
-    public filter: string = '';
-    public maxSize: number = 7;
-    public directionLinks: boolean = true;
-    public autoHide: boolean = false;
+    
     public config: PaginationInstance = {
         id: 'advanced',
         itemsPerPage: 10,

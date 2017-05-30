@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import {Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { Router } from '@angular/router';
@@ -7,12 +7,16 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { PaginationInstance } from 'ngx-pagination';
 
+
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
 
+
+
+
 @Component({
     selector: 'sla-service',
-    templateUrl: './serviceline.component.html' 
+    templateUrl:'./serviceline.component.html'
 })
 
 
@@ -22,7 +26,7 @@ export class SlaServiceComponent {
     serviceline: string = "Sla Service";
 
     public contactId = '';
-    public contractid = '';
+    public contractId = '';
     public serviceLine = '';
     public applicationgroup = '';
     public id: string;
@@ -33,13 +37,16 @@ export class SlaServiceComponent {
     public contactIdList: string[] = [];
     public servicelineList: string[] = [];
     public ApplicationLists: string[] = [];
-    public SupplierList:string[]=[];
+    public SupplierList: string[] = [];
+    //public applicationList: Application[] = [];
     router: Router;
+    //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
+    //    this.router = _router;
+
     public serviceList: Service[] = [];
     constructor(private Service: Sservice) { }
     ngOnInit() {
         this.serviceList = [];
-       
         this.Service.getService()
             .subscribe(data => {
                 this.serviceList = data
@@ -54,22 +61,24 @@ export class SlaServiceComponent {
     public filteredList: string[] = [];
     public ContactIdList: string[] = [];
     public searchContactId = '';
-   // public searchServiceLine = '';
+   
     public searchApplicationgroup = '';
     find() {
+        this.Service.findService(this.contractId, this.applicationgroup)
+            .subscribe(data => {
+                this.serviceList = data
+            })
 
-        this.searchContactId = this.contractid.trim();
-                //this.searchServiceLine = this.serviceLine.trim();
-        this.searchApplicationgroup = this.applicationgroup.trim();
     }
 
 
+    
     notifyContactId(contractid: string) {
         if (event) {
-            this.contractid = contractid;
+            this.contractId = contractid;
+          
         }
     }
-
 
 
     notifyApplication(Service: string) {
@@ -80,13 +89,13 @@ export class SlaServiceComponent {
 
     autoComplete() {
         for (var i = 0; i < this.serviceList.length; i++) {
-            this.ApplicationLists.push(this.serviceList[i].ApplicationGroup);
-            this.contactIdList.push(this.serviceList[i].contractid);
+            this.ApplicationLists.push(this.serviceList[i].applicationGroup);
+            this.contactIdList.push(this.serviceList[i].contractId.toString());
             //this.SupplierList.push(this.serviceList[i].supplier);
         }
     }
 
-
+    //@Input('data') meals: string[] = [];
 
     public filter: string = '';
     public maxSize: number = 7;
@@ -121,9 +130,6 @@ export class SlaServiceComponent {
         this.popped.push(this.serviceList.pop());
     }
 
-}
-    
-
 
     //filter() {
     //    if (this.query !== "") {
@@ -139,5 +145,9 @@ export class SlaServiceComponent {
     //    this.query = item;
     //    this.filteredList = [];
     //}
+
+}
+    
+
 
 
