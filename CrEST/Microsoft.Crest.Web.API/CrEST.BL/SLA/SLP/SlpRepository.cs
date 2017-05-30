@@ -51,7 +51,7 @@ namespace CrEST.BL
             return rps;
         }
 
-        public IEnumerable<SLAData> GetSlpsByStatus(int status)
+        public IEnumerable<SLAData> GetRASlps()
         {
             List<SLAData> result = new List<SLAData>();
             var slas = GetSlaFromDb(string.Empty);
@@ -67,7 +67,7 @@ namespace CrEST.BL
                     else if (sla.Pref == "L")
                         sla.Chk = (value <= targetLevel ? 3 : (value <= minimumLevel ? 2 : 1));
 
-                    if (sla.Chk == status)
+                    if (sla.Chk == 2 || sla.Chk == 1)
                         result.Add(sla);
                 }
             }

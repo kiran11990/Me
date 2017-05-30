@@ -125,7 +125,7 @@ var SlaDashboardComponent = (function () {
     };
     SlaDashboardComponent.prototype.GetSlps = function () {
         var mainthis = this;
-        this.slpService.GetSlpsByStatus(2, "")
+        this.slpService.GetRASlps()
             .subscribe(function (data) {
             mainthis.slps = data;
         });

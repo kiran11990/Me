@@ -86,7 +86,7 @@ export class SlpComponent implements OnInit {
 
         //TODO
         this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
-            .subscribe(result => {
+            .subscribe((result:any) => {
                 if (result == "INF1000") {
                     _this.Message = _this.INF0002;
                     _this.MessageType = 1;
@@ -113,7 +113,7 @@ export class SlpComponent implements OnInit {
             })
 
             this._slpService.SaveSLPs(mainThis.data)
-                .subscribe(result => {
+                .subscribe((result:any) => {
                     if (result == "INF1000") {
                         mainThis.Message = mainThis.INF0001;
                         mainThis.MessageType = 1;

@@ -23,7 +23,7 @@ var SlpService = (function () {
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
         this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
-        this.getSlpByStatus = _constantService.CONFIG.apiLocations.getSlpByStatus;
+        this.getRASlps = _constantService.CONFIG.apiLocations.GetRASlps;
     }
     SlpService.prototype.GetReportingPeriods = function () {
         var header = new Headers({ 'Content-Type': 'application/json' });
@@ -46,9 +46,9 @@ var SlpService = (function () {
         return this.http.get(this.generateSLPforCurrentPeriod + "/" + currentFP + "/" + createdBy, { headers: header })
             .map(function (res) { return res.text(); }).catch(this.commonService.handleError);
     };
-    SlpService.prototype.GetSlpsByStatus = function (status, useralias) {
+    SlpService.prototype.GetRASlps = function () {
         var header = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.get(this.getSlpByStatus + '/' + status, { headers: header })
+        return this.http.get(this.getRASlps, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     return SlpService;

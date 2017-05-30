@@ -32,10 +32,10 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetSlpsByStatus/{status}")]
-        public IEnumerable<SLAData> GetSlpsByStatus(int status)
+        [Route("GetRASlps")]
+        public IEnumerable<SLAData> GetRASlps()
         {
-            return _slpRepository.GetSlpsByStatus(status);
+            return _slpRepository.GetRASlps();
         }
 
         [HttpGet]
