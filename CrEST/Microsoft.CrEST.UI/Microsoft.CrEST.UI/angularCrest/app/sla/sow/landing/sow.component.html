@@ -68,17 +68,16 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th  data-field="name">SoWid</th>
-                                <th data-field="name">SupplierId</th>
-                                <th data-field="name">SupplierName</th>
+                               
+                                <th data-field="name">Supplier Name</th>
                                 <th data-field="name">Itorg</th>
-                                <th data-field="name">ContractId</th>
-                                <th data-field="name">SoweffectiveDate</th>
-                                <th data-field="name">SowexpirationDate</th>
-                                <th data-field="name">Msowner</th>
-                                <th data-field="name">InfyOwner</th>
-                                <th data-field="name">ServiceCatalogVersion</th>
-                                <th data-field="name">PonumYear1</th>
+                                <th data-field="name">Contract Id</th>
+                                <th data-field="name">Soweffective Date</th>
+                                <th data-field="name">Sowexpiration Date</th>
+                                <th data-field="name">Ms Owner</th>
+                                <th data-field="name">Infy Owner</th>
+                                <th data-field="name">Service Catalog Version</th>
+                                <th data-field="name">Ponum Year1</th>
                                 <th data-field="name">Currency</th>
                                 <th data-field="name">SOW Amount Yr1 </th>
                                 <th data-field="name">SOW Amount Yr2 </th>
@@ -86,15 +85,13 @@
                                 <th data-field="name">SOW Amount Yr4 </th>
                                 <th data-field="name">IsCrest?</th>
                                 <th data-field="name">Remarks</th>
-                                 <th data-field="name">CompanyCode</th> 
+                                 <th data-field="name">Company Code</th> 
                                 <th data-field="name">Edit</th>
                                 <!--<th data-field="name">Delete</th>-->
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let sow of sows|paginate: config" style="height:12px">
-                                <td>{{ sow.soWid }}</td>
-                                <td>{{ sow.supplierId }}</td>
                                 <td>{{ sow.supplierName }}</td>
                                 <td>{{ sow.itorg }}</td>
                                 <td>{{ sow.contractId }}</td>

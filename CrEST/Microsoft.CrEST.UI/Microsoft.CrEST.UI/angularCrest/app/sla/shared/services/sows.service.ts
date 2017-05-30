@@ -28,7 +28,8 @@ export class SowService {
     }
 
     getSows() {
-        return this.http.get(this.getSow)
+        var header = new Headers({ 'Cache-Control': 'no-cache' });
+        return this.http.get(this.getSow, { headers: header })
             .map(res => res.json()).catch(this.commonService.handleError);
     }
 
@@ -38,9 +39,9 @@ export class SowService {
     }
 
 
-    findSow(contractId: string, ItOrg: string, application: string, effectiveDate: string, expiryDate: string) {
+    findSow(contractId: string, ItOrg: string, msOwener: string) {
    
-        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&effectiveDate=" + effectiveDate + "&expiryDate=" + expiryDate)
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&msOwner=" + msOwener)
             .map(res => res.json()).catch(this.commonService.handleError);
     }
     getsowMetaData() {

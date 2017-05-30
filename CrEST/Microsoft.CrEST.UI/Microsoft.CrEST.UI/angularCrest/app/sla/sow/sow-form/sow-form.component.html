@@ -9,20 +9,26 @@
                         <option *ngIf="title=='New Sow'" value="0">select suppliers</option>
                         <option *ngFor="let item of sowMetaData.suppliers"
                                 [ngValue]="item.supplierId" [selected]="sow.supplierId == item.supplierId">
-                          {{item.supplierId}}  {{item.supplierName}}
+                         {{item.supplierName}}
                         </option>
                     </select>
                     <div *ngIf="sowForm.controls['supplierId'].hasError('required') && sowForm.controls['supplierId'].touched" class="alert alert-danger">Please select a supplier.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
+                <div class="form-group">
+                    <label>Remark:</label>
+                    <textarea class="form-control" type="text" [formControl]="sowForm.controls['remark']" rows="3" [(ngModel)]="sow.remarks" style="width:50%"></textarea>
+                </div>
+            </div>
+            <!--<div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['serviceline'].valid && sowForm.controls['serviceline'].touched}">
                     <label>Service Line*:</label>
                    
                     <input class="form-control" type="text" [formControl]="sowForm.controls['serviceline']" [(ngModel)]="sow.serviceLine" style="width:50%" />
                     <div *ngIf="sowForm.controls['serviceline'].hasError('required') && sowForm.controls['serviceline'].touched" class="alert alert-danger">Please select service line.</div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div class="row">
@@ -35,7 +41,7 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['itorg'].valid && sowForm.controls['itorg'].touched}">
                     <label>Itorg:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorgId" style="width:50%"  >
+                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorgId" style="width:50%" (ngModelChange)="onitorgChange($event)"  >
                         <option *ngIf="title=='New Sow'" value="0">select itorg</option>
                         <option *ngFor="let item of sowMetaData.itOrg"
                                 [value]="item.itorgId" [selected]="sow.itorg ==item.itorgId">
@@ -108,9 +114,9 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['currency'].valid && sowForm.controls['currency'].touched}">
                     <label>Currency*:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['currency']" [(ngModel)]="sow.currency" style="width:50%">
-                        <option [selected]="sow.currency ==INR">INR</option>
-                        <option [selected]="sow.currency ==USD">USD</option>
+                    <select class="form-control" [formControl]="sowForm.controls['currency']" [(ngModel)]="sow.currency" style="width:50%" (ngModelChange)="onChangecurrency($event)">
+                        <option [selected]="sow.currency ==INR" value="INR">INR</option>
+                        <option [selected]="sow.currency ==USD" value="USD">USD</option>
                     </select>
                     <div *ngIf="sowForm.controls['currency'].hasError('required') && sowForm.controls['currency'].touched" class="alert alert-danger">Please select currency.</div>
                 </div>
@@ -179,17 +185,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 small">
-                <div class="form-group">
-                    <label>Remark:</label>
-                    <textarea class="form-control" type="text" [formControl]="sowForm.controls['remark']" rows="3" [(ngModel)]="sow.remarks" style="width:50%"></textarea>
-                </div>
-            </div>
+          
         </div>
         
         <div class="form-group">
             <div class="col-lg-6 text-right">
-                <button type="submit" class="btn btn-primary" >Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!sowForm.valid" >Submit</button>
             </div>
             <div class="col-lg-6 text-left">
                 <button type="button" class="btn btn-primary" (click)="BackClick($event);">Back</button>

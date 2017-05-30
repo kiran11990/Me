@@ -56,9 +56,12 @@ var SowComponent = (function () {
         this.popped = [];
     }
     SowComponent.prototype.ngOnInit = function () {
-        var _this = this;
         if (this._routeParameterd.snapshot.params['sowStatus']) {
         }
+        this.getAllServices();
+    };
+    SowComponent.prototype.getAllServices = function () {
+        var _this = this;
         this.sowService.getSows()
             .subscribe(function (data) {
             _this.sows = data;
@@ -78,7 +81,7 @@ var SowComponent = (function () {
         var _this = this;
         //this.soweffectiveDates = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
         //this.sowexpirationDates = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
-        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias, this.effectiveDate.toUTCString(), this.expirationDate.toUTCString())
+        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias)
             .subscribe(function (data) {
             _this.sows = data;
         });
