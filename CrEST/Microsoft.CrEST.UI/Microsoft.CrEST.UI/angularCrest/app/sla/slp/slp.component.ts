@@ -92,7 +92,6 @@ export class SlpComponent implements OnInit {
     }
 
     Save(mainThis: any) {
-        debugger;
         mainThis.Message = "";
         if (mainThis.invalidHandsonCells.length <= 0) {
             //TODO
@@ -104,7 +103,6 @@ export class SlpComponent implements OnInit {
 
             this._slpService.SaveSLPs(mainThis.data)
                 .subscribe((result: any) => {
-                    debugger;
                     if (result == "INF1000") {
                         mainThis.Message = mainThis.INF0001;
                         mainThis.MessageType = 1;

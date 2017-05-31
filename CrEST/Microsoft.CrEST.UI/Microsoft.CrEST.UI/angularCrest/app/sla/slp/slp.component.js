@@ -69,7 +69,6 @@ var SlpComponent = (function () {
         });
     };
     SlpComponent.prototype.Save = function (mainThis) {
-        debugger;
         mainThis.Message = "";
         if (mainThis.invalidHandsonCells.length <= 0) {
             //TODO
@@ -79,7 +78,6 @@ var SlpComponent = (function () {
             });
             this._slpService.SaveSLPs(mainThis.data)
                 .subscribe(function (result) {
-                debugger;
                 if (result == "INF1000") {
                     mainThis.Message = mainThis.INF0001;
                     mainThis.MessageType = 1;
