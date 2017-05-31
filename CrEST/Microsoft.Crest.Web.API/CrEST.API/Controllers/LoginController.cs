@@ -5,10 +5,11 @@ using CrEST.BL;
 using CrEST.Data.Models;
 using CrEST.Models;
 using System.Linq;
+using CrEST.API;
 
 namespace Microsoft.Crest.Web.API.Controllers
 {
-
+    
     [Route("api/[controller]")]
 
     public class LoginController : Controller
@@ -21,15 +22,16 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserNames/{name}/{password}")]
-        public IEnumerable<LoginData> GetAllUsers(string UserName, string password)
+        [Route("ValidateUsers/{UserName}/{Password}")]
+        public IEnumerable<LoginData> ValidateUser(string UserName, string password)
         {
-            return _loginRepository.GetUserNames(UserName, password);
+            return _loginRepository.ValidateUser(UserName, password);
         }
-        [Route("GetUsers")]
-        public IEnumerable<RegisterData>GetUsersRegistered(string Username,string UserType)
+        [HttpPost]
+        [Route("GetUsersRegistered/{UserName}/{Password}")]
+        public IEnumerable<RegisterData>GetUsersRegistered(string Username,string Password)
         {
-            return _loginRepository.GetUsersRegistered(Username,UserType);
+            return _loginRepository.GetUsersRegistered(Username,Password);
         }
 
     }

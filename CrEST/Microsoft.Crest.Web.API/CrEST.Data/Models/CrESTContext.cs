@@ -365,7 +365,7 @@ namespace CrEST.Data.Models
             {
                 entity.Property(e => e.UserName).HasColumnName("UserName");
 
-                entity.Property(e => e.RoleName).HasColumnType("RoleName");
+                entity.Property(e => e.Password).HasColumnType("Password");
             });
         }
     }

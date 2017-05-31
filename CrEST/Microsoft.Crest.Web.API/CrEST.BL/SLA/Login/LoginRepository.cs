@@ -9,34 +9,36 @@ using System.Data;
 using System.Data.SqlClient;
 
 
+
 namespace CrEST.BL
 {
     public class Loginrepository : ILoginRepository
     {
-        public IEnumerable<LoginData> GetUserNames(string UserName, string UserType)
-        {
-            return GetUserNames(UserName, UserType);
-        }
+        //public IEnumerable<LoginData> GetUserNames(string UserName, string UserType)
+        //{
+        //    return GetUserNames(UserName, UserType);
+        //}
 
-        public IEnumerable<LoginData> ValidateUser(string UserName,string Password,string UserType)
+        public IEnumerable<LoginData> ValidateUser(string UserName,string Password)
         {
-
             List<LoginData> users = new List<LoginData>();
-
-
             using (CrESTContext db = new CrESTContext())
             {
                 db.Database.OpenConnection();
                 DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
                 cmd.CommandText = "spValidateUser";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@UserName", UserName));
+                cmd.Parameters.Add(new SqlParameter("@Password", Password));
+              
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        RegisterData rd = new RegisterData();
+                        LoginData rd = new LoginData();
                         rd.UserName = reader.GetString(0);
-                   
+                        // rd.Password = reader.GetString(1);
+                        Console.WriteLine()
                     }
 
                     return users;
@@ -44,7 +46,7 @@ namespace CrEST.BL
             }
 
         }
-        public IEnumerable<RegisterData> GetUsersRegistered(string UserName, string UserType)
+        public IEnumerable<RegisterData> GetUsersRegistered(string UserName, string Password)
         {
             List<RegisterData> rd1 = new List<RegisterData>();
             using (CrESTContext db = new CrESTContext())
