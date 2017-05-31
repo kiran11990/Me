@@ -1,0 +1,8 @@
+D:\Crest\SourceCode\Notification\Notification\bin\Release\Notification.exe.config
+D:\Crest\SourceCode\Notification\Notification\bin\Release\Notification.exe
+D:\Crest\SourceCode\Notification\Notification\bin\Release\Notification.pdb
+D:\Crest\SourceCode\Notification\Notification\obj\Release\Notification.csprojResolveAssemblyReference.cache
+D:\Crest\SourceCode\Notification\Notification\obj\Release\Notification.ProjectInstaller.resources
+D:\Crest\SourceCode\Notification\Notification\obj\Release\Notification.csproj.GenerateResource.Cache
+D:\Crest\SourceCode\Notification\Notification\obj\Release\Notification.exe
+D:\Crest\SourceCode\Notification\Notification\obj\Release\Notification.pdb
