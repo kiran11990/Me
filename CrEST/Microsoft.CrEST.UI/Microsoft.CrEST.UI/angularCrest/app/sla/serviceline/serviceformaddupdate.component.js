@@ -61,6 +61,7 @@ var ServicelineFormComponent = (function () {
         var _this = this;
         this.Sservice.getServiceMetaData()
             .subscribe(function (data) {
+            debugger;
             _this.serviceMetaData = data;
         });
     };

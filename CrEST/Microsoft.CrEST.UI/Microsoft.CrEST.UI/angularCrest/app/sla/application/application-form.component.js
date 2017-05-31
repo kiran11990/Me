@@ -136,7 +136,7 @@ var ApplicationFormComponent = (function () {
         this.applicationData.runOrGrow = value;
     };
     ApplicationFormComponent.prototype.onitOrgChange = function (value) {
-        this.applicationData.itOrgName = value;
+        this.applicationData.itorg = value;
     };
     ApplicationFormComponent.prototype.getApplicationMetaData = function () {
         var _this = this;
@@ -156,7 +156,7 @@ var ApplicationFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                _this.routeID ? alert(" application updatedsuccessfully") : alert("application addedsuccessfully");
+                _this.routeID ? alert(" Application Updated Successfully") : alert("Application Saved Successfully");
                 _this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
             }
         });
@@ -165,7 +165,7 @@ var ApplicationFormComponent = (function () {
         console.log('success!');
     };
     ApplicationFormComponent.prototype.redirect = function () {
-        if (confirm("Do you want Update")) {
+        if (confirm("Do You Want? Update")) {
             this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
         else {

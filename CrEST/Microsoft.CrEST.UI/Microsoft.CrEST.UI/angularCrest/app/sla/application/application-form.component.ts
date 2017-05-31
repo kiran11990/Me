@@ -158,7 +158,7 @@ export class ApplicationFormComponent implements OnInit {
         this.applicationData.runOrGrow = value;
     }
     onitOrgChange(value: any) {
-        this.applicationData.itOrgName = value;
+        this.applicationData.itorg = value;
     }
 
 
@@ -180,7 +180,7 @@ export class ApplicationFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                    this.routeID ? alert(" application updatedsuccessfully") : alert("application addedsuccessfully")
+                    this.routeID ? alert(" Application Updated Successfully") : alert("Application Saved Successfully")
                     this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
                 }
             });
@@ -191,7 +191,7 @@ export class ApplicationFormComponent implements OnInit {
     }
     redirect() {
 
-        if (confirm("Do you want Update")) {
+        if (confirm("Do You Want? Update")) {
             this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
         else {

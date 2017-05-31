@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['supplier'].valid && serviceForm.controls['supplier'].touched}">
-                    <label>Supplier*:</label>
+                    <label>Supplier<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="serviceForm.controls['supplier']" [(ngModel)]="serviceMetaData.supplierId" style="width:50%">
                         <option *ngIf="title=='New Service'" value="0">Select Suppliers</option>
                         <option *ngFor="let item of serviceMetaData.suppliers"
@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['SCID'].valid && serviceForm.controls['SCID'].touched}">
-                    <label>SC ID*:</label>
+                    <label>SC ID<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['SCID']" [(ngModel)]="SCID"  style="width:50%"/>
                     <div *ngIf="serviceForm.controls['SCID'].hasError('required') && serviceForm.controls['SCID'].touched" class="alert alert-danger">Please enter SCID.</div>
                 </div>
@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['contractId'].valid && serviceForm.controls['contractId'].touched}">
-                    <label>Contract ID*:</label>
+                    <label>Contract ID<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="serviceForm.controls['contractId']" [(ngModel)]="serviceList.contractId" style="width:50%">
                         <option *ngIf="title=='New Service'" value="0">Select Contract Id</option>
                         <option *ngFor="let item of serviceMetaData.contractIds"
@@ -40,7 +40,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['ApplicationGroup'].valid && serviceForm.controls['ApplicationGroup'].touched}">
-                    <label>Application Group*:</label>
+                    <label>Application Group<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['ApplicationGroup']" [(ngModel)]="ApplicationGroup "  style="width:50%"/>
                     <span *ngIf="serviceForm.controls['ApplicationGroup'].hasError('required') && serviceForm.controls['ApplicationGroup'].touched" class="alert alert-danger">Please Enter Application.</span>
                 </div>
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['crestLvl1'].valid && serviceForm.controls['crestLvl1'].touched}">
-                    <label>CrEST Level-1 Service*:</label>
+                    <label>CrEST Level-1 Service<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="serviceForm.controls['crestLvl1']" [(ngModel)]="CrESTlevel1Servic" style="width:50%">
                         <option *ngFor="let item of serviceMetaData.crestLevel1s"
                                 [value]="item.id" [selected]="serviceMetaData.crestLevel2 ==item.id">
@@ -62,7 +62,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['crestLvl2'].valid && serviceForm.controls['crestLvl2'].touched}">
-                    <label>CrEST Level-2 Service*:</label>
+                    <label>CrEST Level-2 Service<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="serviceForm.controls['crestLvl2']" [(ngModel)]="serviceList.crestLevel2" style="width:50%">
                         <option *ngIf="title=='New Service'" value="0">select crestLvl2</option>
                         <option *ngFor="let item of serviceMetaData.crestLevel2"

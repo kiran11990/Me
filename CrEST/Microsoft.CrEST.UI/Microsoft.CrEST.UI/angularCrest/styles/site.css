@@ -561,3 +561,8 @@ div.tablewrapper {
 .alert-danger{
     width:258px;
 }
+.required input {
+    padding-right: 25px;
+    background-image: url(...);
+    background-position: right top;
+}

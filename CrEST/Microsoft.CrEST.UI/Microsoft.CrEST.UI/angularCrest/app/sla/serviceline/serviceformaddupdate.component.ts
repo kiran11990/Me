@@ -69,6 +69,7 @@ export class ServicelineFormComponent implements OnInit {
     SericeMetaData() {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
+                debugger;
                 this.serviceMetaData = data;
             })
     }

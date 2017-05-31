@@ -1,14 +1,14 @@
 ﻿export class ServiceMetaData {
            public suppliers: Array<Supplier>;
             public contractIds: Array<number>;
-            public crestLevel1s: Array<CrestLevel1>;
-            public crestLevel2: Array<CrestLevel2>;
-            public crestLevel3: Array<CrestLevel3>;
+            public crestLevel1s: Array<CrestLevel1Metadata>;
+            public crestLevel2: Array<CrestLevel2Metadata>;
+            public crestLevel3: Array<CrestLevel3Metadata>;
             public itOrg: Array<ITOrg>;
 };
 
 
-        export class CrestLevel1 {
+export class CrestLevel1Metadata {
             public id: number;
             public service: string;
         
@@ -20,13 +20,13 @@
             public itOrgName: string;
 
         }
-        export class CrestLevel2 {
+        export class CrestLevel2Metadata {
             public id: number;
             public service: string;
            
         }
 
-        export class CrestLevel3 {
+        export class CrestLevel3Metadata {
             public id: number;
             public Service: string;
           

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['supplierId'].valid && sowForm.controls['supplierId'].touched}">
-                    <label>Supplier*:</label>
+                    <label>Supplier<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['supplierId']" [(ngModel)]="sow.supplierId"  (ngModelChange)="onChange($event)"  style="width:50%">
                         <option *ngIf="title=='New Sow'" value="0">Select Suppliers</option>
                         <option *ngFor="let item of sowMetaData.suppliers"
@@ -17,7 +17,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['contractId'].valid && sowForm.controls['contractId'].touched}">
-                    <label>ContractId*:</label>
+                    <label>ContractId<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['contractId']" [(ngModel)]="sow.contractId" style="width:50%" (ngModelChange)="onContactChange($event)">
                         <option *ngIf="title=='New Sow'" value="0">Select Contract Id</option>
                         <option *ngFor="let item of sowMetaData.contractIds"
@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['msowner'].valid && sowForm.controls['msowner'].touched}">
-                    <label>MS Owner Alias*:</label>
+                    <label>MS Owner Alias<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="sowForm.controls['msowner']" [(ngModel)]="sow.msowner" style="width:50%">
                     <div *ngIf="sowForm.controls['msowner'].hasError('required') && sowForm.controls['msowner'].touched" class="alert alert-danger">Please enter ms owner alias.</div>
                 </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['soweffectiveDate'].valid && sowForm.controls['soweffectiveDate'].touched}">
-                    <label>SoW Effective Date*:</label>
+                    <label>SoW Effective Date<span class="alert-danger">*</span></label>
                     <my-date-picker [options]="myDatePickerOptions" class="form-control CalenderPadding" [formControl]="sowForm.controls['soweffectiveDate']" [(ngModel)]="soweffectiveDate"
                                     (dateChanged)="oneffectiveDateChanged($event)" style="width:50%"></my-date-picker>
                     <div *ngIf="sowForm.controls['soweffectiveDate'].hasError('required') && sowForm.controls['soweffectiveDate'].touched" class="alert alert-danger">Please enter sow effective date.</div>
@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['sowexpirationDate'].valid && sowForm.controls['sowexpirationDate'].touched}">
-                    <label>SoW Expiration Date*:</label>
+                    <label>SoW Expiration Date<span class="alert-danger">*</span></label>
                     <my-date-picker class="form-control CalenderPadding" [options]="myDatePickerOptions" [formControl]="sowForm.controls['sowexpirationDate']" [(ngModel)]="sowexpirationDate"
                                     (dateChanged)="onexpirationDateChanged($event)" style="width:50%"></my-date-picker>
                     <div *ngIf="sowForm.controls['sowexpirationDate'].hasError('required') && sowForm.controls['sowexpirationDate'].touched" class="alert alert-danger">Please enter sow expiration date.</div>
@@ -81,7 +81,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['servicecatalogno'].valid && sowForm.controls['servicecatalogno'].touched}">
-                    <label>Service Catalog No*:</label>
+                    <label>Service Catalog No<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="sowForm.controls['servicecatalogno']" [(ngModel)]="sow.serviceCatalogVersion" style="width:50%">
                     <div *ngIf="sowForm.controls['servicecatalogno'].hasError('required') && sowForm.controls['servicecatalogno'].touched" class="alert alert-danger">Please enter service catalog no.</div>
                 </div>
@@ -90,7 +90,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['ponumYear1'].valid && sowForm.controls['ponumYear1'].touched}">
-                    <label>PO#*:</label>
+                    <label>PO#<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="sowForm.controls['ponumYear1']" [(ngModel)]="sow.ponumYear1" style="width:50%">
                     <div *ngIf="sowForm.controls['ponumYear1'].hasError('required') && sowForm.controls['ponumYear1'].touched" class="alert alert-danger">Please enter PO#.</div>
                     <div *ngIf="sowForm.controls['ponumYear1'].hasError('pattern') && sowForm.controls['ponumYear1'].touched" class="alert alert-danger">Please enter valid PO# in digit only.</div>
@@ -98,7 +98,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['currency'].valid && sowForm.controls['currency'].touched}">
-                    <label>Currency*:</label>
+                    <label>Currency<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['currency']" [(ngModel)]="sow.currency" style="width:50%" (ngModelChange)="onChangecurrency($event)">
                         <option [selected]="sow.currency ==INR" value="INR">INR</option>
                         <option [selected]="sow.currency ==USD" value="USD">USD</option>
@@ -110,7 +110,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['companycode'].valid && sowForm.controls['companycode'].touched}">
-                    <label>Company Code Code*:</label>
+                    <label>Company Code Code<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['companycode']" [(ngModel)]="sow.companyCode" (ngModelChange)="onChangeComponeyCode($event)" style="width:50%">
                         <option *ngIf="title=='New Sow'" value="0">Select Company Code</option>
                         <option *ngFor="let item of sowMetaData.companyCodes"
@@ -149,7 +149,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['iscrest'].valid && sowForm.controls['iscrest'].touched}">
-                    <label>Is Crest*:</label>
+                    <label>Is Crest<span class="alert-danger">*</span></label>
                     <div *ngIf="sowForm.controls['iscrest'].hasError('required') && sowForm.controls['iscrest'].touched" class="alert alert-danger">Please select Crest flag.</div>
                     <div>
                         <label class="radio-inline">
