@@ -23,7 +23,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 
         [HttpGet]
         [Route("ValidateUsers/{UserName}/{Password}")]
-        public IEnumerable<LoginData> ValidateUser(string UserName, string password)
+        public int ValidateUser(string UserName, string password)
         {
             return _loginRepository.ValidateUser(UserName, password);
         }

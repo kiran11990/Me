@@ -19,8 +19,9 @@ namespace CrEST.BL
         //    return GetUserNames(UserName, UserType);
         //}
 
-        public IEnumerable<LoginData> ValidateUser(string UserName,string Password)
+        public int ValidateUser(string UserName,string Password)
         {
+            int status=0;
             List<LoginData> users = new List<LoginData>();
             using (CrESTContext db = new CrESTContext())
             {
@@ -29,19 +30,18 @@ namespace CrEST.BL
                 cmd.CommandText = "spValidateUser";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@UserName", UserName));
-                cmd.Parameters.Add(new SqlParameter("@Password", Password));
-              
+                cmd.Parameters.Add(new SqlParameter("@Password", Password));  
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         LoginData rd = new LoginData();
-                        rd.UserName = reader.GetString(0);
-                        // rd.Password = reader.GetString(1);
-                        Console.WriteLine()
+                        status = reader.GetInt32 (0);
+                        //rd.Password = reader.GetString(1);
+                     
                     }
 
-                    return users;
+                    return status;
                 }
             }
 
