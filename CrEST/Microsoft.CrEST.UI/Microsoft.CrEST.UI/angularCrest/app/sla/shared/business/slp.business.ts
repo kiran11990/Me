@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Slp } from '../models/slp';
+import { slaData } from '../models/slp';
 
 @Injectable()
 export class SlpBusiness {
@@ -8,7 +8,7 @@ export class SlpBusiness {
 
     }
 
-    public GetStatus(slpData: Slp) {
+    public GetStatus(slpData: slaData) {
         var result = slpData;
 
         //TODO Check validate rule!! IF(value = "Validate!", "Validate!"
@@ -18,7 +18,7 @@ export class SlpBusiness {
         IF(pref = "L", IF(value <= target, 3, IF(value <= minimum, 2, 1)), ""))))*/
 
         if (result.value == "NA")
-            result.chk = "NA"
+            result.chk = ""
         else if (result.value) {
             var value = this.FormatValue(result.value);
             var targetLevel = this.FormatValue(result.targetLevel);

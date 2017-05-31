@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service'
 import { ReportingPeriod } from "../models/reportingperiod";
-import { Slp } from "../models/slp";
+import { slaData } from "../models/slp";
 import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
@@ -17,13 +17,15 @@ export class SlpService {
     private getSlps: string;
     private getReportingPeriod: string;
     private getRASlps: string;
+    private exportToExcel: string;
 
     constructor(private _constantService: ConstantService, private commonService: CommonService,  private http: Http) {
         this.saveSLPs = _constantService.CONFIG.apiLocations.saveSLPs;
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
         this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
-        this.getRASlps = _constantService.CONFIG.apiLocations.GetRASlps;
+        this.getRASlps = _constantService.CONFIG.apiLocations.getRASlps;
+        this.exportToExcel = _constantService.CONFIG.apiLocations.exportToExcel;
     }
 
     GetReportingPeriods(): Observable<ReportingPeriod[]> {
@@ -32,14 +34,14 @@ export class SlpService {
             .map((res:any) => res.json() as ReportingPeriod[]).catch(this.commonService.handleError);
     }
 
-    GetSlps(period: string, useralias: string): Observable<Slp[]> {
+    GetSlps(period: string, useralias: string): Observable<slaData[]> {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getSlps + "/" + period, { headers: header })
-            .map((res: any) => res.json() as Slp[]).catch(this.commonService.handleError);
+            .map((res: any) => res.json() as slaData[]).catch(this.commonService.handleError);
 
     }
 
-    SaveSLPs(data: Slp[]) {
+    SaveSLPs(data: slaData[]) {
         var header = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: header });
         return this.http.post(this.saveSLPs, data, options)
@@ -55,7 +57,13 @@ export class SlpService {
     GetRASlps() {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getRASlps, { headers: header })
-            .map((res: any) => res.json() as Slp[]).catch(this.commonService.handleError);
+            .map((res: any) => res.json() as slaData[]).catch(this.commonService.handleError);
+    }
+
+    ExportToExcel(fiscalPeriod: any) {
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.exportToExcel + '/' + fiscalPeriod, { headers: header })
+            .map((res: any) => res.json()).catch(this.commonService.handleError);
     }
 }
 

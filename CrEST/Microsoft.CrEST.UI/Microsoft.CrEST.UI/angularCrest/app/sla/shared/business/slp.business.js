@@ -18,7 +18,7 @@ var SlpBusiness = (function () {
         IF(pref = "H", IF(value >= target, 3, IF(value >= minimum, 2, 1)),
         IF(pref = "L", IF(value <= target, 3, IF(value <= minimum, 2, 1)), ""))))*/
         if (result.value == "NA")
-            result.chk = "NA";
+            result.chk = "";
         else if (result.value) {
             var value = this.FormatValue(result.value);
             var targetLevel = this.FormatValue(result.targetLevel);

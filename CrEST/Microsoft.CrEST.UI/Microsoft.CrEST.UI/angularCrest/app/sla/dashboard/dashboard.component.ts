@@ -2,8 +2,10 @@
 import { SowService } from '../shared/services/sows.service';
 import { Sow } from '../shared/models/sow';
 import { SlpService } from '../shared/services/slp.service';
-import { Slp } from '../shared/models/slp';
+import { slaData } from '../shared/models/slp';
 import { ReportingPeriod } from '../shared/models/reportingperiod';
+import 'rxjs/Rx';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
     selector: 'sla-dashboard',
@@ -25,26 +27,75 @@ export class SlaDashboardComponent {
 
 
     public contractIds: Array<Sow> = [];
-    public slps: Array<Slp> = [];
+    public slps: Array<slaData> = [];
     public periods: Array<ReportingPeriod> = [];
     public selectedPeriod: ReportingPeriod;
     public currentSelectedPeriod: any
+    public exportToExcel: any = [];
 
 
     constructor(private sowService: SowService, private slpService: SlpService) {
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
-        this.GetSlps();
+        this.GetRASlps();
         this.GetReportingPeriods();
     }
 
-    onChange(newObj: any) {
-        this.currentSelectedPeriod = newObj;
-        this.selectedPeriod.period = newObj;
+    onChange(selectedPeriod: any, _this: any) {
+        this.currentSelectedPeriod = selectedPeriod;
+        this.selectedPeriod.period = selectedPeriod;
     }
 
-    ExportToExport(fiscalYear: string) {
-        var _this = this;
+    ExportToExport(fiscalPeriod: any, mainThis: any) {
+
+        this.slpService.ExportToExcel(fiscalPeriod.period)
+            .subscribe((data: any) => {
+                mainThis.exportToExcel = data;
+                var options = {
+                    fieldSeparator: ',',
+                    quoteStrings: '"',
+                    decimalseparator: '.',
+                    showLabels: true
+                };
+
+                var excel = new Angular2Csv(mainThis.exportToExcel.slps, "My Report", options);
+
+                //var csvData = mainThis.ConvertToCSV(mainThis.exportToExcel.slps);
+                //var a = document.createElement("a");
+                //a.setAttribute('style', 'display:none;');
+                //document.body.appendChild(a);
+                //var blob = new Blob([csvData], { type: 'text/csv' });
+                //var url = window.URL.createObjectURL(blob);
+                //a.href = url;
+                //a.download = 'SampleExport.csv';
+                //a.click();
+            });
+        
+    }
+
+    private ConvertToCSV(objArray: any) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+        var row = "";
+
+        for (var index in objArray[0]) {
+            //Now convert each value to string and comma-separated
+            row += index + ',';
+        }
+        row = row.slice(0, -1);
+        //append Label row with line break
+        str += row + '\r\n';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+            }
+            str += line + '\r\n';
+        }
+        return str;
     }
 
     private GetActiveContractIdsBarChart() {
@@ -143,7 +194,7 @@ export class SlaDashboardComponent {
             });
     }
 
-    private GetSlps()
+    private GetRASlps()
     {
         var mainthis = this;
         this.slpService.GetRASlps()
@@ -156,7 +207,37 @@ export class SlaDashboardComponent {
         var mainThis = this;
         this.slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
             mainThis.periods = result;
-            mainThis.selectedPeriod = mainThis.periods[0];
+            var allRP: ReportingPeriod = new ReportingPeriod();
+            allRP.id = 0;
+            allRP.period = "All";
+            mainThis.periods.unshift(allRP);
+
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+            mainThis.selectedPeriod = selectedFP;
         });
+    }
+
+    private getCurrentP() {
+        var d = new Date();
+        var currentMonth = d.getMonth() + 1;
+        return currentMonth;
+    }
+
+    private getCurrentY() {
+        var d = new Date();
+        var fiscalYear = d.getFullYear();
+        return fiscalYear;
+    }
+    
+    private GetPreviousFP() {
+        var minusCurrentPeriod = this.getCurrentP() + 11;
+        var plusCurrentPeriod = this.getCurrentP() - 1;
+        if (this.getCurrentP() == 1)
+            return (this.getCurrentY() - 1) + "-" + ('0' + minusCurrentPeriod).slice(-2);
+        else
+            return this.getCurrentY() + "-" + ('0' + plusCurrentPeriod).slice(-2);
     }
 }

@@ -56,5 +56,12 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _slpRepository.SaveSlps(slps);
         }
 
+        [HttpGet]
+        [Route("ExportToExcel/{period}")]
+        public ExportToExcelData ExportToExcel(string period)
+        {
+            return _slpRepository.ExportToExcel(period);
+        }
+
     }
 }
