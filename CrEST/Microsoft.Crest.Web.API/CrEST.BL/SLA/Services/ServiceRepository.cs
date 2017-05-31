@@ -164,9 +164,9 @@ namespace CrEST.BL
 						Currency = reader.GetString(12),
 						ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
 						Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-						Itorg = reader.GetInt32(15),
-						Supplier = _context.Supplier.Where(x => x.SupplierId == reader.GetInt32(2)).FirstOrDefault().SupplierName,
-						ItorgName = _context.Itorg.Where(x => x.ItorgId == reader.GetInt32(15)).FirstOrDefault().ItorgName
+						Itorg = reader.GetInt32(15),						
+						ItorgName = reader.IsDBNull(16) ? string.Empty : reader.GetString(16),
+						Supplier = reader.IsDBNull(17) ? string.Empty : reader.GetString(17)
 					});
 				}
 			}
@@ -184,6 +184,47 @@ namespace CrEST.BL
 			data.CrestLevel3s = _context.CrestLevel3.ToList();
 			data.ItOrg = _context.Itorg.ToList();
 			data.Suppliers = _context.Supplier.ToList();
+
+			return data;
+		}
+
+		public ServiceMetadataList GetServiceMetadataList()
+		{
+			ServiceMetadataList data = new ServiceMetadataList();
+
+			data.ContractIds = _context.SoW.Where(x => x.ContractId != null).Select(x => x.ContractId.Value).Distinct().ToList();
+			data.CrestLevel1Metadata = _context.CrestLevel1
+												.Select(x=>new CrestLevel1Metadata() {
+													Id =x.Id,
+													Service =x.Service
+												})
+												.ToList();
+			data.CrestLevel2Metadata = _context.CrestLevel2
+												.Select(x => new CrestLevel2Metadata()
+												{
+													Id = x.Id,
+													Service = x.Service
+												})
+												.ToList();
+			data.CrestLevel3Metadata = _context.CrestLevel3
+												.Select(x => new CrestLevel3Metadata()
+												{
+													Id = x.Id,
+													Service = x.Service
+												})
+												.ToList();
+			data.ItOrgMetadata = _context.Itorg.Select(x => new ItorgMetadata()
+												{
+													ItorgId = x.ItorgId,
+													ItorgName = x.ItorgName
+												})
+												.ToList();
+			data.SupplierMetadata = _context.Supplier.Select(x => new SupplierMetadata()
+													{
+														SupplierId = x.SupplierId,
+														SupplierName = x.SupplierName
+													})
+													.ToList();
 
 			return data;
 		}

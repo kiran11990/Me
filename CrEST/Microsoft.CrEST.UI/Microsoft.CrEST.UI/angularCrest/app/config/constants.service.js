@@ -41,7 +41,7 @@ var ConstantService = (function () {
                 generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
-                getSlpByStatus: this.apiBaseUrlWithAPI + 'slp/GetSlpsByStatus'
+                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps'
             }
         };
         this.CONSTANTS = {

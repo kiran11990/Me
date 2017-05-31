@@ -65,8 +65,8 @@ namespace CrEST.BL
 					existingItem.Remarks = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
 					existingItem.OwnerAlias = reader.GetString(18);
 					existingItem.Itorg = reader.IsDBNull(19) ? default(int) : reader.GetInt32(19);
-					existingItem.ITOrgName = _context.Itorg.Where(x => x.ItorgId == reader.GetInt32(19)).FirstOrDefault().ItorgName;
-					existingItem.SoWid = reader.GetInt32(20);
+					existingItem.ITOrgName = reader.IsDBNull(20) ? string.Empty : reader.GetString(20);
+					existingItem.SoWid = reader.GetInt32(21);
 				}
 			}
 
@@ -169,8 +169,9 @@ namespace CrEST.BL
 					item.Remarks = reader.IsDBNull(16) ? string.Empty : reader.GetString(16);
 					item.OwnerAlias = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
 					item.Itorg = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18);
-					item.ITOrgName = _context.Itorg.Where(x => x.ItorgId == item.Itorg).FirstOrDefault().ItorgName;
-					item.SoWid = reader.GetInt32(19);
+					item.ITOrgName = reader.IsDBNull(19) ? string.Empty : reader.GetString(19);
+					item.SoWid = reader.GetInt32(20);
+					item.SupplierId = reader.IsDBNull(21) ? default(int) : reader.GetInt32(21);
 					applications.Add(item);
 				}
 			}

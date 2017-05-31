@@ -8,13 +8,13 @@ export class ConstantService {
     private apiBaseUrlWithAPI: string
     public CONFIG: any;
     public CONSTANTS: any;
-    
+
     constructor(private _config: ConfigService) {
         this.apiBaseUrl = _config.get("apiBaseUri");
         this.apiBaseUrlWithAPI = this.apiBaseUrl + "api/";
         this.CONFIG = {
             apiLocations: {
-                baseUrl: this.apiBaseUrl, 
+                baseUrl: this.apiBaseUrl,
 
                 //application
                 getApplication: this.apiBaseUrlWithAPI + 'Application/GetAllApplications',
@@ -42,7 +42,7 @@ export class ConstantService {
                 generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
-                getSlpByStatus: this.apiBaseUrlWithAPI + 'slp/GetSlpsByStatus'
+                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps'
             }
         };
 

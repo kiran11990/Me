@@ -146,8 +146,8 @@ export class SlaDashboardComponent {
     private GetSlps()
     {
         var mainthis = this;
-        this.slpService.GetSlpsByStatus(2, "")
-            .subscribe(data => {
+        this.slpService.GetRASlps()
+            .subscribe((data:any) => {
                 mainthis.slps = data;
             });
     }

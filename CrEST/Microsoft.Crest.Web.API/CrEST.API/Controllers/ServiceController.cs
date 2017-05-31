@@ -53,5 +53,12 @@ namespace Microsoft.Crest.Web.API.Controllers
         {
             return _serviceRepository.GetServiceMetadata();
         }
-    }
+
+		[HttpGet]
+		[Route("GetServiceMetadataList")]
+		public ServiceMetadataList GetServiceMetadataList()
+		{
+			return _serviceRepository.GetServiceMetadataList(); 
+		}
+	}
 }
