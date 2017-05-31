@@ -187,6 +187,47 @@ namespace CrEST.BL
 
 			return data;
 		}
+
+		public ServiceMetadataList GetServiceMetadataList()
+		{
+			ServiceMetadataList data = new ServiceMetadataList();
+
+			data.ContractIds = _context.SoW.Where(x => x.ContractId != null).Select(x => x.ContractId.Value).Distinct().ToList();
+			data.CrestLevel1Metadata = _context.CrestLevel1
+												.Select(x=>new CrestLevel1Metadata() {
+													Id =x.Id,
+													Service =x.Service
+												})
+												.ToList();
+			data.CrestLevel2Metadata = _context.CrestLevel2
+												.Select(x => new CrestLevel2Metadata()
+												{
+													Id = x.Id,
+													Service = x.Service
+												})
+												.ToList();
+			data.CrestLevel3Metadata = _context.CrestLevel3
+												.Select(x => new CrestLevel3Metadata()
+												{
+													Id = x.Id,
+													Service = x.Service
+												})
+												.ToList();
+			data.ItOrgMetadata = _context.Itorg.Select(x => new ItorgMetadata()
+												{
+													ItorgId = x.ItorgId,
+													ItorgName = x.ItorgName
+												})
+												.ToList();
+			data.SupplierMetadata = _context.Supplier.Select(x => new SupplierMetadata()
+													{
+														SupplierId = x.SupplierId,
+														SupplierName = x.SupplierName
+													})
+													.ToList();
+
+			return data;
+		}
 	}
 }
 

@@ -15,5 +15,7 @@ namespace CrEST.BL
         IEnumerable<ServiceData> FindServices(int contractId, string applicationGroup);
 
         ServiceMetadata GetServiceMetadata();
-    }
+
+		ServiceMetadataList GetServiceMetadataList(); 
+	}
 }
