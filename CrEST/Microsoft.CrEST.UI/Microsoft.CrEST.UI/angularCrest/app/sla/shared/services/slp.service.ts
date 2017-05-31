@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { ConstantService } from '../../../config/constants.service'
 import { ReportingPeriod } from "../models/reportingperiod";
 import { slaData } from "../models/slp";
+import { ExportToExcel } from "../models/exportToExcel";
 import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
@@ -60,10 +61,10 @@ export class SlpService {
             .map((res: any) => res.json() as slaData[]).catch(this.commonService.handleError);
     }
 
-    ExportToExcel(fiscalPeriod: any) {
+    ExportToExcel(fiscalPeriod: any): Observable<ExportToExcel> {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.exportToExcel + '/' + fiscalPeriod, { headers: header })
-            .map((res: any) => res.json()).catch(this.commonService.handleError);
+            .map((res: any) => res.json() as ExportToExcel).catch(this.commonService.handleError);
     }
 }
 

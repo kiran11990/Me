@@ -39,7 +39,7 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("GenerateSlps/{period}/{status}")]
+        [Route("GenerateSlps/{period}/{createdBy}")]
         public string GenerateSlps(string period, string createdBy = "")
         {
             return _slpRepository.GenerateSlps(period, createdBy);
