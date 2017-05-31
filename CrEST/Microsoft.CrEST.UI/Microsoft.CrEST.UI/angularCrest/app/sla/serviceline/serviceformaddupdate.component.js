@@ -38,7 +38,7 @@ var ServicelineFormComponent = (function () {
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'itOrg': ['']
+            'itOrg': [''],
         });
     }
     ServicelineFormComponent.prototype.ngOnInit = function () {
@@ -50,6 +50,7 @@ var ServicelineFormComponent = (function () {
             if (this.id != null) {
                 this.Sservice.getServiceById(this.id)
                     .subscribe(function (data) {
+                    debugger;
                     _this.serviceList = data;
                 });
             }

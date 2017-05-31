@@ -86,7 +86,8 @@ export class SlpComponent implements OnInit {
 
         //TODO
         this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
-            .subscribe((result:any) => {
+            .subscribe((result: any) => {
+              
                 if (result == "INF1000") {
                     _this.Message = _this.INF0002;
                     _this.MessageType = 1;
@@ -104,16 +105,19 @@ export class SlpComponent implements OnInit {
     }
 
     Save(mainThis: any) {
+        debugger;
         mainThis.Message = "";
         if (mainThis.invalidHandsonCells.length <= 0) {
             //TODO
             mainThis.data.map(function (item: any) {
+               
                 item.lastModifiedBy = "supraja_tatichetla";
                 return item;
             })
 
             this._slpService.SaveSLPs(mainThis.data)
-                .subscribe((result:any) => {
+                .subscribe((result: any) => {
+                    debugger;
                     if (result == "INF1000") {
                         mainThis.Message = mainThis.INF0001;
                         mainThis.MessageType = 1;
