@@ -193,3 +193,16 @@ Affected parameters are:
    logtoconsole = 
    logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
    assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing assembly 'C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.InstallLog
+   assemblypath = C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.InstallLog
+   assemblypath = C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\notification.exe

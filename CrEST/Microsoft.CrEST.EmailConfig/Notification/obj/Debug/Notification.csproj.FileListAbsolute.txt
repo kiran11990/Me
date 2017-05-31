@@ -6,3 +6,11 @@ D:\Crest\SourceCode\Notification\Notification\obj\Debug\Notification.csproj.Gene
 D:\Crest\SourceCode\Notification\Notification\obj\Debug\Notification.exe
 D:\Crest\SourceCode\Notification\Notification\obj\Debug\Notification.pdb
 D:\Crest\SourceCode\Notification\Notification\obj\Debug\Notification.csprojResolveAssemblyReference.cache
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\Notification.exe.config
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\Notification.exe
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\bin\Debug\Notification.pdb
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\obj\Debug\Notification.csprojResolveAssemblyReference.cache
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\obj\Debug\Notification.ProjectInstaller.resources
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\obj\Debug\Notification.csproj.GenerateResource.Cache
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\obj\Debug\Notification.exe
+C:\Users\v-popras\Source\Repos\Me2\CrEST\Microsoft.CrEST.EmailConfig\Notification\obj\Debug\Notification.pdb
