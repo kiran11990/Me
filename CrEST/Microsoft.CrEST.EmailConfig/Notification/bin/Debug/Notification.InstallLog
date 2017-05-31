@@ -1,0 +1,195 @@
+﻿Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Creating EventLog source Notification in log Application...
+Rolling back assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Restoring event log to previous state for source Notification.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Creating EventLog source Notification in log Application...
+Rolling back assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Restoring event log to previous state for source Notification.
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Warning: The source Notification is not registered on the local machine.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Uninstalling assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Removing EventLog source Notification.
+Service Notification is being removed from the system...
+Service Notification was successfully removed from the system.
+Installing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe
+Installing service Notification...
+Service Notification has been successfully installed.
+Creating EventLog source Notification in log Application...
+Committing assembly 'D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.InstallLog
+   assemblypath = D:\Crest\SourceCode\Notification\Notification\bin\Debug\Notification.exe

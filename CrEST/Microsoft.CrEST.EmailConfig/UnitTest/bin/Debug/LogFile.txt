@@ -1,0 +1,66 @@
+5/18/2017 12:32:30 PM: Daily Reporting service started15453636.7985
+5/18/2017 12:32:32 PM: calling
+5/18/2017 12:34:30 PM: Daily Reporting service started15329332.9404
+5/18/2017 12:34:30 PM: calling
+5/18/2017 12:38:43 PM: Daily Reporting service started15076292.488
+5/18/2017 12:38:43 PM: calling
+5/18/2017 12:40:37 PM: Daily Reporting service started14962299.6125
+5/18/2017 12:40:37 PM: calling
+5/18/2017 12:43:28 PM: Daily Reporting service started14791341.8932
+5/18/2017 12:43:28 PM: calling
+5/18/2017 12:43:29 PM: Daily Reporting service started14790563.3742
+5/18/2017 12:43:29 PM: calling
+5/18/2017 12:44:09 PM: Daily Reporting service started14750276.8563
+5/18/2017 12:44:09 PM: calling
+5/18/2017 12:44:23 PM: mail end
+5/18/2017 1:00:59 PM: mail end
+5/18/2017 3:09:23 PM: Daily Reporting service started120000
+5/18/2017 3:09:42 PM: mail Sent 
+5/18/2017 3:11:10 PM: Daily Reporting service started120000
+5/18/2017 3:11:17 PM: mail Sent 
+5/18/2017 3:22:11 PM: Daily Reporting service started120000
+5/18/2017 3:22:15 PM: mail Start 
+5/18/2017 3:23:07 PM:  started   
+5/18/2017 3:23:37 PM: mail Sent 
+5/18/2017 3:23:37 PM: service sleep 
+5/18/2017 4:36:37 PM: Daily Reporting service started-1283270.0227
+5/18/2017 4:37:55 PM: Daily Reporting service started156460.3124
+5/18/2017 4:38:02 PM: calling
+5/18/2017 4:47:11 PM: Daily Reporting service started214140.7717
+5/18/2017 4:47:16 PM: calling
+5/19/2017 11:13:32 AM:  initilaze 
+5/19/2017 11:13:47 AM:  db call  
+5/19/2017 11:13:51 AM:  sql open   
+5/19/2017 11:13:57 AM:  sql befor exit  
+5/19/2017 11:14:02 AM:  sql after exit  
+5/19/2017 11:14:21 AM: 
+5/19/2017 11:15:13 AM:  initilaze 
+5/19/2017 11:15:20 AM:  db call  
+5/19/2017 11:15:22 AM:  sql open   
+5/19/2017 11:15:24 AM:  sql befor exit  
+5/19/2017 11:15:29 AM:  sql after exit  
+5/19/2017 11:15:31 AM: 
+5/19/2017 11:16:52 AM:  initilaze 
+5/19/2017 11:16:58 AM:  db call  
+5/19/2017 11:16:59 AM:  sql open   
+5/19/2017 11:17:02 AM:  sql befor exit  
+5/19/2017 11:17:07 AM:  sql after exit  
+5/19/2017 11:17:16 AM: v-sued@microsoft.com
+5/19/2017 11:57:02 AM:  initilaze 
+5/19/2017 11:57:28 AM:  initilaze 
+5/19/2017 11:58:15 AM:  initilaze 
+5/19/2017 2:20:59 PM:  initilaze 
+5/19/2017 2:21:06 PM: mail Start  mail method
+5/19/2017 2:21:06 PM:  db call befor  
+5/19/2017 2:21:07 PM:  db call  
+5/19/2017 2:21:08 PM:  sql open   
+5/19/2017 2:21:08 PM:  sql befor exit  
+5/19/2017 2:21:16 PM:  sql after exit  
+5/19/2017 2:21:16 PM: v-sued@microsoft.com
+5/19/2017 2:21:18 PM:  db cal end mail method 
+5/19/2017 2:21:20 PM:  started mail method  
+5/19/2017 2:21:25 PM:  send mail method started   
+5/19/2017 2:21:29 PM: suneethae@gmail.comSrisuni@1suneethae@gmail.comsmtp.gmail.com
+5/19/2017 2:21:35 PM: firstv-sued@microsoft.comsuneethae@gmail.com suneethae@gmail.comSrisuni@1
+5/19/2017 2:21:39 PM: v-sued@microsoft.comsuneethae@gmail.com suneethae@gmail.comSrisuni@1
+5/19/2017 2:21:50 PM: mail Sent 

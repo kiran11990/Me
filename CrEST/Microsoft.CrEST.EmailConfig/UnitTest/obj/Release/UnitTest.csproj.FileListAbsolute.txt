@@ -1,0 +1,16 @@
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\UnitTest.dll.config
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\UnitTest.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\UnitTest.pdb
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Notification.exe
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Notification.pdb
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Notification.exe.config
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\Crest\SourceCode\Notification\UnitTest\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\Crest\SourceCode\Notification\UnitTest\obj\Release\UnitTest.csprojResolveAssemblyReference.cache
+D:\Crest\SourceCode\Notification\UnitTest\obj\Release\UnitTest.dll
+D:\Crest\SourceCode\Notification\UnitTest\obj\Release\UnitTest.pdb
