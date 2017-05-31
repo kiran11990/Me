@@ -23,7 +23,8 @@ var SlpService = (function () {
         this.generateSLPforCurrentPeriod = _constantService.CONFIG.apiLocations.generateSLPforCurrentPeriod;
         this.getSlps = _constantService.CONFIG.apiLocations.getSlps;
         this.getReportingPeriod = _constantService.CONFIG.apiLocations.getReportingPeriod;
-        this.getRASlps = _constantService.CONFIG.apiLocations.GetRASlps;
+        this.getRASlps = _constantService.CONFIG.apiLocations.getRASlps;
+        this.exportToExcel = _constantService.CONFIG.apiLocations.exportToExcel;
     }
     SlpService.prototype.GetReportingPeriods = function () {
         var header = new Headers({ 'Content-Type': 'application/json' });
@@ -49,6 +50,11 @@ var SlpService = (function () {
     SlpService.prototype.GetRASlps = function () {
         var header = new Headers({ 'Content-Type': 'application/json' });
         return this.http.get(this.getRASlps, { headers: header })
+            .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
+    };
+    SlpService.prototype.ExportToExcel = function (fiscalPeriod) {
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        return this.http.get(this.exportToExcel + '/' + fiscalPeriod, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     return SlpService;

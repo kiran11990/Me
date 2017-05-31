@@ -19,7 +19,7 @@ namespace CrEST.Models
 
         public string SupplierName { get; set; }
         public string SCID { get; set; }
-        public int ContractId { get; set; }
+        public int? ContractId { get; set; }
         public string ApplicationGroup { get; set; }
         public string CrestLevel1 { get; set; }
         public string CrestLevel2 { get; set; }
@@ -36,6 +36,7 @@ namespace CrEST.Models
         public string Remarks { get; set; }
         public string ValidationNotes { get; set; }
         public string Type { get; set; }
-        public int Chk { get; set; }
+        public int? Chk { get; set; }
+        public string InfyOwner { get; set; }
     }
 }

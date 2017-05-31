@@ -43,21 +43,8 @@ var SlpComponent = (function () {
     SlpComponent.prototype.onChange = function (selectedPeriod, _this) {
         _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.GetCurrentFP();
-        var previousFP = _this.GetPreviousFP();
         _this.currentSelectedPeriod = selectedPeriod.period;
-        if (_this.currentSelectedPeriod == currentFP) {
-            _this.showGenerateAction = true;
-            _this.showSaveAction = true;
-        }
-        else if (_this.currentSelectedPeriod == previousFP) {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = true;
-        }
-        else {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = false;
-        }
+        _this.SetActionButton(_this);
         this.GetSLPData(selectedPeriod.period);
     };
     SlpComponent.prototype.Generate = function (fiscalYear, _this) {
@@ -110,6 +97,7 @@ var SlpComponent = (function () {
     };
     //**Actions and Events End
     SlpComponent.prototype.GetReportingPeriods = function () {
+        var _this = this;
         var mainThis = this;
         this._slpService.GetReportingPeriods().subscribe(function (result) {
             mainThis.periods = result;
@@ -117,9 +105,33 @@ var SlpComponent = (function () {
             allRP.id = 0;
             allRP.period = "All";
             mainThis.periods.unshift(allRP);
-            mainThis.selectedPeriod = allRP;
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = _this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+            mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = mainThis.selectedPeriod.period;
+            mainThis.SetActionButton(mainThis);
             mainThis.GetSLPData(mainThis.selectedPeriod.period);
         });
+    };
+    SlpComponent.prototype.SetActionButton = function (mainThis) {
+        var currentFP = mainThis.GetCurrentFP();
+        var previousFP = mainThis.GetPreviousFP();
+        var d = new Date();
+        var day = d.getDate();
+        if (mainThis.currentSelectedPeriod == currentFP) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else if (mainThis.currentSelectedPeriod == previousFP && day <= 10) {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = true;
+        }
+        else {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = false;
+        }
     };
     SlpComponent.prototype.GetSLPData = function (fiscalYear) {
         var _this = this;
@@ -376,8 +388,6 @@ var SlpComponent = (function () {
                 td.style.backgroundColor = "#FFFF00"; //yellow
             else if (status == "1")
                 td.style.backgroundColor = "#FF0000"; //red
-            else if (status == "NA")
-                td.innerText = "NA";
             return td;
         }
     };

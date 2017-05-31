@@ -1,4 +1,4 @@
-export class Slp {
+export class slaData {
     id: number
     slabaseId: number;
     supplierName: string;
@@ -29,5 +29,6 @@ export class Slp {
     createdDate: string;
     lastModifiedBy: string;
     lastModifiedDate: string;
+    infyOwner: string;
 }
 

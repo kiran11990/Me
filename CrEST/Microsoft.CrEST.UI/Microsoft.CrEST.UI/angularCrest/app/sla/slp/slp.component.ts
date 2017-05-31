@@ -6,7 +6,7 @@ import { HotTableModule } from 'ng2-handsontable';
 import { SlpService } from "../shared/services/slp.service";
 import { SlpBusiness } from "../shared/business/slp.business";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
-import { Slp } from "../shared/models/slp";
+import { slaData } from "../shared/models/slp";
 import { HandsonCells } from "../shared/models/handson";
 import { ConstantService } from "../../config/constants.service";
 
@@ -60,22 +60,9 @@ export class SlpComponent implements OnInit {
     onChange(selectedPeriod: any, _this: any) {
         _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.GetCurrentFP();
-        var previousFP = _this.GetPreviousFP();
-        _this.currentSelectedPeriod = selectedPeriod.period;
 
-        if (_this.currentSelectedPeriod == currentFP) {
-            _this.showGenerateAction = true;
-            _this.showSaveAction = true;
-        }
-        else if (_this.currentSelectedPeriod == previousFP) {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = true;
-        }
-        else {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = false;
-        }
+        _this.currentSelectedPeriod = selectedPeriod.period;
+        _this.SetActionButton(_this);
 
         this.GetSLPData(selectedPeriod.period);
     }
@@ -143,14 +130,45 @@ export class SlpComponent implements OnInit {
             allRP.id = 0;
             allRP.period = "All";
             mainThis.periods.unshift(allRP);
-            mainThis.selectedPeriod = allRP;
-            mainThis.GetSLPData(mainThis.selectedPeriod.period)
+
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+
+            mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = mainThis.selectedPeriod.period;
+
+            mainThis.SetActionButton(mainThis);
+
+            mainThis.GetSLPData(mainThis.selectedPeriod.period);
         });
     }
 
+    private SetActionButton(mainThis:any)
+    {
+        var currentFP = mainThis.GetCurrentFP();
+        var previousFP = mainThis.GetPreviousFP();
+
+        var d = new Date();
+        var day = d.getDate();
+
+        if (mainThis.currentSelectedPeriod == currentFP) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else if (mainThis.currentSelectedPeriod == previousFP && day <= 10) {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = true;
+        }
+        else {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = false;
+        }
+    }
     private GetSLPData(fiscalYear: string) {
         var _this = this;
-        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<Slp>) => {
+        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<slaData>) => {
             _this.data = result;
         });
     }
@@ -443,8 +461,6 @@ export class SlpComponent implements OnInit {
                 td.style.backgroundColor = "#FFFF00"; //yellow
             else if (status == "1")
                 td.style.backgroundColor = "#FF0000"; //red
-            else if (status == "NA")
-                td.innerText = "NA";
             return td;
         }
     }

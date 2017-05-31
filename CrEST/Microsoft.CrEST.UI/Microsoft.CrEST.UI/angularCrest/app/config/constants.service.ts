@@ -42,7 +42,8 @@ export class ConstantService {
                 generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
-                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps'
+                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps',
+                exportToExcel: this.apiBaseUrlWithAPI + 'slp/ExportToExcel'
             }
         };
 
