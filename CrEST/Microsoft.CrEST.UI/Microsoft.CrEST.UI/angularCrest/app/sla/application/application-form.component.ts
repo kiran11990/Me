@@ -51,12 +51,11 @@ export class ApplicationFormComponent implements OnInit {
             'endDate': ['', Validators.required],
             'endtoend': [''],
             'epm': [''],
-            'tm': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'ManagedCapacity': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'ManagedServices': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'tm': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'ManagedCapacity': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'ManagedServices': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'Software': ['',  Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'sowId': ['', Validators.required],
             'itOrg': [''],
             //'itorg':['']
         })
@@ -118,6 +117,8 @@ export class ApplicationFormComponent implements OnInit {
             this.applicationService.getApplicationbyId(id)
                 .subscribe(data => {
                     this.applicationData = data
+
+                    this.applicationData.softwareAssetSearchableId = (this.applicationData.softwareAssetSearchableId == null) ? this.applicationData.softwareAssetSearchableId :this.applicationData.softwareAssetSearchableId.trim(); 
                     var datepickerEndDate = new Date(this.applicationData.endDate);
                     var datepickerStartDate = new Date(this.applicationData.startDate);
                     this.enddate = <IMyDateModel>{
@@ -179,7 +180,7 @@ export class ApplicationFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                    this.routeID ? alert("updatedsuccessfully") : alert("application added successfully")
+                    this.routeID ? alert(" application updatedsuccessfully") : alert("application addedsuccessfully")
                     this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
                 }
             });
