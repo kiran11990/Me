@@ -164,9 +164,9 @@ namespace CrEST.BL
 						Currency = reader.GetString(12),
 						ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
 						Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-						Itorg = reader.GetInt32(15),
-						Supplier = _context.Supplier.Where(x => x.SupplierId == reader.GetInt32(2)).FirstOrDefault().SupplierName,
-						ItorgName = _context.Itorg.Where(x => x.ItorgId == reader.GetInt32(15)).FirstOrDefault().ItorgName
+						Itorg = reader.GetInt32(15),						
+						ItorgName = reader.IsDBNull(16) ? string.Empty : reader.GetString(16),
+						Supplier = reader.IsDBNull(17) ? string.Empty : reader.GetString(17)
 					});
 				}
 			}
