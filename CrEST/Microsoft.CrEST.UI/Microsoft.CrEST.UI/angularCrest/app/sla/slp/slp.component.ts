@@ -69,16 +69,14 @@ export class SlpComponent implements OnInit {
 
     Generate(fiscalYear: string, _this: any) {
         _this.Message = "";
-        var currentFP = _this.GetCurrentFP();
 
         //TODO
-        this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
+        this._slpService.GenerateSLPforCurrentPeriod(fiscalYear, "supraja_tatichetla")
             .subscribe((result: any) => {
-              
                 if (result == "INF1000") {
                     _this.Message = _this.INF0002;
                     _this.MessageType = 1;
-                    _this.GetSLPData(currentFP);
+                    _this.GetSLPData(fiscalYear);
                 }
                 else if (result == "ERR1000") {
                     _this.Message = _this.ERR0004;
@@ -96,7 +94,6 @@ export class SlpComponent implements OnInit {
         if (mainThis.invalidHandsonCells.length <= 0) {
             //TODO
             mainThis.data.map(function (item: any) {
-               
                 item.lastModifiedBy = "supraja_tatichetla";
                 return item;
             })
@@ -143,8 +140,7 @@ export class SlpComponent implements OnInit {
         });
     }
 
-    private SetActionButton(mainThis:any)
-    {
+    private SetActionButton(mainThis: any) {
         var currentFP = mainThis.GetCurrentFP();
         var previousFP = mainThis.GetPreviousFP();
 
@@ -156,7 +152,7 @@ export class SlpComponent implements OnInit {
             mainThis.showSaveAction = true;
         }
         else if (mainThis.currentSelectedPeriod == previousFP && day <= 10) {
-            mainThis.showGenerateAction = false;
+            mainThis.showGenerateAction = true;
             mainThis.showSaveAction = true;
         }
         else {
@@ -393,13 +389,13 @@ export class SlpComponent implements OnInit {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        var valueRemarksCell = instance.getCellMeta(row, col + 1);
+
         if (status == "1") {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = true;
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
@@ -407,6 +403,8 @@ export class SlpComponent implements OnInit {
                 }
             }
         }
+
+        var tdValueRemarks = instance.getCell(row, col + 1, true);
 
         /***********Set status column**********/
         if (value != "NA" || value) {
@@ -421,23 +419,31 @@ export class SlpComponent implements OnInit {
 
     private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any, cells: any) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
-       
+        var valuesCell = instance.getCellMeta(row, col);
+
         //check for percentage and numbers
         if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
-            var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valuesCell = instance.getCellMeta(row, col);
-            valuesCell.valid = false;
+            valuesCell.valid = true;
 
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
                     cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
                 }
             }
+        }
+
+        //TODO
+        if (cellProperties.mainThis.data[row].infyOwner === "karthik_ramamoorthi") {
+            cellProperties.editor = false;
+            td.style.background = '#EEE';
+        } else {
+            cellProperties.editor = 'text';
+            td.style.background = '#FFFFFF';
         }
     }
 

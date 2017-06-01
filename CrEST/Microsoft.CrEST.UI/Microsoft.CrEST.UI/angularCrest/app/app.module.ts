@@ -15,15 +15,21 @@ import { SlaModule } from "./sla/sla.module";
 import { SharedModule } from './shared/shared.module';
 import { Routing } from './app.routing';
 
+import { LoginComponent } from "../Authentication/login/login.component";
+import { RegisterComponent } from "../Authentication/Register/register.component";
+import { UserService } from "../Authentication/_services/user.service";
+
+
+
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, CommonModule, ReactiveFormsModule],
+	imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, LoginComponent, RegisterComponent, CommonModule, ReactiveFormsModule],
     declarations: [AppComponent, HomeComponent, NavigationComponent, NotFoundComponent],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
 
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        ConfigService, ConstantService, CommonService,
+		ConfigService, ConstantService, CommonService, UserService,
         {
             provide: APP_INITIALIZER,
             useFactory: (config: ConfigService) => () => config.load(),

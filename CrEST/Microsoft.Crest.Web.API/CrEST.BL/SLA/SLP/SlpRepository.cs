@@ -82,7 +82,7 @@ namespace CrEST.BL
             cmd.CommandText = "spGenerateSLPData";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@ReportingPeriod", period));
-            cmd.Parameters.Add(new SqlParameter("@CreatedBy", createdBy));
+            cmd.Parameters.Add(new SqlParameter("@LastModifiedBy", createdBy));
             cmd.CommandTimeout = 300;
 
             using (var reader = cmd.ExecuteReader())

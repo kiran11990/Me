@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { SowService } from '../shared/services/sows.service';
 import { SlpService } from '../shared/services/slp.service';
+import { ExportToExcel } from '../shared/models/exportToExcel';
 import { ReportingPeriod } from '../shared/models/reportingperiod';
-import 'rxjs/Rx';
-import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+import { AngularToCsv } from '../../shared/AngularTocsv';
 var SlaDashboardComponent = (function () {
     function SlaDashboardComponent(sowService, slpService) {
         this.sowService = sowService;
@@ -30,7 +30,7 @@ var SlaDashboardComponent = (function () {
         this.contractIds = [];
         this.slps = [];
         this.periods = [];
-        this.exportToExcel = [];
+        this.exportToExcel = new ExportToExcel();
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
         this.GetRASlps();
@@ -50,39 +50,11 @@ var SlaDashboardComponent = (function () {
                 decimalseparator: '.',
                 showLabels: true
             };
-            var excel = new Angular2Csv(mainThis.exportToExcel.slps, "My Report", options);
-            //var csvData = mainThis.ConvertToCSV(mainThis.exportToExcel.slps);
-            //var a = document.createElement("a");
-            //a.setAttribute('style', 'display:none;');
-            //document.body.appendChild(a);
-            //var blob = new Blob([csvData], { type: 'text/csv' });
-            //var url = window.URL.createObjectURL(blob);
-            //a.href = url;
-            //a.download = 'SampleExport.csv';
-            //a.click();
+            new AngularToCsv(mainThis.exportToExcel.sows, "SoWs", options);
+            new AngularToCsv(mainThis.exportToExcel.services, "Services", options);
+            new AngularToCsv(mainThis.exportToExcel.applications, "Applications", options);
+            new AngularToCsv(mainThis.exportToExcel.slps, "Service Level Performance", options);
         });
-    };
-    SlaDashboardComponent.prototype.ConvertToCSV = function (objArray) {
-        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-        var str = '';
-        var row = "";
-        for (var index in objArray[0]) {
-            //Now convert each value to string and comma-separated
-            row += index + ',';
-        }
-        row = row.slice(0, -1);
-        //append Label row with line break
-        str += row + '\r\n';
-        for (var i = 0; i < array.length; i++) {
-            var line = '';
-            for (var index in array[i]) {
-                if (line != '')
-                    line += ',';
-                line += array[i][index];
-            }
-            str += line + '\r\n';
-        }
-        return str;
     };
     SlaDashboardComponent.prototype.GetActiveContractIdsBarChart = function () {
         var mainthis = this;
