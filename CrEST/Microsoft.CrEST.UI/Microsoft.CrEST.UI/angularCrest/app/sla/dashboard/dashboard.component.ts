@@ -43,13 +43,16 @@ export class SlaDashboardComponent {
     }
 
     onChange(selectedPeriod: any, _this: any) {
-        this.currentSelectedPeriod = selectedPeriod;
-        this.selectedPeriod.period = selectedPeriod;
+
+        _this.selectedPeriod = selectedPeriod;
+        _this.currentSelectedPeriod = selectedPeriod.period;
+        //this.currentSelectedPeriod = selectedPeriod;
+        //this.selectedPeriod.period = selectedPeriod;
     }
 
     ExportToExport(fiscalPeriod: any, mainThis: any) {
 
-        this.slpService.ExportToExcel(fiscalPeriod.period)
+        this.slpService.ExportToExcel(fiscalPeriod)
             .subscribe((data: ExportToExcel) => {
                 mainThis.exportToExcel = data;
 
@@ -193,6 +196,7 @@ export class SlaDashboardComponent {
                 return node.period == currentFP;
             });
             mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = selectedFP.period;
         });
     }
 

@@ -38,11 +38,13 @@ var SlaDashboardComponent = (function () {
         this.GetReportingPeriods();
     }
     SlaDashboardComponent.prototype.onChange = function (selectedPeriod, _this) {
-        this.currentSelectedPeriod = selectedPeriod;
-        this.selectedPeriod.period = selectedPeriod;
+        _this.selectedPeriod = selectedPeriod;
+        _this.currentSelectedPeriod = selectedPeriod.period;
+        //this.currentSelectedPeriod = selectedPeriod;
+        //this.selectedPeriod.period = selectedPeriod;
     };
     SlaDashboardComponent.prototype.ExportToExport = function (fiscalPeriod, mainThis) {
-        this.slpService.ExportToExcel(fiscalPeriod.period)
+        this.slpService.ExportToExcel(fiscalPeriod)
             .subscribe(function (data) {
             mainThis.exportToExcel = data;
             var options = {
@@ -166,6 +168,7 @@ var SlaDashboardComponent = (function () {
                 return node.period == currentFP;
             });
             mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = selectedFP.period;
         });
     };
     SlaDashboardComponent.prototype.getCurrentP = function () {
