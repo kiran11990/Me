@@ -30,43 +30,50 @@ namespace CrEST.BL
                 cmd.CommandText = "spValidateUser";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@UserName", UserName));
-                cmd.Parameters.Add(new SqlParameter("@Password", Password));  
+                cmd.Parameters.Add(new SqlParameter("@Password", Password));
+                
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         LoginData rd = new LoginData();
                         status = reader.GetInt32 (0);
-                        //rd.Password = reader.GetString(1);
-                     
+                        //rd.Password = reader.GetString(1)
                     }
-
                     return status;
                 }
             }
-
         }
-        public IEnumerable<RegisterData> GetUsersRegistered(string UserName, string Password)
+        public int GetUsersRegistered(string UserName, string Password, string RoleName)
         {
-            List<RegisterData> rd1 = new List<RegisterData>();
+            int status = 0;
+
             using (CrESTContext db = new CrESTContext())
             {
+                //RegisterData rd = new RegisterData();
                 db.Database.OpenConnection();
                 DbCommand cmd = db.Database.GetDbConnection().CreateCommand();
-                cmd.CommandText = "spInsertUsers";
+                cmd.CommandText = "spInsertUser";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@UserName", UserName));
+                cmd.Parameters.Add(new SqlParameter("@Password", Password));
+                cmd.Parameters.Add(new SqlParameter("@Rolename", RoleName));
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
-                    {
-                        RegisterData rd = new RegisterData();
-                        rd.UserName = reader.GetString(0);
-                        rd1.Add(rd);
+                    
+                        while (reader.Read())
+                        {
+                        RegisterData rd1 = new RegisterData();
+                            UserName = reader.GetString(0);
+                            Password = reader.GetString(1);
+                            RoleName = reader.GetString(2);
+                            //status.Add(rd1);
+                        }
+                     
                     }
-
-                    return rd1;
-                }
-            }
+                return status;
+                
         }
         }
+       }
     }

@@ -28,11 +28,19 @@ namespace Microsoft.Crest.Web.API.Controllers
             return _loginRepository.ValidateUser(UserName, password);
         }
         [HttpPost]
-        [Route("GetUsersRegistered/{UserName}/{Password}")]
-        public IEnumerable<RegisterData>GetUsersRegistered(string Username,string Password)
+        [Route("GetUsersRegistered/{UserName}/{Password}/{RoleName}")]
+        public int GetUsersRegistered(string Username,string Password,string RoleName)
         {
-            return _loginRepository.GetUsersRegistered(Username,Password);
+            return _loginRepository.GetUsersRegistered(Username,Password,RoleName);
         }
+
+
+        //[HttpGet]
+        //[Route("GetUsersMetadata")]
+        //public RegisterUser GetUsersMetadata()
+        //{
+        //    return _loginRepository.GetUsersMetadata();
+        //}
 
     }
 
