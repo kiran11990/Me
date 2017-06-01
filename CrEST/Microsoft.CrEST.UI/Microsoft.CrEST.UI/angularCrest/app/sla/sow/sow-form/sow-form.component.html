@@ -40,11 +40,12 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['itorg'].valid && sowForm.controls['itorg'].touched}">
                     <label>Itorg:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorgId" style="width:50%" (ngModelChange)="onitorgChange($event)"  >
+                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorg" style="width:50%" (ngModelChange)="onitorgChange($event)"  >
                         <option *ngIf="title=='New Sow'" value="0">Select IT Org</option>
                         <option *ngFor="let item of sowMetaData.itOrg"
                                 [value]="item.itorgId" [selected]="sow.itorg ==item.itorgId">
                             {{item.itorgName}}
+                            {{item.itorgId}}
                         </option>
                     </select>
                     <div *ngIf="sowForm.controls['itorg'].hasError('required') && sowForm.controls['itorg'].touched" class="alert alert-danger">Please select service line.</div>

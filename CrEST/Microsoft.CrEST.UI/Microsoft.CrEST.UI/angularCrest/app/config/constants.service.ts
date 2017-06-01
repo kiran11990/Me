@@ -25,7 +25,7 @@ export class ConstantService {
 
                 //service
                 getservice: this.apiBaseUrlWithAPI + 'Service/GetAllServices',
-                getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
+                getServiceById: this.apiBaseUrlWithAPI +'Service/GetServiceById/',
                 saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',
                 findService: this.apiBaseUrlWithAPI + 'Service/FindServices/',
                 getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadataList',

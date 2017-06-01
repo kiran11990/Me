@@ -188,10 +188,10 @@
             <div class="col-lg-6 small">
                 <div class="form-group">
                     <label>IT-ORG:</label>
-                    <select class="form-control" [formControl]="applicationForm.controls['itOrg']" [(ngModel)]="applicationData.itOrgName" style="width:50%" (ngModelChange)="onitOrgChange($event)" >
-                        <option *ngIf="title=='New Application'|| applicationData.itOrgName==0" value="select">Select Itorg</option>
+                    <select class="form-control" [formControl]="applicationForm.controls['itOrg']" [(ngModel)]="applicationData.itorg" style="width:50%" (ngModelChange)="onitOrgChange($event)" >
+                        <option *ngIf="title=='New Application'|| applicationData.itorg==0" value="select">Select Itorg</option>
                         <option *ngFor="let item of applicationMetaData.itOrg"
-                                [value]="item.itorgId" [selected]="applicationData.itOrgName ==item.itorgId">
+                                [value]="item.itorgId" [selected]="applicationData.itorg ==item.itorgId">
                             {{item.itorgName}}
                         </option>
                     </select>

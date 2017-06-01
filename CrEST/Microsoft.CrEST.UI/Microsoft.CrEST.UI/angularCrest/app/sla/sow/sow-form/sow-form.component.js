@@ -13,7 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 //import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
-import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
+import { SowMetaData } from "../../shared/models/sowMetaData";
 import { SowService } from '../../shared/services/sows.service';
 var SowFormComponent = (function () {
     function SowFormComponent(formBuilder, router, route, SowService) {
@@ -22,7 +22,7 @@ var SowFormComponent = (function () {
         this.SowService = SowService;
         this.effectiveDate = new Date();
         this.expirationDate = new Date();
-        this.sowMetaData = new ApplicationMetaData();
+        this.sowMetaData = new SowMetaData();
         this.sow = new Sow();
         //private sow: Sow[] = [];
         this.startdate = new Date();

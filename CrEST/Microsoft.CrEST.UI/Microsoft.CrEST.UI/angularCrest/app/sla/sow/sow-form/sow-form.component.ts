@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 //import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
 import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
-import { RunOrGrow } from "../../shared/models/applicationmetadata";
+import { SowMetaData } from "../../shared/models/sowMetaData";
 import { SowService } from '../../shared/services/sows.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 @Component({
@@ -19,7 +19,7 @@ export class SowFormComponent implements OnInit {
     title: string;
     effectiveDate: Date = new Date();
     expirationDate: Date = new Date();
-    sowMetaData: ApplicationMetaData = new ApplicationMetaData();
+    sowMetaData: SowMetaData = new SowMetaData();
     sow: Sow = new Sow();
     //private sow: Sow[] = [];
     startdate: Date = new Date();

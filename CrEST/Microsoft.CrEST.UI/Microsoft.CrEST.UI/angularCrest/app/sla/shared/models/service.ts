@@ -1,5 +1,6 @@
 ﻿export class Service {
     supplier: string;
+    supplierId: number;
     scid: string;
     contractId: string;
     applicationGroup: string;

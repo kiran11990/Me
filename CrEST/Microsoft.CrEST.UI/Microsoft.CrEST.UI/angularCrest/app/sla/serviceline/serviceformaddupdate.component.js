@@ -37,46 +37,67 @@ var ServicelineFormComponent = (function () {
             'appgroupservicesfeeyr4': ['', Validators.pattern(this.currencyPattern)],
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            //'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'remarks': ['', Validators.required],
             'itOrg': [''],
         });
     }
     ServicelineFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.service.currency = "USD";
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
-        if (this.title == "Edit Service") {
-            if (this.id != null) {
-                this.Sservice.getServiceById(this.id)
-                    .subscribe(function (data) {
-                    debugger;
-                    _this.serviceList = data;
-                });
-            }
-            else {
-            }
+        if (this.id != null) {
+            this.Sservice.getServiceById(this.id)
+                .subscribe(function (data) {
+                _this.serviceList = data;
+            });
         }
+    };
+    ServicelineFormComponent.prototype.onitOrgChange = function (value) {
+        this.service.itorg = value;
+    };
+    ServicelineFormComponent.prototype.onChange = function (value) {
+        this.service.supplierId = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel1 = function (value) {
+        this.service.crestLevel1 = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel2 = function (value) {
+        this.service.crestLevel2 = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel3 = function (value) {
+        this.service.crestLevel3 = value;
     };
     ServicelineFormComponent.prototype.SericeMetaData = function () {
         var _this = this;
         this.Sservice.getServiceMetaData()
             .subscribe(function (data) {
-            debugger;
             _this.serviceMetaData = data;
         });
     };
+    ServicelineFormComponent.prototype.onChangecurrency = function (value) {
+        this.service.currency = value;
+    };
     ServicelineFormComponent.prototype.redirect = function () {
         if (confirm("Do you want Update")) {
-            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+            return false;
         }
         else {
             this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
         }
         event.preventDefault();
     };
-    ServicelineFormComponent.prototype.submitForm = function (serviceformvalue) {
-        console.log(serviceformvalue);
+    ServicelineFormComponent.prototype.submitForm = function (Service) {
+        //applicationData.endDate = enddate;
+        this.Sservice.addservice(this.service)
+            .subscribe(function (result) {
+            var result = result;
+            if (result == 1) {
+                alert("success fully added");
+            }
+        });
     };
     return ServicelineFormComponent;
 }());

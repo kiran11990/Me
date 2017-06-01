@@ -42,58 +42,79 @@ export class ServicelineFormComponent implements OnInit {
             'appgroupservicesfeeyr4': ['', Validators.pattern(this.currencyPattern)],
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            //'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'remarks': ['', Validators.required],
             'itOrg': [''],
         });
     }
 
 
     ngOnInit() {
+        this.service.currency = "USD"
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
-        if (this.title == "Edit Service") {
             if (this.id != null) {
                 this.Sservice.getServiceById(this.id)
                     .subscribe(data => {
-                        debugger;
                         this.serviceList = data
+                       
                     })
             }
-            else {
-
-            }
-        }
+        
+        
+    }
+    onitOrgChange(value: any) {
+        this.service.itorg = value;
     }
 
+    onChange(value: any) {
+        this.service.supplierId = value;
+
+    }
+    onChancrestLevel1(value: any) {
+        this.service.crestLevel1 = value;
+    }
+    onChancrestLevel2(value: any) {
+        this.service.crestLevel2 = value;
+    }
+
+
+    onChancrestLevel3(value: any) {
+        this.service.crestLevel3 = value;
+    }
 
     SericeMetaData() {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
-                debugger;
                 this.serviceMetaData = data;
             })
     }
-   
+
+    onChangecurrency(value: any) {
+        this.service.currency = value;
+    }
+
 
     redirect() {
         if (confirm("Do you want Update")) {
-            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+            return false;
         }
         else {
             this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
         }
         event.preventDefault();
-       
-       
     }
 
+    submitForm(Service: Service) {
+        //applicationData.endDate = enddate;
 
-
-
-    submitForm(serviceformvalue: any) {
-        console.log(serviceformvalue);
-      
+        this.Sservice.addservice(this.service)
+            .subscribe((result: number) => {
+                var result = result;
+                if (result == 1) {
+                    alert("success fully added");
+                }
+            });
     }
-
 }

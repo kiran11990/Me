@@ -66,7 +66,7 @@ var ApplicationFormComponent = (function () {
             'tm': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedCapacity': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedServices': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
-            'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'Software': ['', Validators.required],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'itOrg': [''],
         });
