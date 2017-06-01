@@ -39,7 +39,7 @@ namespace Microsoft.Crest.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("GenerateSlps/{period}/{status}")]
+        [Route("GenerateSlps/{period}/{createdBy}")]
         public string GenerateSlps(string period, string createdBy = "")
         {
             return _slpRepository.GenerateSlps(period, createdBy);
@@ -54,6 +54,13 @@ namespace Microsoft.Crest.Web.API.Controllers
                 throw new ArgumentNullException("slps");
             }
             return _slpRepository.SaveSlps(slps);
+        }
+
+        [HttpGet]
+        [Route("ExportToExcel/{period}")]
+        public ExportToExcelData ExportToExcel(string period)
+        {
+            return _slpRepository.ExportToExcel(period);
         }
 
     }

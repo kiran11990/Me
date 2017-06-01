@@ -10,8 +10,8 @@
             <label for="contractId">Reporting Period:</label>
         </div>
         <div class="col-lg-5 col-sm-5">
-            <select class="form-control" [ngModel]="selectedPeriod" (ngModelChange)="onChange($event)">
-                <option *ngFor="let item of periods" value={{item.period}}>
+            <select class="form-control" [ngModel]="selectedPeriod" (ngModelChange)="onChange($event, this)">
+                <option *ngFor="let item of periods" [ngValue]="item">
                     {{item.period}}
                 </option>
             </select>
@@ -19,7 +19,7 @@
     </div>
     <div>
         <div class="col-lg-6 col-sm-6 fixed-action-btn">
-            <a class="btn btn-primary" (click)="ExportToExport(selectedPeriod)">Export to Excel</a>
+            <a class="btn btn-primary" (click)="ExportToExport(selectedPeriod, this)">Export to Excel</a>
         </div>
     </div>
 </div>

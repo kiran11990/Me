@@ -43,7 +43,7 @@ export class ServicelineFormComponent implements OnInit {
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'itOrg': ['']
+            'itOrg': [''],
         });
     }
 
@@ -56,6 +56,7 @@ export class ServicelineFormComponent implements OnInit {
             if (this.id != null) {
                 this.Sservice.getServiceById(this.id)
                     .subscribe(data => {
+                        debugger;
                         this.serviceList = data
                     })
             }
@@ -69,6 +70,7 @@ export class ServicelineFormComponent implements OnInit {
     SericeMetaData() {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
+                debugger;
                 this.serviceMetaData = data;
             })
     }

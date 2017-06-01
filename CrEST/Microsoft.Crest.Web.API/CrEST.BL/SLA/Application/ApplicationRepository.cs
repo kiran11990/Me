@@ -142,15 +142,14 @@ namespace CrEST.BL
 			if (application == null)
 				cmd.Parameters.Add(new SqlParameter("@Application", string.Empty));
 			else
-				cmd.Parameters.Add(new SqlParameter("@Application", application));
-
-			ApplicationData item = new ApplicationData(); 
+				cmd.Parameters.Add(new SqlParameter("@Application", application));			
 
 			using (var reader = cmd.ExecuteReader())
 			{
 				while (reader.Read())
 				{
-					item.ApplicationId = reader.GetInt32(0);
+                    ApplicationData item = new ApplicationData();
+                    item.ApplicationId = reader.GetInt32(0);
 					item.SupplierName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
 					item.ContractId = reader.GetInt32(2);
 					item.ServiceLine = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);

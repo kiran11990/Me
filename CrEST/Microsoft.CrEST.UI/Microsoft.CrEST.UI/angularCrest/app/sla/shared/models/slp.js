@@ -1,7 +1,7 @@
-var Slp = (function () {
-    function Slp() {
+var slaData = (function () {
+    function slaData() {
     }
-    return Slp;
+    return slaData;
 }());
-export { Slp };
+export { slaData };
 //# sourceMappingURL=slp.js.map

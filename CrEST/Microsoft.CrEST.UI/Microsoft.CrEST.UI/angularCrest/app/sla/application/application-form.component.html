@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['supplier'].valid && applicationForm.controls['supplier'].touched}">
-                    <label>Supplier*:</label>
+                    <label class="required">Supplier<span class="alert-danger">*</span>:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['supplier']" [(ngModel)]="applicationData.supplierId" style="width:50%" (ngModelChange)="onChange($event)" >
                         <option *ngIf="title=='New Application'" value="select">Select Suppliers</option>
                         <option *ngFor="let item of applicationMetaData.suppliers"
@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['contactId'].valid && applicationForm.controls['contactId'].touched}"  >
-                    <label>Contract ID*:</label>
+                    <label>Contract ID <span class="alert-danger">*</span>:</label>
                     <select class="form-control" [formControl]="applicationForm.controls['contactId']" [(ngModel)]="applicationData.contractId" style="width:50%">
                         <option *ngIf="title=='New Application'" value="select">Select Contract</option>
                         <option *ngFor="let item of applicationMetaData.contractIds"
@@ -34,14 +34,14 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['serviceline'].valid && applicationForm.controls['serviceline'].touched}"  >
-                    <label>Service Line*:</label>
+                    <label>Service Line<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['serviceline']" [(ngModel)]="applicationData.serviceLine"style="width:50%" />
                     <div *ngIf="applicationForm.controls['serviceline'].hasError('required') && applicationForm.controls['serviceline'].touched" class="alert alert-danger">Please Enter Service LIne.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Application'].valid && applicationForm.controls['Application'].touched}">
-                    <label>Application*:</label>
+                    <label>Application<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['Application']" [(ngModel)]="applicationData.application"  style="width:50%" />
                     <div *ngIf="applicationForm.controls['Application'].hasError('required') && applicationForm.controls['Application'].touched" class="alert alert-danger">Please Enter Application.</div>
                 </div>
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['OwnerAlias'].valid && applicationForm.controls['OwnerAlias'].touched}">
-                    <label>Owner Alias*:</label>
+                    <label>Owner Alias<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['OwnerAlias']" [(ngModel)]="applicationData.ownerAlias" style="width:50%" />
                     <div *ngIf="applicationForm.controls['OwnerAlias'].hasError('required') && applicationForm.controls['OwnerAlias'].touched" class="alert alert-danger">Please Enter Owner Alias.</div>
                 </div>
@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Runvsgrow'].valid && applicationForm.controls['Runvsgrow'].touched}">
-                    <label>Run vs Grow*:</label>
+                    <label>Run vs Grow<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="applicationForm.controls['Runvsgrow']" [(ngModel)]="applicationData.runOrGrow" style="width:50%" (ngModelChange)="onrunOrGrowChange($event)" >
                         <option *ngIf="title=='New Application'" value="select">Select RunvsGrow</option>
                         <option *ngFor="let item of runOrGrow"
@@ -87,7 +87,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ApplicationGroup'].valid && applicationForm.controls['ApplicationGroup'].touched}">
-                    <label>Application Group*:</label>
+                    <label>Application Group<span class="alert-danger">*</span></label>
 
                     <input type="text" class="form-control" [formControl]="applicationForm.controls['ApplicationGroup']" [(ngModel)]="applicationData.applicationGroup" style="width:50%"/>
                     <div *ngIf="applicationForm.controls['ApplicationGroup'].hasError('required') && applicationForm.controls['ApplicationGroup'].touched" class="alert alert-danger">Please Enter Group.</div>
