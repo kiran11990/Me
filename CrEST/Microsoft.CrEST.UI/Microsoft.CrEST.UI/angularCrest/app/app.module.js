@@ -18,9 +18,6 @@ import { ConfigService, ConstantService, CommonService } from './shared/shared';
 import { SlaModule } from "./sla/sla.module";
 import { SharedModule } from './shared/shared.module';
 import { Routing } from './app.routing';
-import { LoginComponent } from "../Authentication/login/login.component";
-import { RegisterComponent } from "../Authentication/Register/register.component";
-import { UserService } from "../Authentication/_services/user.service";
 var AppModule = (function () {
     function AppModule() {
     }
@@ -28,13 +25,13 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     NgModule({
-        imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, LoginComponent, RegisterComponent, CommonModule, ReactiveFormsModule],
+        imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, CommonModule, ReactiveFormsModule],
         declarations: [AppComponent, HomeComponent, NavigationComponent, NotFoundComponent],
         bootstrap: [AppComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         providers: [
             { provide: LocationStrategy, useClass: HashLocationStrategy },
-            ConfigService, ConstantService, CommonService, UserService,
+            ConfigService, ConstantService, CommonService,
             {
                 provide: APP_INITIALIZER,
                 useFactory: function (config) { return function () { return config.load(); }; },

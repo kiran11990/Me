@@ -1,15 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './notfound/notfound.component';
-import { LoginComponent } from '../Authentication/login/login.component';
-import { RegisterComponent } from '../Authentication/Register/register.component';
 var appRoutes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    //{ path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'home', component: HomeComponent },
-    // { path: '', pathMatch: 'full', component: HomeComponent },
+    { path: '', pathMatch: 'full', component: HomeComponent },
     { path: 'not-found', component: NotFoundComponent },
     { path: '**', redirectTo: 'not-found' }
 ];
