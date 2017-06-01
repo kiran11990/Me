@@ -32,6 +32,7 @@ export class SlaDashboardComponent {
     public selectedPeriod: ReportingPeriod;
     public currentSelectedPeriod: any
     public exportToExcel: ExportToExcel = new ExportToExcel();
+    showRATable: boolean = false;
 
 
     constructor(private sowService: SowService, private slpService: SlpService) {
@@ -171,6 +172,10 @@ export class SlaDashboardComponent {
         this.slpService.GetRASlps()
             .subscribe((data:any) => {
                 mainthis.slps = data;
+                if (mainthis.slps.length > 0)
+                    mainthis.showRATable = true;
+                else
+                    mainthis.showRATable = false;
             });
     }
 

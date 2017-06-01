@@ -26,6 +26,7 @@ var SlpComponent = (function () {
         this.remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
         this.showGenerateAction = false;
         this.showSaveAction = false;
+        this.showHotTable = false;
         this.invalidHandsonCells = [];
         this.periods = new Array();
         this.INF0001 = _constantService.CONSTANTS.Messages.INF0001;
@@ -134,6 +135,10 @@ var SlpComponent = (function () {
         var _this = this;
         this._slpService.GetSlps(fiscalYear, '').subscribe(function (result) {
             _this.data = result;
+            if (_this.data.length > 0)
+                _this.showHotTable = true;
+            else
+                _this.showHotTable = false;
         });
     };
     SlpComponent.prototype.getCurrentP = function () {
@@ -366,7 +371,7 @@ var SlpComponent = (function () {
             }
         }
         //TODO
-        if (cellProperties.mainThis.data[row].infyOwner === "karthik_ramamoorthi") {
+        if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
             cellProperties.editor = false;
             td.style.background = '#EEE';
         }

@@ -30,6 +30,7 @@ export class SlpComponent implements OnInit {
     remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
     showGenerateAction: boolean = false;
     showSaveAction: boolean = false;
+    showHotTable: boolean = false;
     invalidHandsonCells: Array<HandsonCells> = [];
 
     INF0001: string;
@@ -164,6 +165,10 @@ export class SlpComponent implements OnInit {
         var _this = this;
         this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<slaData>) => {
             _this.data = result;
+            if (_this.data.length > 0)
+                _this.showHotTable = true;
+            else
+                _this.showHotTable = false;
         });
     }
 
@@ -438,7 +443,7 @@ export class SlpComponent implements OnInit {
         }
 
         //TODO
-        if (cellProperties.mainThis.data[row].infyOwner === "karthik_ramamoorthi") {
+        if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
             cellProperties.editor = false;
             td.style.background = '#EEE';
         } else {

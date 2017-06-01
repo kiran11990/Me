@@ -31,6 +31,7 @@ var SlaDashboardComponent = (function () {
         this.slps = [];
         this.periods = [];
         this.exportToExcel = new ExportToExcel();
+        this.showRATable = false;
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
         this.GetRASlps();
@@ -145,6 +146,10 @@ var SlaDashboardComponent = (function () {
         this.slpService.GetRASlps()
             .subscribe(function (data) {
             mainthis.slps = data;
+            if (mainthis.slps.length > 0)
+                mainthis.showRATable = true;
+            else
+                mainthis.showRATable = false;
         });
     };
     SlaDashboardComponent.prototype.GetReportingPeriods = function () {
