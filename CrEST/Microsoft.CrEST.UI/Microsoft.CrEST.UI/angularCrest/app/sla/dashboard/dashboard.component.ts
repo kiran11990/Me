@@ -2,8 +2,10 @@
 import { SowService } from '../shared/services/sows.service';
 import { Sow } from '../shared/models/sow';
 import { SlpService } from '../shared/services/slp.service';
-import { Slp } from '../shared/models/slp';
+import { slaData } from '../shared/models/slp';
+import { ExportToExcel } from '../shared/models/exportToExcel';
 import { ReportingPeriod } from '../shared/models/reportingperiod';
+import { AngularToCsv } from '../../shared/AngularTocsv';
 
 @Component({
     selector: 'sla-dashboard',
@@ -25,28 +27,48 @@ export class SlaDashboardComponent {
 
 
     public contractIds: Array<Sow> = [];
-    public slps: Array<Slp> = [];
+    public slps: Array<slaData> = [];
     public periods: Array<ReportingPeriod> = [];
     public selectedPeriod: ReportingPeriod;
     public currentSelectedPeriod: any
+    public exportToExcel: ExportToExcel = new ExportToExcel();
 
 
     constructor(private sowService: SowService, private slpService: SlpService) {
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
-        this.GetSlps();
+        this.GetRASlps();
         this.GetReportingPeriods();
     }
 
-    onChange(newObj: any) {
-        this.currentSelectedPeriod = newObj;
-        this.selectedPeriod.period = newObj;
+    onChange(selectedPeriod: any, _this: any) {
+        this.currentSelectedPeriod = selectedPeriod;
+        this.selectedPeriod.period = selectedPeriod;
     }
 
-    ExportToExport(fiscalYear: string) {
-        var _this = this;
-    }
+    ExportToExport(fiscalPeriod: any, mainThis: any) {
 
+        this.slpService.ExportToExcel(fiscalPeriod.period)
+            .subscribe((data: ExportToExcel) => {
+                mainThis.exportToExcel = data;
+
+
+                var options = {
+                    fieldSeparator: ',',
+                    quoteStrings: '"',
+                    decimalseparator: '.',
+                    showLabels: true
+                };
+
+                new AngularToCsv(mainThis.exportToExcel.sows, "SoWs", options);
+                new AngularToCsv(mainThis.exportToExcel.services, "Services", options);
+                new AngularToCsv(mainThis.exportToExcel.applications, "Applications", options);
+                new AngularToCsv(mainThis.exportToExcel.slps, "Service Level Performance", options);
+                
+            });
+        
+    }
+    
     private GetActiveContractIdsBarChart() {
         var mainthis = this;
         this.sowService.getSows()
@@ -143,7 +165,7 @@ export class SlaDashboardComponent {
             });
     }
 
-    private GetSlps()
+    private GetRASlps()
     {
         var mainthis = this;
         this.slpService.GetRASlps()
@@ -156,7 +178,37 @@ export class SlaDashboardComponent {
         var mainThis = this;
         this.slpService.GetReportingPeriods().subscribe((result: Array<ReportingPeriod>) => {
             mainThis.periods = result;
-            mainThis.selectedPeriod = mainThis.periods[0];
+            var allRP: ReportingPeriod = new ReportingPeriod();
+            allRP.id = 0;
+            allRP.period = "All";
+            mainThis.periods.unshift(allRP);
+
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+            mainThis.selectedPeriod = selectedFP;
         });
+    }
+
+    private getCurrentP() {
+        var d = new Date();
+        var currentMonth = d.getMonth() + 1;
+        return currentMonth;
+    }
+
+    private getCurrentY() {
+        var d = new Date();
+        var fiscalYear = d.getFullYear();
+        return fiscalYear;
+    }
+    
+    private GetPreviousFP() {
+        var minusCurrentPeriod = this.getCurrentP() + 11;
+        var plusCurrentPeriod = this.getCurrentP() - 1;
+        if (this.getCurrentP() == 1)
+            return (this.getCurrentY() - 1) + "-" + ('0' + minusCurrentPeriod).slice(-2);
+        else
+            return this.getCurrentY() + "-" + ('0' + plusCurrentPeriod).slice(-2);
     }
 }

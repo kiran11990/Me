@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 //import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
 import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
-import { RunOrGrow } from "../../shared/models/applicationmetadata";
+import { SowMetaData } from "../../shared/models/sowMetaData";
 import { SowService } from '../../shared/services/sows.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 @Component({
@@ -19,7 +19,7 @@ export class SowFormComponent implements OnInit {
     title: string;
     effectiveDate: Date = new Date();
     expirationDate: Date = new Date();
-    sowMetaData: ApplicationMetaData = new ApplicationMetaData();
+    sowMetaData: SowMetaData = new SowMetaData();
     sow: Sow = new Sow();
     //private sow: Sow[] = [];
     startdate: Date = new Date();
@@ -40,22 +40,20 @@ export class SowFormComponent implements OnInit {
             
             'supplierId': ['', Validators.required],
             'contractId': ['', Validators.required],
-            //'serviceline': ['', Validators.required],
             'itorg': ['', Validators.required],
             'soweffectiveDate': ['', Validators.required], //Date
             'sowexpirationDate': ['', Validators.required], //Date
             'msowner': [null, Validators.required],
             'servicecatalogno': ['', Validators.required],
             'ponumYear1': ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]], //Number
-            'currency': ['', Validators.required],
-            'sowamountYear1': ['', [Validators.required, Validators.pattern(this.currencyPattern)]], //currency
-            'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],//currency
-            'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],//currency
-            'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],//currency
+            'currency': [''],
+
+            'sowamountYear2': ['', Validators.pattern(/^\$?[0-9]+(\.[0-9][0-9])?$/)],/*.pattern(this.currencyPattern)],*/
+            'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],/*.pattern(this.currencyPattern)],*/
+            'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],/*.pattern(this.currencyPattern)],*/
             'iscrest': ['', Validators.required],
             'remark': [''],
             'infyOwner': [''],
-            'ssovalidated': [''],
             'companycode': ['', Validators.required]
         });
 
@@ -80,7 +78,6 @@ export class SowFormComponent implements OnInit {
     }
     onitorgChange(value: number) {
         this.sow.itorg = value;
-        alert(this.sow.itorg);
 
     }
     onChangecurrency(value: any) {
@@ -177,6 +174,17 @@ export class SowFormComponent implements OnInit {
                 }
             });
     }
+
+    redirect() {
+
+        if (confirm("Do you want Update")) {
+            this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
+        }
+        else {
+            this.router.navigate(['applications', { sowStatus: "updatedsuccessfully" }]);
+        }
+    }
+
     BackClick(event: Event) {
         event.preventDefault();
         event.stopPropagation();

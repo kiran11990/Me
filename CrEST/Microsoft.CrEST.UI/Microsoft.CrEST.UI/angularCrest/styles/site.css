@@ -551,5 +551,18 @@ div.tablewrapper {
 .form-control{
     width:50%;
 }
-
-
+.alert {
+    padding: 0px !important;
+    margin-top: 6px;
+}
+.CalenderPadding {
+    padding:0px !important;
+}
+.alert-danger{
+    width:258px;
+}
+.required input {
+    padding-right: 25px;
+    background-image: url(...);
+    background-position: right top;
+}

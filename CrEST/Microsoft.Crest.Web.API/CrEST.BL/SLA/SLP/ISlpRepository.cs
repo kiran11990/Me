@@ -11,5 +11,6 @@ namespace CrEST.BL
         IEnumerable<SLAData> GetRASlps();
         string GenerateSlps(string period, string createdBy);
         string SaveSlps(List<SLAData> slps);
+        ExportToExcelData ExportToExcel(string period);
     }
 }

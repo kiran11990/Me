@@ -26,10 +26,6 @@ var SowComponent = (function () {
         this.contractIDList = [];
         this.ItOrgList = [];
         this.msOwnerAliasList = [];
-        this.effectiveDate = new Date();
-        this.expirationDate = new Date();
-        this.soweffectiveDates = new Date();
-        this.sowexpirationDates = new Date();
         this.searchContractId = '';
         this.searchServiceLine = '';
         this.searchMsowner = '';
@@ -70,17 +66,8 @@ var SowComponent = (function () {
             }
         });
     };
-    SowComponent.prototype.oneffectiveDateChanged = function (event) {
-        this.effectiveDate = event.jsdate;
-    };
-    SowComponent.prototype.onexpirationDateChanged = function (event) {
-        this.expirationDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    };
     SowComponent.prototype.find = function () {
         var _this = this;
-        //this.soweffectiveDates = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
-        //this.sowexpirationDates = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
         this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias)
             .subscribe(function (data) {
             _this.sows = data;

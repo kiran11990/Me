@@ -24,6 +24,7 @@ const slaRoutes: Routes = [
     { path: 'services', component: SlaServiceComponent, pathMatch: 'full' },
     { path: 'services/add', component: ServicelineFormComponent },
     { path: 'services/:id', component: ServicelineFormComponent },
+    { path: 'services/services', component: SlaServiceComponent },
 
     { path: 'slps', component: SlpComponent, pathMatch: 'full' },
 

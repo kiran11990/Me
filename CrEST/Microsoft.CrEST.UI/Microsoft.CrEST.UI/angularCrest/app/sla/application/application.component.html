@@ -1,23 +1,17 @@
-﻿<div>
-   
-</div>
-<div class="row">
-
+﻿<div class="row">
     <div class="col-lg-12">
         <div class="page-header"> <a href="/">Dashboard</a> > SLA > Applications </div>
     </div>
-    <div class="panel panel-default">
-       
-        <div class="panel-heading">
-            Applications
-        </div>
-        <div style="margin-top:12px">
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group row">
             <div class="col-lg-3">
                 <input id="contactids" #varSearchcontactid type="text" [(ngModel)]='contactId' class="form-control" placeholder="Contract Id" />
                 <auto-complete [tagId]="contactids" [values]='contactIdList|filterUser:contactId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'> </auto-complete>
             </div>
             <div class="col-lg-3">
-                <input class="form-control" id="serviceline" #varSearchserviceline type="text" [(ngModel)]='serviceLine' placeholder="Service Line" aria-label="Search User"  />
+                <input class="form-control" id="serviceline" #varSearchserviceline type="text" [(ngModel)]='serviceLine' placeholder="Service Line" aria-label="Search User" />
                 <auto-complete [tagId]='servicelines' [values]='servicelineList|filterUser:serviceLine' [elementToBind]='varSearchserviceline' (notifyOnSelected)='notifyServiceLine($event)'> </auto-complete>
             </div>
 
@@ -25,90 +19,97 @@
                 <input class="form-control" id="application" #varSearchapplication type="text" [(ngModel)]='application' placeholder="Application" aria-label="Application" />
                 <auto-complete [tagId]='application' [values]='ApplicationLists|filterUser:application' [elementToBind]='varSearchapplication' (notifyOnSelected)='notifyApplication($event)'> </auto-complete>
             </div>
-
-            <button class="btn waves-effect waves-light" (click)="find()">Find</button>
-        </div>       
-        <div  class="panel-body">
-            <div class="col-lg-6">
-                <p>
-                    Displaying {{ applicationList.length }} Applications.
-                </p>
+            <div class="col-lg-3">
+                <button class="btn btn-primary" (click)="find()">Find</button>
             </div>
-            <div class="col-lg-6 text-right">
-                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                    <a class="btn btn-primary"
-                       routerLink="/applications/add" style="margin-bottom:2px">
-                        Add
-                    </a>
+
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Applications
                 </div>
-                </div>
+                <div class="panel-body">
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <p>
+                                Displaying {{ applicationList.length }} Applications.
+                            </p>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <div class="fixed-action-btn">
+                                <a class="btn btn-primary"
+                                   routerLink="/applications/add" style="margin-bottom:2px">
+                                    Add
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Supplier Name</th>
+                                <th>Contract Id</th>
+                                <th>Service Line</th>
+                                <th>Application</th>
+                                <th>Owner Alias</th>
+                                <th>Service Class</th>
+                                <th>Run Vs Grow</th>
+                                <th>Application Group</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>End To End</th>
+                                <th>EPM</th>
+                                <th>T&M</th>
+                                <th>Managed Capacity</th>
+                                <th>Managed Services</th>
+                                <th>Software Asset Searchable Id</th>
+                                <th>Remarks</th>
+                                <th>ITOrg Name</th>
+                                <th>Action</th>
 
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Supplier Name</th>
-                            <th>Contract Id</th>
-                            <th>Service Line</th>
-                            <th>Application</th>
-                            <th>Owner Alias</th>
-                            <th>Service Class</th>
-                            <th>Run Or Grow</th>
-                            <th>Application Group</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>End To End</th>
-                            <th>Epm</th>
-                            <th>Tm</th>
-                            <th>Managed Capacity</th>
-                            <th>Managed Services</th>
-                            <th>Software AssetSearchable Id</th>
-                            <th>Remarks</th>
-                            <th>ITOrg Name</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of applicationList | paginate: config" style="height:12px">
-
-                            <td>{{item.supplierName}}</td>
-                            <td>{{item.contractId}}</td>
-                            <td>{{item.serviceLine}}</td>
-                            <td>{{item.application}}</td>
-                            <td>{{item.ownerAlias}}</td>
-                            <td>{{item.serviceClass}}</td>
-                            <td>{{item.runOrGrow}}</td>
-                            <td>{{item.applicationGroup}}</td>
-                            <td>{{item.startDate}}</td>
-                            <td>{{item.endDate}}</td>
-                            <td>{{item.endToEnd}}</td>
-                            <td>{{item.epm}}</td>
-                            <td>{{item.tM}}</td>
-                            <td>{{item.managedCapacity}}</td>
-                            <td>{{item.managedService}}</td>
-                            <td>{{item.softwareAssetSearchableId}}</td>
-                            <td>{{item.remarks}}</td>
-                            <td>{{item.itOrgName}}</td>
-                            <td>
-
-                                <a class="btn btn-primary" [routerLink]="['/applications', item.applicationId]">Edit</a>
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-                </table>
-                <div class="has-text-centered" style="background-color:cornflowerBlue" *ngIf="applicationList.length>10">
-                    <pagination-controls [id]="config.id"
-                                         [maxSize]="maxSize"
-                                         [directionLinks]="directionLinks"
-                                         [autoHide]="autoHide"
-                                         [previousLabel]="labels.previousLabel"
-                                         [nextLabel]="labels.nextLabel"
-                                         [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                                         [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                                         [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                                         (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of applicationList | paginate: config" style="height:12px">
+                                <td>{{item.supplierName}}</td>
+                                <td>{{item.contractId}}</td>
+                                <td>{{item.serviceLine}}</td>
+                                <td>{{item.application}}</td>
+                                <td>{{item.ownerAlias}}</td>
+                                <td>{{item.serviceClass}}</td>
+                                <td>{{item.runOrGrow}}</td>
+                                <td>{{item.applicationGroup}}</td>
+                                <td>{{item.startDate}}</td>
+                                <td>{{item.endDate}}</td>
+                                <td>{{item.endToEnd}}</td>
+                                <td>{{item.epm}}</td>
+                                <td>{{item.tM}}</td>
+                                <td>{{item.managedCapacity}}</td>
+                                <td>{{item.managedService}}</td>
+                                <td>{{item.softwareAssetSearchableId}}</td>
+                                <td>{{item.remarks}}</td>
+                                <td>{{item.itOrgName}}</td>
+                                <td>
+                                    <a class="btn btn-primary" [routerLink]="['/applications', item.applicationId]">Edit</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="has-text-centered" *ngIf="applicationList.length>10">
+                        <pagination-controls [id]="config.id"
+                                             [maxSize]="maxSize"
+                                             [directionLinks]="directionLinks"
+                                             [autoHide]="autoHide"
+                                             [previousLabel]="labels.previousLabel"
+                                             [nextLabel]="labels.nextLabel"
+                                             [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                             [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                             [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                             (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
+    </div>
+</div>

@@ -10,6 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { SowService } from '../shared/services/sows.service';
 import { SlpService } from '../shared/services/slp.service';
+import { ExportToExcel } from '../shared/models/exportToExcel';
+import { ReportingPeriod } from '../shared/models/reportingperiod';
+import { AngularToCsv } from '../../shared/AngularTocsv';
 var SlaDashboardComponent = (function () {
     function SlaDashboardComponent(sowService, slpService) {
         this.sowService = sowService;
@@ -27,17 +30,31 @@ var SlaDashboardComponent = (function () {
         this.contractIds = [];
         this.slps = [];
         this.periods = [];
+        this.exportToExcel = new ExportToExcel();
         this.GetActiveContractIdsBarChart();
         this.GetActiveContracts();
-        this.GetSlps();
+        this.GetRASlps();
         this.GetReportingPeriods();
     }
-    SlaDashboardComponent.prototype.onChange = function (newObj) {
-        this.currentSelectedPeriod = newObj;
-        this.selectedPeriod.period = newObj;
+    SlaDashboardComponent.prototype.onChange = function (selectedPeriod, _this) {
+        this.currentSelectedPeriod = selectedPeriod;
+        this.selectedPeriod.period = selectedPeriod;
     };
-    SlaDashboardComponent.prototype.ExportToExport = function (fiscalYear) {
-        var _this = this;
+    SlaDashboardComponent.prototype.ExportToExport = function (fiscalPeriod, mainThis) {
+        this.slpService.ExportToExcel(fiscalPeriod.period)
+            .subscribe(function (data) {
+            mainThis.exportToExcel = data;
+            var options = {
+                fieldSeparator: ',',
+                quoteStrings: '"',
+                decimalseparator: '.',
+                showLabels: true
+            };
+            new AngularToCsv(mainThis.exportToExcel.sows, "SoWs", options);
+            new AngularToCsv(mainThis.exportToExcel.services, "Services", options);
+            new AngularToCsv(mainThis.exportToExcel.applications, "Applications", options);
+            new AngularToCsv(mainThis.exportToExcel.slps, "Service Level Performance", options);
+        });
     };
     SlaDashboardComponent.prototype.GetActiveContractIdsBarChart = function () {
         var mainthis = this;
@@ -123,7 +140,7 @@ var SlaDashboardComponent = (function () {
             mainthis.contractIds = data;
         });
     };
-    SlaDashboardComponent.prototype.GetSlps = function () {
+    SlaDashboardComponent.prototype.GetRASlps = function () {
         var mainthis = this;
         this.slpService.GetRASlps()
             .subscribe(function (data) {
@@ -131,11 +148,38 @@ var SlaDashboardComponent = (function () {
         });
     };
     SlaDashboardComponent.prototype.GetReportingPeriods = function () {
+        var _this = this;
         var mainThis = this;
         this.slpService.GetReportingPeriods().subscribe(function (result) {
             mainThis.periods = result;
-            mainThis.selectedPeriod = mainThis.periods[0];
+            var allRP = new ReportingPeriod();
+            allRP.id = 0;
+            allRP.period = "All";
+            mainThis.periods.unshift(allRP);
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = _this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+            mainThis.selectedPeriod = selectedFP;
         });
+    };
+    SlaDashboardComponent.prototype.getCurrentP = function () {
+        var d = new Date();
+        var currentMonth = d.getMonth() + 1;
+        return currentMonth;
+    };
+    SlaDashboardComponent.prototype.getCurrentY = function () {
+        var d = new Date();
+        var fiscalYear = d.getFullYear();
+        return fiscalYear;
+    };
+    SlaDashboardComponent.prototype.GetPreviousFP = function () {
+        var minusCurrentPeriod = this.getCurrentP() + 11;
+        var plusCurrentPeriod = this.getCurrentP() - 1;
+        if (this.getCurrentP() == 1)
+            return (this.getCurrentY() - 1) + "-" + ('0' + minusCurrentPeriod).slice(-2);
+        else
+            return this.getCurrentY() + "-" + ('0' + plusCurrentPeriod).slice(-2);
     };
     return SlaDashboardComponent;
 }());

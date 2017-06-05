@@ -31,10 +31,6 @@ export class SowComponent {
     public contractIDList: string[] = [];
     public ItOrgList: string[] = [];
     public msOwnerAliasList: string[] = [];
-   effectiveDate: Date = new Date();
-   expirationDate: Date = new Date();
-   soweffectiveDates: Date = new Date();
-   sowexpirationDates: Date = new Date();
    public searchContractId = '';
    public searchServiceLine = '';
    public searchMsowner = '';
@@ -62,26 +58,12 @@ export class SowComponent {
         // other options...
         dateFormat: 'dd.mm.yyyy',
     };
-    oneffectiveDateChanged(event: IMyDateModel) {
-        this.effectiveDate = event.jsdate;
-      
-    }
-
-    onexpirationDateChanged(event: IMyDateModel) {
-        this.expirationDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    }
 
     find() {
-
-
-        //this.soweffectiveDates = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
-        //this.sowexpirationDates = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));
         this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias)
             .subscribe(data => {
                 this.sows = data
             })
-
     }
   
     deleteSow(sow: any) {

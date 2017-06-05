@@ -12,8 +12,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
-//import { IMyDateModel } from 'mydatepicker';
-//import { IMyDpOptions } from 'mydatepicker';
 var ServicelineFormComponent = (function () {
     function ServicelineFormComponent(formBuilder, router, route, Sservice) {
         this.router = router;
@@ -39,28 +37,38 @@ var ServicelineFormComponent = (function () {
             'appgroupservicesfeeyr4': ['', Validators.pattern(this.currencyPattern)],
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'itOrg': ['']
+            //'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'remarks': ['', Validators.required],
+            'itOrg': [''],
         });
     }
     ServicelineFormComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.service.currency = "USD";
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
-        //alert(this.title);
-        if (this.title == "Edit Service") {
-            if (this.id != null) {
-                //if (this.route.snapshot.params['id'] != null) {
-                //    this.id = this.route.snapshot.params['id'];
-                this.Sservice.getServiceById(this.id)
-                    .subscribe(function (data) {
-                    _this.serviceList = data;
-                });
-            }
-            else {
-            }
+        if (this.id != null) {
+            this.Sservice.getServiceById(this.id)
+                .subscribe(function (data) {
+                _this.serviceList = data;
+            });
         }
+    };
+    ServicelineFormComponent.prototype.onitOrgChange = function (value) {
+        this.service.itorg = value;
+    };
+    ServicelineFormComponent.prototype.onChange = function (value) {
+        this.service.supplierId = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel1 = function (value) {
+        this.service.crestLevel1 = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel2 = function (value) {
+        this.service.crestLevel2 = value;
+    };
+    ServicelineFormComponent.prototype.onChancrestLevel3 = function (value) {
+        this.service.crestLevel3 = value;
     };
     ServicelineFormComponent.prototype.SericeMetaData = function () {
         var _this = this;
@@ -69,60 +77,27 @@ var ServicelineFormComponent = (function () {
             _this.serviceMetaData = data;
         });
     };
-    //getServiceListbyID() {
-    //    for (var i = 0; i < this.serviceList.length; i++) {
-    //        if (this.serviceList[i].contractid == this.route.snapshot.params['id']) {
-    //            this.service = this.serviceList[i];
-    //        }
-    //    }
-    //}
-    //submitAttempt = false;
-    //initSubmit() {
-    //    this.submitAttempt = true;
-    //}
-    //submit() {
-    //    console.log('success!');
-    //}
-    //private startDte: Object = {
-    //    date: {
-    //        year: this.date.getFullYear(),
-    //        month: this.date.getMonth() + 1,
-    //        day: this.date.getDate()
-    //    }
-    //};
-    //private endDate: Object = {
-    //    date: {
-    //        year: this.date.getFullYear(),
-    //        month: this.date.getMonth() + 1,
-    //        day: this.date.getDate()
-    //    }
-    //}
-    //private myDatePickerOptions: IMyDpOptions = {
-    //    // other options...
-    //    dateFormat: 'dd.mm.yyyy',
-    //};
-    //onstartDateChanged(event: IMyDateModel) {
-    //    alert(event.formatted)
-    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    //}
-    //onendDateChanged(event: IMyDateModel) {
-    //    alert(event.formatted)
-    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    //}
-    //redirect() {
-    //    if (confirm("Do you want Update")) {
-    //    }
-    //    else {
-    //        this.router.navigate(['services']);
-    //    }
-    //}
-    ServicelineFormComponent.prototype.BackClick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.router.navigateByUrl('/services');
+    ServicelineFormComponent.prototype.onChangecurrency = function (value) {
+        this.service.currency = value;
     };
-    ServicelineFormComponent.prototype.submitForm = function (serviceformvalue) {
-        console.log(serviceformvalue);
+    ServicelineFormComponent.prototype.redirect = function () {
+        if (confirm("Do you want Update")) {
+            return false;
+        }
+        else {
+            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+        }
+        event.preventDefault();
+    };
+    ServicelineFormComponent.prototype.submitForm = function (Service) {
+        //applicationData.endDate = enddate;
+        this.Sservice.addservice(this.service)
+            .subscribe(function (result) {
+            var result = result;
+            if (result == 1) {
+                alert("success fully added");
+            }
+        });
     };
     return ServicelineFormComponent;
 }());

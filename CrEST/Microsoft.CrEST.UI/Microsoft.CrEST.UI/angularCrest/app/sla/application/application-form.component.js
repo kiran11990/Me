@@ -63,12 +63,11 @@ var ApplicationFormComponent = (function () {
             'endDate': ['', Validators.required],
             'endtoend': [''],
             'epm': [''],
-            'tm': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'ManagedCapacity': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'ManagedServices': ['', Validators.pattern(/^\d+[.]?\d*%?$/)],
-            'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'tm': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'ManagedCapacity': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'ManagedServices': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
+            'Software': ['', Validators.required],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'sowId': ['', Validators.required],
             'itOrg': [''],
         });
         this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
@@ -104,6 +103,7 @@ var ApplicationFormComponent = (function () {
             this.applicationService.getApplicationbyId(id)
                 .subscribe(function (data) {
                 _this.applicationData = data;
+                _this.applicationData.softwareAssetSearchableId = (_this.applicationData.softwareAssetSearchableId == null) ? _this.applicationData.softwareAssetSearchableId : _this.applicationData.softwareAssetSearchableId.trim();
                 var datepickerEndDate = new Date(_this.applicationData.endDate);
                 var datepickerStartDate = new Date(_this.applicationData.startDate);
                 _this.enddate = {
@@ -136,7 +136,7 @@ var ApplicationFormComponent = (function () {
         this.applicationData.runOrGrow = value;
     };
     ApplicationFormComponent.prototype.onitOrgChange = function (value) {
-        this.applicationData.itOrgName = value;
+        this.applicationData.itorg = value;
     };
     ApplicationFormComponent.prototype.getApplicationMetaData = function () {
         var _this = this;
@@ -156,7 +156,7 @@ var ApplicationFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                _this.routeID ? alert("updatedsuccessfully") : alert("application added successfully");
+                _this.routeID ? alert(" Application Updated Successfully") : alert("Application Saved Successfully");
                 _this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
             }
         });
@@ -165,7 +165,7 @@ var ApplicationFormComponent = (function () {
         console.log('success!');
     };
     ApplicationFormComponent.prototype.redirect = function () {
-        if (confirm("Do you want Update")) {
+        if (confirm("Do You Want? Update")) {
             this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
         else {
