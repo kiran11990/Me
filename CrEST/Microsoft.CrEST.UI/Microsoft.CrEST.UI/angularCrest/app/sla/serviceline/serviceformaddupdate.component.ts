@@ -4,10 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
 import { ServiceMetaData } from "../shared/models/serviceMetaData";
-//import { IMyDateModel } from 'mydatepicker';
-//import { IMyDpOptions } from 'mydatepicker';
-
-
 @Component({
     selector: 'service-form',
     templateUrl: './serviceformaddupdate.component.html'
@@ -47,7 +43,7 @@ export class ServicelineFormComponent implements OnInit {
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'itOrg': ['']
+            'itOrg': [''],
         });
     }
 
@@ -56,13 +52,11 @@ export class ServicelineFormComponent implements OnInit {
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
-        //alert(this.title);
         if (this.title == "Edit Service") {
             if (this.id != null) {
-                //if (this.route.snapshot.params['id'] != null) {
-                //    this.id = this.route.snapshot.params['id'];
                 this.Sservice.getServiceById(this.id)
                     .subscribe(data => {
+                        debugger;
                         this.serviceList = data
                     })
             }
@@ -76,72 +70,26 @@ export class ServicelineFormComponent implements OnInit {
     SericeMetaData() {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
+                debugger;
                 this.serviceMetaData = data;
             })
     }
-    //getServiceListbyID() {
-    //    for (var i = 0; i < this.serviceList.length; i++) {
-    //        if (this.serviceList[i].contractid == this.route.snapshot.params['id']) {
-    //            this.service = this.serviceList[i];
-    //        }
-    //    }
-    //}
+   
 
-
-    //submitAttempt = false;
-
-    //initSubmit() {
-    //    this.submitAttempt = true;
-    //}
-
-    //submit() {
-    //    console.log('success!');
-    //}
-
-    //private startDte: Object = {
-    //    date: {
-    //        year: this.date.getFullYear(),
-    //        month: this.date.getMonth() + 1,
-    //        day: this.date.getDate()
-    //    }
-    //};
-    //private endDate: Object = {
-    //    date: {
-    //        year: this.date.getFullYear(),
-    //        month: this.date.getMonth() + 1,
-    //        day: this.date.getDate()
-    //    }
-    //}
-
-
-    //private myDatePickerOptions: IMyDpOptions = {
-    //    // other options...
-    //    dateFormat: 'dd.mm.yyyy',
-    //};
-
-
-    //onstartDateChanged(event: IMyDateModel) {
-    //    alert(event.formatted)
-    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    //}
-
-    //onendDateChanged(event: IMyDateModel) {
-    //    alert(event.formatted)
-    //    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    //}
-    //redirect() {
-    //    if (confirm("Do you want Update")) {
-    //    }
-    //    else {
-    //        this.router.navigate(['services']);
-    //    }
-    //}
-
-    BackClick(event: Event) {
+    redirect() {
+        if (confirm("Do you want Update")) {
+            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+        }
+        else {
+            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+        }
         event.preventDefault();
-        event.stopPropagation();
-        this.router.navigateByUrl('/services');
+       
+       
     }
+
+
+
 
     submitForm(serviceformvalue: any) {
         console.log(serviceformvalue);

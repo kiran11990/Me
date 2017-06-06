@@ -28,7 +28,7 @@ var ConstantService = (function () {
                 getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
                 saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',
                 findService: this.apiBaseUrlWithAPI + 'Service/FindServices/',
-                getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadata',
+                getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadataList',
                 //sow
                 getSow: this.apiBaseUrlWithAPI + 'SoW/GetAllSoWs',
                 getSowById: this.apiBaseUrlWithAPI + 'SoW/GetSoWById/',
@@ -41,7 +41,8 @@ var ConstantService = (function () {
                 generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
-                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps'
+                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps',
+                exportToExcel: this.apiBaseUrlWithAPI + 'slp/ExportToExcel'
             }
         };
         this.CONSTANTS = {

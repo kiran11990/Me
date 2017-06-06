@@ -36,7 +36,7 @@
                        [columns]="columns"
                        [options]="options"
                        [col-widths]="colWidths"
-                       (AfterValidate)="afterValidate($event)">
+                       (AfterValidate)="afterValidate($event)" *ngIf="showHotTable">
             </hot-table>
         </div>
     </div>

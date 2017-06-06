@@ -26,6 +26,7 @@ var SlpComponent = (function () {
         this.remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
         this.showGenerateAction = false;
         this.showSaveAction = false;
+        this.showHotTable = false;
         this.invalidHandsonCells = [];
         this.periods = new Array();
         this.INF0001 = _constantService.CONSTANTS.Messages.INF0001;
@@ -43,33 +44,19 @@ var SlpComponent = (function () {
     SlpComponent.prototype.onChange = function (selectedPeriod, _this) {
         _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.GetCurrentFP();
-        var previousFP = _this.GetPreviousFP();
         _this.currentSelectedPeriod = selectedPeriod.period;
-        if (_this.currentSelectedPeriod == currentFP) {
-            _this.showGenerateAction = true;
-            _this.showSaveAction = true;
-        }
-        else if (_this.currentSelectedPeriod == previousFP) {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = true;
-        }
-        else {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = false;
-        }
+        _this.SetActionButton(_this);
         this.GetSLPData(selectedPeriod.period);
     };
     SlpComponent.prototype.Generate = function (fiscalYear, _this) {
         _this.Message = "";
-        var currentFP = _this.GetCurrentFP();
         //TODO
-        this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
+        this._slpService.GenerateSLPforCurrentPeriod(fiscalYear, "supraja_tatichetla")
             .subscribe(function (result) {
             if (result == "INF1000") {
                 _this.Message = _this.INF0002;
                 _this.MessageType = 1;
-                _this.GetSLPData(currentFP);
+                _this.GetSLPData(fiscalYear);
             }
             else if (result == "ERR1000") {
                 _this.Message = _this.ERR0004;
@@ -108,6 +95,7 @@ var SlpComponent = (function () {
     };
     //**Actions and Events End
     SlpComponent.prototype.GetReportingPeriods = function () {
+        var _this = this;
         var mainThis = this;
         this._slpService.GetReportingPeriods().subscribe(function (result) {
             mainThis.periods = result;
@@ -115,14 +103,42 @@ var SlpComponent = (function () {
             allRP.id = 0;
             allRP.period = "All";
             mainThis.periods.unshift(allRP);
-            mainThis.selectedPeriod = allRP;
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = _this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+            mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = mainThis.selectedPeriod.period;
+            mainThis.SetActionButton(mainThis);
             mainThis.GetSLPData(mainThis.selectedPeriod.period);
         });
+    };
+    SlpComponent.prototype.SetActionButton = function (mainThis) {
+        var currentFP = mainThis.GetCurrentFP();
+        var previousFP = mainThis.GetPreviousFP();
+        var d = new Date();
+        var day = d.getDate();
+        if (mainThis.currentSelectedPeriod == currentFP) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else if (mainThis.currentSelectedPeriod == previousFP && day <= 10) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = false;
+        }
     };
     SlpComponent.prototype.GetSLPData = function (fiscalYear) {
         var _this = this;
         this._slpService.GetSlps(fiscalYear, '').subscribe(function (result) {
             _this.data = result;
+            if (_this.data.length > 0)
+                _this.showHotTable = true;
+            else
+                _this.showHotTable = false;
         });
     };
     SlpComponent.prototype.getCurrentP = function () {
@@ -314,13 +330,12 @@ var SlpComponent = (function () {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        var valueRemarksCell = instance.getCellMeta(row, col + 1);
         if (status == "1") {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = true;
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
@@ -328,6 +343,7 @@ var SlpComponent = (function () {
                 }
             }
         }
+        var tdValueRemarks = instance.getCell(row, col + 1, true);
         /***********Set status column**********/
         if (value != "NA" || value) {
             var tdStatus = instance.getCell(row, col + 2, true);
@@ -339,21 +355,29 @@ var SlpComponent = (function () {
     ;
     SlpComponent.prototype.ValidateValue = function (instance, td, row, col, prop, value, cellProperties, cells) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
+        var valuesCell = instance.getCellMeta(row, col);
         //check for percentage and numbers
         if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
-            var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valuesCell = instance.getCellMeta(row, col);
-            valuesCell.valid = false;
+            valuesCell.valid = true;
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
                     cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
                 }
             }
+        }
+        //TODO
+        if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
+            cellProperties.editor = false;
+            td.style.background = '#EEE';
+        }
+        else {
+            cellProperties.editor = 'text';
+            td.style.background = '#FFFFFF';
         }
     };
     SlpComponent.prototype.statusRenderer = function (instance, td, row, col, prop, value, cellProperties) {
@@ -374,8 +398,6 @@ var SlpComponent = (function () {
                 td.style.backgroundColor = "#FFFF00"; //yellow
             else if (status == "1")
                 td.style.backgroundColor = "#FF0000"; //red
-            else if (status == "NA")
-                td.innerText = "NA";
             return td;
         }
     };

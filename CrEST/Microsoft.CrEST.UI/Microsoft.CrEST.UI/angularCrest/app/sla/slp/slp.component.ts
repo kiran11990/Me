@@ -6,7 +6,7 @@ import { HotTableModule } from 'ng2-handsontable';
 import { SlpService } from "../shared/services/slp.service";
 import { SlpBusiness } from "../shared/business/slp.business";
 import { ReportingPeriod } from "../shared/models/reportingperiod";
-import { Slp } from "../shared/models/slp";
+import { slaData } from "../shared/models/slp";
 import { HandsonCells } from "../shared/models/handson";
 import { ConstantService } from "../../config/constants.service";
 
@@ -30,6 +30,7 @@ export class SlpComponent implements OnInit {
     remarksRegexValidtor = /^[ A-Za-z0-9_@./#&+-]*$/;
     showGenerateAction: boolean = false;
     showSaveAction: boolean = false;
+    showHotTable: boolean = false;
     invalidHandsonCells: Array<HandsonCells> = [];
 
     INF0001: string;
@@ -60,37 +61,23 @@ export class SlpComponent implements OnInit {
     onChange(selectedPeriod: any, _this: any) {
         _this.Message = "";
         _this.selectedPeriod = selectedPeriod;
-        var currentFP = _this.GetCurrentFP();
-        var previousFP = _this.GetPreviousFP();
-        _this.currentSelectedPeriod = selectedPeriod.period;
 
-        if (_this.currentSelectedPeriod == currentFP) {
-            _this.showGenerateAction = true;
-            _this.showSaveAction = true;
-        }
-        else if (_this.currentSelectedPeriod == previousFP) {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = true;
-        }
-        else {
-            _this.showGenerateAction = false;
-            _this.showSaveAction = false;
-        }
+        _this.currentSelectedPeriod = selectedPeriod.period;
+        _this.SetActionButton(_this);
 
         this.GetSLPData(selectedPeriod.period);
     }
 
     Generate(fiscalYear: string, _this: any) {
         _this.Message = "";
-        var currentFP = _this.GetCurrentFP();
 
         //TODO
-        this._slpService.GenerateSLPforCurrentPeriod(currentFP, "supraja_tatichetla")
-            .subscribe((result:any) => {
+        this._slpService.GenerateSLPforCurrentPeriod(fiscalYear, "supraja_tatichetla")
+            .subscribe((result: any) => {
                 if (result == "INF1000") {
                     _this.Message = _this.INF0002;
                     _this.MessageType = 1;
-                    _this.GetSLPData(currentFP);
+                    _this.GetSLPData(fiscalYear);
                 }
                 else if (result == "ERR1000") {
                     _this.Message = _this.ERR0004;
@@ -113,7 +100,7 @@ export class SlpComponent implements OnInit {
             })
 
             this._slpService.SaveSLPs(mainThis.data)
-                .subscribe((result:any) => {
+                .subscribe((result: any) => {
                     if (result == "INF1000") {
                         mainThis.Message = mainThis.INF0001;
                         mainThis.MessageType = 1;
@@ -139,15 +126,49 @@ export class SlpComponent implements OnInit {
             allRP.id = 0;
             allRP.period = "All";
             mainThis.periods.unshift(allRP);
-            mainThis.selectedPeriod = allRP;
-            mainThis.GetSLPData(mainThis.selectedPeriod.period)
+
+            var currentFP = mainThis.GetPreviousFP();
+            var selectedFP = this.periods.find(function (node) {
+                return node.period == currentFP;
+            });
+
+            mainThis.selectedPeriod = selectedFP;
+            mainThis.currentSelectedPeriod = mainThis.selectedPeriod.period;
+
+            mainThis.SetActionButton(mainThis);
+
+            mainThis.GetSLPData(mainThis.selectedPeriod.period);
         });
     }
 
+    private SetActionButton(mainThis: any) {
+        var currentFP = mainThis.GetCurrentFP();
+        var previousFP = mainThis.GetPreviousFP();
+
+        var d = new Date();
+        var day = d.getDate();
+
+        if (mainThis.currentSelectedPeriod == currentFP) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else if (mainThis.currentSelectedPeriod == previousFP && day <= 10) {
+            mainThis.showGenerateAction = true;
+            mainThis.showSaveAction = true;
+        }
+        else {
+            mainThis.showGenerateAction = false;
+            mainThis.showSaveAction = false;
+        }
+    }
     private GetSLPData(fiscalYear: string) {
         var _this = this;
-        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<Slp>) => {
+        this._slpService.GetSlps(fiscalYear, '').subscribe((result: Array<slaData>) => {
             _this.data = result;
+            if (_this.data.length > 0)
+                _this.showHotTable = true;
+            else
+                _this.showHotTable = false;
         });
     }
 
@@ -373,13 +394,13 @@ export class SlpComponent implements OnInit {
         /*******Set Value remarks column**********/
         var data = cellProperties.mainThis.data;
         var status = cellProperties.mainThis._slpBusiness.GetStatus(data[row]);
+        var valueRemarksCell = instance.getCellMeta(row, col + 1);
+
         if (status == "1") {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valueRemarksCell = instance.getCellMeta(row, col + 1);
             valueRemarksCell.valid = true;
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
@@ -387,6 +408,8 @@ export class SlpComponent implements OnInit {
                 }
             }
         }
+
+        var tdValueRemarks = instance.getCell(row, col + 1, true);
 
         /***********Set status column**********/
         if (value != "NA" || value) {
@@ -401,23 +424,31 @@ export class SlpComponent implements OnInit {
 
     private ValidateValue(instance: any, td: any, row: any, col: any, prop: any, value: any, cellProperties: any, cells: any) {
         var tdMinimumValue = instance.getDataAtCell(row, 14);
-       
+        var valuesCell = instance.getCellMeta(row, col);
+
         //check for percentage and numbers
         if ((tdMinimumValue.charAt(tdMinimumValue.length - 1) == "%" && value && value.charAt(value.length - 1) != "%")
             || tdMinimumValue.charAt(tdMinimumValue.length - 1) != "%" && value && (value.charAt(value.length - 1) == "%")) {
-            var valuesCell = instance.getCellMeta(row, col);
             valuesCell.valid = false;
             cellProperties.mainThis.invalidHandsonCells.push(cells);
         }
         else {
-            var valuesCell = instance.getCellMeta(row, col);
-            valuesCell.valid = false;
+            valuesCell.valid = true;
 
             for (var i = 0; i < cellProperties.mainThis.invalidHandsonCells.length; i++) {
                 if (cellProperties.mainThis.invalidHandsonCells[i].row == cells.row && cellProperties.mainThis.invalidHandsonCells[i].col == cells.col) {
                     cellProperties.mainThis.invalidHandsonCells.splice(i, 1);
                 }
             }
+        }
+
+        //TODO
+        if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
+            cellProperties.editor = false;
+            td.style.background = '#EEE';
+        } else {
+            cellProperties.editor = 'text';
+            td.style.background = '#FFFFFF';
         }
     }
 
@@ -439,8 +470,6 @@ export class SlpComponent implements OnInit {
                 td.style.backgroundColor = "#FFFF00"; //yellow
             else if (status == "1")
                 td.style.backgroundColor = "#FF0000"; //red
-            else if (status == "NA")
-                td.innerText = "NA";
             return td;
         }
     }

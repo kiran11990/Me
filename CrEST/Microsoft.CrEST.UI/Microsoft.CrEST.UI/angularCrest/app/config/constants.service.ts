@@ -28,7 +28,7 @@ export class ConstantService {
                 getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
                 saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',
                 findService: this.apiBaseUrlWithAPI + 'Service/FindServices/',
-                getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadata',
+                getServiceMetaData: this.apiBaseUrlWithAPI + 'Service/GetServiceMetadataList',
                 //sow
                 getSow: this.apiBaseUrlWithAPI + 'SoW/GetAllSoWs',
                 getSowById: this.apiBaseUrlWithAPI + 'SoW/GetSoWById/',
@@ -42,10 +42,8 @@ export class ConstantService {
                 generateSLPforCurrentPeriod: this.apiBaseUrlWithAPI + 'slp/GenerateSlps',
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
-				getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps',
-
-				//Login
-				ValidateUsers: this.apiBaseUrlWithAPI + 'Login/ValidateUsers/'
+                getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps',
+                exportToExcel: this.apiBaseUrlWithAPI + 'slp/ExportToExcel'
             }
         };
 

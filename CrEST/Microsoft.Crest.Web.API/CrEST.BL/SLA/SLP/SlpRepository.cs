@@ -146,6 +146,22 @@ namespace CrEST.BL
             }
         }
 
+        public ExportToExcelData ExportToExcel(string period)
+        {
+            var data = new ExportToExcelData();
+
+            ISoWRepository sowRepo = new SoWRepository(_context);
+            data.Sows = sowRepo.GetAll();
+            IServiceRepository serviceRepo = new ServiceRepository(_context);
+            data.Services = serviceRepo.GetAllServices();
+            IApplicationRepository applicationRepo = new ApplicationRepository(_context);
+            data.Applications = applicationRepo.GetAllApplications();
+
+            data.Slps = GetSlps(period);
+            
+            return data;
+        }
+
         private IEnumerable<SLAData> GetSlaFromDb(string period)
         {
             List<SLAData> slas = new List<SLAData>();
@@ -185,6 +201,7 @@ namespace CrEST.BL
                     sla.Type = sla.MinimumLevel.Contains("%") ? "P" : "N";
                     sla.Value = reader.IsDBNull(23) ? string.Empty : (reader.GetString(23));
                     sla.ValueRemarks = reader.IsDBNull(24) ? string.Empty : reader.GetString(24);
+                    sla.InfyOwner = reader.IsDBNull(25) ? string.Empty : reader.GetString(25);
                     slas.Add(sla);
                 }
             }
