@@ -86,6 +86,7 @@ var SlaServiceComponent = (function () {
         for (var i = 0; i < this.serviceList.length; i++) {
             this.ApplicationLists.push(this.serviceList[i].applicationGroup);
             this.contactIdList.push(this.serviceList[i].contractId.toString());
+            //this.SupplierList.push(this.serviceList[i].supplier);
         }
     };
     SlaServiceComponent.prototype.onPageChange = function (number) {

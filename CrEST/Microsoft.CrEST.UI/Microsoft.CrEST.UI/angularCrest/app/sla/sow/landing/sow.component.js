@@ -53,6 +53,7 @@ var SowComponent = (function () {
     }
     SowComponent.prototype.ngOnInit = function () {
         if (this._routeParameterd.snapshot.params['sowStatus']) {
+            //this.getAllServices();
         }
         this.getAllServices();
     };

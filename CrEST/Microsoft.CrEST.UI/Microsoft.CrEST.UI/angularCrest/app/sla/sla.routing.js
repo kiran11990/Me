@@ -7,7 +7,7 @@ import { SlaDashboardComponent } from './dashboard/dashboard.component';
 import { ServicelineFormComponent } from './serviceline/serviceformaddupdate.component';
 import { SlpComponent } from './slp/slp.component';
 import { ApplicationFormComponent } from './application/application-form.component';
-var slaRoutes = [
+export var slaRoutes = [
     { path: 'sows', component: SowComponent, pathMatch: 'full' },
     { path: 'sows/add', component: SowFormComponent },
     { path: 'sows/sowStatus', component: SowComponent },
@@ -21,7 +21,7 @@ var slaRoutes = [
     { path: 'services/:id', component: ServicelineFormComponent },
     { path: 'services/services', component: SlaServiceComponent },
     { path: 'slps', component: SlpComponent, pathMatch: 'full' },
-    { path: 'sladashboard', component: SlaDashboardComponent, pathMatch: 'full' }
+    { path: 'sladashboard', component: SlaDashboardComponent }
 ];
 export var SlaRouting = RouterModule.forChild(slaRoutes);
 //# sourceMappingURL=sla.routing.js.map

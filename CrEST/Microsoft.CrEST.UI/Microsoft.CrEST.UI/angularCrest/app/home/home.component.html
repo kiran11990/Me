@@ -8,12 +8,28 @@
 </div>-->
 
 
-<div id="page-wrapper">
+<div id="wrapper">
+    <div class="row">
+        {{pageContent}}
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <crest-nav-bar>Loading Navigation...</crest-nav-bar>
+        </nav>
+    </div>
+    <div id="page-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+<!--<div id="page-wrapper">
 	<div class="row">
 		{{pageContent}}
-		<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-			<crest-nav-bar>Loading Navigation...</crest-nav-bar>
-		</nav>
-	</div>
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <crest-nav-bar>Loading Navigation...</crest-nav-bar>
+            </nav>
+        </div>
 </div>
+<div class="col-sm-8 col-sm-offset-2">
+<router-outlet></router-outlet>
+</div>-->
 

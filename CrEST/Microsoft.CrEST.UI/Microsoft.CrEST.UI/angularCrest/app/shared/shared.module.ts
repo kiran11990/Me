@@ -13,6 +13,7 @@ import { MyDatePickerModule } from 'mydatepicker';
         FormsModule],
     declarations: [
         AutoCompleteComponent, UserFilterPipe, SearchPipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [AutoCompleteComponent, UserFilterPipe, SearchPipe, MyDatePickerModule]
    
 })

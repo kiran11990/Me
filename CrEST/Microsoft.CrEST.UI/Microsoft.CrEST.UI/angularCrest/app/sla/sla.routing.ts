@@ -10,7 +10,7 @@ import { SlpComponent } from './slp/slp.component';
 import { ApplicationFormComponent } from './application/application-form.component';
 
 
-const slaRoutes: Routes = [
+export const slaRoutes: Routes = [
     { path: 'sows', component: SowComponent, pathMatch: 'full' },
     { path: 'sows/add', component: SowFormComponent },
     { path: 'sows/sowStatus', component: SowComponent },
@@ -26,9 +26,8 @@ const slaRoutes: Routes = [
     { path: 'services/:id', component: ServicelineFormComponent },
     { path: 'services/services', component: SlaServiceComponent },
 
-    { path: 'slps', component: SlpComponent, pathMatch: 'full' },
-
-    { path: 'sladashboard', component: SlaDashboardComponent, pathMatch: 'full' }
+    { path: 'slps', component: SlpComponent, pathMatch: 'full' },   
+    { path: 'sladashboard', component: SlaDashboardComponent }
 ]
 
 export const SlaRouting = RouterModule.forChild(slaRoutes);

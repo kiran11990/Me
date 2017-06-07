@@ -28,8 +28,8 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     NgModule({
-        imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, LoginComponent, RegisterComponent, CommonModule, ReactiveFormsModule],
-        declarations: [AppComponent, HomeComponent, NavigationComponent, NotFoundComponent],
+        imports: [BrowserModule, FormsModule, HttpModule, SlaModule, Routing, SharedModule, CommonModule, ReactiveFormsModule],
+        declarations: [AppComponent, HomeComponent, NavigationComponent, NotFoundComponent, LoginComponent, RegisterComponent,],
         bootstrap: [AppComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         providers: [
