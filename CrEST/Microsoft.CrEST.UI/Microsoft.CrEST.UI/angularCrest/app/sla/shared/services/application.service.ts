@@ -11,6 +11,7 @@ import { CommonService } from '../../../shared/common.service'
 
 @Injectable()
 export class ApplicationService {
+	public appId: number;
     public getApplicationUrl: string;
     public addApplicationUrl: string;
     public findApplicationUrl: string;

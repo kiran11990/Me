@@ -344,6 +344,18 @@ namespace CrEST.Data.Models
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Sow_Supplier");
             });
-        }
-    }
+			//Added for Login 
+		
+			//Added for registration
+
+			//modelBuilder.Entity<Register>(entity =>
+			//{
+			//	entity.Property(e => e.UserName).HasColumnName("UserName");
+			//	entity.Property(e => e.Password).HasColumnName("Password");
+
+			//	entity.Property(e => e.RoleName).HasColumnType("RoleName");
+			//});
+
+		}
+	}
 }

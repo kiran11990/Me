@@ -29,7 +29,7 @@ export class SowFormComponent implements OnInit {
     public itorgFlag: boolean = true;
     public routeID: number;
     //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
-    private currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
+	private currencyPattern = /^[0-9]*$/;
     constructor(
         formBuilder: FormBuilder,
         private router: Router,
@@ -182,12 +182,10 @@ export class SowFormComponent implements OnInit {
 
     redirect() {
 
-        if (confirm("Do you want Update")) {
+		if (confirm("Are you sure you want to leave this page?")) {
             this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
         }
-        else {
-            this.router.navigate(['applications', { sowStatus: "updatedsuccessfully" }]);
-        }
+       
     }
 
     BackClick(event: Event) {

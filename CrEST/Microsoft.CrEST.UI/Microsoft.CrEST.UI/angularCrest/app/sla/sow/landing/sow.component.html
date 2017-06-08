@@ -39,7 +39,7 @@
                         <div class="col-lg-6 text-right">
                             <div class="fixed-action-btn">
                                 <a class="btn btn-primary"
-                                   routerLink="/sows/add">
+                                   routerLink="add">
                                     Add
                                 </a>
                             </div>
@@ -87,7 +87,7 @@
                                 <td>{{ sow.remarks }}</td>
                                 <td>{{sow.companyCode}}</td>
                                 <td>
-                                    <a class="btn btn-primary" [routerLink]="['/sows', sow.soWid]">Edit</a>
+                                    <a class="btn btn-primary" [routerLink]="[sow.soWid]">Edit</a>
                                 </td>
                             </tr>
                         </tbody>

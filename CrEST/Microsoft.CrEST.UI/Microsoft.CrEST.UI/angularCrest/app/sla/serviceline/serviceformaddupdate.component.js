@@ -110,13 +110,9 @@ var ServicelineFormComponent = (function () {
         this.service.currency = value;
     };
     ServicelineFormComponent.prototype.redirect = function () {
-        if (confirm("Do you want Update")) {
-            return false;
-        }
-        else {
+        if (confirm("Are you sure you want to leave this page?")) {
             this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
         }
-        event.preventDefault();
     };
     ServicelineFormComponent.prototype.submitForm = function (service) {
         //applicationData.endDate = enddate;

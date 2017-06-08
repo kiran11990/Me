@@ -125,13 +125,9 @@ export class ServicelineFormComponent implements OnInit {
 
 
     redirect() {
-        if (confirm("Do you want Update")) {
-            return false;
+		if (confirm("Are you sure you want to leave this page?")) {
+			this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
         }
-        else {
-            this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
-        }
-        event.preventDefault();
     }
 
     submitForm(service: Service) {

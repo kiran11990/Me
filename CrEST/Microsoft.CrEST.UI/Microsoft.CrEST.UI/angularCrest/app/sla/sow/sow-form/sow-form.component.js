@@ -30,7 +30,7 @@ var SowFormComponent = (function () {
         this.contractIdFlag = true;
         this.itorgFlag = true;
         //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
-        this.currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
+        this.currencyPattern = /^[0-9]*$/;
         this.soweffectiveDate = {
             date: {
                 year: this.startdate.getFullYear(),
@@ -153,11 +153,8 @@ var SowFormComponent = (function () {
         });
     };
     SowFormComponent.prototype.redirect = function () {
-        if (confirm("Do you want Update")) {
+        if (confirm("Are you sure you want to leave this page?")) {
             this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
-        }
-        else {
-            this.router.navigate(['applications', { sowStatus: "updatedsuccessfully" }]);
         }
     };
     SowFormComponent.prototype.BackClick = function (event) {

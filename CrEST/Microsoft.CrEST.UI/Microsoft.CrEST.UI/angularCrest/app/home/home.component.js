@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { Component } from '@angular/core';
 var HomeComponent = (function () {
     function HomeComponent() {
-        this.pageContent = "This is one stop application for CrEST PMO Tool";
     }
     return HomeComponent;
 }());

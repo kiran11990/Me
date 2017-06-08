@@ -39,7 +39,7 @@
                         <div class="col-lg-6 text-right">
                             <div class="fixed-action-btn">
                                 <a class="btn btn-primary"
-                                   routerLink="/applications/add" style="margin-bottom:2px">
+                                   routerLink="add" style="margin-bottom:2px">
                                     Add
                                 </a>
                             </div>
@@ -91,7 +91,7 @@
                                 <td>{{item.remarks}}</td>
                                 <td>{{item.itOrgName}}</td>
                                 <td>
-                                    <a class="btn btn-primary" [routerLink]="['/applications', item.applicationId]">Edit</a>
+                                    <a class="btn btn-primary" [routerLink]="[item.applicationId]">Edit</a>
                                 </td>
                             </tr>
                         </tbody>

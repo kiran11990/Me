@@ -6,5 +6,5 @@
 })
 
 export class HomeComponent {
-    pageContent: String = "This is one stop application for CrEST PMO Tool";
+   // pageContent: String = "This is one stop application for CrEST PMO Tool";  
 }

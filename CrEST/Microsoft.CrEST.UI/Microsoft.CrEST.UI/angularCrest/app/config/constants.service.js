@@ -43,7 +43,10 @@ var ConstantService = (function () {
                 getSlps: this.apiBaseUrlWithAPI + 'slp/GetSLPs',
                 getReportingPeriod: this.apiBaseUrlWithAPI + 'slp/GetReportingPeriod',
                 getRASlps: this.apiBaseUrlWithAPI + 'slp/GetRASlps',
-                exportToExcel: this.apiBaseUrlWithAPI + 'slp/ExportToExcel'
+                exportToExcel: this.apiBaseUrlWithAPI + 'slp/ExportToExcel',
+                //Login
+                ValidateUsers: this.apiBaseUrlWithAPI + 'Login/ValidateUsers/',
+                RegisterUser: this.apiBaseUrlWithAPI + 'Login/GetUsersRegistered/'
             }
         };
         this.CONSTANTS = {

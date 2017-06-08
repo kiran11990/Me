@@ -35,7 +35,7 @@
                         <div class="col-lg-6 text-right">
                             <div class="fixed-action-btn">
                                 <a class="btn btn-primary"
-                                   routerLink="/services/add">
+                                   routerLink="add">
                                     Add
                                 </a>
                             </div>
@@ -81,7 +81,7 @@
                                 <td>{{ service.currency }}</td>
                                 <td>{{ service.itorgName }}</td>
                                 <td>
-                                    <a class="btn btn-primary" [routerLink]="['/services', service.serviceId]">Edit</a>
+                                    <a class="btn btn-primary" [routerLink]="[service.serviceId]">Edit</a>
                                 </td>
                             </tr>
                         </tbody>
