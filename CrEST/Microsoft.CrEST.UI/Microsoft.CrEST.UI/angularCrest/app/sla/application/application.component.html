@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <table class="table table-striped table-bordered table-hover" *ngIf="applicationList.length>0">
-                        <thead>
+                        <thead class="tblHeader">
                             <tr>
                                 <th>Supplier</th>
                                 <th>Contract Id</th>
@@ -80,8 +80,8 @@
                                 <td>{{item.serviceClass}}</td>
                                 <td>{{item.runOrGrow}}</td>
                                 <td>{{item.applicationGroup}}</td>
-                                <td>{{item.startDate}}</td>
-                                <td>{{item.endDate}}</td>
+                                <td>{{item.startDate|date: 'MM-dd-yyyy'}}</td>
+                                <td>{{item.endDate|date: 'MM-dd-yyyy'}}</td>
                                 <td>{{item.endToEnd}}</td>
                                 <td>{{item.epm}}</td>
                                 <td>{{item.tM}}</td>

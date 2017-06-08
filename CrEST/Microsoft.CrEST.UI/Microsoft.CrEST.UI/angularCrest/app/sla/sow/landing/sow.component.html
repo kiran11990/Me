@@ -45,8 +45,8 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover" *ngIf="sows.length>0">
-                        <thead>
+                    <table class="table table-striped table-bordered table-hover" *ngIf="sows.length>0" style="table-layout:fixed">
+                        <thead class="tblHeader">
                             <tr>
                                 <th data-field="name">Supplier Name</th>
                                 <th data-field="name">ITOrg Name</th>
@@ -71,10 +71,10 @@
                         <tbody>
                             <tr *ngFor="let sow of sows|paginate: config" style="height:12px">
                                 <td>{{ sow.supplierName }}</td>
-                                <td>{{sow.itOrgName}}</td>
+                                <td>{{sow.itorgName}}</td>
                                 <td>{{ sow.contractId }}</td>
-                                <td>{{ sow.soweffectiveDate }}</td>
-                                <td>{{ sow.sowexpirationDate }}</td>
+                                <td>{{ sow.soweffectiveDate|date: 'MM-dd-yyyy' }}</td>
+                                <td>{{ sow.sowexpirationDate|date: 'MM-dd-yyyy' }}</td>
                                 <td>{{ sow.msowner }}</td>
                                 <td>{{ sow.serviceCatalogVersion }}</td>
                                 <td>{{ sow.ponumYear1 }}</td>

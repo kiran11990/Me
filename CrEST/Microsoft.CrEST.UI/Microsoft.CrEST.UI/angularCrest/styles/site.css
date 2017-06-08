@@ -570,3 +570,6 @@ div.tablewrapper {
     overflow-x: auto;
     overflow-y: auto;
 }
+.tblHeader {
+	background-color: #EEE;
+}
