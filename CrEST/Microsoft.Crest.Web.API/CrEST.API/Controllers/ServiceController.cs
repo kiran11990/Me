@@ -22,7 +22,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 		[HttpGet]
 		[Route("GetServiceById/{id}")]
 		public ServiceData GetServiceById(int id)
-		{
+		 {
 			return _serviceRepository.GetById(id);
 		}		
 
@@ -35,7 +35,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 
         [HttpPost]
         [Route("SaveService")]
-        public ServiceData SaveService([FromBody]ServiceData item)
+        public int SaveService([FromBody]ServiceData item)
         {
             return _serviceRepository.SaveService(item);
         }

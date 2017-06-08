@@ -21,7 +21,7 @@ namespace CrEST.BL
 
 		public IEnumerable<SowData> GetAll()
 		{
-			return SearchSow(0, 0, null, null, string.Empty);
+			return SearchSow(0, string.Empty, null, null, string.Empty);
 		}
 
 		public SowData GetById(int item)
@@ -68,38 +68,35 @@ namespace CrEST.BL
 		public int SaveSOW(SowData item)
 		{
 
-			SoW existingItem = _context.SoW.Where(s => s.SoWid == item.SoWid).SingleOrDefault();
+			SoW sowItem = _context.SoW.Where(s => s.SoWid == item.SoWid).SingleOrDefault();
 
-			if (existingItem == null)
+			if (sowItem == null)
 			{
-				existingItem = new SoW();
+                sowItem = new SoW();
 			}
-
-			existingItem.SupplierId = _context.Supplier.Where(x => x.SupplierId == item.SupplierId).FirstOrDefault().SupplierId;
-			existingItem.Itorg = item.Itorg;
-			existingItem.ContractId = item.ContractId;
-			existingItem.SoweffectiveDate = item.SoweffectiveDate;
-			existingItem.SowexpirationDate = item.SowexpirationDate;
-			existingItem.Msowner = item.Msowner;
-			existingItem.InfyOwner = item.InfyOwner;
-			existingItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
-			existingItem.PonumYear1 = item.PonumYear1;
-			existingItem.SowamountYear1 = item.SowamountYear1;
-			existingItem.SowamountYear2 = item.SowamountYear2;
-			existingItem.SowamountYear3 = item.SowamountYear3;
-			existingItem.SowamountYear4 = item.SowamountYear4;
-			existingItem.IsCrest = item.IsCrest;
-			existingItem.Remarks = item.Remarks;
-
-			if (existingItem.SoWid == 0)
-				_context.SoW.Add(existingItem);
-
+            sowItem.SupplierId = _context.Supplier.Where(x => x.SupplierId == item.SupplierId).FirstOrDefault().SupplierId;
+			sowItem.Itorg = item.Itorg;
+			sowItem.ContractId = item.ContractId;
+			sowItem.SoweffectiveDate = item.SoweffectiveDate;
+			sowItem.SowexpirationDate = item.SowexpirationDate;
+			sowItem.Msowner = item.Msowner;
+			sowItem.InfyOwner = item.InfyOwner;
+			sowItem.ServiceCatalogVersion = item.ServiceCatalogVersion;
+			sowItem.PonumYear1 = item.PonumYear1;
+			sowItem.SowamountYear1 = item.SowamountYear1;
+			sowItem.SowamountYear2 = item.SowamountYear2;
+			sowItem.SowamountYear3 = item.SowamountYear3;
+			sowItem.SowamountYear4 = item.SowamountYear4;
+			sowItem.IsCrest = item.IsCrest;
+			sowItem.Remarks = item.Remarks;
+			if (sowItem.SoWid == 0)
+				_context.SoW.Add(sowItem);
             return _context.SaveChanges();
 
         }
 
 
-		public IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime effectiveDate, DateTime expiryDate, string msOwner)
+		public IEnumerable<SowData> FindSoW(int contractId, string ITOrg, DateTime effectiveDate, DateTime expiryDate, string msOwner)
 		{
 			return SearchSow(contractId, ITOrg, effectiveDate, expiryDate, msOwner);
 		}
@@ -144,9 +141,16 @@ namespace CrEST.BL
 			return sows;
 		}
 
-		private IEnumerable<SowData> SearchSow(int contractId, int itOrg, DateTime? effectiveDate, DateTime? expiryDate, string msOwner)
+		private IEnumerable<SowData> SearchSow(int contractId, string itOrg, DateTime? effectiveDate, DateTime? expiryDate, string infyOwner)
 		{
-			List<SowData> sows = new List<SowData>();
+
+            int id = 0;
+            if (!String.IsNullOrWhiteSpace(itOrg)) {
+                id = _context.Itorg.Where(x => x.ItorgName == itOrg).Select(x => x.ItorgId).Single();
+            }
+            
+
+            List<SowData> sows = new List<SowData>();
 
 
 			_context.Database.OpenConnection();
@@ -154,11 +158,11 @@ namespace CrEST.BL
 				cmd.CommandText = "spSearchSoW";
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.Add(new SqlParameter("@ContractId", contractId));
-				cmd.Parameters.Add(new SqlParameter("@ITOrg", itOrg));
-				if (msOwner == null)
-					cmd.Parameters.Add(new SqlParameter("@MSOwner", string.Empty));
+				cmd.Parameters.Add(new SqlParameter("@ITOrg", id));
+				if (infyOwner == null)
+					cmd.Parameters.Add(new SqlParameter("@InfyOwner", string.Empty));
 				else
-					cmd.Parameters.Add(new SqlParameter("@MSOwner", msOwner));
+					cmd.Parameters.Add(new SqlParameter("@InfyOwner", infyOwner));
 				if (effectiveDate == null || effectiveDate == new DateTime())
 					cmd.Parameters.Add(new SqlParameter("@SOWEffectiveDate", string.Empty));
 				else

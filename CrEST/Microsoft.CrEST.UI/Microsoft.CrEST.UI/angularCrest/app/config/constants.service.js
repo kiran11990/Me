@@ -24,6 +24,7 @@ var ConstantService = (function () {
                 getApplicationbyId: this.apiBaseUrlWithAPI + 'Application/GetApplicationById/',
                 getapplicationMetaData: this.apiBaseUrlWithAPI + 'Application/GetApplicationMetadata',
                 //service
+                //service
                 getservice: this.apiBaseUrlWithAPI + 'Service/GetAllServices',
                 getServiceById: this.apiBaseUrlWithAPI + 'Service/GetServiceById/',
                 saveService: this.apiBaseUrlWithAPI + 'Service/SaveService',

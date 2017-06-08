@@ -14,6 +14,7 @@ namespace CrEST.Models
         public string CrestLevel1 { get; set; }
         public string CrestLevel2 { get; set; }
         public string CrestLevel3 { get; set; }
+        public int CrestLevel2Id { get; set; }
         public int CrestLevel1Id { get; set; }
         public int CrestLevel3Id { get; set; }
         public decimal? AppGroupServiceFeeY1 { get; set; }

@@ -49,6 +49,7 @@ export class ApplicationService {
     }
 
     addApplication(applicationData: ApplicationData): Observable<number> {
+        debugger;
         var header = new Headers({ 'Content-Type': 'application/json'});
         let body = JSON.stringify(applicationData);
         return this.http

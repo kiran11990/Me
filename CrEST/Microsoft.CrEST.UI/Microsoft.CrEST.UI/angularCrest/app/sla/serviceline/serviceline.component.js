@@ -15,7 +15,6 @@ var SlaServiceComponent = (function () {
     function SlaServiceComponent(Service) {
         this.Service = Service;
         this.sample = "";
-        //Foreach(var x in ayyy)
         this.serviceline = "Sla Service";
         this.contactId = '';
         this.contractId = '';
@@ -28,14 +27,11 @@ var SlaServiceComponent = (function () {
         this.servicelineList = [];
         this.ApplicationLists = [];
         this.SupplierList = [];
-        //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
-        //    this.router = _router;
         this.serviceList = [];
         this.filteredList = [];
         this.ContactIdList = [];
         this.searchContactId = '';
         this.searchApplicationgroup = '';
-        //@Input('data') meals: string[] = [];
         this.filter = '';
         this.maxSize = 7;
         this.directionLinks = true;
@@ -84,8 +80,12 @@ var SlaServiceComponent = (function () {
     };
     SlaServiceComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.serviceList.length; i++) {
-            this.ApplicationLists.push(this.serviceList[i].applicationGroup);
-            this.contactIdList.push(this.serviceList[i].contractId.toString());
+            if (this.ApplicationLists.indexOf(this.serviceList[i].applicationGroup) == -1) {
+                this.ApplicationLists.push(this.serviceList[i].applicationGroup);
+            }
+            if (this.contactIdList.indexOf(this.serviceList[i].contractId.toString()) == -1) {
+                this.contactIdList.push(this.serviceList[i].contractId.toString());
+            }
         }
     };
     SlaServiceComponent.prototype.onPageChange = function (number) {

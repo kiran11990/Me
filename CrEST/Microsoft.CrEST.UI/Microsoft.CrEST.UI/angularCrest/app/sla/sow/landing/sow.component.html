@@ -7,22 +7,19 @@
     <div class="col-lg-12">
         <div class="form-group row">
             <div class="col-lg-3">
-                <label for="contractID">Contract ID</label>
                 <input id="contractIDs" #varSearchcontractid type="text" [(ngModel)]='contractID' class="form-control" placeholder="Contract ID" />
                 <auto-complete [tagId]="contractIDs" [values]='contractIDList|filterUser:contractID' [elementToBind]='varSearchcontractid' (notifyOnSelected)='notifyContractId($event)'> </auto-complete>
             </div>
             <div class="col-lg-3">
-                <label for="serviceLine">IT Org</label>
                 <input class="form-control" id="itOrg" #varSearchitOrg type="text" [(ngModel)]='itOrg' placeholder="IT Org" />
                 <auto-complete [tagId]='itOrg' [values]='ItOrgList|filterUser:itOrg' [elementToBind]='varSearchitOrg' (notifyOnSelected)='notifyItOrg($event)'> </auto-complete>
             </div>
 
             <div class="col-lg-3">
-                <label for="msOwnerAlias">MS Owner Alias</label>
-                <input class="form-control" id="msOwnerAlias" #varSearchmsOwnerAlias type="text" [(ngModel)]='msOwnerAlias' placeholder="MS Owner Alias" />
+                <input class="form-control" id="msOwnerAlias" #varSearchmsOwnerAlias type="text" [(ngModel)]='msOwnerAlias' placeholder="Infy Owner" />
                 <auto-complete [tagId]='msOwnerAliass' [values]='msOwnerAliasList|filterUser:msOwnerAlias' [elementToBind]='varSearchmsOwnerAlias' (notifyOnSelected)='notifymsOwnerAlias($event)'> </auto-complete>
             </div>
-            <div class="col-lg-3" style="margin-top:25px">
+            <div class="col-lg-3">
                 <button class="btn btn-primary" (click)="find()">Find</button>
             </div>
 
@@ -36,7 +33,7 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <p>
-                                Displaying {{ sows.length }} SOWs.
+                                Displaying {{ sows.length }} rows.
                             </p>
                         </div>
                         <div class="col-lg-6 text-right">
@@ -48,38 +45,37 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" *ngIf="sows.length>0">
                         <thead>
                             <tr>
-                               
                                 <th data-field="name">Supplier Name</th>
+                                <th data-field="name">ITOrg Name</th>
                                 <th data-field="name">Contarct Id</th>
                                 <th data-field="name">SoW Effective Date</th>
                                 <th data-field="name">SoW Expiration Date</th>
-                                <th data-field="name">Ms Owner</th>
-                                <th data-field="name">Infy Owner</th>
+                                <th data-field="name">MS Owner</th>
+                                <!--<th data-field="name">Infy Owner</th>-->
                                 <th data-field="name">Service Catalog Version</th>
-                                <th data-field="name">Ponum Year1</th>
+                                <th data-field="name">PO# Year1</th>
                                 <th data-field="name">Currency</th>
                                 <th data-field="name">SoW Amount Year1 </th>
                                 <th data-field="name">SoW Amount Year2 </th>
                                 <th data-field="name">SoW Amount Year3</th>
                                 <th data-field="name">SoW Amount Year4 </th>
-                                <th data-field="name">Is Crest?</th>
+                                <th data-field="name"> Crest Flag</th>
                                 <th data-field="name">Remarks</th>
                                  <th data-field="name">Company Code</th> 
                                 <th data-field="name">Action</th>
-                                <!--<th data-field="name">Delete</th>-->
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let sow of sows|paginate: config" style="height:12px">
                                 <td>{{ sow.supplierName }}</td>
+                                <td>{{sow.itOrgName}}</td>
                                 <td>{{ sow.contractId }}</td>
                                 <td>{{ sow.soweffectiveDate }}</td>
                                 <td>{{ sow.sowexpirationDate }}</td>
                                 <td>{{ sow.msowner }}</td>
-                                <td>{{ sow.infyOwner }}</td>
                                 <td>{{ sow.serviceCatalogVersion }}</td>
                                 <td>{{ sow.ponumYear1 }}</td>
                                 <td>{{ sow.currency }}</td>
@@ -107,6 +103,9 @@
                                              [screenReaderPageLabel]="labels.screenReaderPageLabel"
                                              [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
                                              (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
+                    </div>
+                    <div *ngIf="sows.length==0">
+                        <p>No Data Found</p>
                     </div>
                 </div>
             </div>

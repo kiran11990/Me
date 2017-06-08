@@ -27,7 +27,7 @@ export class SowComponent {
     public application = '';
     public owneralias = '';
     public ItOrg: any;
-    public itOrg: any;
+    public itOrg="";
     public contractIDList: string[] = [];
     public ItOrgList: string[] = [];
     public msOwnerAliasList: string[] = [];
@@ -60,7 +60,7 @@ export class SowComponent {
     };
 
     find() {
-        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias)
+        this.sowService.findSow(this.contractID, this.itOrg, this.msOwnerAlias)
             .subscribe(data => {
                 this.sows = data
             })
@@ -101,9 +101,18 @@ export class SowComponent {
 
     autoComplete() {
         for (var i = 0; i < this.sows.length; i++) {
-            this.contractIDList.push(this.sows[i].contractId.toString());
-            this.ItOrgList.push(this.sows[i].itorgName);
-            this.msOwnerAliasList.push(this.sows[i].msowner);
+            if (this.contractIDList.indexOf(this.sows[i].contractId.toString()) == -1) {
+                this.contractIDList.push(this.sows[i].contractId.toString());
+            }
+            if (this.ItOrgList.indexOf(this.sows[i].itorgName)==-1) {
+                this.ItOrgList.push(this.sows[i].itorgName);
+            }
+            if (this.msOwnerAliasList.indexOf(this.sows[i].infyOwner) == -1) {
+                this.msOwnerAliasList.push(this.sows[i].infyOwner);
+            }
+            
+            
+            
         }
     }
 

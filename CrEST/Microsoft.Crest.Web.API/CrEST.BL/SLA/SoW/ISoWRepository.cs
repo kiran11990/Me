@@ -13,7 +13,7 @@ namespace CrEST.BL
 
 		int SaveSOW(SowData item);
 
-        IEnumerable<SowData> FindSoW(int contractId, int ITOrg, DateTime effectiveDate, DateTime expiryDate, string msOwner);
+        IEnumerable<SowData> FindSoW(int contractId, string ITOrg, DateTime effectiveDate, DateTime expiryDate, string infyOwner);
 
         SowMetadata GetSowMetadata();
 

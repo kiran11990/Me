@@ -31,6 +31,11 @@ var ApplicationFormComponent = (function () {
         this.outparam = '';
         this.dropdownSettings = {};
         this.runOrGrow = [];
+        this.supplierFlag = true;
+        this.contractIdFlag = true;
+        this.serviceClassFlag = true;
+        this.runOrGrowFlag = true;
+        this.itorgFlag = true;
         this.startDate = {
             date: {
                 year: this.startdate.getFullYear(),
@@ -53,26 +58,23 @@ var ApplicationFormComponent = (function () {
             'contactId': ['', Validators.required],
             'serviceline': ['', Validators.required],
             'Application': ['', Validators.required],
-            //'applicationId': ['', Validators.required],
-            //'supplierName': ['', Validators.required],
             'OwnerAlias': ['', Validators.required],
             'Serviceclass': [''],
             'Runvsgrow': ['', Validators.required],
             'ApplicationGroup': ['', Validators.required],
             'startDate': ['', Validators.required],
             'endDate': ['', Validators.required],
-            'endtoend': [''],
-            'epm': [''],
+            'endtoend': [null, Validators.required],
+            'epm': [null, Validators.required],
             'tm': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedCapacity': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedServices': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
-            'Software': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'Software': ['', Validators.pattern(/^[a-zA-Z0-9-+@+!+#+%+*+$]*$/)] /*pattern(/^[a-zA-Z0-9]+[-+@+!+#+%+*+$][0-9]*$/)]*/,
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'itOrg': [''],
         });
         this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         this.applicationData.startDate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
-        //this.mydate = '2016-01-10';
     }
     ApplicationFormComponent.prototype.onstartDateChanged = function (event) {
         this.startdate = event.jsdate;
@@ -95,7 +97,6 @@ var ApplicationFormComponent = (function () {
                 name: "run and grow"
             }];
         this.getApplicationMetaData();
-        //called after the constructor and called  after the first ngOnChanges() 
         this.title = this._routeParams.snapshot.params['id'] ? 'Edit Application' : 'New Application';
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
@@ -124,18 +125,33 @@ var ApplicationFormComponent = (function () {
         }
     };
     ApplicationFormComponent.prototype.onChange = function (value) {
+        if (value != undefined) {
+            this.supplierFlag = false;
+        }
         this.applicationData.supplierId = value;
     };
     ApplicationFormComponent.prototype.onContactChange = function (value) {
+        if (value != undefined) {
+            this.contractIdFlag = false;
+        }
         this.applicationData.contractId = value;
     };
     ApplicationFormComponent.prototype.onServiceclassChange = function (value) {
+        if (value != undefined) {
+            this.serviceClassFlag = false;
+        }
         this.applicationData.serviceClass = value;
     };
     ApplicationFormComponent.prototype.onrunOrGrowChange = function (value) {
+        if (value != undefined) {
+            this.runOrGrowFlag = false;
+        }
         this.applicationData.runOrGrow = value;
     };
     ApplicationFormComponent.prototype.onitOrgChange = function (value) {
+        if (value != undefined) {
+            this.itorgFlag = false;
+        }
         this.applicationData.itorg = value;
     };
     ApplicationFormComponent.prototype.getApplicationMetaData = function () {
@@ -166,9 +182,6 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.redirect = function () {
         if (confirm("Do You Want? Update")) {
-            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
-        }
-        else {
             this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
     };

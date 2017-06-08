@@ -40,9 +40,9 @@ namespace Microsoft.Crest.Web.API.Controllers
 
 		[HttpGet]
         [Route("FindSoWs")]
-        public IEnumerable<SowData> FindSoWs([FromQuery]int contractId, [FromQuery]int ITOrg, [FromQuery]DateTime effectiveDate, [FromQuery]DateTime expiryDate, [FromQuery]string msOwner)
+        public IEnumerable<SowData> FindSoWs([FromQuery]int contractId, [FromQuery]string ITOrg, [FromQuery]DateTime effectiveDate, [FromQuery]DateTime expiryDate, [FromQuery]string infyOwner)
 		{
-			IEnumerable<SowData> results = _sowRepository.FindSoW(contractId, ITOrg, effectiveDate, expiryDate, msOwner);	 		
+			IEnumerable<SowData> results = _sowRepository.FindSoW(contractId, ITOrg, effectiveDate, expiryDate, infyOwner);	 		
 			return results;
 		}
 

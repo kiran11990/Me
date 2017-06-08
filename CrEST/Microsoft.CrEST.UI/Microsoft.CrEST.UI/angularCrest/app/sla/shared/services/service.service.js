@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -21,9 +21,10 @@ var Sservice = (function () {
         this.http = http;
         this.contractorIds = [];
         this.getservice = _constantService.CONFIG.apiLocations.getservice;
-        this.getserviceByID = _constantService.CONFIG.apiLocations.getserviceByID;
+        this.getserviceByID = _constantService.CONFIG.apiLocations.getServiceById;
         this.findServiceUrl = _constantService.CONFIG.apiLocations.findService;
         this.getServiceMetaDataUrl = _constantService.CONFIG.apiLocations.getServiceMetaData;
+        this.addserviceUrl = _constantService.CONFIG.apiLocations.saveService;
     }
     Sservice.prototype.getService = function () {
         //debugger
@@ -31,7 +32,7 @@ var Sservice = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.getServiceById = function (id) {
-        return this.http.get(this.getserviceByID + "/" + id)
+        return this.http.get(this.getserviceByID + id)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.getServiceMetaData = function () {
@@ -39,7 +40,10 @@ var Sservice = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.addservice = function (service) {
-        return this.http.post(this.getservice, JSON.stringify(service))
+        debugger;
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        var body = JSON.stringify(service);
+        return this.http.post(this.addserviceUrl, body, { headers: header })
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     Sservice.prototype.findService = function (contractId, applicationGroup) {
@@ -54,20 +58,4 @@ Sservice = __decorate([
     __metadata("design:paramtypes", [ConstantService, CommonService, Http])
 ], Sservice);
 export { Sservice };
-//export class AutocompleteComponent {
-//    public query = '';
-//    public countries = ["Albania", "Andorra", "Armenia", "Austria", "Azerbaijan", "Belarus",
-//        "Belgium", "Bosnia & Herzegovina", "Bulgaria", "Croatia", "Cyprus",
-//        "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Georgia",
-//        "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Kosovo",
-//        "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Malta",
-//        "Moldova", "Monaco", "Montenegro", "Netherlands", "Norway", "Poland",
-//        "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia",
-//        "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom", "Vatican City"];
-//    public filteredList = [];
-//    public elementRef;
-//    constructor(myElement: ElementRef) {
-//        this.elementRef = myElement;
-//    }
-//}
 //# sourceMappingURL=service.service.js.map

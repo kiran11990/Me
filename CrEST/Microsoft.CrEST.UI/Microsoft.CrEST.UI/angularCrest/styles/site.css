@@ -566,3 +566,7 @@ div.tablewrapper {
     background-image: url(...);
     background-position: right top;
 }
+.tbody {
+    overflow-x: auto;
+    overflow-y: auto;
+}

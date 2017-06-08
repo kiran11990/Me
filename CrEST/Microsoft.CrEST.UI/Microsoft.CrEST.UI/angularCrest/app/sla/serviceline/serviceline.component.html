@@ -10,7 +10,6 @@
                 <input id="contractid" #varSearchcontactid type="text" [(ngModel)]='contractId' class="form-control" placeholder="Contract Id" />
                 <auto-complete [tagId]="contractId" [values]='contactIdList|filterUser:contractId' [elementToBind]='varSearchcontactid' (notifyOnSelected)='notifyContactId($event)'>
                 </auto-complete>
-
             </div>
             <div class="col-lg-3">
                 <input id="application" #varSearchapplication type="text" [(ngModel)]='applicationgroup' class="form-control" placeholder="Application Group" />
@@ -20,7 +19,6 @@
             <div class="col-lg-3">
                 <button class="btn btn-primary" (click)="find()">Find</button>
             </div>
-
         </div>
         <div class="row">
             <div class="panel panel-default">
@@ -31,7 +29,7 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <p>
-                                Displaying {{ serviceList.length }} Services.
+                                Displaying {{ serviceList.length }} rows.
                             </p>
                         </div>
                         <div class="col-lg-6 text-right">
@@ -43,11 +41,11 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" *ngIf="serviceList.length>0">
                         <thead>
                             <tr>
                                 <th data-field="name">Supplier</th>
-                                <th data-field="name">SC ID</th>
+                                <th data-field="name">SCID</th>
                                 <th data-field="name">Contract ID</th>
                                 <th data-field="name">Application Group</th>
                                 <th data-field="name">CrEST Level-1 Service</th>
@@ -62,7 +60,6 @@
                                 <th data-field="name">Currency</th>
                                 <th data-field="name">Itorg Name</th>
                                 <th data-field="name">Action</th>
-
 
                             </tr>
                         </thead>
@@ -84,9 +81,8 @@
                                 <td>{{ service.currency }}</td>
                                 <td>{{ service.itorgName }}</td>
                                 <td>
-                                    <a class="btn btn-primary" [routerLink]="['/services', service.contractid]">Edit</a>
+                                    <a class="btn btn-primary" [routerLink]="['/services', service.serviceId]">Edit</a>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
@@ -102,6 +98,9 @@
                                              [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
                                              (pageChange)="onPageChange($event)" class="my-pagination"></pagination-controls>
                     </div>
+                </div>
+                <div *ngIf="serviceList.length==0">
+                    <p>No Data Found</p>
                 </div>
             </div>
         </div>

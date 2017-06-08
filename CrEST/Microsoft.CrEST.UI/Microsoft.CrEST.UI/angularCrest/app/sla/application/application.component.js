@@ -94,9 +94,15 @@ var SlaApplicationComponent = (function () {
     };
     SlaApplicationComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.applicationList.length; i++) {
-            this.ApplicationLists.push(this.applicationList[i].application);
-            this.contactIdList.push(this.applicationList[i].contractId.toString());
-            this.servicelineList.push(this.applicationList[i].serviceLine);
+            if (this.ApplicationLists.indexOf(this.applicationList[i].application) == -1) {
+                this.ApplicationLists.push(this.applicationList[i].application);
+            }
+            if (this.contactIdList.indexOf(this.applicationList[i].contractId.toString()) == -1) {
+                this.contactIdList.push(this.applicationList[i].contractId.toString());
+            }
+            if (this.servicelineList.indexOf(this.applicationList[i].serviceLine) == -1) {
+                this.servicelineList.push(this.applicationList[i].serviceLine);
+            }
         }
     };
     SlaApplicationComponent.prototype.onPageChange = function (number) {

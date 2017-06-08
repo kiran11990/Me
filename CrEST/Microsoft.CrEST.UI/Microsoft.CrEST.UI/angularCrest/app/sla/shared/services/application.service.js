@@ -47,6 +47,7 @@ var ApplicationService = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     ApplicationService.prototype.addApplication = function (applicationData) {
+        debugger;
         var header = new Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(applicationData);
         return this.http

@@ -16,11 +16,19 @@ export class ServicelineFormComponent implements OnInit {
     public serviceMetaData: ServiceMetaData[] = [];
     public serviceList: Service[] = [];
     public editServiceList: Service[] = [];
-
     public id: string = "";
+    public supplierFlag: boolean = true;
+    public contractIdFlag: boolean = true;
+    public serviceClassFlag: boolean = true;
+    public runOrGrowFlag: boolean = true;
+    public itorgFlag: boolean = true;
+    public crestLvl1: boolean = true;
+    public crestLvl2: boolean = true;
+    public crestLvl3: boolean = true;
+    
 
     service: Service = new Service();
-    private currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
+	private currencyPattern = /^[0-9]*$/;
     constructor(
         formBuilder: FormBuilder,
         private router: Router,
@@ -42,58 +50,100 @@ export class ServicelineFormComponent implements OnInit {
             'appgroupservicesfeeyr4': ['', Validators.pattern(this.currencyPattern)],
             'currency': [''],
             'validationNote': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
-            'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            //'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'remarks': ['', Validators.required],
             'itOrg': [''],
         });
     }
 
 
     ngOnInit() {
+        this.service.currency = "USD"
         this.SericeMetaData();
         this.id = this.route.snapshot.params['id'];
         this.title = this.id ? 'Edit Service' : 'New Service';
-        if (this.title == "Edit Service") {
-            if (this.id != null) {
-                this.Sservice.getServiceById(this.id)
-                    .subscribe(data => {
-                        debugger;
-                        this.serviceList = data
-                    })
-            }
-            else {
-
-            }
+        if (this.id != null) {
+            this.Sservice.getServiceById(this.id)
+                .subscribe(data => {
+                    this.service = data
+                })
         }
+
+
+    }
+    onitOrgChange(value: any) {
+        if (value != undefined) {
+            this.itorgFlag = false;
+        }
+        this.service.itorg = value;
+    }
+
+    onChange(value: any) {
+        if (value != undefined) {
+            this.supplierFlag = false;
+        }
+        this.service.supplierId = value;
+
+    }
+    onChancrestLevel1(value: any) {
+        if (value != undefined) {
+            this.crestLvl1 = false;
+        }
+        this.service.crestLevel1Id = value;
+    }
+    onChancrestLevel2(value: any) {
+        if (value != undefined){
+            this.crestLvl2 = false;
+        }
+       
+        this.service.crestLevel2 = value;
     }
 
 
+    onChancrestLevel3(value: any) {
+        if (value != undefined) {
+            this.crestLvl3 = false;
+        }
+        this.service.crestLevel3Id = value;
+    }
+    onChangContractId(value: any) {
+        if (value != undefined) {
+            this.contractIdFlag = false;
+        }
+        this.service.contractId = value;
+    }
     SericeMetaData() {
         this.Sservice.getServiceMetaData()
             .subscribe(data => {
-                debugger;
                 this.serviceMetaData = data;
             })
     }
-   
+
+    onChangecurrency(value: any) {
+        this.service.currency = value;
+    }
+
 
     redirect() {
         if (confirm("Do you want Update")) {
-            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+            return false;
         }
         else {
-            this.router.navigate(['services', { sowStatus: "updatedsuccessfully" }]);
+            this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
         }
         event.preventDefault();
-       
-       
     }
 
+    submitForm(service: Service) {
+        //applicationData.endDate = enddate;
 
-
-
-    submitForm(serviceformvalue: any) {
-        console.log(serviceformvalue);
-      
+        this.Sservice.addservice(this.service)
+            .subscribe((result: number) => {
+                var result = result;
+                if (result == 1) {
+                    this.id ? alert(" Service Updated Successfully") : alert("Service Saved Successfully")
+                    this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
+                }
+            });
     }
-
 }

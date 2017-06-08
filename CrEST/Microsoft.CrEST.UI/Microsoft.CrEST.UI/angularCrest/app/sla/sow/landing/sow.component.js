@@ -23,6 +23,7 @@ var SowComponent = (function () {
         this.contractID = '';
         this.application = '';
         this.owneralias = '';
+        this.itOrg = "";
         this.contractIDList = [];
         this.ItOrgList = [];
         this.msOwnerAliasList = [];
@@ -68,7 +69,7 @@ var SowComponent = (function () {
     };
     SowComponent.prototype.find = function () {
         var _this = this;
-        this.sowService.findSow(this.contractID, this.ItOrg, this.msOwnerAlias)
+        this.sowService.findSow(this.contractID, this.itOrg, this.msOwnerAlias)
             .subscribe(function (data) {
             _this.sows = data;
         });
@@ -103,9 +104,15 @@ var SowComponent = (function () {
     };
     SowComponent.prototype.autoComplete = function () {
         for (var i = 0; i < this.sows.length; i++) {
-            this.contractIDList.push(this.sows[i].contractId.toString());
-            this.ItOrgList.push(this.sows[i].itorgName);
-            this.msOwnerAliasList.push(this.sows[i].msowner);
+            if (this.contractIDList.indexOf(this.sows[i].contractId.toString()) == -1) {
+                this.contractIDList.push(this.sows[i].contractId.toString());
+            }
+            if (this.ItOrgList.indexOf(this.sows[i].itorgName) == -1) {
+                this.ItOrgList.push(this.sows[i].itorgName);
+            }
+            if (this.msOwnerAliasList.indexOf(this.sows[i].infyOwner) == -1) {
+                this.msOwnerAliasList.push(this.sows[i].infyOwner);
+            }
         }
     };
     SowComponent.prototype.onPageChange = function (number) {

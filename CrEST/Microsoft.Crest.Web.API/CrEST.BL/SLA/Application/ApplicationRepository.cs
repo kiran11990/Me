@@ -170,8 +170,8 @@ namespace CrEST.BL
 					item.Itorg = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18);
 					item.ITOrgName = reader.IsDBNull(19) ? string.Empty : reader.GetString(19);
 					item.SoWid = reader.GetInt32(20);
-					item.SupplierId = reader.IsDBNull(21) ? default(int) : reader.GetInt32(21);
-					applications.Add(item);
+                    item.SupplierId = reader.IsDBNull(21) ? default(int) : reader.GetInt32(21);
+                    applications.Add(item);
 				}
 			}
 

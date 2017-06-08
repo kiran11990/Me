@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
 import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
 import { RunOrGrow } from "../../shared/models/applicationmetadata";
@@ -25,8 +24,11 @@ export class SowFormComponent implements OnInit {
     startdate: Date = new Date();
     enddate: Date = new Date();
     public id: number;
-
+    public supplierFlag: boolean = true;
+    public contractIdFlag: boolean = true;
+    public itorgFlag: boolean = true;
     public routeID: number;
+    //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
     private currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
     constructor(
         formBuilder: FormBuilder,
@@ -47,11 +49,11 @@ export class SowFormComponent implements OnInit {
             'servicecatalogno': ['', Validators.required],
             'ponumYear1': ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]], //Number
             'currency': [''],
-
-            'sowamountYear2': ['', Validators.pattern(/^\$?[0-9]+(\.[0-9][0-9])?$/)],/*.pattern(this.currencyPattern)],*/
+            'sowamountYear1': ['', Validators.pattern(this.currencyPattern)],
+            'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],/*.pattern(this.currencyPattern)],*/
             'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],/*.pattern(this.currencyPattern)],*/
             'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],/*.pattern(this.currencyPattern)],*/
-            'iscrest': ['', Validators.required],
+            'iscrest': [null, Validators.required],
             'remark': [''],
             'infyOwner': [''],
             'companycode': ['', Validators.required]
@@ -66,10 +68,16 @@ export class SowFormComponent implements OnInit {
    
 
     onChange(value: any) {
+        if (value != undefined) {
+            this.supplierFlag = false;
+        }
         this.sow.supplierId = value;
     }
 
     onContactChange(value: any) {
+        if (value != undefined) {
+            this.contractIdFlag = false;
+        }
         this.sow.contractId = value;
 
     }
@@ -77,6 +85,9 @@ export class SowFormComponent implements OnInit {
         this.sow.companyCode = value;
     }
     onitorgChange(value: number) {
+        if (value != undefined) {
+            this.itorgFlag = false;
+        }
         this.sow.itorg = value;
 
     }
@@ -105,14 +116,11 @@ export class SowFormComponent implements OnInit {
         dateFormat: 'dd.mm.yyyy',
     };
 
-
     oneffectiveDateChanged(event: IMyDateModel) {
         this.effectiveDate = event.jsdate;
     }
-
     onexpirationDateChanged(event: IMyDateModel) {
         this.expirationDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     }
     
 
@@ -157,9 +165,6 @@ export class SowFormComponent implements OnInit {
                 this.sowMetaData = data;
             })
     }
-  
-
-
     submitForm(sow: Sow) {
         sow.soweffectiveDate = new Date(Date.UTC(this.effectiveDate.getFullYear(), this.effectiveDate.getMonth(), this.effectiveDate.getDate(), this.effectiveDate.getHours(), this.effectiveDate.getMinutes(), this.effectiveDate.getSeconds()));
         sow.sowexpirationDate = new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate(), this.expirationDate.getHours(), this.expirationDate.getMinutes(), this.expirationDate.getSeconds()));

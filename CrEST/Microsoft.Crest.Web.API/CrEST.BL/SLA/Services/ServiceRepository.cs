@@ -40,18 +40,22 @@ namespace CrEST.BL
 					existingItem.Scid = reader.GetString(2);
 					existingItem.ContractId = reader.GetInt32(3);
 					existingItem.ApplicationGroup = reader.GetString(4);
-					existingItem.CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
-					existingItem.CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
-					existingItem.CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
-					existingItem.AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8);
-					existingItem.AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9);
-					existingItem.AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10);
-					existingItem.AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11);
-					existingItem.Currency = reader.GetString(12);
-					existingItem.ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13);
-					existingItem.Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14);
-					existingItem.ItorgName = reader.GetString(15);
-					existingItem.SupplierId = reader.GetInt32(16);
+					existingItem.CrestLevel1Id= reader.IsDBNull(5) ? default(int) : reader.GetInt32(5);
+					existingItem.CrestLevel1 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                    existingItem.CrestLevel2Id = reader.IsDBNull(7) ? default(int) : reader.GetInt32(7);
+                    existingItem.CrestLevel2 = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+                    existingItem.CrestLevel3Id = reader.IsDBNull(9) ? default(int) : reader.GetInt32(9);
+					existingItem.CrestLevel3 = reader.IsDBNull(10) ? string.Empty : reader.GetString(10);
+					existingItem.AppGroupServiceFeeY1 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11);
+					existingItem.AppGroupServiceFeeY2 = reader.IsDBNull(12) ? default(decimal) : reader.GetDecimal(12);
+					existingItem.AppGroupServiceFeeY3 = reader.IsDBNull(13) ? default(decimal) : reader.GetDecimal(13);
+					existingItem.AppGroupServiceFeeY4 = reader.IsDBNull(14) ? default(decimal) : reader.GetDecimal(14);
+					existingItem.Currency = reader.GetString(15);
+					existingItem.ValidationNotes = reader.IsDBNull(16) ? string.Empty : reader.GetString(16);
+					existingItem.Remarks = reader.IsDBNull(17) ? string.Empty : reader.GetString(17);
+                    existingItem.Itorg = reader.GetInt32(18);
+                    existingItem.ItorgName = reader.GetString(19);
+					existingItem.SupplierId = reader.GetInt32(20);
 				}
 			}
 
@@ -74,57 +78,66 @@ namespace CrEST.BL
 				{
 					services.Add(new ServiceData()
 					{
-						ServiceId = reader.GetInt32(0),
-						Supplier = reader.GetString(1),
-						Scid = reader.GetString(2),
-						ContractId = reader.GetInt32(3),
-						ApplicationGroup = reader.GetString(4),
-						CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
-						CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
-						CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
-						AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8),
+                        ServiceId = reader.GetInt32(0),
+                        Supplier = reader.GetString(1),
+                        Scid = reader.GetString(2),
+                        ContractId = reader.GetInt32(3),
+                        ApplicationGroup = reader.GetString(4),
+                        CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
+                        CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
+                        CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
+                        AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8),
 						AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9),
 						AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10),
 						AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11),
 						Currency = reader.GetString(12),
 						ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
 						Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-						ItorgName = reader.GetString(15),
-						SupplierId = reader.GetInt32(16)
-					});
+                        //Itorg = reader.GetInt32(15),
+                        ItorgName = reader.GetString(15),
+                        SupplierId = reader.GetInt32(16)
+                    });
 				}
 			}
 
 			return services;
 		}
 
-		public ServiceData SaveService(ServiceData service)
+		public int SaveService(ServiceData service)
 		{
-			Service item = new Service()
-			{
-				SupplierId = Convert.ToInt32(service.SupplierId),
-				SoWid = _context.SoW.FirstOrDefault(x => x.ContractId == service.ContractId).SoWid,
-				ApplicationGroup = service.ApplicationGroup,
-				CrestLevel1 = service.CrestLevel1Id,
-				CrestLevel2 = service.CrestLevel2,
-				CrestLevel3 = service.CrestLevel3Id,
-				AppGroupServiceFeeY1 = service.AppGroupServiceFeeY1,
-				AppGroupServiceFeeY2 = service.AppGroupServiceFeeY2,
-				AppGroupServiceFeeY3 = service.AppGroupServiceFeeY3,
-				AppGroupServiceFeeY4 = service.AppGroupServiceFeeY4,
-				ValidationNotes = service.ValidationNotes,
-				Remarks = service.Remarks,
-				Scid = service.Scid,
-				Currency = service.Currency,
-				Itorg = _context.Itorg.FirstOrDefault(x => x.ItorgName == service.ItorgName).ItorgId
-			};
 
-			var existingItem = _context.Service.FirstOrDefault(s => s.ServiceId == service.ServiceId);
-			if (existingItem == null)
-				_context.Service.Add(item);
 
-			_context.SaveChanges();
-			return service;
+
+            Service serviceItem = _context.Service.FirstOrDefault(s => s.ServiceId == service.ServiceId);
+
+            if (serviceItem == null)
+            {
+                serviceItem = new Service();
+            }
+            serviceItem.SupplierId = Convert.ToInt32(service.SupplierId);
+            serviceItem.SoWid = _context.SoW.FirstOrDefault(x => x.ContractId == service.ContractId).SoWid;
+            serviceItem.ApplicationGroup = service.ApplicationGroup;
+            serviceItem.CrestLevel1 = service. CrestLevel1Id;
+            serviceItem.CrestLevel2 = service.CrestLevel2;
+            serviceItem.CrestLevel3 = service.CrestLevel3Id;
+            serviceItem.AppGroupServiceFeeY1 = service.AppGroupServiceFeeY1;
+            serviceItem.AppGroupServiceFeeY2 = service.AppGroupServiceFeeY2;
+            serviceItem. AppGroupServiceFeeY3 = service.AppGroupServiceFeeY3;
+            serviceItem. AppGroupServiceFeeY4 = service.AppGroupServiceFeeY4;
+            serviceItem.ValidationNotes = service.ValidationNotes;
+            serviceItem.Remarks = service.Remarks;
+            serviceItem.Scid = service.Scid;
+            serviceItem.Currency = service.Currency;
+            serviceItem.Itorg = service.Itorg;
+           
+
+            if (serviceItem.ServiceId == 0)
+                _context.Service.Add(serviceItem);
+            //else
+            //    _context.Service.Update(item);
+
+			 return _context.SaveChanges();
+			
 
 
 		}
@@ -149,25 +162,26 @@ namespace CrEST.BL
 				{
 					services.Add(new ServiceData()
 					{
-						Scid = reader.GetString(0),
-						ServiceId = reader.GetInt32(1),
-						SupplierId = reader.GetInt32(2),
-						ContractId = reader.GetInt32(3),
-						ApplicationGroup = reader.GetString(4),
-						CrestLevel1 = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
-						CrestLevel2 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
-						CrestLevel3 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
-						AppGroupServiceFeeY1 = reader.IsDBNull(8) ? default(decimal) : reader.GetDecimal(8),
-						AppGroupServiceFeeY2 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9),
-						AppGroupServiceFeeY3 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10),
-						AppGroupServiceFeeY4 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11),
-						Currency = reader.GetString(12),
-						ValidationNotes = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
-						Remarks = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-						Itorg = reader.GetInt32(15),						
-						ItorgName = reader.IsDBNull(16) ? string.Empty : reader.GetString(16),
-						Supplier = reader.IsDBNull(17) ? string.Empty : reader.GetString(17)
-					});
+                        Scid = reader.GetString(0),
+                        ServiceId = reader.GetInt32(1),
+                        Supplier = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                        SupplierId = reader.GetInt32(3),
+                        ContractId = reader.GetInt32(4),
+                        ApplicationGroup = reader.GetString(5),
+                        CrestLevel1 = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
+                        CrestLevel2 = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
+                        CrestLevel3 = reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
+                        AppGroupServiceFeeY1 = reader.IsDBNull(9) ? default(decimal) : reader.GetDecimal(9),
+                        AppGroupServiceFeeY2 = reader.IsDBNull(10) ? default(decimal) : reader.GetDecimal(10),
+                        AppGroupServiceFeeY3 = reader.IsDBNull(11) ? default(decimal) : reader.GetDecimal(11),
+                        AppGroupServiceFeeY4 = reader.IsDBNull(12) ? default(decimal) : reader.GetDecimal(12),
+                        Currency = reader.GetString(13),
+                        ValidationNotes = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
+                        Remarks = reader.IsDBNull(15) ? string.Empty : reader.GetString(15),
+                        Itorg = reader.GetInt32(16),
+                        ItorgName = reader.IsDBNull(17) ? string.Empty : reader.GetString(17),
+                       
+                    });
 				}
 			}
 

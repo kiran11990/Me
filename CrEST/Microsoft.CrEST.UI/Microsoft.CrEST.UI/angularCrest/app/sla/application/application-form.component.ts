@@ -31,6 +31,11 @@ export class ApplicationFormComponent implements OnInit {
     public mydate: string;
     public runOrGrow: RunOrGrow[] = [];
     public title: any;
+    public supplierFlag: boolean = true;
+    public contractIdFlag: boolean = true;
+    public serviceClassFlag: boolean = true;
+    public runOrGrowFlag: boolean = true;
+    public itorgFlag: boolean = true;
     constructor(private _routeParams: ActivatedRoute, private applicationService: ApplicationService, private router: Router, formBuilder: FormBuilder, private http: Http) {
        
 
@@ -41,27 +46,23 @@ export class ApplicationFormComponent implements OnInit {
             'contactId': ['', Validators.required],
             'serviceline': ['', Validators.required],
             'Application': ['', Validators.required],
-            //'applicationId': ['', Validators.required],
-            //'supplierName': ['', Validators.required],
             'OwnerAlias': ['', Validators.required],
             'Serviceclass': [''],
             'Runvsgrow': ['', Validators.required],
             'ApplicationGroup': ['', Validators.required],
             'startDate': ['', Validators.required],
             'endDate': ['', Validators.required],
-            'endtoend': [''],
-            'epm': [''],
+            'endtoend': [null, Validators.required],
+            'epm': [null, Validators.required],
             'tm': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedCapacity': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
             'ManagedServices': ['', Validators.pattern(/[0-9]*\.?[0-9]+%/)],
-            'Software': ['',  Validators.pattern(/^[a-zA-Z0-9]*$/)],
+            'Software': ['', Validators.pattern(/^[a-zA-Z0-9-+@+!+#+%+*+$]*$/)]/*pattern(/^[a-zA-Z0-9]+[-+@+!+#+%+*+$][0-9]*$/)]*/,
             'remarks': ['', Validators.pattern(/^[a-zA-Z0-9]*$/)],
             'itOrg': [''],
-            //'itorg':['']
         })
         this.applicationData.endDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         this.applicationData.startDate = new Date(Date.UTC(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), this.endDate.getHours(), this.endDate.getMinutes(), this.endDate.getSeconds()));
-        //this.mydate = '2016-01-10';
 
     }
 
@@ -109,7 +110,6 @@ export class ApplicationFormComponent implements OnInit {
             name: "run and grow"
         }]; 
         this.getApplicationMetaData();
-        //called after the constructor and called  after the first ngOnChanges() 
         this.title = this._routeParams.snapshot.params['id'] ? 'Edit Application' : 'New Application';
         if (this._routeParams.snapshot.params['id'] != null) {
             var id = this._routeParams.snapshot.params['id'];
@@ -143,21 +143,39 @@ export class ApplicationFormComponent implements OnInit {
     }
 
     onChange(value: any) {
+        if (value!=undefined) {
+            this.supplierFlag = false;
+        }
         this.applicationData.supplierId = value;
     }
 
     onContactChange(value: any) {
+
+        if (value != undefined) {
+            this.contractIdFlag = false;
+        }
         this.applicationData.contractId = value;
 
     }
     onServiceclassChange(value: any) {
+        if (value != undefined) {
+            this.serviceClassFlag = false;
+        }
         this.applicationData.serviceClass = value;
     }
 
     onrunOrGrowChange(value: any) {
+
+        if (value != undefined) {
+            this.runOrGrowFlag = false;
+        }
         this.applicationData.runOrGrow = value;
     }
     onitOrgChange(value: any) {
+        if (value != undefined) {
+            this.itorgFlag = false;
+        }
+      
         this.applicationData.itorg = value;
     }
 
@@ -192,9 +210,6 @@ export class ApplicationFormComponent implements OnInit {
     redirect() {
 
         if (confirm("Do You Want? Update")) {
-            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
-        }
-        else {
             this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
         }
     }

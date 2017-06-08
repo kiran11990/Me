@@ -20,6 +20,7 @@ var slaRoutes = [
     { path: 'services/add', component: ServicelineFormComponent },
     { path: 'services/:id', component: ServicelineFormComponent },
     { path: 'services/services', component: SlaServiceComponent },
+    { path: 'services/servicetatus', component: SlaServiceComponent },
     { path: 'slps', component: SlpComponent, pathMatch: 'full' },
     { path: 'sladashboard', component: SlaDashboardComponent, pathMatch: 'full' }
 ];

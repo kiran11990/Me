@@ -10,7 +10,7 @@ namespace CrEST.BL
 
 		ServiceData GetById(int id);
 
-		ServiceData SaveService(ServiceData service);
+		int SaveService(ServiceData service);
 
         IEnumerable<ServiceData> FindServices(int contractId, string applicationGroup);
 

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { CustomValidators } from 'ng2-validation';
 import { Sow } from '../../shared/models/sow';
 import { ApplicationMetaData } from "../../shared/models/applicationmetadata";
 import { SowService } from '../../shared/services/sows.service';
@@ -27,6 +26,10 @@ var SowFormComponent = (function () {
         //private sow: Sow[] = [];
         this.startdate = new Date();
         this.enddate = new Date();
+        this.supplierFlag = true;
+        this.contractIdFlag = true;
+        this.itorgFlag = true;
+        //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
         this.currencyPattern = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|0)?(\.[0-9]{1,2})?$/;
         this.soweffectiveDate = {
             date: {
@@ -56,10 +59,11 @@ var SowFormComponent = (function () {
             'servicecatalogno': ['', Validators.required],
             'ponumYear1': ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
             'currency': [''],
-            'sowamountYear2': ['', Validators.pattern(/^\$?[0-9]+(\.[0-9][0-9])?$/)],
+            'sowamountYear1': ['', Validators.pattern(this.currencyPattern)],
+            'sowamountYear2': ['', Validators.pattern(this.currencyPattern)],
             'sowamountYear3': ['', Validators.pattern(this.currencyPattern)],
             'sowamountYear4': ['', Validators.pattern(this.currencyPattern)],
-            'iscrest': ['', Validators.required],
+            'iscrest': [null, Validators.required],
             'remark': [''],
             'infyOwner': [''],
             'companycode': ['', Validators.required]
@@ -68,15 +72,24 @@ var SowFormComponent = (function () {
         this.sow.sowexpirationDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
     }
     SowFormComponent.prototype.onChange = function (value) {
+        if (value != undefined) {
+            this.supplierFlag = false;
+        }
         this.sow.supplierId = value;
     };
     SowFormComponent.prototype.onContactChange = function (value) {
+        if (value != undefined) {
+            this.contractIdFlag = false;
+        }
         this.sow.contractId = value;
     };
     SowFormComponent.prototype.onChangeComponeyCode = function (value) {
         this.sow.companyCode = value;
     };
     SowFormComponent.prototype.onitorgChange = function (value) {
+        if (value != undefined) {
+            this.itorgFlag = false;
+        }
         this.sow.itorg = value;
     };
     SowFormComponent.prototype.onChangecurrency = function (value) {
@@ -87,7 +100,6 @@ var SowFormComponent = (function () {
     };
     SowFormComponent.prototype.onexpirationDateChanged = function (event) {
         this.expirationDate = event.jsdate;
-        // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     };
     SowFormComponent.prototype.ngOnInit = function () {
         var _this = this;

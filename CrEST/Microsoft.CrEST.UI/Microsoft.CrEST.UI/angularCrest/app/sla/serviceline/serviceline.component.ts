@@ -6,8 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { PaginationInstance } from 'ngx-pagination';
-
-
 import { Sservice } from "../shared/services/service.service";
 import { Service } from "../shared/models/service";
 
@@ -22,7 +20,6 @@ import { Service } from "../shared/models/service";
 
 export class SlaServiceComponent {
     public sample: string = "";
-    //Foreach(var x in ayyy)
     serviceline: string = "Sla Service";
 
     public contactId = '';
@@ -38,11 +35,8 @@ export class SlaServiceComponent {
     public servicelineList: string[] = [];
     public ApplicationLists: string[] = [];
     public SupplierList: string[] = [];
-    //public applicationList: Application[] = [];
     router: Router;
-    //constructor(private http: Http, _router: Router, private Sservice: Sservice) {
-    //    this.router = _router;
-
+   
     public serviceList: Service[] = [];
     constructor(private Service: Sservice) { }
     ngOnInit() {
@@ -89,13 +83,16 @@ export class SlaServiceComponent {
 
     autoComplete() {
         for (var i = 0; i < this.serviceList.length; i++) {
-            this.ApplicationLists.push(this.serviceList[i].applicationGroup);
-            this.contactIdList.push(this.serviceList[i].contractId.toString());
-            //this.SupplierList.push(this.serviceList[i].supplier);
+            if (this.ApplicationLists.indexOf(this.serviceList[i].applicationGroup)==-1) {
+                this.ApplicationLists.push(this.serviceList[i].applicationGroup);
+            }
+
+            if (this.contactIdList.indexOf(this.serviceList[i].contractId.toString())==-1) {
+                this.contactIdList.push(this.serviceList[i].contractId.toString());
+            }
         }
     }
 
-    //@Input('data') meals: string[] = [];
 
     public filter: string = '';
     public maxSize: number = 7;
@@ -129,23 +126,6 @@ export class SlaServiceComponent {
     popItem() {
         this.popped.push(this.serviceList.pop());
     }
-
-
-    //filter() {
-    //    if (this.query !== "") {
-    //        this.filteredList = this.countries.filter(function (el) {
-    //            return el.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
-    //        }.bind(this));
-    //    } else {
-    //        this.filteredList = [];
-    //    }
-    //}
-
-    //select(item) {
-    //    this.query = item;
-    //    this.filteredList = [];
-    //}
-
 }
     
 

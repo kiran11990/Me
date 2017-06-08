@@ -5,11 +5,11 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['supplierId'].valid && sowForm.controls['supplierId'].touched}">
                     <label>Supplier<span class="alert-danger">*</span></label>
-                    <select class="form-control" [formControl]="sowForm.controls['supplierId']" [(ngModel)]="sow.supplierId"  (ngModelChange)="onChange($event)"  style="width:50%">
-                        <option *ngIf="title=='New Sow'" value="0">Select Suppliers</option>
+                    <select class="form-control" [formControl]="sowForm.controls['supplierId']" [(ngModel)]="sow.supplierId" (ngModelChange)="onChange($event)" style="width:50%">
+                        <option *ngIf="title=='New Sow'&&supplierFlag" value="0">Select Suppliers</option>
                         <option *ngFor="let item of sowMetaData.suppliers"
                                 [ngValue]="item.supplierId" [selected]="sow.supplierId == item.supplierId">
-                         {{item.supplierName}}
+                            {{item.supplierName}}
                         </option>
                     </select>
                     <div *ngIf="sowForm.controls['supplierId'].hasError('required') && sowForm.controls['supplierId'].touched" class="alert alert-danger">Please Select Supplier.</div>
@@ -19,7 +19,7 @@
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['contractId'].valid && sowForm.controls['contractId'].touched}">
                     <label>ContractId<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['contractId']" [(ngModel)]="sow.contractId" style="width:50%" (ngModelChange)="onContactChange($event)">
-                        <option *ngIf="title=='New Sow'" value="0">Select Contract Id</option>
+                        <option *ngIf="title=='New Sow'&&contractIdFlag" value="0">Select Contract Id</option>
                         <option *ngFor="let item of sowMetaData.contractIds"
                                 [ngValue]="item" [selected]="sow.contractId ==item">
                             {{item}}
@@ -29,7 +29,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group">
@@ -40,7 +39,7 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['itorg'].valid && sowForm.controls['itorg'].touched}">
                     <label>Itorg:</label>
-                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorgId" style="width:50%" (ngModelChange)="onitorgChange($event)"  >
+                    <select class="form-control" [formControl]="sowForm.controls['itorg']" [(ngModel)]="sow.itorg" style="width:50%" (ngModelChange)="onitorgChange($event)">
                         <option *ngIf="title=='New Sow'" value="0">Select IT Org</option>
                         <option *ngFor="let item of sowMetaData.itOrg"
                                 [value]="item.itorgId" [selected]="sow.itorg ==item.itorgId">
@@ -51,7 +50,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['msowner'].valid && sowForm.controls['msowner'].touched}">
@@ -59,7 +57,6 @@
                     <input class="form-control" type="text" [formControl]="sowForm.controls['msowner']" [(ngModel)]="sow.msowner" style="width:50%">
                     <div *ngIf="sowForm.controls['msowner'].hasError('required') && sowForm.controls['msowner'].touched" class="alert alert-danger">Please enter ms owner alias.</div>
                 </div>
-
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['soweffectiveDate'].valid && sowForm.controls['soweffectiveDate'].touched}">
@@ -100,8 +97,8 @@
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['currency'].valid && sowForm.controls['currency'].touched}">
                     <label>Currency<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="sowForm.controls['currency']" [(ngModel)]="sow.currency" style="width:50%" (ngModelChange)="onChangecurrency($event)">
-                        <option [selected]="sow.currency ==INR" value="INR">INR</option>
-                        <option [selected]="sow.currency ==USD" value="USD">USD</option>
+                        <option [selected]="sow.currency ==='INR'" value="INR">INR</option>
+                        <option [selected]="sow.currency ==='USD'" value="USD">USD</option>
                     </select>
                     <div *ngIf="sowForm.controls['currency'].hasError('required') && sowForm.controls['currency'].touched" class="alert alert-danger">Please select currency.</div>
                 </div>
@@ -109,17 +106,12 @@
         </div>
         <div class="row">
             <div class="col-lg-6 small">
-                <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['companycode'].valid && sowForm.controls['companycode'].touched}">
-                    <label>Company Code Code<span class="alert-danger">*</span></label>
-                    <select class="form-control" [formControl]="sowForm.controls['companycode']" [(ngModel)]="sow.companyCode" (ngModelChange)="onChangeComponeyCode($event)" style="width:50%">
-                        <option *ngIf="title=='New Sow'" value="0">Select Company Code</option>
-                        <option *ngFor="let item of sowMetaData.companyCodes"
-                                [ngValue]="item" [selected]="sow.companyCode ==item">
-                            {{item}}
-                        </option>
-                    </select>
-                    <div *ngIf="sowForm.controls['companycode'].hasError('required') && sowForm.controls['companycode'].touched" class="alert alert-danger">Please select currency code.</div>
+                <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['sowamountYear1'].valid && sowForm.controls['sowamountYear1'].touched}">
+                    <label>Sow Amount Year1:</label>
+                    <input class="form-control" type="text" [formControl]="sowForm.controls['sowamountYear1']" [(ngModel)]="sow.sowamountYear1" style="width:50%">
+                    <div *ngIf="sowForm.controls['sowamountYear1'].hasError('pattern') && sowForm.controls['sowamountYear1'].touched" class="alert alert-danger">Please enter valid SoW Amount Yr2.</div>
                 </div>
+
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['sowamountYear2'].valid && sowForm.controls['sowamountYear2'].touched}">
@@ -130,7 +122,7 @@
             </div>
         </div>
         <div class="row">
-            
+
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['sowamountYear3'].valid && sowForm.controls['sowamountYear3'].touched}">
                     <label>Sow Amount Year3:</label>
@@ -150,7 +142,7 @@
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['iscrest'].valid && sowForm.controls['iscrest'].touched}">
                     <label>Is Crest<span class="alert-danger">*</span></label>
-                    <div *ngIf="sowForm.controls['iscrest'].hasError('required') && sowForm.controls['iscrest'].touched" class="alert alert-danger">Please select Crest flag.</div>
+                    
                     <div>
                         <label class="radio-inline">
                             <input type="radio" name="crest" value=true [checked]="sow.isCrest===true" [formControl]="sowForm.controls['iscrest']" [(ngModel)]="sow.isCrest">
@@ -161,24 +153,40 @@
                             No
                         </label>
                     </div>
+                    <div *ngIf="sowForm.controls['iscrest'].hasError('required') && sowForm.controls['iscrest'].touched" class="alert alert-danger">Please select Crest flag.</div>
                 </div>
             </div>
+            <div class="col-lg-6 small">
+                <div class="form-group" [ngClass]="{'has-error':!sowForm.controls['companycode'].valid && sowForm.controls['companycode'].touched}">
+                    <label>Company Code Code<span class="alert-danger">*</span></label>
+                    <select class="form-control" [formControl]="sowForm.controls['companycode']" [(ngModel)]="sow.companyCode" (ngModelChange)="onChangeComponeyCode($event)" style="width:50%">
+                        <option *ngIf="title=='New Sow'" value="0">Select Company Code</option>
+                        <option *ngFor="let item of sowMetaData.companyCodes"
+                                [ngValue]="item" [selected]="sow.companyCode ==item">
+                            {{item}}
+                        </option>
+                    </select>
+                    <div *ngIf="sowForm.controls['companycode'].hasError('required') && sowForm.controls['companycode'].touched" class="alert alert-danger">Please select currency code.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group">
                     <label>Remark:</label>
                     <textarea class="form-control" type="text" [formControl]="sowForm.controls['remark']" rows="3" [(ngModel)]="sow.remarks" style="width:50%"></textarea>
                 </div>
-            </div>
         </div>
-        
+            </div>
         
         <div class="form-group">
-            <div class="col-lg-6 text-right">
-                <button type="submit" class="btn btn-primary" [disabled]="!sowForm.valid" >Submit</button>
-            </div>
-            <div class="col-lg-6 text-left">
-                <button type="button" class="btn btn-primary" (click)="redirect()">Back</button>
-            </div>
-        </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="submit" class="btn btn-primary" [disabled]="!sowForm.valid">Submit</button>
+                    </div>
+                    <div class="col-lg-6 text-left">
+                        <button type="button" class="btn btn-primary" (click)="redirect()">Back</button>
+                    </div>
+                </div>
     </form>
 </div>

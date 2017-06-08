@@ -36,7 +36,7 @@ var SowService = (function () {
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.findSow = function (contractId, ItOrg, msOwener) {
-        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&msOwner=" + msOwener)
+        return this.http.get(this.findSowUrl + '?contractId=' + contractId + "&ITOrg=" + ItOrg + "&infyOwner=" + msOwener)
             .map(function (res) { return res.json(); }).catch(this.commonService.handleError);
     };
     SowService.prototype.getsowMetaData = function () {
