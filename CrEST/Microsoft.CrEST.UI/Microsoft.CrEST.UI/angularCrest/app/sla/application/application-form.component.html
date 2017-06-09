@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['supplier'].valid && applicationForm.controls['supplier'].touched}">
-                    <label class="required">Supplier<span class="alert-danger">*</span>:</label>
+                    <label class="required">Supplier<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="applicationForm.controls['supplier']" [(ngModel)]="applicationData.supplierId" style="width:50%" (ngModelChange)="onChange($event)" >
                         <option *ngIf="title=='New Application' &&supplierFlag" value="select">Select Suppliers</option>
                         <option *ngFor="let item of applicationMetaData.suppliers"
@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['contactId'].valid && applicationForm.controls['contactId'].touched}"  >
-                    <label>Contract ID <span class="alert-danger">*</span>:</label>
+                    <label>Contract ID <span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="applicationForm.controls['contactId']" [(ngModel)]="applicationData.contractId" style="width:50%">
                         <option *ngIf="title=='New Application' &&contractIdFlag" value="select">Select Contract</option>
                         <option *ngFor="let item of applicationMetaData.contractIds"
@@ -59,7 +59,7 @@
             <div class="col-lg-6 small">
                 <div class="form-group">
 
-                    <label>Service Class (Optional):</label>
+                    <label>Service Class (Optional)</label>
                     <select class="form-control" [formControl]="applicationForm.controls['Serviceclass']" [(ngModel)]="applicationData.serviceClass" style="width:50%" (ngModelChange)="onServiceclassChange($event)" >
                         <option *ngIf="title=='New Application'&&serviceClassFlag" value="select">Select ServiceClass</option>
                         <option *ngFor="let item of applicationMetaData.serviceClass"
@@ -152,14 +152,14 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['tm'].valid && applicationForm.controls['tm'].touched}">
-                    <label>T&M:</label>
+                    <label>T&M</label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['tm']" [(ngModel)]="applicationData.tm"  style="width:50%"/>
                     <div *ngIf="applicationForm.controls['tm'].hasError('pattern') && applicationForm.controls['tm'].touched" class="alert alert-danger">Please enter in percentage.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ManagedCapacity'].valid && applicationForm.controls['ManagedCapacity'].touched}">
-                    <label>Managed Capacity:</label>
+                    <label>Managed Capacity</label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['ManagedCapacity']" [(ngModel)]="applicationData.managedCapacity" style="width:50%"/>
                     <div *ngIf="applicationForm.controls['ManagedCapacity'].hasError('pattern') && applicationForm.controls['ManagedCapacity'].touched" class="alert alert-danger">Please enter in percentage.</div>
                 </div>
@@ -168,14 +168,14 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['ManagedServices'].valid && applicationForm.controls['ManagedServices'].touched}">
-                    <label>Managed Services:</label>
+                    <label>Managed Services</label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['ManagedServices']" [(ngModel)]="applicationData.managedService" style="width:50%" />
                     <div *ngIf="applicationForm.controls['ManagedServices'].hasError('pattern') && applicationForm.controls['ManagedServices'].touched" class="alert alert-danger">Please enter in percentage.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['Software'].valid && applicationForm.controls['Software'].touched}">
-                    <label>Software AssetSearch Lable ID:</label>
+                    <label>Software Asset Search Lable ID</label>
                     <input class="form-control" type="text" [formControl]="applicationForm.controls['Software']" [(ngModel)]="applicationData.softwareAssetSearchableId"  style="width:50%"/>
                     <div *ngIf="applicationForm.controls['Software'].hasError('pattern') && applicationForm.controls['Software'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
                 </div>
@@ -184,14 +184,14 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!applicationForm.controls['remarks'].valid && applicationForm.controls['remarks'].touched}">
-                    <label>Remarks:</label>
-                    <input class="form-control" type="text" [formControl]="applicationForm.controls['remarks']" [(ngModel)]="applicationData.remarks" style="width:50%" />
+                    <label>Remarks</label>
+                    <textarea class="form-control" type="text" [formControl]="applicationForm.controls['remarks']" [(ngModel)]="applicationData.remarks" style="width:50%"></textarea>
                     <div *ngIf="applicationForm.controls['remarks'].hasError('pattern') && applicationForm.controls['remarks'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group">
-                    <label>IT-ORG:</label>
+                    <label>IT-ORG</label>
                     <select class="form-control" [formControl]="applicationForm.controls['itOrg']" [(ngModel)]="applicationData.itorg" style="width:50%" (ngModelChange)="onitOrgChange($event)" >
                         <option *ngIf="title=='New Application'&&itorgFlag" value="select">Select Itorg</option>
                         <option *ngFor="let item of applicationMetaData.itOrg"

@@ -142,14 +142,14 @@ namespace CrEST.BL
 			if (application == null)
 				cmd.Parameters.Add(new SqlParameter("@Application", string.Empty));
 			else
-				cmd.Parameters.Add(new SqlParameter("@Application", application));			
+				cmd.Parameters.Add(new SqlParameter("@Application", application));
 
 			using (var reader = cmd.ExecuteReader())
 			{
 				while (reader.Read())
 				{
-                    ApplicationData item = new ApplicationData();
-                    item.ApplicationId = reader.GetInt32(0);
+					ApplicationData item = new ApplicationData();
+					item.ApplicationId = reader.GetInt32(0);
 					item.SupplierName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
 					item.ContractId = reader.GetInt32(2);
 					item.ServiceLine = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
@@ -170,8 +170,10 @@ namespace CrEST.BL
 					item.Itorg = reader.IsDBNull(18) ? default(int) : reader.GetInt32(18);
 					item.ITOrgName = reader.IsDBNull(19) ? string.Empty : reader.GetString(19);
 					item.SoWid = reader.GetInt32(20);
-                    item.SupplierId = reader.IsDBNull(21) ? default(int) : reader.GetInt32(21);
-                    applications.Add(item);
+					item.SupplierId = reader.IsDBNull(21) ? default(int) : reader.GetInt32(21);
+					item.ServiceClassName = reader.IsDBNull(21) ? string.Empty : reader.GetString(22);
+					item.RunOrGrowName = reader.IsDBNull(23) ? string.Empty : reader.GetString(23);
+					applications.Add(item);
 				}
 			}
 

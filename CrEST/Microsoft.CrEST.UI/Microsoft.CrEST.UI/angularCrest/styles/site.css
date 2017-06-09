@@ -559,6 +559,8 @@ div.tablewrapper {
     padding:0px !important;
 }
 .alert-danger {
+	background-color:none;
+border-color: none;
 	/* width:258px;*/
 }
 .required input {
@@ -572,4 +574,7 @@ div.tablewrapper {
 }
 .tblHeader {
 	background-color: #EEE;
+}
+.panel-default {
+	width:1750px;
 }

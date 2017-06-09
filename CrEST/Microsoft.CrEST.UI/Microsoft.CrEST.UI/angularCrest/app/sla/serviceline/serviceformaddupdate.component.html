@@ -17,7 +17,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['SCID'].valid && serviceForm.controls['SCID'].touched}">
-                    <label>SC ID<span class="alert-danger">*</span></label>
+                    <label>SCID<span class="alert-danger">*</span></label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['SCID']" [(ngModel)]="service.scid" style="width:50%" />
                     <div *ngIf="serviceForm.controls['SCID'].hasError('required') && serviceForm.controls['SCID'].touched" class="alert alert-danger">Please enter SCID.</div>
                 </div>
@@ -76,7 +76,7 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group">
-                    <label>CrEST Level-3 Service:</label>
+                    <label>CrEST Level-3 Service</label>
 
                     <select class="form-control" [formControl]="serviceForm.controls['crestLvl3']" [(ngModel)]="service.crestLevel3Id" style="width:50%" (ngModelChange)="onChancrestLevel3($event)">
                         <option *ngIf="title=='New Service'&&crestLvl3" value="0">select crestLvl3</option>
@@ -89,7 +89,7 @@
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['appgroupservicesfeeyr1'].valid && serviceForm.controls['appgroupservicesfeeyr1'].touched}">
-                    <label>Application Group Services Fee Year 1:</label>
+                    <label>Application Group Services Fee Year 1</label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['appgroupservicesfeeyr1']" [(ngModel)]="service.appGroupServiceFeeY1" style="width:50%" />
                     <span *ngIf="serviceForm.controls['appgroupservicesfeeyr1'].hasError('pattern') && serviceForm.controls['appgroupservicesfeeyr1'].touched" class="alert alert-danger">Please enter in currency only.</span>
                 </div>
@@ -98,14 +98,14 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['appgroupservicesfeeyr2'].valid && serviceForm.controls['appgroupservicesfeeyr2'].touched}">
-                    <label>Application Group Services Fee Year 2:</label>
+                    <label>Application Group Services Fee Year 2</label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['appgroupservicesfeeyr2']" [(ngModel)]="service.appGroupServiceFeeY2" style="width:50%" />
                     <span *ngIf="serviceForm.controls['appgroupservicesfeeyr2'].hasError('pattern') && serviceForm.controls['appgroupservicesfeeyr2'].touched" class="alert alert-danger">Please enter in currency only.</span>
                 </div>
             </div>
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['appgroupservicesfeeyr3'].valid && serviceForm.controls['appgroupservicesfeeyr3'].touched}">
-                    <label>Application Group Services Fee Year 3:</label>
+                    <label>Application Group Services Fee Year 3</label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['appgroupservicesfeeyr3']" [(ngModel)]="service.appGroupServiceFeeY3" style="width:50%" />
                     <span *ngIf="serviceForm.controls['appgroupservicesfeeyr3'].hasError('pattern') && serviceForm.controls['appgroupservicesfeeyr3'].touched" class="alert alert-danger">Please enter in currency only.</span>
                 </div>
@@ -114,7 +114,7 @@
         <div class="row">
             <div class="col-xs-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['appgroupservicesfeeyr4'].valid && serviceForm.controls['appgroupservicesfeeyr4'].touched}">
-                    <label>Application Group Services Fee Year 4:</label>
+                    <label>Application Group Services Fee Year 4</label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['appgroupservicesfeeyr4']" [(ngModel)]="service.appGroupServiceFeeY4" style="width:50%" />
                     <div *ngIf="serviceForm.controls['appgroupservicesfeeyr4'].hasError('pattern') && serviceForm.controls['appgroupservicesfeeyr4'].touched" class="alert alert-danger">Please enter in currency only.</div>
                 </div>
@@ -123,8 +123,8 @@
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['currency'].valid && serviceForm.controls['currency'].touched}">
                     <label>Currency<span class="alert-danger">*</span></label>
                     <select class="form-control" [formControl]="serviceForm.controls['currency']" [(ngModel)]="service.currency" style="width:50%" (ngModelChange)="onChangecurrency($event)">
-                        <option [selected]='service.currency==INR' value='INR'>INR</option>
-                        <option [selected]='service.currency==USD' value='USD'>USD</option>
+                        <option [selected]="service.currency=='INR'" value='INR'>INR</option>
+                        <option [selected]="service.currency=='USD'" value='USD'>USD</option>
                     </select>
                     <div *ngIf="serviceForm.controls['currency'].hasError('required') && serviceForm.controls['currency'].touched" class="alert alert-danger">Please select currency.</div>
                 </div>
@@ -137,31 +137,31 @@
         <div class="row">
             <div class="col-lg-6 small">
                 <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['validationNote'].valid && serviceForm.controls['validationNote'].touched}">
-                    <label>Validation Notes:</label>
+                    <label>Validation Notes</label>
                     <input class="form-control" type="text" [formControl]="serviceForm.controls['validationNote']" [(ngModel)]="service.validationNotes" style="width:50%" />
                     <div *ngIf="serviceForm.controls['validationNote'].hasError('pattern') && serviceForm.controls['validationNote'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</div>
                 </div>
             </div>
             <div class="col-lg-6 small">
-                <div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['remarks'].valid && serviceForm.controls['remarks'].touched}">
-                    <label>Remarks<span class="alert-danger">*</span></label>
-                    <input class="form-control" type="text" [formControl]="serviceForm.controls['remarks']" [(ngModel)]="service.remarks" style="width:50%" />
-                    <span *ngIf="serviceForm.controls['remarks'].hasError('pattern') && serviceForm.controls['remarks'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</span>
-                </div>
+				<div class="form-group">
+					<label>IT-ORG</label>
+					<select class="form-control" [formControl]="serviceForm.controls['itOrg']" [(ngModel)]="service.itorg" style="width:50%" (ngModelChange)="onitOrgChange($event)">
+						<option *ngIf="title=='New Service'&&itorgFlag" value="0">Select It Org</option>
+						<option *ngFor="let item of serviceMetaData.itOrgMetadata"
+								[ngValue]="item.itorgId" [selected]="service.itorg ==item.itorgId">
+							{{item.itorgName}}
+						</option>
+					</select>
+				</div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6 small">
-                <div class="form-group">
-                    <label>IT-ORG:</label>
-                    <select class="form-control" [formControl]="serviceForm.controls['itOrg']" [(ngModel)]="service.itorg" style="width:50%" (ngModelChange)="onitOrgChange($event)">
-                        <option *ngIf="title=='New Service'&&itorgFlag" value="0">Select It Org</option>
-                        <option *ngFor="let item of serviceMetaData.itOrgMetadata"
-                                [ngValue]="item.itorgId" [selected]="service.itorg ==item.itorgId">
-                            {{item.itorgName}}
-                        </option>
-                    </select>
-                </div>
+				<div class="form-group" [ngClass]="{'has-error':!serviceForm.controls['remarks'].valid && serviceForm.controls['remarks'].touched}">
+					<label>Remarks<span class="alert-danger">*</span></label>
+					<textarea class="form-control" type="text" [formControl]="serviceForm.controls['remarks']" [(ngModel)]="service.remarks" style="width:50%"></textarea>
+					<span *ngIf="serviceForm.controls['remarks'].hasError('pattern') && serviceForm.controls['remarks'].touched" class="alert alert-danger">Please enter Text or numbers only. No unsafe characters.</span>
+				</div>
             </div>
         </div>
         <div class="form-group">
