@@ -43,7 +43,6 @@ namespace CrEST.BL
                     {
                         LoginData rd = new LoginData();
                         status = reader.GetInt32 (0);
-                        //rd.Password = reader.GetString(1)
                     }
                     return status;
                 }
@@ -53,9 +52,7 @@ namespace CrEST.BL
         {
             int status = 0;
 
-            //using (CrESTContext db = new CrESTContext())
-            //{
-            //RegisterData rd = new RegisterData();
+            
             _context.Database.OpenConnection();
                 DbCommand cmd = _context.Database.GetDbConnection().CreateCommand();
                 cmd.CommandText = "spInsertUsers";
@@ -72,7 +69,6 @@ namespace CrEST.BL
                             UserName = reader.GetString(0);
                             Password = reader.GetString(1);
                             RoleName = reader.GetString(2);
-                            //status.Add(rd1);
                         }
                      
                     }

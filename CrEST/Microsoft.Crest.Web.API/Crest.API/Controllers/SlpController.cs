@@ -12,9 +12,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly ISlpsRepository _slpRepository;
         
-		public SlpController(CrESTContext context)
+		public SlpController(ISlpsRepository slpRepository)
 		{
-            _slpRepository = new SlpRepository(context);
+            _slpRepository = slpRepository;
 		}
   
         [HttpGet]

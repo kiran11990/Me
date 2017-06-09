@@ -10,9 +10,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {		
 		private readonly ISupplierRepository _supplierRepository;
         
-		public SupplierController(CrESTContext context)
+		public SupplierController(ISupplierRepository supplierRepository)
 		{
-			_supplierRepository = new SupplierRepository(context);
+			_supplierRepository = supplierRepository;
 		}
 
 		// GET api/values

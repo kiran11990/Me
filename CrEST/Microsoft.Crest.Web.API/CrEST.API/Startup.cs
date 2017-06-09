@@ -34,7 +34,15 @@ namespace CrEST.API
             // Add framework services.
             services.AddMvc();
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+			services.AddTransient<IServiceRepository, ServiceRepository>();
+			services.AddTransient<ISoWRepository, SoWRepository>();
+			services.AddTransient<ISlpsRepository, SlpRepository>();
+			services.AddTransient<ISupplierRepository, SupplierRepository>();
+			services.AddTransient<ILoginRepository, Loginrepository>();
+			
+
+
+			services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()

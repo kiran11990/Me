@@ -17,7 +17,7 @@ namespace Microsoft.Crest.Web.API.Controllers
 		public ApplicationController(CrESTContext context, IApplicationRepository applicationRepository)
 		{
             _applicationRepository = applicationRepository;
-            _applicationRepository = new ApplicationRepository(context);
+            //_applicationRepository = new ApplicationRepository(context);
 		}
   
         [HttpGet]

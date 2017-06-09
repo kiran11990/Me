@@ -16,9 +16,9 @@ namespace Microsoft.Crest.Web.API.Controllers
     {
         private readonly ILoginRepository _loginRepository;
 
-        public LoginController(CrESTContext context)
+        public LoginController(ILoginRepository loginRepository)
         {
-            _loginRepository = new Loginrepository(context);
+            _loginRepository = loginRepository;
         }
 
         [HttpGet]
