@@ -30,7 +30,7 @@ var ServicelineFormComponent = (function () {
         this.crestLvl2 = true;
         this.crestLvl3 = true;
         this.service = new Service();
-        this.currencyPattern = /^[0-9]*$/;
+        this.currencyPattern = /^(\d+(\.\d*)?)$/;
         this.serviceForm = formBuilder.group({
             'supplier': ['', Validators.required],
             'SCID': ['', Validators.required],

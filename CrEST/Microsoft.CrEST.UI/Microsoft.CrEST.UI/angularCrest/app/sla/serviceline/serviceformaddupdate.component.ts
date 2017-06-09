@@ -28,7 +28,7 @@ export class ServicelineFormComponent implements OnInit {
     
 
     service: Service = new Service();
-	private currencyPattern = /^[0-9]*$/;
+	private currencyPattern = /^(\d+(\.\d*)?)$/;
     constructor(
         formBuilder: FormBuilder,
         private router: Router,

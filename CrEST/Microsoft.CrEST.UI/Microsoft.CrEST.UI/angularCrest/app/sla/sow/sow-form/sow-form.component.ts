@@ -29,7 +29,7 @@ export class SowFormComponent implements OnInit {
     public itorgFlag: boolean = true;
     public routeID: number;
     //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
-	private currencyPattern = /^[0-9]*$/;
+	private currencyPattern = /^(\d+(\.\d*)?)$/;;
     constructor(
         formBuilder: FormBuilder,
         private router: Router,

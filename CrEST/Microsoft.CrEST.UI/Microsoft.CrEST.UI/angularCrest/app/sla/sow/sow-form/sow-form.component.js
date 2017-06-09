@@ -30,7 +30,7 @@ var SowFormComponent = (function () {
         this.contractIdFlag = true;
         this.itorgFlag = true;
         //private currencyPattern = /^\$\d+[\.]*[\d]*$/;
-        this.currencyPattern = /^[0-9]*$/;
+        this.currencyPattern = /^(\d+(\.\d*)?)$/;
         this.soweffectiveDate = {
             date: {
                 year: this.startdate.getFullYear(),
@@ -71,6 +71,7 @@ var SowFormComponent = (function () {
         this.sow.soweffectiveDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
         this.sow.sowexpirationDate = new Date(Date.UTC(this.startdate.getFullYear(), this.startdate.getMonth(), this.startdate.getDate(), this.startdate.getHours(), this.startdate.getMinutes(), this.startdate.getSeconds()));
     }
+    ;
     SowFormComponent.prototype.onChange = function (value) {
         if (value != undefined) {
             this.supplierFlag = false;
