@@ -111,7 +111,7 @@ var ServicelineFormComponent = (function () {
     };
     ServicelineFormComponent.prototype.redirect = function () {
         if (confirm("Are you sure you want to leave this page?")) {
-            this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
+            this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
         }
     };
     ServicelineFormComponent.prototype.submitForm = function (service) {
@@ -122,7 +122,7 @@ var ServicelineFormComponent = (function () {
             var result = result;
             if (result == 1) {
                 _this.id ? alert(" Service Updated Successfully") : alert("Service Saved Successfully");
-                _this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
+                _this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
             }
         });
     };

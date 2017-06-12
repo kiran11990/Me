@@ -39,7 +39,7 @@ export class SlpComponent implements OnInit {
     ERR0002: string;
     ERR0003: string;
     ERR0004: string;
-
+loggedUser: string = (localStorage.getItem('currentUser')).toString().replace(/"/g, ' ').trim();
     constructor(private _slpService: SlpService, private _slpBusiness: SlpBusiness, private _constantService: ConstantService) {
         this.periods = new Array<ReportingPeriod>();
 
@@ -360,7 +360,8 @@ export class SlpComponent implements OnInit {
         this.colWidths.push(500);
         this.columns.push({
             data: "valueRemarks",
-            validator: this.remarksRegexValidtor,
+			validator: this.remarksRegexValidtor,
+			renderer: this.ValueRenderer,
             mainThis: this
         });
 
@@ -444,10 +445,12 @@ export class SlpComponent implements OnInit {
 
         //TODO
         if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
-            cellProperties.editor = false;
+			//cellProperties.editor = false;
+			cellProperties.readOnly = false;
             td.style.background = '#EEE';
-        } else {
-            cellProperties.editor = 'text';
+		} else {
+			cellProperties.readOnly = true;
+            //cellProperties.editor = 'text';
             td.style.background = '#FFFFFF';
         }
     }

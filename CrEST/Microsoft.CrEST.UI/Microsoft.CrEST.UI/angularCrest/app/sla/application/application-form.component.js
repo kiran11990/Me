@@ -173,7 +173,7 @@ var ApplicationFormComponent = (function () {
             var result = result;
             if (result == 1) {
                 _this.routeID ? alert(" Application Updated Successfully") : alert("Application Saved Successfully");
-                _this.router.navigate(['applications']);
+                _this.router.navigate(['/home/applications']);
             }
         });
     };
@@ -182,7 +182,7 @@ var ApplicationFormComponent = (function () {
     };
     ApplicationFormComponent.prototype.redirect = function () {
         if (confirm("Do You Want? Update")) {
-            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
+            this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
         }
     };
     return ApplicationFormComponent;

@@ -174,7 +174,7 @@ export class SowFormComponent implements OnInit {
             .subscribe((result: number) => {
                 var result = result;
                 if (result == 1) {
-                    this.route.snapshot.params['id']? alert("updatedsuccessfully") : alert("sow added successfully")
+                    this.route.snapshot.params['id']? alert("sow updated successfully") : alert("sow added successfully")
                   this.router.navigate(['sows', {sowStatus: "updatedsuccessfully" }]);
                 }
             });
@@ -183,7 +183,7 @@ export class SowFormComponent implements OnInit {
     redirect() {
 
 		if (confirm("Are you sure you want to leave this page?")) {
-            this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
+			this.router.navigate(['/home/sows', { sowStatus: "updatedsuccessfully" }]);
         }
        
     }
@@ -191,6 +191,6 @@ export class SowFormComponent implements OnInit {
     BackClick(event: Event) {
         event.preventDefault();
         event.stopPropagation();
-        this.router.navigateByUrl('/sows');
+		this.router.navigateByUrl('/home/sows');
     }
 }
