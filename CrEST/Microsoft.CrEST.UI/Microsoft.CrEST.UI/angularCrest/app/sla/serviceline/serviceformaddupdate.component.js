@@ -110,8 +110,15 @@ var ServicelineFormComponent = (function () {
         this.service.currency = value;
     };
     ServicelineFormComponent.prototype.redirect = function () {
-        if (confirm("Are you sure you want to leave this page?")) {
-            this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
+        if (this.serviceForm.dirty) {
+            if (confirm("Are you sure you want to leave this page?")) {
+                this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
+            }
+            else
+                this.router.navigate(['/home/services']);
+        }
+        else {
+            this.router.navigate(['/home/services']);
         }
     };
     ServicelineFormComponent.prototype.submitForm = function (service) {

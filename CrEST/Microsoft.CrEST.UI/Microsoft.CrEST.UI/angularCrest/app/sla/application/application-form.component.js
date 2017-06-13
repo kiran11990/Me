@@ -181,8 +181,15 @@ var ApplicationFormComponent = (function () {
         console.log('success!');
     };
     ApplicationFormComponent.prototype.redirect = function () {
-        if (confirm("Do You Want? Update")) {
-            this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
+        if (this.applicationForm.dirty) {
+            if (confirm("Do You Want? Update")) {
+                this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
+            }
+            else
+                this.router.navigate(['/home/applications']);
+        }
+        else {
+            this.router.navigate(['/home/applications']);
         }
     };
     return ApplicationFormComponent;
