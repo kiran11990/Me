@@ -28,6 +28,7 @@ var SlpComponent = (function () {
         this.showSaveAction = false;
         this.showHotTable = false;
         this.invalidHandsonCells = [];
+        this.loggedUser = (localStorage.getItem('currentUser')).toString().replace(/"/g, ' ').trim();
         this.periods = new Array();
         this.INF0001 = _constantService.CONSTANTS.Messages.INF0001;
         this.INF0002 = _constantService.CONSTANTS.Messages.INF0002;
@@ -302,6 +303,7 @@ var SlpComponent = (function () {
         this.columns.push({
             data: "valueRemarks",
             validator: this.remarksRegexValidtor,
+            renderer: this.ValueRenderer,
             mainThis: this
         });
         this.colHeaders.push('Status');
@@ -372,11 +374,13 @@ var SlpComponent = (function () {
         }
         //TODO
         if (cellProperties.mainThis.data[row].infyOwner != "karthik_ramamoorthi") {
-            cellProperties.editor = false;
+            //cellProperties.editor = false;
+            cellProperties.readOnly = false;
             td.style.background = '#EEE';
         }
         else {
-            cellProperties.editor = 'text';
+            cellProperties.readOnly = true;
+            //cellProperties.editor = 'text';
             td.style.background = '#FFFFFF';
         }
     };

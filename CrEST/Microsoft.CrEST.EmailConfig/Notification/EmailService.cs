@@ -64,10 +64,10 @@ namespace Notification
      public   void MainProcess()
         {
                      
-
-                string InfyOwnerlist = "", InfyOwnerDMlist="",cclist="", Msg="", Sub="";
-              
-                DataSet ds = new DataSet();
+            double duration=Convert.ToDouble(ConfigurationManager.AppSettings["Duration"]);
+            string InfyOwnerlist = "", InfyOwnerDMlist="",cclist="", Msg="", Sub="";
+            eventLogEmailService.WriteEntry("Crest: Email Main Process start" + DateTime.Now);
+            DataSet ds = new DataSet();
                 try
                 {
                     while (true)
@@ -88,7 +88,7 @@ namespace Notification
 
                             if (InfyOwnerlist != "")
                             {
-                                ServiceLog.SendEmail(InfyOwnerlist + "" + InfyOwnerDMlist, cclist, "", Sub, Msg);
+                                ServiceLog.SendEmail(InfyOwnerlist + "," + InfyOwnerDMlist, cclist, "", Sub, Msg);
                                 eventLogEmailService.WriteEntry("Crest: Mail sent sucessfully  " + DateTime.Now + "");
                             }
                             else
@@ -99,7 +99,7 @@ namespace Notification
                         }
                     
 
-                        Thread.Sleep(300000);
+                        Thread.Sleep(TimeSpan.FromHours(duration));
                     }
                 }
 

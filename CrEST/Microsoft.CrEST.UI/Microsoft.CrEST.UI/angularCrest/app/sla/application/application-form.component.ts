@@ -199,7 +199,7 @@ export class ApplicationFormComponent implements OnInit {
                 var result = result;
                 if (result == 1) {
                     this.routeID ? alert(" Application Updated Successfully") : alert("Application Saved Successfully")
-                    this.router.navigate(['applications']);
+					this.router.navigate(['/home/applications']);
                 }
             });
     }
@@ -210,7 +210,7 @@ export class ApplicationFormComponent implements OnInit {
     redirect() {
 
         if (confirm("Do You Want? Update")) {
-            this.router.navigate(['applications', { applicationStatus: "updatedsuccessfully" }]);
+			this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
         }
     }
 }

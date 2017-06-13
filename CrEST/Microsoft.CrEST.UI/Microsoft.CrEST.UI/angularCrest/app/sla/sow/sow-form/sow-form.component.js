@@ -148,20 +148,20 @@ var SowFormComponent = (function () {
             .subscribe(function (result) {
             var result = result;
             if (result == 1) {
-                _this.route.snapshot.params['id'] ? alert("updatedsuccessfully") : alert("sow added successfully");
+                _this.route.snapshot.params['id'] ? alert("sow updated successfully") : alert("sow added successfully");
                 _this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
             }
         });
     };
     SowFormComponent.prototype.redirect = function () {
         if (confirm("Are you sure you want to leave this page?")) {
-            this.router.navigate(['sows', { sowStatus: "updatedsuccessfully" }]);
+            this.router.navigate(['/home/sows', { sowStatus: "updatedsuccessfully" }]);
         }
     };
     SowFormComponent.prototype.BackClick = function (event) {
         event.preventDefault();
         event.stopPropagation();
-        this.router.navigateByUrl('/sows');
+        this.router.navigateByUrl('/home/sows');
     };
     return SowFormComponent;
 }());

@@ -126,7 +126,7 @@ export class ServicelineFormComponent implements OnInit {
 
     redirect() {
 		if (confirm("Are you sure you want to leave this page?")) {
-			this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
+			this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
         }
     }
 
@@ -138,7 +138,7 @@ export class ServicelineFormComponent implements OnInit {
                 var result = result;
                 if (result == 1) {
                     this.id ? alert(" Service Updated Successfully") : alert("Service Saved Successfully")
-                    this.router.navigate(['services', { servicetatus: "updatedsuccessfully" }]);
+					this.router.navigate(['/home/services', { servicetatus: "updatedsuccessfully" }]);
                 }
             });
     }
