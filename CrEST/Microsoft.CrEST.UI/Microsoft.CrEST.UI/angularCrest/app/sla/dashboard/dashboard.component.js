@@ -20,11 +20,13 @@ var SlaDashboardComponent = (function () {
         this.sowData = [];
         this.sowBarChartOptions = {
             scaleShowVerticalLines: false,
+            legend: { position: 'bottom' },
             responsive: true
         };
+        this.doughnutposition = 'right';
         this.sowBarChartLabels = [];
         this.sowBarChartType = 'bar';
-        this.sowBarChartLegend = true;
+        this.sowBarChartLegend = { position: 'bottom' };
         this.sowBarChartData = [];
         this.isDataAvailable = false;
         this.contractIds = [];
@@ -37,6 +39,7 @@ var SlaDashboardComponent = (function () {
         this.GetRASlps();
         this.GetReportingPeriods();
     }
+    ;
     SlaDashboardComponent.prototype.onChange = function (selectedPeriod, _this) {
         _this.selectedPeriod = selectedPeriod;
         _this.currentSelectedPeriod = selectedPeriod.period;

@@ -194,7 +194,9 @@ namespace CrEST.BL
                     sla.IsCustom = reader.IsDBNull(14) ? default(bool) : (reader.GetBoolean(14));
                     sla.TargetLevel = reader.IsDBNull(15) ? string.Empty : (reader.GetString(15));
                     sla.MinimumLevel = reader.IsDBNull(16) ? string.Empty : (reader.GetString(16));
-                    sla.Remarks = reader.IsDBNull(17) ? string.Empty : (reader.GetString(17));
+                    sla.Weightage = reader.IsDBNull(17) ? string.Empty : (reader.GetString(17));//added by snigdha
+                    sla.Remarks = reader.IsDBNull(18) ? string.Empty : (reader.GetString(18));
+                    
                     sla.ValidationNotes = reader.IsDBNull(19) ? string.Empty : (reader.GetString(19));
                     sla.ReportingPeriod = reader.GetString(20);
                     sla.Pref = reader.GetString(21);

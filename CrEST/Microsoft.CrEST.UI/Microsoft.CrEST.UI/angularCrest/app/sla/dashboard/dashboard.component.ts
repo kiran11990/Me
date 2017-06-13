@@ -17,11 +17,15 @@ export class SlaDashboardComponent {
     private sowData: Array<Sow> = [];
     public sowBarChartOptions: any = {
         scaleShowVerticalLines: false,
+        legend: { position: 'bottom'},
         responsive: true
     };
+    ;
+    public doughnutposition: string = 'right';
     public sowBarChartLabels: string[] = [];
     public sowBarChartType: string = 'bar';
-    public sowBarChartLegend: boolean = true;
+    public sowBarChartLegend: any = { position:'bottom' };
+
     public sowBarChartData: any[] = [];
     public isDataAvailable: boolean = false;
 
@@ -51,7 +55,7 @@ export class SlaDashboardComponent {
     }
 
     ExportToExport(fiscalPeriod: any, mainThis: any) {
-
+        
         this.slpService.ExportToExcel(fiscalPeriod)
             .subscribe((data: ExportToExcel) => {
                 mainThis.exportToExcel = data;
@@ -64,7 +68,8 @@ export class SlaDashboardComponent {
                     showLabels: true
                 };
 
-                new AngularToCsv(mainThis.exportToExcel.sows, "SoWs", options);
+        
+                new AngularToCsv(mainThis.exportToExcel.sows, "SoWs",  options);
                 new AngularToCsv(mainThis.exportToExcel.services, "Services", options);
                 new AngularToCsv(mainThis.exportToExcel.applications, "Applications", options);
                 new AngularToCsv(mainThis.exportToExcel.slps, "Service Level Performance", options);
