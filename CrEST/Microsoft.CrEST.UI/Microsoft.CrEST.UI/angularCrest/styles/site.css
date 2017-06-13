@@ -569,12 +569,19 @@ border-color: none;
     background-position: right top;
 }
 .tbody {
-    overflow-x: auto;
-    overflow-y: auto;
+    /*overflow-x: auto;
+    overflow-y: auto;*/
 }
 .tblHeader {
 	background-color: #EEE;
 }
 .panel-default {
-	width:1750px;
+	/*width:1750px;*/
+}
+.tableScroll
+{
+    display:block;
+    overflow-x:scroll;
+    overflow-y:scroll;
+    height:450px;
 }
