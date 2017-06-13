@@ -208,9 +208,16 @@ export class ApplicationFormComponent implements OnInit {
         console.log('success!');
     }
     redirect() {
-
-        if (confirm("Do You Want? Update")) {
-			this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
+        if (this.applicationForm.dirty) {
+            if (confirm("Do You Want? Update")) {
+                this.router.navigate(['/home/applications', { applicationStatus: "updatedsuccessfully" }]);
+            }
+            else
+                this.router.navigate(['/home/applications']);
+        }
+        else
+        {
+            this.router.navigate(['/home/applications']);
         }
     }
 }

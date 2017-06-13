@@ -181,9 +181,16 @@ export class SowFormComponent implements OnInit {
     }
 
     redirect() {
-
-		if (confirm("Are you sure you want to leave this page?")) {
-			this.router.navigate(['/home/sows', { sowStatus: "updatedsuccessfully" }]);
+        if (this.sowForm.dirty) {
+            if (confirm("Are you sure you want to leave this page?")) {
+                this.router.navigate(['/home/sows', { sowStatus: "updatedsuccessfully" }]);
+            }
+            else
+                this.router.navigate(['/home/sows']);
+        }
+        else
+        {
+            this.router.navigate(['/home/sows']);
         }
        
     }
